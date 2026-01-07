@@ -1,5 +1,5 @@
 site_name: Soliplex
-site_url: https://soliplex.github.io/docs/
+site_url: https://soliplex.github.io/
 dev_addr: 127.0.0.1:8001
 theme:
   name: material
@@ -50,8 +50,8 @@ theme:
   # logo: img/icon-white.svg
   # favicon: img/favicon.png
   language: en
-repo_name: soliplex/docs
-repo_url: https://github.com/soliplex/docs
+repo_name: soliplex/soliplex.github.io
+repo_url: https://github.com/soliplex/soliplex.github.io
 plugins:
   # Material for MkDocs
   search:
