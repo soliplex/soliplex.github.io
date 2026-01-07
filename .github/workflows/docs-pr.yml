@@ -1,0 +1,33 @@
+name: Validate Docs PR
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_NOTIFY_URL: ${{ secrets.SLACK_NOTIFY_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install mkdocs-material
+
+      - name: Build docs (validation)
+        run: mkdocs build --strict
+
+      - name: Notify Slack on failure
+        if: failure()
+        env:
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -X POST \
+            --data-urlencode \
+            "payload={\"channel\": \"#soliplex\", \"username\": \"docs-ci\", \"text\": \":x: Docs PR validation failed\n$RUN_URL\", \"icon_emoji\": \":books:\"}" \
+            "$SLACK_NOTIFY_URL"
