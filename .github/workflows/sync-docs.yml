@@ -160,6 +160,11 @@ jobs:
             echo "- ✅ **soliplex/ag-ui**: $AGUI_COUNT files" >> $GITHUB_STEP_SUMMARY
           fi
 
+      - name: Force add synced docs (override .gitignore)
+        run: |
+          git add --force docs/soliplex/ docs/ingester/ docs/agents/ docs/chatbot/ docs/flutter/ docs/ag-ui/ 2>/dev/null || true
+          git status
+
       - name: Create Pull Request with synced docs
         id: cpr
         uses: peter-evans/create-pull-request@v7
@@ -193,9 +198,6 @@ jobs:
             **Triggered by:** ${{ github.event_name }}
             **Workflow run:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           labels: documentation,automated
-          add-paths: |
-            docs/
-          git-add-args: '--force'
 
       - name: Enable Pull Request Auto-merge
         if: steps.cpr.outputs.pull-request-number != ''
