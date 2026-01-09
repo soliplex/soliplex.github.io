@@ -1,6 +1,3 @@
-[submodule "projects/projects/soliplex"]
-	path = projects/projects/soliplex
-	url = https://github.com/soliplex/soliplex.git
 [submodule "projects/soliplex"]
 	path = projects/soliplex
 	url = https://github.com/soliplex/soliplex.git
