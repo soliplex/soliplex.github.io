@@ -28,6 +28,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   sync:
@@ -87,13 +88,8 @@ jobs:
             docs/ingester \
             docs
 
-      - name: Sync soliplex/ingester-agents docs
-        if: steps.repos.outputs.sync_agents == 'true'
-        run: |
-          ./scripts/sync-repo-docs.sh \
-            soliplex/ingester-agents \
-            docs/agents \
-            README.md || echo "⚠️  Failed to sync ingester-agents (may not exist)"
+      # Note: ingester-agents doesn't have a docs/ directory, only README.md
+      # Skipping sync for now - can be added later if docs are created
 
       - name: Sync soliplex/chatbot docs
         if: steps.repos.outputs.sync_chatbot == 'true'
