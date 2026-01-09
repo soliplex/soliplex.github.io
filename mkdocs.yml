@@ -60,12 +60,10 @@ nav:
 
   - Core Platform:
       - Overview: soliplex/overview.md
-      - Prerequisites: soliplex/prerequisites.md
       - Setup:
           - Server: soliplex/server.md
           - Client: soliplex/client.md
           - RAG Database: soliplex/rag.md
-          - Docker: soliplex/docker.md
       - Configuration:
           - Filesystem Layout: soliplex/config/filesystem_layout.md
           - Installation: soliplex/config/installation.md
@@ -89,12 +87,13 @@ nav:
       - Configuration: ingester/CONFIGURATION.md
       - CLI Reference: ingester/CLI.md
 
-  - Legacy Docs:
-      - Overview: overview.md
-      - Server: server.md
-      - Client: client.md
-      - RAG: rag.md
-      - Usage: usage.md
+  - User Interfaces:
+      - Chatbot Widget: chatbot/readme.md
+      - AG-UI Integration: ag-ui/README.md
+
+  - Supporting Tools:
+      - Ingester Agents: ingester-agents/index.md
+      - PDF Splitter: pdf-splitter/index.md
 markdown_extensions:
   - admonition
   - attr_list

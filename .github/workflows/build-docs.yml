@@ -17,6 +17,13 @@ jobs:
       SLACK_NOTIFY_URL: ${{ secrets.SLACK_NOTIFY_URL }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Update submodules to latest
+        run: |
+          git submodule update --init --recursive --remote
 
       - name: Configure Git
         run: |
@@ -36,6 +43,9 @@ jobs:
 
       - name: Install dependencies
         run: pip install mkdocs-material
+
+      - name: Build documentation from submodules
+        run: python scripts/build-docs.py --no-update
 
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force
