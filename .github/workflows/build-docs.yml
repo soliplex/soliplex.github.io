@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  repository_dispatch:
+    types: [docs_update]
 
 permissions:
   contents: write
@@ -16,6 +18,17 @@ jobs:
     env:
       SLACK_NOTIFY_URL: ${{ secrets.SLACK_NOTIFY_URL }}
     steps:
+      - name: Log trigger information
+        run: |
+          echo "🚀 Documentation build triggered"
+          echo "Trigger: ${{ github.event_name }}"
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "📦 Source repository: ${{ github.event.client_payload.repository }}"
+            echo "🔗 Commit: ${{ github.event.client_payload.sha }}"
+            echo "👤 Pushed by: ${{ github.event.client_payload.pusher }}"
+            echo "💬 Commit message: ${{ github.event.client_payload.commit_message }}"
+          fi
+
       - uses: actions/checkout@v6
         with:
           submodules: recursive
