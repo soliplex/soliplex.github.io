@@ -141,6 +141,18 @@ If documentation sync fails:
 3. Check that the sync script has correct permissions (`chmod +x scripts/sync-repo-docs.sh`)
 4. Try running the sync script locally to identify issues
 
+**Branch Protection Error:**
+
+If the workflow fails with "Protected branch update failed - Required status check 'validate' is expected":
+
+1. Go to repository Settings → Branches → Branch protection rules for `main`
+2. Either:
+   - **Option A (Recommended)**: Under "Allow specified actors to bypass required pull requests", add `github-actions[bot]`
+   - **Option B**: Under "Require status checks to pass before merging", remove the `validate` check or ensure a `validate` workflow exists
+   - **Option C**: Disable branch protection temporarily for testing
+
+The sync workflow needs to push commits directly to `main`, so it must either bypass protection or have all required checks pass.
+
 ### Build Issues
 
 If the documentation build fails:
