@@ -194,7 +194,7 @@ Co-Authored-By: github-actions[bot] <41898282+github-actions[bot]@users.noreply.
         if: steps.push.outputs.has_changes == 'true'
         run: |
           git format-patch -1 HEAD --stdout > sync-docs.patch
-          echo "📦 Patch file created: sync-docs.patch"
+          echo "Patch file created: sync-docs.patch"
           echo "To apply manually, run: git am sync-docs.patch"
 
       - name: Upload synced docs as artifact
