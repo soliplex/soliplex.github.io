@@ -164,8 +164,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Add all docs changes
-          git add docs/
+          # Add all docs changes (force to override .gitignore)
+          git add --force docs/
 
           # Check if there are changes to commit
           if git diff --staged --quiet; then
