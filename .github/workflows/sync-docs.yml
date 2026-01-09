@@ -176,46 +176,41 @@ jobs:
             echo "Creating commit with synced documentation..."
 
             # Build commit message
-            COMMIT_MSG="docs: sync from upstream repositories
+            cat > /tmp/commit_msg.txt << 'COMMIT_EOF'
+          docs: sync from upstream repositories
 
-Synced repositories:"
+          Synced repositories:
+          COMMIT_EOF
 
             if [ -d "docs/soliplex" ]; then
-              COMMIT_MSG="$COMMIT_MSG
-- soliplex/soliplex"
+              echo "- soliplex/soliplex" >> /tmp/commit_msg.txt
             fi
 
             if [ -d "docs/ingester" ]; then
-              COMMIT_MSG="$COMMIT_MSG
-- soliplex/ingester"
+              echo "- soliplex/ingester" >> /tmp/commit_msg.txt
             fi
 
             if [ -d "docs/agents" ]; then
-              COMMIT_MSG="$COMMIT_MSG
-- soliplex/ingester-agents"
+              echo "- soliplex/ingester-agents" >> /tmp/commit_msg.txt
             fi
 
             if [ -d "docs/chatbot" ]; then
-              COMMIT_MSG="$COMMIT_MSG
-- soliplex/chatbot"
+              echo "- soliplex/chatbot" >> /tmp/commit_msg.txt
             fi
 
             if [ -d "docs/flutter" ]; then
-              COMMIT_MSG="$COMMIT_MSG
-- soliplex/flutter"
+              echo "- soliplex/flutter" >> /tmp/commit_msg.txt
             fi
 
             if [ -d "docs/ag-ui" ]; then
-              COMMIT_MSG="$COMMIT_MSG
-- soliplex/ag-ui"
+              echo "- soliplex/ag-ui" >> /tmp/commit_msg.txt
             fi
 
-            COMMIT_MSG="$COMMIT_MSG
+            echo "" >> /tmp/commit_msg.txt
+            echo "Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> /tmp/commit_msg.txt
+            echo "Triggered by: ${{ github.event_name }}" >> /tmp/commit_msg.txt
 
-Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
-Triggered by: ${{ github.event_name }}"
-
-            git commit -m "$COMMIT_MSG"
+            git commit -F /tmp/commit_msg.txt
             git push
 
             echo "CHANGES=true" >> $GITHUB_ENV
