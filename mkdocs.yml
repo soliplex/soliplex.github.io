@@ -57,24 +57,44 @@ plugins:
   search:
 nav:
   - Home: index.md
-  - Overview: overview.md
-  - Setup:
+
+  - Core Platform:
+      - Overview: soliplex/overview.md
+      - Prerequisites: soliplex/prerequisites.md
+      - Setup:
+          - Server: soliplex/server.md
+          - Client: soliplex/client.md
+          - RAG Database: soliplex/rag.md
+          - Docker: soliplex/docker.md
+      - Configuration:
+          - Filesystem Layout: soliplex/config/filesystem_layout.md
+          - Installation: soliplex/config/installation.md
+          - Meta: soliplex/config/meta.md
+          - Environment: soliplex/config/environment.md
+          - Secrets: soliplex/config/secrets.md
+          - Agents: soliplex/config/agents.md
+          - Rooms: soliplex/config/rooms.md
+          - Completions: soliplex/config/completions.md
+          - RAG: soliplex/config/rag.md
+          - Quizzes: soliplex/config/quizzes.md
+          - OIDC Authentication: soliplex/config/oidc_providers.md
+      - Usage: soliplex/usage.md
+
+  - Ingester:
+      - Getting Started: ingester/GETTING_STARTED.md
+      - Architecture: ingester/ARCHITECTURE.md
+      - API Reference: ingester/API.md
+      - Workflows: ingester/WORKFLOWS.md
+      - Database Schema: ingester/DATABASE.md
+      - Configuration: ingester/CONFIGURATION.md
+      - CLI Reference: ingester/CLI.md
+
+  - Legacy Docs:
+      - Overview: overview.md
       - Server: server.md
       - Client: client.md
-      - RAG DB: rag.md
-  - Configuration:
-      - Filesystem Layout: config/filesystem_layout.md
-      - Installation: config/installation.md
-      - Meta: config/meta.md
-      - Environment: config/environment.md
-      - Secrets: config/secrets.md
-      - Agents: config/agents.md
-      - Rooms: config/rooms.md
-      - Completions: config/completions.md
-      - RAG: config/rag.md
-      - Quizzes: config/quizzes.md
-      - OIDC Authentication: config/oidc_providers.md
-  - Usage: usage.md
+      - RAG: rag.md
+      - Usage: usage.md
 markdown_extensions:
   - admonition
   - attr_list

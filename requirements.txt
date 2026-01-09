@@ -1,0 +1,9 @@
+# MkDocs and Material Theme
+mkdocs>=1.6.1
+mkdocs-material>=9.6.19
+
+# Markdown extensions (included with mkdocs-material but pinned for consistency)
+pymdown-extensions>=10.11.2
+
+# Python Markdown (core dependency)
+markdown>=3.6
