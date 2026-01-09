@@ -160,70 +160,51 @@ jobs:
             echo "- ✅ **soliplex/ag-ui**: $AGUI_COUNT files" >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: Commit synced docs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # Add all docs changes (force to override .gitignore)
-          git add --force docs/
-
-          # Check if there are changes to commit
-          if git diff --staged --quiet; then
-            echo "No documentation changes detected"
-            echo "CHANGES=false" >> $GITHUB_ENV
-          else
-            # Create detailed commit message
-            echo "Creating commit with synced documentation..."
-
-            # Build commit message
-            cat > /tmp/commit_msg.txt << 'COMMIT_EOF'
-          docs: sync from upstream repositories
-
-          Synced repositories:
-          COMMIT_EOF
-
-            if [ -d "docs/soliplex" ]; then
-              echo "- soliplex/soliplex" >> /tmp/commit_msg.txt
-            fi
-
-            if [ -d "docs/ingester" ]; then
-              echo "- soliplex/ingester" >> /tmp/commit_msg.txt
-            fi
-
-            if [ -d "docs/agents" ]; then
-              echo "- soliplex/ingester-agents" >> /tmp/commit_msg.txt
-            fi
-
-            if [ -d "docs/chatbot" ]; then
-              echo "- soliplex/chatbot" >> /tmp/commit_msg.txt
-            fi
-
-            if [ -d "docs/flutter" ]; then
-              echo "- soliplex/flutter" >> /tmp/commit_msg.txt
-            fi
-
-            if [ -d "docs/ag-ui" ]; then
-              echo "- soliplex/ag-ui" >> /tmp/commit_msg.txt
-            fi
-
-            echo "" >> /tmp/commit_msg.txt
-            echo "Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> /tmp/commit_msg.txt
-            echo "Triggered by: ${{ github.event_name }}" >> /tmp/commit_msg.txt
-
-            git commit -F /tmp/commit_msg.txt
-            git push
-
-            echo "CHANGES=true" >> $GITHUB_ENV
-            echo "✅ Changes committed and pushed"
-          fi
-
-      - name: Trigger docs build
-        if: env.CHANGES == 'true'
-        uses: peter-evans/repository-dispatch@v3
+      - name: Create Pull Request with synced docs
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: docs_synced
+          commit-message: |
+            docs: sync from upstream repositories
+
+            Synced repositories:
+            - soliplex/soliplex
+            - soliplex/ingester
+
+            Timestamp: ${{ github.run_id }}
+            Triggered by: ${{ github.event_name }}
+          branch: docs-sync-${{ github.run_id }}
+          delete-branch: true
+          title: 'docs: sync from upstream repositories'
+          body: |
+            ## Documentation Sync
+
+            Automated sync of documentation from upstream repositories.
+
+            **Synced repositories:**
+            - soliplex/soliplex
+            - soliplex/ingester
+            - soliplex/ingester-agents (if available)
+            - soliplex/chatbot (if available)
+            - soliplex/flutter (if available)
+            - soliplex/ag-ui (if available)
+
+            **Triggered by:** ${{ github.event_name }}
+            **Workflow run:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          labels: documentation,automated
+          add-paths: |
+            docs/
+
+      - name: Enable Pull Request Auto-merge
+        if: steps.cpr.outputs.pull-request-number != ''
+        run: gh pr merge --auto --squash "${{ steps.cpr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set changes flag
+        if: steps.cpr.outputs.pull-request-number != ''
+        run: echo "CHANGES=true" >> $GITHUB_ENV
 
       - name: Notify on failure
         if: failure()
