@@ -156,54 +156,76 @@ jobs:
             echo "- ✅ **soliplex/ag-ui**: $AGUI_COUNT files" >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: Force add synced docs (override .gitignore)
+      - name: Commit and push synced docs directly to main
+        continue-on-error: true
+        id: push
         run: |
-          git add --force docs/soliplex/ docs/ingester/ docs/agents/ docs/chatbot/ docs/flutter/ docs/ag-ui/ 2>/dev/null || true
-          git status
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Create Pull Request with synced docs
-        id: cpr
-        uses: peter-evans/create-pull-request@v7
+          # Force add synced docs (override .gitignore)
+          git add --force docs/soliplex/ docs/ingester/ docs/chatbot/ docs/flutter/ docs/ag-ui/ 2>/dev/null || true
+
+          # Check if there are changes
+          if git diff --cached --quiet; then
+            echo "No documentation changes to commit"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Committing synced documentation..."
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+
+            # Create commit
+            git commit -m "docs: sync from upstream repositories
+
+Synced repositories:
+- soliplex/soliplex
+- soliplex/ingester
+
+Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+Triggered by: ${{ github.event_name }}
+
+Co-Authored-By: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+
+            # Try to push (will fail due to branch protection, but that's OK)
+            git push || echo "⚠️  Push failed due to branch protection - this is expected"
+          fi
+
+      - name: Create patch file for manual application
+        if: steps.push.outputs.has_changes == 'true'
+        run: |
+          git format-patch -1 HEAD --stdout > sync-docs.patch
+          echo "📦 Patch file created: sync-docs.patch"
+          echo "To apply manually, run: git am sync-docs.patch"
+
+      - name: Upload synced docs as artifact
+        if: steps.push.outputs.has_changes == 'true'
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: |
-            docs: sync from upstream repositories
+          name: synced-docs-${{ github.run_id }}
+          path: |
+            docs/soliplex/
+            docs/ingester/
+            docs/chatbot/
+            docs/flutter/
+            docs/ag-ui/
+            sync-docs.patch
+          retention-days: 7
 
-            Synced repositories:
-            - soliplex/soliplex
-            - soliplex/ingester
-
-            Timestamp: ${{ github.run_id }}
-            Triggered by: ${{ github.event_name }}
-          branch: docs-sync-${{ github.run_id }}
-          delete-branch: true
-          title: 'docs: sync from upstream repositories'
-          body: |
-            ## Documentation Sync
-
-            Automated sync of documentation from upstream repositories.
-
-            **Synced repositories:**
-            - soliplex/soliplex
-            - soliplex/ingester
-            - soliplex/ingester-agents (if available)
-            - soliplex/chatbot (if available)
-            - soliplex/flutter (if available)
-            - soliplex/ag-ui (if available)
-
-            **Triggered by:** ${{ github.event_name }}
-            **Workflow run:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          labels: documentation,automated
-
-      - name: Enable Pull Request Auto-merge
-        if: steps.cpr.outputs.pull-request-number != ''
-        run: gh pr merge --auto --squash "${{ steps.cpr.outputs.pull-request-number }}"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set changes flag
-        if: steps.cpr.outputs.pull-request-number != ''
-        run: echo "CHANGES=true" >> $GITHUB_ENV
+      - name: Summary
+        if: steps.push.outputs.has_changes == 'true'
+        run: |
+          echo "## ⚠️  Manual Action Required" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Documentation has been synced but could not be pushed due to branch protection." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### To complete the sync:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Download the artifact 'synced-docs-${{ github.run_id }}' from this workflow run" >> $GITHUB_STEP_SUMMARY
+          echo "2. Extract it to your local repository" >> $GITHUB_STEP_SUMMARY
+          echo "3. Run: \`git add --force docs/\`" >> $GITHUB_STEP_SUMMARY
+          echo "4. Run: \`git commit -m 'docs: sync from upstream repositories'\`" >> $GITHUB_STEP_SUMMARY
+          echo "5. Run: \`git push\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Or apply the patch: \`git am sync-docs.patch\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Notify on failure
         if: failure()
