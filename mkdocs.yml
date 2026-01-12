@@ -89,7 +89,6 @@ nav:
 
   - User Interfaces:
       - Chatbot Widget: chatbot/readme.md
-      - AG-UI Integration: ag-ui/README.md
 
   - Supporting Tools:
       - Ingester Agents: ingester-agents/index.md

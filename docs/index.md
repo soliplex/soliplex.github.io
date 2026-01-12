@@ -48,15 +48,6 @@ Embeddable Next.js chat widget for integrating Soliplex into web applications.
 - [Documentation](chatbot/readme.md)
 - [Usage Guide](chatbot/usage.md)
 
-### [AG-UI Integration](ag-ui/README.md)
-
-Agent-User Interaction Protocol for standardized AI agent communication.
-
-**Quick Links:**
-- [Introduction](ag-ui/introduction.mdx)
-- [AG-UI Documentation](ag-ui/ag_ui.md)
-- [Integrations](ag-ui/integrations.mdx)
-
 ## Supporting Tools
 
 ### [Ingester Agents](ingester-agents/index.md)
@@ -87,7 +78,6 @@ Utility for splitting and processing PDF documents for ingestion.
 1. [Core Platform Architecture](soliplex/overview.md) - System design and components
 2. [Ingester Architecture](ingester/ARCHITECTURE.md) - Ingestion pipeline design
 3. [API References](ingester/API.md) - REST API documentation
-4. [AG-UI Integration](ag-ui/introduction.mdx) - Agent-User interaction protocol
 
 ### For Operations
 
@@ -117,7 +107,6 @@ This documentation is automatically synchronized from multiple repositories:
 - **Ingester**: [soliplex/ingester](https://github.com/soliplex/ingester)
 - **Flutter Client**: [soliplex/flutter](https://github.com/soliplex/flutter)
 - **Chatbot Widget**: [soliplex/chatbot](https://github.com/soliplex/chatbot)
-- **AG-UI Integration**: [soliplex/ag-ui](https://github.com/soliplex/ag-ui)
 - **Ingester Agents**: [soliplex/ingester-agents](https://github.com/soliplex/ingester-agents)
 - **PDF Splitter**: [soliplex/pdf-splitter](https://github.com/soliplex/pdf-splitter)
 

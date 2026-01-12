@@ -208,7 +208,6 @@ def main():
     projects_with_docs = {
         'soliplex': 'projects/soliplex/docs',
         'ingester': 'projects/ingester/docs',
-        'ag-ui': 'projects/ag-ui/docs',
         'chatbot': 'projects/chatbot/docs',
         'flutter': 'projects/flutter/docs',
     }
