@@ -674,6 +674,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Running the Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-command-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server Command Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Usage Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying the Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1713,6 +1752,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Running the Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-command-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server Command Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Usage Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying the Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1951,18 +2029,100 @@ configurations:</p>
 </li>
 </ol>
 <h2 id="running-the-server">Running the Server</h2>
-<p>Start the FastAPI server with auto-reload:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>soliplex-cli<span class="w"> </span>serve<span class="w"> </span>example/installation.yaml<span class="w"> </span>-r<span class="w"> </span>both
+<p>Start the FastAPI server:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>soliplex-cli<span class="w"> </span>serve<span class="w"> </span>example/installation.yaml
 </span></code></pre></div>
 <p>The server will be available at <code>http://localhost:8000</code> by default.</p>
-<p>For testing purposes, the server can be run with authentication disabled.
-To run without authentication:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>soliplex-cli<span class="w"> </span>serve<span class="w"> </span>example/no_auth.yaml<span class="w"> </span>-r<span class="w"> </span>both
+<h3 id="server-command-options">Server Command Options</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>soliplex-cli<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>INSTALLATION_CONFIG_PATH
+</span></code></pre></div>
+<p><strong>Basic Options:</strong></p>
+<ul>
+<li><code>INSTALLATION_CONFIG_PATH</code> - Path to installation YAML file (required)</li>
+<li><code>--help</code> - Show help message</li>
+</ul>
+<p><strong>Network Options:</strong></p>
+<ul>
+<li><code>--host HOST</code> - Bind to specific host (default: <code>127.0.0.1</code>)</li>
+<li>Use <code>0.0.0.0</code> to accept connections from any network interface</li>
+<li>
+<p>Example: <code>--host 0.0.0.0</code></p>
+</li>
+<li>
+<p><code>--port PORT</code> - Listen on specific port (default: <code>8000</code>)</p>
+</li>
+<li>Example: <code>--port 8080</code></li>
+</ul>
+<p><strong>Authentication Options:</strong></p>
+<ul>
+<li><code>--no-auth-mode</code> - Disable authentication (development/testing only)</li>
+<li><strong>WARNING</strong>: Never use in production</li>
+<li>Example: <code>--no-auth-mode</code></li>
+</ul>
+<p><strong>Hot Reload Options:</strong></p>
+<ul>
+<li><code>--reload {code,config,both}</code> / <code>-r {code,config,both}</code> - Enable hot reload</li>
+<li><code>code</code> - Watch Python source files for changes</li>
+<li><code>config</code> - Watch YAML configuration files for changes</li>
+<li><code>both</code> - Watch both code and config files</li>
+<li>
+<p>Example: <code>--reload both</code> or <code>-r both</code></p>
+</li>
+<li>
+<p><code>--reload-dirs DIRS</code> - Additional directories to watch (repeatable)</p>
+</li>
+<li>
+<p>Example: <code>--reload-dirs ./custom_modules --reload-dirs ./plugins</code></p>
+</li>
+<li>
+<p><code>--reload-includes PATTERNS</code> - File patterns to include in watch (repeatable)</p>
+</li>
+<li>Example: <code>--reload-includes "*.yaml" --reload-includes "*.json"</code></li>
+</ul>
+<p><strong>Proxy Options:</strong></p>
+<ul>
+<li><code>--proxy-headers</code> - Enable parsing of X-Forwarded-* headers</li>
+<li>Use when running behind a reverse proxy (nginx, traefik, etc.)</li>
+<li>
+<p>Example: <code>--proxy-headers</code></p>
+</li>
+<li>
+<p><code>--forwarded-allow-ips IPS</code> - Trusted IP addresses for proxy headers (comma-separated)</p>
+</li>
+<li>Default: <code>127.0.0.1</code></li>
+<li>Example: <code>--forwarded-allow-ips "127.0.0.1,10.0.0.0/8"</code></li>
+</ul>
+<h3 id="common-usage-examples">Common Usage Examples</h3>
+<p><strong>Development with hot reload:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>soliplex-cli<span class="w"> </span>serve<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>--reload<span class="w"> </span>both<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>--no-auth-mode
 </span></code></pre></div></p>
+<p><strong>Production (behind nginx):</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>soliplex-cli<span class="w"> </span>serve<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>--host<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span>--port<span class="w"> </span><span class="m">8000</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span>--proxy-headers<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span>--forwarded-allow-ips<span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span>
+</span></code></pre></div></p>
+<p><strong>Docker container (all network interfaces):</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>soliplex-cli<span class="w"> </span>serve<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>--port<span class="w"> </span><span class="m">8000</span>
+</span></code></pre></div></p>
+<p><strong>Custom port for testing:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>soliplex-cli<span class="w"> </span>serve<span class="w"> </span>example/minimal.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span>--port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span>--no-auth-mode
+</span></code></pre></div></p>
+<h3 id="verifying-the-server">Verifying the Server</h3>
 <p>To confirm your room configuration:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="s1">&#39;http://127.0.0.1:8000/api/v1/rooms&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="s1">&#39;http://127.0.0.1:8000/api/v1/rooms&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span>
+</span></code></pre></div></p>
+<p>To check server health:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span>http://127.0.0.1:8000/health
 </span></code></pre></div></p>
 <h2 id="api-endpoints">API Endpoints</h2>
 <p>If the <code>soliplex-cli</code> server is running, you can browse the
