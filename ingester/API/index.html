@@ -2654,7 +2654,8 @@
 - <code>doc_meta</code> (string, optional) - JSON string of metadata (default: <code>{}</code>)
 - <code>priority</code> (integer, optional) - Processing priority (default: 0)</p>
 <p><strong>Response:</strong>
-- <code>201 Created</code> - Document ingested successfully
+- <code>201 Created</code> - Document ingested successfully (new document)
+- <code>203 Non-Authoritative Information</code> - Document already exists in a different batch
 - <code>400 Bad Request</code> - Invalid parameters or metadata
 - <code>500 Internal Server Error</code> - Processing error</p>
 <p><strong>Success Response Body:</strong>
@@ -2666,6 +2667,10 @@
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">&quot;uri_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
 </span></code></pre></div></p>
+<p><strong>Notes:</strong>
+- The <code>batch_id</code> in the response reflects the batch where the document URI actually resides
+- If a document with the same hash already exists in a different batch, the response returns <code>203</code> with the original batch ID
+- This prevents duplicate processing while informing the caller that the document was previously ingested</p>
 <p><strong>Example:</strong>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/document/ingest-document&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;file=@document.pdf&quot;</span><span class="w"> </span><span class="se">\</span>
