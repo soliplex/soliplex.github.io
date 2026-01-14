@@ -1652,6 +1652,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#building-for-testflightapp-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building for TestFlight/App Store
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1805,8 +1816,9 @@ Each developer must configure their own Apple Developer Team ID:</p>
 </span></code></pre></div>
 <p>Your <code>Local.xcconfig</code> should contain:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>DEVELOPMENT_TEAM = YOUR_TEAM_ID_HERE
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>CODE_SIGN_IDENTITY = Apple Development
 </span></code></pre></div>
+<p>Both iOS and macOS use Xcode's automatic signing, which selects the correct
+identity based on build type (development vs release).</p>
 <p><strong>Finding your Team ID:</strong></p>
 <ol>
 <li>Go to <a href="https://developer.apple.com/account">https://developer.apple.com/account</a></li>
@@ -1836,33 +1848,57 @@ per-session but tokens don't persist, requiring re-login on each launch.</p>
 <li><strong>Simulator:</strong> No signing required for debug builds</li>
 <li><strong>Physical device:</strong> Requires <code>Local.xcconfig</code> with valid <code>DEVELOPMENT_TEAM</code></li>
 </ul>
+<h4 id="building-for-testflightapp-store">Building for TestFlight/App Store</h4>
+<p><strong>CRITICAL:</strong> Use Flutter <strong>stable</strong> channel for production builds. Beta/dev
+channels can produce binaries that fail App Store validation.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Verify you&#39;re on stable channel</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>flutter<span class="w"> </span>channel<span class="w"> </span>stable
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>flutter<span class="w"> </span>upgrade
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Build release IPA</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>flutter<span class="w"> </span>build<span class="w"> </span>ipa<span class="w"> </span>--release
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># Upload using Transporter app</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>open<span class="w"> </span>-a<span class="w"> </span>Transporter<span class="w"> </span>build/ios/ipa/soliplex_frontend.ipa
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="c1"># Or use command line (requires API key)</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>xcrun<span class="w"> </span>altool<span class="w"> </span>--upload-app<span class="w"> </span>--type<span class="w"> </span>ios<span class="w"> </span>-f<span class="w"> </span>build/ios/ipa/soliplex_frontend.ipa<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">  </span>--apiKey<span class="w"> </span>YOUR_API_KEY<span class="w"> </span>--apiIssuer<span class="w"> </span>YOUR_ISSUER_ID
+</span></code></pre></div>
+<p>The <code>flutter build ipa --release</code> command automatically:</p>
+<ul>
+<li>Uses <code>Apple Distribution</code> signing identity</li>
+<li>Includes debug symbols (dSYM files)</li>
+<li>Creates properly encrypted binary for App Store submission</li>
+</ul>
+<p><strong>Troubleshooting validation errors:</strong> If you get "binary not built with Apple's
+linker" errors, ensure you're on Flutter stable channel, not beta or dev.</p>
 <h3 id="web">Web</h3>
 <p>No special setup required. Run with:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>chrome
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>chrome
 </span></code></pre></div>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="entitlements-require-signing">Entitlements require signing</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&quot;Runner&quot; has entitlements that require signing with a development certificate
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&quot;Runner&quot; has entitlements that require signing with a development certificate
 </span></code></pre></div>
-<p><strong>Cause:</strong> Missing <code>Local.xcconfig</code> or <code>CODE_SIGN_IDENTITY</code> not set.</p>
-<p><strong>Fix:</strong> Create <code>Local.xcconfig</code> with both <code>DEVELOPMENT_TEAM</code> and
-<code>CODE_SIGN_IDENTITY</code> as shown above.</p>
+<p><strong>Cause:</strong> Missing <code>Local.xcconfig</code> or <code>DEVELOPMENT_TEAM</code> not set.</p>
+<p><strong>Fix:</strong> Create <code>Local.xcconfig</code> with <code>DEVELOPMENT_TEAM</code> as shown above.</p>
 <h3 id="keychain-errors-on-macos">Keychain errors on macOS</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>OSStatus error -25293
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>OSStatus error -25293
 </span></code></pre></div>
 <p><strong>Cause:</strong> Missing or invalid code signing configuration.</p>
 <p><strong>Fix:</strong> Follow the macOS code signing setup above.</p>
 <h3 id="pod-install-fails">Pod install fails</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Clean and reinstall</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">cd</span><span class="w"> </span>ios<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nb">cd</span><span class="w"> </span>macos<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Clean and reinstall</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">cd</span><span class="w"> </span>ios<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nb">cd</span><span class="w"> </span>macos<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
 </span></code></pre></div>
 <h3 id="flutter-version-issues">Flutter version issues</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Check version</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>flutter<span class="w"> </span>--version
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Upgrade if needed</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>flutter<span class="w"> </span>upgrade
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Check version</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>flutter<span class="w"> </span>--version
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Upgrade if needed</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>flutter<span class="w"> </span>upgrade
 </span></code></pre></div>
 <h2 id="related-files">Related Files</h2>
 <table>
