@@ -982,6 +982,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example-google-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Google Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1704,6 +1715,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example-google-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Google Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1833,22 +1855,26 @@ agent used to make the calls to the LLM.</p>
 <h2 id="optional-agent-elements">Optional Agent Elements</h2>
 <ul>
 <li>
-<p><code>provider_type</code>: a string, must be one of <code>"ollama"</code> (the default) or
-  <code>"openai"</code>.</p>
+<p><code>provider_type</code>: a string, must be one of <code>"ollama"</code> (the default),
+  <code>"openai"</code>, or <code>"google"</code>.</p>
 </li>
 <li>
-<p><code>provider_base_url</code>: a string, defaulting to the value configured in
-  the installation environment as <code>OLLAMA_BASE_URL</code> is the base API URL
-  for the agent's LLM provider. Must be specified <em>without</em> the <code>/v1</code>
-    suffix. E.g.:</p>
+<p><code>provider_base_url</code>: a string, is the base API URL for the agent's LLM
+  provider.</p>
 </li>
 </ul>
+<p>If not provided, and <code>provider_type</code> is set to <code>"ollama"</code>, defaults to
+  the value configured in the installation environment as <code>OLLAMA_BASE_URL</code></p>
+<p>If not provided, and <code>provider_type</code> is set to <code>"openai"</code>, defaults to
+  the default OpenAI service URL.</p>
+<p><strong>Must not be set</strong> if <code>provider_type</code> is set to <code>"google"</code>.</p>
+<p>Must be specified <em>without</em> the <code>/v1</code> suffix. E.g.:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">provider_base_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://provider.example.com/api&quot;</span>
 </span></code></pre></div>
 <ul>
-<li><code>provider_key</code> (a string, default's to None) should be the
-  <em>name</em> of the secret holding the LLM provider's API key
-  (<em>not</em> the value of the API key), prefixed with <code>secret:</code></li>
+<li><code>provider_key</code> (a string, default None) should be the <em>name</em> of the secret
+  holding the LLM provider's API key (<em>not</em> the value of the API key),
+  prefixed with <code>secret:</code></li>
 </ul>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">provider_key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;secret:FOO_PROVIDER_API_KEY&quot;</span>
 </span></code></pre></div>
@@ -1882,6 +1908,21 @@ agent used to make the calls to the LLM.</p>
 </span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nt">truncation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
 </span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="nt">verbosity</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;high&quot;</span>
+</span></code></pre></div>
+<h2 id="example-google-configuration">Example Google Configuration</h2>
+<p><strong>NOTE</strong>: the values below show types, but should not be used without
+          testing.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">model_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gemini-2.5-flash&quot;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">provider_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;google&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">provider_model_settings</span><span class="p">:</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.90</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">top_p</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.70</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">frequency_penalty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">presence_penalty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.50</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">parallel_tool_calls</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="nt">truncation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;disabled&quot;</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="nt">verbosity</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;high&quot;</span>
 </span></code></pre></div>
 
 
