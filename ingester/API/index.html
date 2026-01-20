@@ -1325,6 +1325,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#post-apiv1documentcleanup-orphans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /api/v1/document/cleanup-orphans
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-apiv1documentby-uri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELETE /api/v1/document/by-uri
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1380,6 +1402,17 @@
     <span class="md-ellipsis">
       
         GET /api/v1/batch/status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1batchbatch_idsteps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/batch/{batch_id}/steps
       
     </span>
   </a>
@@ -1470,10 +1503,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1workflowparam-setstargettarget" class="md-nav__link">
+  <a href="#get-apiv1workflowparam_setstargettarget" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/workflow/param-sets/target/{target}
+        GET /api/v1/workflow/param_sets/target/{target}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-apiv1workflowparam-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /api/v1/workflow/param-sets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-apiv1workflowparam-setsset_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELETE /api/v1/workflow/param-sets/{set_id}
       
     </span>
   </a>
@@ -1503,10 +1558,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1workflowrun-groupsrun_group_id" class="md-nav__link">
+  <a href="#get-apiv1workflowrun_groupsrun_group_id" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/workflow/run-groups/{run_group_id}
+        GET /api/v1/workflow/run_groups/{run_group_id}
       
     </span>
   </a>
@@ -1514,10 +1569,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1workflowrun-groupsrun_group_idstats" class="md-nav__link">
+  <a href="#delete-apiv1workflowrun_groupsrun_group_id" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/workflow/run-groups/{run_group_id}/stats
+        DELETE /api/v1/workflow/run_groups/{run_group_id}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1workflowrun_groupsrun_group_idstats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/workflow/run_groups/{run_group_id}/stats
       
     </span>
   </a>
@@ -1613,6 +1679,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stats-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stats Endpoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stats Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1statsdurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/stats/durations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1statsstep-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/stats/step-stats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lancedb-endpoints" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1647,10 +1752,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1lancedbdocuments" class="md-nav__link">
+  <a href="#get-apiv1lancedbvacuum" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/lancedb/documents
+        GET /api/v1/lancedb/vacuum
       
     </span>
   </a>
@@ -1658,10 +1763,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1lancedbvacuum" class="md-nav__link">
+  <a href="#get-apiv1lancedbdocuments" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/lancedb/vacuum
+        GET /api/v1/lancedb/documents
       
     </span>
   </a>
@@ -1741,6 +1846,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#rungroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RunGroup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lifecyclehistory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LifecycleHistory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#runstatus-enum" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1772,17 +1899,6 @@
     <span class="md-ellipsis">
       
         Error Responses
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rate-limiting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rate Limiting
       
     </span>
   </a>
@@ -2201,6 +2317,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#post-apiv1documentcleanup-orphans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /api/v1/document/cleanup-orphans
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-apiv1documentby-uri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELETE /api/v1/document/by-uri
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2256,6 +2394,17 @@
     <span class="md-ellipsis">
       
         GET /api/v1/batch/status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1batchbatch_idsteps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/batch/{batch_id}/steps
       
     </span>
   </a>
@@ -2346,10 +2495,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1workflowparam-setstargettarget" class="md-nav__link">
+  <a href="#get-apiv1workflowparam_setstargettarget" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/workflow/param-sets/target/{target}
+        GET /api/v1/workflow/param_sets/target/{target}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-apiv1workflowparam-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /api/v1/workflow/param-sets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-apiv1workflowparam-setsset_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELETE /api/v1/workflow/param-sets/{set_id}
       
     </span>
   </a>
@@ -2379,10 +2550,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1workflowrun-groupsrun_group_id" class="md-nav__link">
+  <a href="#get-apiv1workflowrun_groupsrun_group_id" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/workflow/run-groups/{run_group_id}
+        GET /api/v1/workflow/run_groups/{run_group_id}
       
     </span>
   </a>
@@ -2390,10 +2561,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1workflowrun-groupsrun_group_idstats" class="md-nav__link">
+  <a href="#delete-apiv1workflowrun_groupsrun_group_id" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/workflow/run-groups/{run_group_id}/stats
+        DELETE /api/v1/workflow/run_groups/{run_group_id}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1workflowrun_groupsrun_group_idstats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/workflow/run_groups/{run_group_id}/stats
       
     </span>
   </a>
@@ -2489,6 +2671,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stats-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stats Endpoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stats Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1statsdurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/stats/durations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1statsstep-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/stats/step-stats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lancedb-endpoints" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2523,10 +2744,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1lancedbdocuments" class="md-nav__link">
+  <a href="#get-apiv1lancedbvacuum" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/lancedb/documents
+        GET /api/v1/lancedb/vacuum
       
     </span>
   </a>
@@ -2534,10 +2755,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiv1lancedbvacuum" class="md-nav__link">
+  <a href="#get-apiv1lancedbdocuments" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/v1/lancedb/vacuum
+        GET /api/v1/lancedb/documents
       
     </span>
   </a>
@@ -2617,6 +2838,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#rungroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RunGroup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lifecyclehistory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LifecycleHistory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#runstatus-enum" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2648,17 +2891,6 @@
     <span class="md-ellipsis">
       
         Error Responses
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rate-limiting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rate Limiting
       
     </span>
   </a>
@@ -2746,9 +2978,9 @@
 
 <h1 id="soliplex-ingester-api-reference">Soliplex Ingester API Reference</h1>
 <h2 id="base-url">Base URL</h2>
-<p>All API endpoints are prefixed with <code>/api/v1/</code> unless otherwise noted.</p>
+<p>All API endpoints are prefixed with <code>/api/v1/</code>.</p>
 <h2 id="authentication">Authentication</h2>
-<p>Currently, the API does not implement authentication. This should be added for production deployments.</p>
+<p>Authentication is enforced when <code>API_KEY_ENABLED=true</code> or <code>AUTH_TRUST_PROXY_HEADERS=true</code> in environment settings. All endpoints require the <code>get_current_user</code> dependency.</p>
 <hr />
 <h2 id="document-endpoints">Document Endpoints</h2>
 <h3 id="get-apiv1document">GET /api/v1/document/</h3>
@@ -2802,13 +3034,66 @@
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;doc_meta={\&quot;author\&quot;:\&quot;John Doe\&quot;}&quot;</span>
 </span></code></pre></div></p>
 <hr />
+<h3 id="post-apiv1documentcleanup-orphans">POST /api/v1/document/cleanup-orphans</h3>
+<p>Delete orphaned documents with no URI references.</p>
+<p><strong>Response:</strong>
+- <code>200 OK</code> - Cleanup successful with statistics
+- <code>500 Internal Server Error</code> - Processing error</p>
+<p><strong>Success Response Body:</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Orphaned documents cleaned up&quot;</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;statistics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">&quot;deleted_documents&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">&quot;deleted_history&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/document/cleanup-orphans&quot;</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="delete-apiv1documentby-uri">DELETE /api/v1/document/by-uri</h3>
+<p>Delete a DocumentURI by URI and source with cascading deletion.</p>
+<p>If only one DocumentURI references the underlying document, all associated records are deleted including workflow runs, steps, lifecycle history, artifacts, and the document itself.</p>
+<p>If multiple DocumentURIs reference the same document, only the specified DocumentURI and its history are deleted; the document is preserved.</p>
+<p><strong>Query Parameters:</strong>
+- <code>uri</code> (string, required) - The document URI to delete
+- <code>source</code> (string, required) - The source system identifier</p>
+<p><strong>Response:</strong>
+- <code>200 OK</code> - Deletion successful with statistics
+- <code>404 Not Found</code> - DocumentURI not found
+- <code>500 Internal Server Error</code> - Processing error</p>
+<p><strong>Success Response Body:</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DocumentURI deleted successfully&quot;</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/documents/report.pdf&quot;</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;filesystem&quot;</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="nt">&quot;statistics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nt">&quot;deleted_document_uris&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="nt">&quot;deleted_uri_history&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="nt">&quot;deleted_documents&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="nt">&quot;deleted_workflow_runs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="nt">&quot;deleted_run_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="nt">&quot;deleted_lifecycle_history&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="nt">&quot;total_deleted&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Notes:</strong>
+- When <code>deleted_documents</code> is 0, other DocumentURIs still reference the document
+- All deletions occur within a single transaction for atomicity
+- File artifacts are also deleted from configured storage (filesystem, S3, or database)</p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/document/by-uri?uri=/documents/report.pdf&amp;source=filesystem&quot;</span>
+</span></code></pre></div></p>
+<hr />
 <h2 id="batch-endpoints">Batch Endpoints</h2>
 <h3 id="get-apiv1batch">GET /api/v1/batch/</h3>
 <p>List all document batches.</p>
 <p><strong>Response:</strong>
 - <code>200 OK</code> - Array of DocumentBatch objects</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="post-apiv1batch">POST /api/v1/batch/</h3>
@@ -2820,14 +3105,14 @@
 <p><strong>Response:</strong>
 - <code>201 Created</code> - Batch created successfully</p>
 <p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;source=filesystem&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;name=Q4 Reports&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;source=filesystem&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;name=Q4 Reports&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="post-apiv1batchstart-workflows">POST /api/v1/batch/start-workflows</h3>
@@ -2837,23 +3122,23 @@
 - <code>batch_id</code> (integer, required) - Batch ID to process
 - <code>workflow_definition_id</code> (string, optional) - Workflow to use (default: from config)
 - <code>priority</code> (integer, optional) - Processing priority (default: 0)
-- <code>param_id</code> (string, optional) - Parameter set ID (default: "default")</p>
+- <code>param_id</code> (string, optional) - Parameter set ID (default: from config)</p>
 <p><strong>Response:</strong>
 - <code>201 Created</code> - Workflows started successfully
 - <code>404 Not Found</code> - Batch not found
 - <code>500 Internal Server Error</code> - Processing error</p>
 <p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Workflows started&quot;</span><span class="p">,</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;workflows&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">&quot;run_group&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Workflows started&quot;</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;workflows&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;run_group&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/start-workflows&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;batch_id=1&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;workflow_definition_id=batch&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;param_id=default&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/start-workflows&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;batch_id=1&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;workflow_definition_id=batch&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;param_id=default&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1batchstatus">GET /api/v1/batch/status</h3>
@@ -2864,49 +3149,76 @@
 - <code>200 OK</code> - Batch status details
 - <code>404 Not Found</code> - Batch not found</p>
 <p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;batch&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q4 Reports&quot;</span><span class="p">,</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;filesystem&quot;</span><span class="p">,</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="nt">&quot;document_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span><span class="nt">&quot;workflow_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="nt">&quot;COMPLETED&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="nt">&quot;RUNNING&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="nt">&quot;PENDING&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">  </span><span class="nt">&quot;workflows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">...</span><span class="p">],</span>
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">  </span><span class="nt">&quot;parsed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">  </span><span class="nt">&quot;remaining&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;batch&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q4 Reports&quot;</span><span class="p">,</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;filesystem&quot;</span><span class="p">,</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">  </span><span class="nt">&quot;document_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">  </span><span class="nt">&quot;workflow_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">    </span><span class="nt">&quot;COMPLETED&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">    </span><span class="nt">&quot;RUNNING&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">    </span><span class="nt">&quot;PENDING&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">  </span><span class="nt">&quot;workflows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">...</span><span class="p">],</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">  </span><span class="nt">&quot;parsed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">  </span><span class="nt">&quot;remaining&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/status?batch_id=1&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/status?batch_id=1&quot;</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="get-apiv1batchbatch_idsteps">GET /api/v1/batch/{batch_id}/steps</h3>
+<p>Get all workflow steps for a batch.</p>
+<p><strong>Path Parameters:</strong>
+- <code>batch_id</code> (integer, required) - Batch ID</p>
+<p><strong>Response:</strong>
+- <code>200 OK</code> - Array of RunStep objects
+- <code>500 Internal Server Error</code> - Processing error</p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/1/steps&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h2 id="workflow-endpoints">Workflow Endpoints</h2>
 <h3 id="get-apiv1workflow">GET /api/v1/workflow/</h3>
-<p>Get workflow runs, optionally filtered by batch ID.</p>
+<p>Get workflow runs with optional pagination.</p>
 <p><strong>Query Parameters:</strong>
-- <code>batch_id</code> (integer, optional) - Filter by batch ID</p>
+- <code>batch_id</code> (integer, optional) - Filter by batch ID
+- <code>include_steps</code> (boolean, optional) - Include step details (default: false)
+- <code>include_doc_info</code> (boolean, optional) - Include document info (default: false)
+- <code>page</code> (integer, optional) - Page number (1-indexed)
+- <code>rows_per_page</code> (integer, optional) - Results per page (default: 10 when paginated)</p>
 <p><strong>Response:</strong>
-- <code>200 OK</code> - Array of WorkflowRun objects</p>
+- <code>200 OK</code> - Array of WorkflowRun objects (unpaginated) or PaginatedResponse (paginated)</p>
+<p><strong>Paginated Response Body:</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">...</span><span class="p">],</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="nt">&quot;page&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="nt">&quot;rows_per_page&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="nt">&quot;total_pages&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="p">}</span>
+</span></code></pre></div></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/?batch_id=1&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/?batch_id=1&amp;page=1&amp;rows_per_page=20&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowby-status">GET /api/v1/workflow/by-status</h3>
-<p>Get workflow runs filtered by status.</p>
+<p>Get workflow runs filtered by status with optional pagination.</p>
 <p><strong>Query Parameters:</strong>
 - <code>status</code> (enum, required) - One of: PENDING, RUNNING, COMPLETED, ERROR, FAILED
-- <code>batch_id</code> (integer, optional) - Filter by batch ID</p>
+- <code>batch_id</code> (integer, optional) - Filter by batch ID
+- <code>include_doc_info</code> (boolean, optional) - Include document info (default: false)
+- <code>page</code> (integer, optional) - Page number (1-indexed)
+- <code>rows_per_page</code> (integer, optional) - Results per page</p>
 <p><strong>Response:</strong>
-- <code>200 OK</code> - Array of WorkflowRun objects</p>
+- <code>200 OK</code> - Array of WorkflowRun objects or PaginatedResponse</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/by-status?status=FAILED&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/by-status?status=FAILED&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowdefinitions">GET /api/v1/workflow/definitions</h3>
@@ -2914,30 +3226,30 @@
 <p><strong>Response:</strong>
 - <code>200 OK</code> - Array of workflow definition summaries</p>
 <p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">[</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p">{</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Batch Workflow&quot;</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="p">{</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;interactive&quot;</span><span class="p">,</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Interactive Workflow&quot;</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="p">]</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">[</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="p">{</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Batch Workflow&quot;</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span><span class="p">{</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;interactive&quot;</span><span class="p">,</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Interactive Workflow&quot;</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="p">]</span>
 </span></code></pre></div></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/definitions&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/definitions&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowdefinitionsworkflow_id">GET /api/v1/workflow/definitions/{workflow_id}</h3>
-<p>Get detailed workflow definition by ID.</p>
+<p>Get workflow definition YAML content by ID.</p>
 <p><strong>Path Parameters:</strong>
 - <code>workflow_id</code> (string, required) - Workflow definition ID</p>
 <p><strong>Response:</strong>
-- <code>200 OK</code> - Complete WorkflowDefinition object
+- <code>200 OK</code> - YAML content (Content-Type: text/yaml)
 - <code>404 Not Found</code> - Workflow definition not found</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/definitions/batch&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/definitions/batch&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowparam-sets">GET /api/v1/workflow/param-sets</h3>
@@ -2945,40 +3257,83 @@
 <p><strong>Response:</strong>
 - <code>200 OK</code> - Array of parameter set summaries</p>
 <p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">[</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="p">{</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Default Parameters&quot;</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="p">{</span>
-</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high_quality&quot;</span><span class="p">,</span>
-</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;High Quality Processing&quot;</span>
-</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="p">]</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">[</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="p">{</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Default Parameters&quot;</span><span class="p">,</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;app&quot;</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">  </span><span class="p">{</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high_quality&quot;</span><span class="p">,</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;High Quality Processing&quot;</span><span class="p">,</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="p">]</span>
 </span></code></pre></div></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowparam-setsset_id">GET /api/v1/workflow/param-sets/{set_id}</h3>
-<p>Get parameter set by ID.</p>
+<p>Get parameter set YAML content by ID.</p>
 <p><strong>Path Parameters:</strong>
 - <code>set_id</code> (string, required) - Parameter set ID</p>
 <p><strong>Response:</strong>
-- <code>200 OK</code> - Complete WorkflowParams object
+- <code>200 OK</code> - YAML content (Content-Type: text/yaml)
 - <code>404 Not Found</code> - Parameter set not found</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets/default&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets/default&quot;</span>
 </span></code></pre></div></p>
 <hr />
-<h3 id="get-apiv1workflowparam-setstargettarget">GET /api/v1/workflow/param-sets/target/{target}</h3>
+<h3 id="get-apiv1workflowparam_setstargettarget">GET /api/v1/workflow/param_sets/target/{target}</h3>
 <p>Get parameter sets that target a specific LanceDB directory.</p>
 <p><strong>Path Parameters:</strong>
 - <code>target</code> (string, required) - LanceDB data directory path</p>
 <p><strong>Response:</strong>
 - <code>200 OK</code> - Array of matching WorkflowParams objects</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets/target/lancedb&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param_sets/target/lancedb&quot;</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="post-apiv1workflowparam-sets">POST /api/v1/workflow/param-sets</h3>
+<p>Upload a new parameter set from YAML content.</p>
+<p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code></p>
+<p><strong>Form Parameters:</strong>
+- <code>yaml_content</code> (string, required) - Raw YAML content</p>
+<p><strong>Response:</strong>
+- <code>201 Created</code> - Parameter set created successfully
+- <code>400 Bad Request</code> - Invalid YAML syntax or format
+- <code>409 Conflict</code> - Parameter set with same ID already exists
+- <code>500 Internal Server Error</code> - Processing error</p>
+<p><strong>Success Response Body:</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">{</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Parameter set created successfully&quot;</span><span class="p">,</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_params&quot;</span><span class="p">,</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span><span class="nt">&quot;file_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/params/my_params.yaml&quot;</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Notes:</strong>
+- Uploaded parameter sets have <code>source</code> set to "user"
+- The parameter set ID is taken from the YAML content</p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;yaml_content=id: my_params\nname: My Parameters\nconfig:\n  parse:\n    format: markdown&quot;</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="delete-apiv1workflowparam-setsset_id">DELETE /api/v1/workflow/param-sets/{set_id}</h3>
+<p>Delete a user-uploaded parameter set.</p>
+<p><strong>Path Parameters:</strong>
+- <code>set_id</code> (string, required) - Parameter set ID to delete</p>
+<p><strong>Response:</strong>
+- <code>200 OK</code> - Parameter set deleted successfully
+- <code>403 Forbidden</code> - Cannot delete built-in parameter sets
+- <code>404 Not Found</code> - Parameter set not found
+- <code>500 Internal Server Error</code> - Processing error</p>
+<p><strong>Notes:</strong>
+- Only parameter sets with <code>source="user"</code> can be deleted
+- Built-in parameter sets cannot be deleted via API</p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets/my_params&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowsteps">GET /api/v1/workflow/steps</h3>
@@ -2988,7 +3343,7 @@
 <p><strong>Response:</strong>
 - <code>200 OK</code> - Array of RunStep objects</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/steps?status=RUNNING&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/steps?status=RUNNING&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowrun-groups">GET /api/v1/workflow/run-groups</h3>
@@ -2999,10 +3354,10 @@
 - <code>200 OK</code> - Array of RunGroup objects
 - <code>500 Internal Server Error</code> - Processing error</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run-groups?batch_id=1&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run-groups?batch_id=1&quot;</span>
 </span></code></pre></div></p>
 <hr />
-<h3 id="get-apiv1workflowrun-groupsrun_group_id">GET /api/v1/workflow/run-groups/{run_group_id}</h3>
+<h3 id="get-apiv1workflowrun_groupsrun_group_id">GET /api/v1/workflow/run_groups/{run_group_id}</h3>
 <p>Get specific run group by ID.</p>
 <p><strong>Path Parameters:</strong>
 - <code>run_group_id</code> (integer, required) - Run group ID</p>
@@ -3010,18 +3365,46 @@
 - <code>200 OK</code> - RunGroup object
 - <code>500 Internal Server Error</code> - Processing error</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run-groups/5&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run_groups/5&quot;</span>
 </span></code></pre></div></p>
 <hr />
-<h3 id="get-apiv1workflowrun-groupsrun_group_idstats">GET /api/v1/workflow/run-groups/{run_group_id}/stats</h3>
+<h3 id="delete-apiv1workflowrun_groupsrun_group_id">DELETE /api/v1/workflow/run_groups/{run_group_id}</h3>
+<p>Delete a run group and all dependent records.</p>
+<p><strong>Path Parameters:</strong>
+- <code>run_group_id</code> (integer, required) - Run group ID to delete</p>
+<p><strong>Response:</strong>
+- <code>200 OK</code> - Run group deleted successfully
+- <code>404 Not Found</code> - Run group does not exist
+- <code>500 Internal Server Error</code> - Processing error</p>
+<p><strong>Response Body:</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RunGroup 5 deleted successfully&quot;</span><span class="p">,</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">  </span><span class="nt">&quot;statistics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">    </span><span class="nt">&quot;deleted_runsteps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="w">    </span><span class="nt">&quot;deleted_lifecyclehistory&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="w">    </span><span class="nt">&quot;deleted_workflowruns&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="w">    </span><span class="nt">&quot;deleted_rungroups&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="w">    </span><span class="nt">&quot;total_deleted&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">206</span>
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Notes:</strong>
+- Works with both SQLite and PostgreSQL databases
+- Deletes all dependent records: RunSteps, LifecycleHistory, WorkflowRuns, and the RunGroup
+- The deletion is performed within a transaction and rolled back if any error occurs</p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run_groups/5&quot;</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="get-apiv1workflowrun_groupsrun_group_idstats">GET /api/v1/workflow/run_groups/{run_group_id}/stats</h3>
 <p>Get statistics for a run group.</p>
 <p><strong>Path Parameters:</strong>
 - <code>run_group_id</code> (integer, required) - Run group ID</p>
 <p><strong>Response:</strong>
-- <code>200 OK</code> - Statistics object with status counts and durations
+- <code>200 OK</code> - Statistics object with status counts
 - <code>500 Internal Server Error</code> - Processing error</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run-groups/5/stats&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run_groups/5/stats&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowruns">GET /api/v1/workflow/runs</h3>
@@ -3031,7 +3414,7 @@
 <p><strong>Response:</strong>
 - <code>200 OK</code> - Array of WorkflowRun objects</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/runs?batch_id=1&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/runs?batch_id=1&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowrunsworkflow_id">GET /api/v1/workflow/runs/{workflow_id}</h3>
@@ -3041,7 +3424,7 @@
 <p><strong>Response:</strong>
 - <code>200 OK</code> - WorkflowRun object with steps array</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/runs/42&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/runs/42&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1workflowrunsworkflow_idlifecycle">GET /api/v1/workflow/runs/{workflow_id}/lifecycle</h3>
@@ -3053,28 +3436,29 @@
 - <code>400 Bad Request</code> - Invalid workflow ID
 - <code>500 Internal Server Error</code> - Processing error</p>
 <p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">[</span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="p">{</span>
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">    </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;item_start&quot;</span><span class="p">,</span>
-</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">    </span><span class="nt">&quot;run_group_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
-</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">    </span><span class="nt">&quot;workflow_run_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
-</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">    </span><span class="nt">&quot;step_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">    </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
-</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">    </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:30&quot;</span><span class="p">,</span>
-</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;COMPLETED&quot;</span><span class="p">,</span>
-</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">    </span><span class="nt">&quot;status_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:30&quot;</span><span class="p">,</span>
-</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="w">    </span><span class="nt">&quot;status_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Item processing completed successfully&quot;</span><span class="p">,</span>
-</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="w">    </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="p">]</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="p">[</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">  </span><span class="p">{</span>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="w">    </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;item_start&quot;</span><span class="p">,</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="w">    </span><span class="nt">&quot;handler_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a><span class="w">    </span><span class="nt">&quot;run_group_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="w">    </span><span class="nt">&quot;workflow_run_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="w">    </span><span class="nt">&quot;step_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="w">    </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a><span class="w">    </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:30&quot;</span><span class="p">,</span>
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a><span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;COMPLETED&quot;</span><span class="p">,</span>
+</span><span id="__span-36-12"><a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a><span class="w">    </span><span class="nt">&quot;status_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:30&quot;</span><span class="p">,</span>
+</span><span id="__span-36-13"><a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a><span class="w">    </span><span class="nt">&quot;status_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Item processing completed successfully&quot;</span><span class="p">,</span>
+</span><span id="__span-36-14"><a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a><span class="w">    </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-36-15"><a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-36-16"><a id="__codelineno-36-16" name="__codelineno-36-16" href="#__codelineno-36-16"></a><span class="p">]</span>
 </span></code></pre></div></p>
 <p><strong>Event Types:</strong>
 - <code>group_start</code> / <code>group_end</code> - Run group lifecycle
 - <code>item_start</code> / <code>item_end</code> / <code>item_failed</code> - Item processing lifecycle
 - <code>step_start</code> / <code>step_end</code> / <code>step_failed</code> - Individual step lifecycle</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/runs/42/lifecycle&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/runs/42/lifecycle&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="post-apiv1workflow">POST /api/v1/workflow/</h3>
@@ -3082,17 +3466,17 @@
 <p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code></p>
 <p><strong>Form Parameters:</strong>
 - <code>doc_id</code> (string, required) - Document hash to process
-- <code>workflow_definition_id</code> (string, optional) - Workflow to use
+- <code>workflow_definiton_id</code> (string, optional) - Workflow to use
 - <code>param_id</code> (string, optional) - Parameter set ID
 - <code>priority</code> (integer, optional) - Processing priority (default: 0)</p>
 <p><strong>Response:</strong>
 - <code>201 Created</code> - Workflow run created
 - <code>500 Internal Server Error</code> - Processing error</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;doc_id=sha256-abc123...&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;workflow_definition_id=batch&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;priority=10&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;doc_id=sha256-abc123...&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;workflow_definiton_id=batch&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;priority=10&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="post-apiv1workflowretry">POST /api/v1/workflow/retry</h3>
@@ -3104,8 +3488,8 @@
 - <code>201 Created</code> - Failed steps reset successfully
 - <code>500 Internal Server Error</code> - Processing error</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/retry&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;run_group_id=5&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/retry&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;run_group_id=5&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h2 id="source-status-endpoint">Source Status Endpoint</h2>
@@ -3118,9 +3502,32 @@
 <p><strong>Response:</strong>
 - <code>200 OK</code> - Status object indicating new/changed/deleted documents</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/source-status&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;source=filesystem&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;hashes={&quot;file1.pdf&quot;:&quot;sha256-abc&quot;,&quot;file2.pdf&quot;:&quot;sha256-def&quot;}&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/source-status&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;source=filesystem&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;hashes={&quot;file1.pdf&quot;:&quot;sha256-abc&quot;,&quot;file2.pdf&quot;:&quot;sha256-def&quot;}&#39;</span>
+</span></code></pre></div></p>
+<hr />
+<h2 id="stats-endpoints">Stats Endpoints</h2>
+<h3 id="get-apiv1statsdurations">GET /api/v1/stats/durations</h3>
+<p>Get workflow durations by run group.</p>
+<p><strong>Query Parameters:</strong>
+- <code>run_group_id</code> (integer, required) - Run group ID</p>
+<p><strong>Response:</strong>
+- <code>200 OK</code> - Duration statistics
+- <code>500 Internal Server Error</code> - Processing error</p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/stats/durations?run_group_id=5&quot;</span>
+</span></code></pre></div></p>
+<hr />
+<h3 id="get-apiv1statsstep-stats">GET /api/v1/stats/step-stats</h3>
+<p>Get workflow step statistics by run group.</p>
+<p><strong>Query Parameters:</strong>
+- <code>run_group_id</code> (integer, required) - Run group ID</p>
+<p><strong>Response:</strong>
+- <code>200 OK</code> - Step statistics
+- <code>500 Internal Server Error</code> - Processing error</p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/stats/step-stats?run_group_id=5&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h2 id="lancedb-endpoints">LanceDB Endpoints</h2>
@@ -3129,22 +3536,22 @@
 <p><strong>Response:</strong>
 - <code>200 OK</code> - List of databases with metadata</p>
 <p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="p">{</span>
-</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
-</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">  </span><span class="nt">&quot;lancedb_dir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/data/lancedb&quot;</span><span class="p">,</span>
-</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">  </span><span class="nt">&quot;database_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">  </span><span class="nt">&quot;databases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default.lancedb&quot;</span><span class="p">,</span>
-</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default.lancedb&quot;</span><span class="p">,</span>
-</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">      </span><span class="nt">&quot;size_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1048576</span><span class="p">,</span>
-</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">      </span><span class="nt">&quot;size_human&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.00 MB&quot;</span>
-</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="p">{</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="w">  </span><span class="nt">&quot;lancedb_dir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/data/lancedb&quot;</span><span class="p">,</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="w">  </span><span class="nt">&quot;database_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a><span class="w">  </span><span class="nt">&quot;databases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+</span><span id="__span-43-8"><a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+</span><span id="__span-43-9"><a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a><span class="w">      </span><span class="nt">&quot;size_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1048576</span><span class="p">,</span>
+</span><span id="__span-43-10"><a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a><span class="w">      </span><span class="nt">&quot;size_human&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.00 MB&quot;</span>
+</span><span id="__span-43-11"><a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-43-12"><a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-43-13"><a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/list&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/list&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="get-apiv1lancedbinfo">GET /api/v1/lancedb/info</h3>
@@ -3156,43 +3563,60 @@
 - <code>404 Not Found</code> - Database does not exist
 - <code>500 Internal Server Error</code> - Failed to open database</p>
 <p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
-</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
-</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/data/lancedb/default.lancedb&quot;</span><span class="p">,</span>
-</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">  </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="w">    </span><span class="nt">&quot;lancedb&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.25.3&quot;</span><span class="p">,</span>
-</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="w">    </span><span class="nt">&quot;haiku_rag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.5.0&quot;</span><span class="p">,</span>
-</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="w">    </span><span class="nt">&quot;stored_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.5.0&quot;</span>
-</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="w">  </span><span class="nt">&quot;embeddings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="w">    </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openai&quot;</span><span class="p">,</span>
-</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text-embedding-3-small&quot;</span><span class="p">,</span>
-</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="w">    </span><span class="nt">&quot;vector_dim&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1536</span>
-</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a><span class="w">  </span><span class="nt">&quot;documents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="w">    </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
-</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a><span class="w">    </span><span class="nt">&quot;size_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">512000</span><span class="p">,</span>
-</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a><span class="w">    </span><span class="nt">&quot;size_human&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;500.00 KB&quot;</span><span class="p">,</span>
-</span><span id="__span-32-18"><a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a><span class="w">    </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-</span><span id="__span-32-19"><a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-32-20"><a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a><span class="w">  </span><span class="nt">&quot;chunks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-32-21"><a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a><span class="w">    </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1500</span><span class="p">,</span>
-</span><span id="__span-32-22"><a id="__codelineno-32-22" name="__codelineno-32-22" href="#__codelineno-32-22"></a><span class="w">    </span><span class="nt">&quot;size_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2048000</span><span class="p">,</span>
-</span><span id="__span-32-23"><a id="__codelineno-32-23" name="__codelineno-32-23" href="#__codelineno-32-23"></a><span class="w">    </span><span class="nt">&quot;size_human&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2.00 MB&quot;</span><span class="p">,</span>
-</span><span id="__span-32-24"><a id="__codelineno-32-24" name="__codelineno-32-24" href="#__codelineno-32-24"></a><span class="w">    </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-</span><span id="__span-32-25"><a id="__codelineno-32-25" name="__codelineno-32-25" href="#__codelineno-32-25"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-32-26"><a id="__codelineno-32-26" name="__codelineno-32-26" href="#__codelineno-32-26"></a><span class="w">  </span><span class="nt">&quot;vector_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-32-27"><a id="__codelineno-32-27" name="__codelineno-32-27" href="#__codelineno-32-27"></a><span class="w">    </span><span class="nt">&quot;exists&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-32-28"><a id="__codelineno-32-28" name="__codelineno-32-28" href="#__codelineno-32-28"></a><span class="w">    </span><span class="nt">&quot;indexed_rows&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1450</span><span class="p">,</span>
-</span><span id="__span-32-29"><a id="__codelineno-32-29" name="__codelineno-32-29" href="#__codelineno-32-29"></a><span class="w">    </span><span class="nt">&quot;unindexed_rows&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span>
-</span><span id="__span-32-30"><a id="__codelineno-32-30" name="__codelineno-32-30" href="#__codelineno-32-30"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-32-31"><a id="__codelineno-32-31" name="__codelineno-32-31" href="#__codelineno-32-31"></a><span class="w">  </span><span class="nt">&quot;tables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;chunks&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;settings&quot;</span><span class="p">]</span>
-</span><span id="__span-32-32"><a id="__codelineno-32-32" name="__codelineno-32-32" href="#__codelineno-32-32"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="p">{</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/data/lancedb/default&quot;</span><span class="p">,</span>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="w">  </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a><span class="w">    </span><span class="nt">&quot;lancedb&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.25.3&quot;</span><span class="p">,</span>
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a><span class="w">    </span><span class="nt">&quot;haiku_rag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.25.0&quot;</span><span class="p">,</span>
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a><span class="w">    </span><span class="nt">&quot;stored_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.25.0&quot;</span>
+</span><span id="__span-45-8"><a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-45-9"><a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a><span class="w">  </span><span class="nt">&quot;embeddings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-45-10"><a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a><span class="w">    </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openai&quot;</span><span class="p">,</span>
+</span><span id="__span-45-11"><a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a><span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text-embedding-3-small&quot;</span><span class="p">,</span>
+</span><span id="__span-45-12"><a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a><span class="w">    </span><span class="nt">&quot;vector_dim&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1536</span>
+</span><span id="__span-45-13"><a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-45-14"><a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a><span class="w">  </span><span class="nt">&quot;documents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-45-15"><a id="__codelineno-45-15" name="__codelineno-45-15" href="#__codelineno-45-15"></a><span class="w">    </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+</span><span id="__span-45-16"><a id="__codelineno-45-16" name="__codelineno-45-16" href="#__codelineno-45-16"></a><span class="w">    </span><span class="nt">&quot;size_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">512000</span><span class="p">,</span>
+</span><span id="__span-45-17"><a id="__codelineno-45-17" name="__codelineno-45-17" href="#__codelineno-45-17"></a><span class="w">    </span><span class="nt">&quot;size_human&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;500.00 KB&quot;</span><span class="p">,</span>
+</span><span id="__span-45-18"><a id="__codelineno-45-18" name="__codelineno-45-18" href="#__codelineno-45-18"></a><span class="w">    </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+</span><span id="__span-45-19"><a id="__codelineno-45-19" name="__codelineno-45-19" href="#__codelineno-45-19"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-45-20"><a id="__codelineno-45-20" name="__codelineno-45-20" href="#__codelineno-45-20"></a><span class="w">  </span><span class="nt">&quot;chunks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-45-21"><a id="__codelineno-45-21" name="__codelineno-45-21" href="#__codelineno-45-21"></a><span class="w">    </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1500</span><span class="p">,</span>
+</span><span id="__span-45-22"><a id="__codelineno-45-22" name="__codelineno-45-22" href="#__codelineno-45-22"></a><span class="w">    </span><span class="nt">&quot;size_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2048000</span><span class="p">,</span>
+</span><span id="__span-45-23"><a id="__codelineno-45-23" name="__codelineno-45-23" href="#__codelineno-45-23"></a><span class="w">    </span><span class="nt">&quot;size_human&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2.00 MB&quot;</span><span class="p">,</span>
+</span><span id="__span-45-24"><a id="__codelineno-45-24" name="__codelineno-45-24" href="#__codelineno-45-24"></a><span class="w">    </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+</span><span id="__span-45-25"><a id="__codelineno-45-25" name="__codelineno-45-25" href="#__codelineno-45-25"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-45-26"><a id="__codelineno-45-26" name="__codelineno-45-26" href="#__codelineno-45-26"></a><span class="w">  </span><span class="nt">&quot;vector_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-45-27"><a id="__codelineno-45-27" name="__codelineno-45-27" href="#__codelineno-45-27"></a><span class="w">    </span><span class="nt">&quot;exists&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-45-28"><a id="__codelineno-45-28" name="__codelineno-45-28" href="#__codelineno-45-28"></a><span class="w">    </span><span class="nt">&quot;indexed_rows&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1450</span><span class="p">,</span>
+</span><span id="__span-45-29"><a id="__codelineno-45-29" name="__codelineno-45-29" href="#__codelineno-45-29"></a><span class="w">    </span><span class="nt">&quot;unindexed_rows&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span>
+</span><span id="__span-45-30"><a id="__codelineno-45-30" name="__codelineno-45-30" href="#__codelineno-45-30"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-45-31"><a id="__codelineno-45-31" name="__codelineno-45-31" href="#__codelineno-45-31"></a><span class="w">  </span><span class="nt">&quot;tables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;chunks&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;settings&quot;</span><span class="p">]</span>
+</span><span id="__span-45-32"><a id="__codelineno-45-32" name="__codelineno-45-32" href="#__codelineno-45-32"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/info?db=default.lancedb&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/info?db=default&quot;</span>
 </span></code></pre></div></p>
-<p><strong>Note:</strong> The <code>db</code> parameter supports nested paths (e.g., <code>project/data.lancedb</code>).</p>
+<p><strong>Note:</strong> The <code>db</code> parameter supports nested paths (e.g., <code>project/data</code>).</p>
+<hr />
+<h3 id="get-apiv1lancedbvacuum">GET /api/v1/lancedb/vacuum</h3>
+<p>Optimize and clean up database tables to reduce disk usage.</p>
+<p><strong>Query Parameters:</strong>
+- <code>db</code> (string, required) - Database name relative to lancedb_dir</p>
+<p><strong>Response:</strong>
+- <code>200 OK</code> - Vacuum completed successfully
+- <code>500 Internal Server Error</code> - Vacuum failed</p>
+<p><strong>Response Body:</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="p">{</span>
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span>
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/vacuum?db=default&quot;</span>
+</span></code></pre></div></p>
+<p><strong>Note:</strong> Vacuum removes deleted rows and compacts table files. Run periodically after bulk deletions.</p>
 <hr />
 <h3 id="get-apiv1lancedbdocuments">GET /api/v1/lancedb/documents</h3>
 <p>List documents stored in a LanceDB database.</p>
@@ -3206,119 +3630,133 @@
 - <code>404 Not Found</code> - Database does not exist
 - <code>500 Internal Server Error</code> - Query error</p>
 <p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="p">{</span>
-</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
-</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/data/lancedb/default.lancedb&quot;</span><span class="p">,</span>
-</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="w">  </span><span class="nt">&quot;document_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
-</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="w">  </span><span class="nt">&quot;documents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;doc-abc123&quot;</span><span class="p">,</span>
-</span><span id="__span-34-8"><a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a><span class="w">      </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/documents/report.pdf&quot;</span><span class="p">,</span>
-</span><span id="__span-34-9"><a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a><span class="w">      </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q4 Financial Report&quot;</span><span class="p">,</span>
-</span><span id="__span-34-10"><a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a><span class="w">      </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
-</span><span id="__span-34-11"><a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a><span class="w">      </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T12:00:00&quot;</span><span class="p">,</span>
-</span><span id="__span-34-12"><a id="__codelineno-34-12" name="__codelineno-34-12" href="#__codelineno-34-12"></a><span class="w">      </span><span class="nt">&quot;chunk_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span>
-</span><span id="__span-34-13"><a id="__codelineno-34-13" name="__codelineno-34-13" href="#__codelineno-34-13"></a><span class="w">      </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">}</span>
-</span><span id="__span-34-14"><a id="__codelineno-34-14" name="__codelineno-34-14" href="#__codelineno-34-14"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-34-15"><a id="__codelineno-34-15" name="__codelineno-34-15" href="#__codelineno-34-15"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-34-16"><a id="__codelineno-34-16" name="__codelineno-34-16" href="#__codelineno-34-16"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="p">{</span>
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/data/lancedb/default&quot;</span><span class="p">,</span>
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="w">  </span><span class="nt">&quot;document_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a><span class="w">  </span><span class="nt">&quot;documents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;doc-abc123&quot;</span><span class="p">,</span>
+</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a><span class="w">      </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/documents/report.pdf&quot;</span><span class="p">,</span>
+</span><span id="__span-49-9"><a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a><span class="w">      </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q4 Financial Report&quot;</span><span class="p">,</span>
+</span><span id="__span-49-10"><a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a><span class="w">      </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
+</span><span id="__span-49-11"><a id="__codelineno-49-11" name="__codelineno-49-11" href="#__codelineno-49-11"></a><span class="w">      </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T12:00:00&quot;</span><span class="p">,</span>
+</span><span id="__span-49-12"><a id="__codelineno-49-12" name="__codelineno-49-12" href="#__codelineno-49-12"></a><span class="w">      </span><span class="nt">&quot;chunk_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span>
+</span><span id="__span-49-13"><a id="__codelineno-49-13" name="__codelineno-49-13" href="#__codelineno-49-13"></a><span class="w">      </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">}</span>
+</span><span id="__span-49-14"><a id="__codelineno-49-14" name="__codelineno-49-14" href="#__codelineno-49-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-49-15"><a id="__codelineno-49-15" name="__codelineno-49-15" href="#__codelineno-49-15"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-49-16"><a id="__codelineno-49-16" name="__codelineno-49-16" href="#__codelineno-49-16"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/documents?db=default.lancedb&amp;limit=10&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/documents?db=default&amp;limit=10&quot;</span>
 </span></code></pre></div></p>
 <p><strong>Example with filter:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/documents?db=default.lancedb&amp;filter=uri%20LIKE%20&#39;%25report%25&#39;&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/documents?db=default&amp;filter=uri%20LIKE%20&#39;%25report%25&#39;&quot;</span>
 </span></code></pre></div></p>
-<hr />
-<h3 id="get-apiv1lancedbvacuum">GET /api/v1/lancedb/vacuum</h3>
-<p>Optimize and clean up database tables to reduce disk usage.</p>
-<p><strong>Query Parameters:</strong>
-- <code>db</code> (string, required) - Database name relative to lancedb_dir</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Vacuum completed successfully
-- <code>500 Internal Server Error</code> - Vacuum failed</p>
-<p><strong>Response Body:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="p">{</span>
-</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span>
-</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/vacuum?db=default.lancedb&quot;</span>
-</span></code></pre></div></p>
-<p><strong>Note:</strong> Vacuum removes deleted rows and compacts table files. Run periodically after bulk deletions.</p>
 <hr />
 <h2 id="data-models">Data Models</h2>
 <h3 id="documentbatch">DocumentBatch</h3>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="p">{</span>
-</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q4 Reports&quot;</span><span class="p">,</span>
-</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;filesystem&quot;</span><span class="p">,</span>
-</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a><span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
-</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a><span class="w">  </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-39-7"><a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a><span class="w">  </span><span class="nt">&quot;batch_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-</span><span id="__span-39-8"><a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a><span class="w">  </span><span class="nt">&quot;duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
-</span><span id="__span-39-9"><a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="p">{</span>
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q4 Reports&quot;</span><span class="p">,</span>
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;filesystem&quot;</span><span class="p">,</span>
+</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a><span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
+</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a><span class="w">  </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="w">  </span><span class="nt">&quot;batch_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+</span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a><span class="w">  </span><span class="nt">&quot;duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="document">Document</h3>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="p">{</span>
-</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">  </span><span class="nt">&quot;hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-abc123...&quot;</span><span class="p">,</span>
-</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">  </span><span class="nt">&quot;mime_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application/pdf&quot;</span><span class="p">,</span>
-</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="w">  </span><span class="nt">&quot;file_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1024000</span><span class="p">,</span>
-</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="w">  </span><span class="nt">&quot;doc_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">},</span>
-</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>
-</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="p">{</span>
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="w">  </span><span class="nt">&quot;hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-abc123...&quot;</span><span class="p">,</span>
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="w">  </span><span class="nt">&quot;mime_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application/pdf&quot;</span><span class="p">,</span>
+</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="w">  </span><span class="nt">&quot;file_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1024000</span><span class="p">,</span>
+</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="w">  </span><span class="nt">&quot;doc_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">}</span>
+</span><span id="__span-53-6"><a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="documenturi">DocumentURI</h3>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="p">{</span>
-</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
-</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">  </span><span class="nt">&quot;doc_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-abc123...&quot;</span><span class="p">,</span>
-</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="w">  </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/documents/report.pdf&quot;</span><span class="p">,</span>
-</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;filesystem&quot;</span><span class="p">,</span>
-</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="p">{</span>
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="w">  </span><span class="nt">&quot;doc_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-abc123...&quot;</span><span class="p">,</span>
+</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a><span class="w">  </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/documents/report.pdf&quot;</span><span class="p">,</span>
+</span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;filesystem&quot;</span><span class="p">,</span>
+</span><span id="__span-54-6"><a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-54-7"><a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+</span><span id="__span-54-8"><a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="workflowrun">WorkflowRun</h3>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="p">{</span>
-</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
-</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="w">  </span><span class="nt">&quot;workflow_definition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
-</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="w">  </span><span class="nt">&quot;run_group_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
-</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="w">  </span><span class="nt">&quot;doc_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-abc123...&quot;</span><span class="p">,</span>
-</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="w">  </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="w">  </span><span class="nt">&quot;created_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
-</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a><span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:00&quot;</span><span class="p">,</span>
-</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a><span class="w">  </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-42-11"><a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RUNNING&quot;</span><span class="p">,</span>
-</span><span id="__span-42-12"><a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a><span class="w">  </span><span class="nt">&quot;status_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:05:00&quot;</span><span class="p">,</span>
-</span><span id="__span-42-13"><a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a><span class="w">  </span><span class="nt">&quot;status_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-42-14"><a id="__codelineno-42-14" name="__codelineno-42-14" href="#__codelineno-42-14"></a><span class="w">  </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-</span><span id="__span-42-15"><a id="__codelineno-42-15" name="__codelineno-42-15" href="#__codelineno-42-15"></a><span class="w">  </span><span class="nt">&quot;run_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-</span><span id="__span-42-16"><a id="__codelineno-42-16" name="__codelineno-42-16" href="#__codelineno-42-16"></a><span class="w">  </span><span class="nt">&quot;duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
-</span><span id="__span-42-17"><a id="__codelineno-42-17" name="__codelineno-42-17" href="#__codelineno-42-17"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="p">{</span>
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="w">  </span><span class="nt">&quot;workflow_definition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
+</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="w">  </span><span class="nt">&quot;run_group_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-55-6"><a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a><span class="w">  </span><span class="nt">&quot;doc_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-abc123...&quot;</span><span class="p">,</span>
+</span><span id="__span-55-7"><a id="__codelineno-55-7" name="__codelineno-55-7" href="#__codelineno-55-7"></a><span class="w">  </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-55-8"><a id="__codelineno-55-8" name="__codelineno-55-8" href="#__codelineno-55-8"></a><span class="w">  </span><span class="nt">&quot;created_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
+</span><span id="__span-55-9"><a id="__codelineno-55-9" name="__codelineno-55-9" href="#__codelineno-55-9"></a><span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:00&quot;</span><span class="p">,</span>
+</span><span id="__span-55-10"><a id="__codelineno-55-10" name="__codelineno-55-10" href="#__codelineno-55-10"></a><span class="w">  </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-55-11"><a id="__codelineno-55-11" name="__codelineno-55-11" href="#__codelineno-55-11"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RUNNING&quot;</span><span class="p">,</span>
+</span><span id="__span-55-12"><a id="__codelineno-55-12" name="__codelineno-55-12" href="#__codelineno-55-12"></a><span class="w">  </span><span class="nt">&quot;status_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:05:00&quot;</span><span class="p">,</span>
+</span><span id="__span-55-13"><a id="__codelineno-55-13" name="__codelineno-55-13" href="#__codelineno-55-13"></a><span class="w">  </span><span class="nt">&quot;status_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-55-14"><a id="__codelineno-55-14" name="__codelineno-55-14" href="#__codelineno-55-14"></a><span class="w">  </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+</span><span id="__span-55-15"><a id="__codelineno-55-15" name="__codelineno-55-15" href="#__codelineno-55-15"></a><span class="w">  </span><span class="nt">&quot;run_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+</span><span id="__span-55-16"><a id="__codelineno-55-16" name="__codelineno-55-16" href="#__codelineno-55-16"></a><span class="w">  </span><span class="nt">&quot;duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+</span><span id="__span-55-17"><a id="__codelineno-55-17" name="__codelineno-55-17" href="#__codelineno-55-17"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="runstep">RunStep</h3>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="p">{</span>
-</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span>
-</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="w">  </span><span class="nt">&quot;workflow_run_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
-</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="w">  </span><span class="nt">&quot;workflow_step_number&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a><span class="w">  </span><span class="nt">&quot;workflow_step_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;parse&quot;</span><span class="p">,</span>
-</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a><span class="w">  </span><span class="nt">&quot;step_config_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
-</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a><span class="w">  </span><span class="nt">&quot;step_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;parse&quot;</span><span class="p">,</span>
-</span><span id="__span-43-8"><a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a><span class="w">  </span><span class="nt">&quot;is_last_step&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-43-9"><a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a><span class="w">  </span><span class="nt">&quot;created_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:00&quot;</span><span class="p">,</span>
-</span><span id="__span-43-10"><a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a><span class="w">  </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-</span><span id="__span-43-11"><a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a><span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:02:00&quot;</span><span class="p">,</span>
-</span><span id="__span-43-12"><a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a><span class="w">  </span><span class="nt">&quot;status_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:05:00&quot;</span><span class="p">,</span>
-</span><span id="__span-43-13"><a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a><span class="w">  </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-43-14"><a id="__codelineno-43-14" name="__codelineno-43-14" href="#__codelineno-43-14"></a><span class="w">  </span><span class="nt">&quot;retry&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-</span><span id="__span-43-15"><a id="__codelineno-43-15" name="__codelineno-43-15" href="#__codelineno-43-15"></a><span class="w">  </span><span class="nt">&quot;retries&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-</span><span id="__span-43-16"><a id="__codelineno-43-16" name="__codelineno-43-16" href="#__codelineno-43-16"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RUNNING&quot;</span><span class="p">,</span>
-</span><span id="__span-43-17"><a id="__codelineno-43-17" name="__codelineno-43-17" href="#__codelineno-43-17"></a><span class="w">  </span><span class="nt">&quot;status_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-43-18"><a id="__codelineno-43-18" name="__codelineno-43-18" href="#__codelineno-43-18"></a><span class="w">  </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-</span><span id="__span-43-19"><a id="__codelineno-43-19" name="__codelineno-43-19" href="#__codelineno-43-19"></a><span class="w">  </span><span class="nt">&quot;worker_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;worker-abc-123&quot;</span><span class="p">,</span>
-</span><span id="__span-43-20"><a id="__codelineno-43-20" name="__codelineno-43-20" href="#__codelineno-43-20"></a><span class="w">  </span><span class="nt">&quot;duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
-</span><span id="__span-43-21"><a id="__codelineno-43-21" name="__codelineno-43-21" href="#__codelineno-43-21"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="p">{</span>
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span>
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="w">  </span><span class="nt">&quot;workflow_run_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="w">  </span><span class="nt">&quot;workflow_step_number&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a><span class="w">  </span><span class="nt">&quot;workflow_step_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;parse&quot;</span><span class="p">,</span>
+</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a><span class="w">  </span><span class="nt">&quot;step_config_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-56-7"><a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a><span class="w">  </span><span class="nt">&quot;step_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;parse&quot;</span><span class="p">,</span>
+</span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a><span class="w">  </span><span class="nt">&quot;is_last_step&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-56-9"><a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a><span class="w">  </span><span class="nt">&quot;created_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:00&quot;</span><span class="p">,</span>
+</span><span id="__span-56-10"><a id="__codelineno-56-10" name="__codelineno-56-10" href="#__codelineno-56-10"></a><span class="w">  </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-56-11"><a id="__codelineno-56-11" name="__codelineno-56-11" href="#__codelineno-56-11"></a><span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:02:00&quot;</span><span class="p">,</span>
+</span><span id="__span-56-12"><a id="__codelineno-56-12" name="__codelineno-56-12" href="#__codelineno-56-12"></a><span class="w">  </span><span class="nt">&quot;status_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:05:00&quot;</span><span class="p">,</span>
+</span><span id="__span-56-13"><a id="__codelineno-56-13" name="__codelineno-56-13" href="#__codelineno-56-13"></a><span class="w">  </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-56-14"><a id="__codelineno-56-14" name="__codelineno-56-14" href="#__codelineno-56-14"></a><span class="w">  </span><span class="nt">&quot;retry&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-56-15"><a id="__codelineno-56-15" name="__codelineno-56-15" href="#__codelineno-56-15"></a><span class="w">  </span><span class="nt">&quot;retries&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-56-16"><a id="__codelineno-56-16" name="__codelineno-56-16" href="#__codelineno-56-16"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RUNNING&quot;</span><span class="p">,</span>
+</span><span id="__span-56-17"><a id="__codelineno-56-17" name="__codelineno-56-17" href="#__codelineno-56-17"></a><span class="w">  </span><span class="nt">&quot;status_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-56-18"><a id="__codelineno-56-18" name="__codelineno-56-18" href="#__codelineno-56-18"></a><span class="w">  </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+</span><span id="__span-56-19"><a id="__codelineno-56-19" name="__codelineno-56-19" href="#__codelineno-56-19"></a><span class="w">  </span><span class="nt">&quot;worker_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;worker-abc-123&quot;</span><span class="p">,</span>
+</span><span id="__span-56-20"><a id="__codelineno-56-20" name="__codelineno-56-20" href="#__codelineno-56-20"></a><span class="w">  </span><span class="nt">&quot;duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+</span><span id="__span-56-21"><a id="__codelineno-56-21" name="__codelineno-56-21" href="#__codelineno-56-21"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="rungroup">RunGroup</h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="p">{</span>
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Batch 1 Processing&quot;</span><span class="p">,</span>
+</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a><span class="w">  </span><span class="nt">&quot;workflow_definition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
+</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a><span class="w">  </span><span class="nt">&quot;param_definition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-57-7"><a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a><span class="w">  </span><span class="nt">&quot;created_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
+</span><span id="__span-57-8"><a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a><span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:00&quot;</span><span class="p">,</span>
+</span><span id="__span-57-9"><a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a><span class="w">  </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-57-10"><a id="__codelineno-57-10" name="__codelineno-57-10" href="#__codelineno-57-10"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RUNNING&quot;</span><span class="p">,</span>
+</span><span id="__span-57-11"><a id="__codelineno-57-11" name="__codelineno-57-11" href="#__codelineno-57-11"></a><span class="w">  </span><span class="nt">&quot;status_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:30:00&quot;</span><span class="p">,</span>
+</span><span id="__span-57-12"><a id="__codelineno-57-12" name="__codelineno-57-12" href="#__codelineno-57-12"></a><span class="w">  </span><span class="nt">&quot;status_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Processing documents&quot;</span><span class="p">,</span>
+</span><span id="__span-57-13"><a id="__codelineno-57-13" name="__codelineno-57-13" href="#__codelineno-57-13"></a><span class="w">  </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-57-14"><a id="__codelineno-57-14" name="__codelineno-57-14" href="#__codelineno-57-14"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="lifecyclehistory">LifecycleHistory</h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="p">{</span>
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="w">  </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;item_start&quot;</span><span class="p">,</span>
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="w">  </span><span class="nt">&quot;handler_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a><span class="w">  </span><span class="nt">&quot;run_group_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a><span class="w">  </span><span class="nt">&quot;workflow_run_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a><span class="w">  </span><span class="nt">&quot;step_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-58-8"><a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a><span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
+</span><span id="__span-58-9"><a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a><span class="w">  </span><span class="nt">&quot;completed_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:30&quot;</span><span class="p">,</span>
+</span><span id="__span-58-10"><a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;COMPLETED&quot;</span><span class="p">,</span>
+</span><span id="__span-58-11"><a id="__codelineno-58-11" name="__codelineno-58-11" href="#__codelineno-58-11"></a><span class="w">  </span><span class="nt">&quot;status_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:01:30&quot;</span><span class="p">,</span>
+</span><span id="__span-58-12"><a id="__codelineno-58-12" name="__codelineno-58-12" href="#__codelineno-58-12"></a><span class="w">  </span><span class="nt">&quot;status_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-58-13"><a id="__codelineno-58-13" name="__codelineno-58-13" href="#__codelineno-58-13"></a><span class="w">  </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-58-14"><a id="__codelineno-58-14" name="__codelineno-58-14" href="#__codelineno-58-14"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="runstatus-enum">RunStatus Enum</h3>
 <ul>
@@ -3342,18 +3780,17 @@
 <hr />
 <h2 id="error-responses">Error Responses</h2>
 <p>All error responses follow this format:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="p">{</span>
-</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Error message describing what went wrong&quot;</span><span class="p">,</span>
-</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="w">  </span><span class="nt">&quot;status_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span>
-</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="p">{</span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Error message describing what went wrong&quot;</span><span class="p">,</span>
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="w">  </span><span class="nt">&quot;status_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span>
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Common HTTP status codes:
 - <code>400 Bad Request</code> - Invalid parameters
+- <code>403 Forbidden</code> - Permission denied
 - <code>404 Not Found</code> - Resource not found
+- <code>409 Conflict</code> - Duplicate resource
 - <code>500 Internal Server Error</code> - Server-side error</p>
-<hr />
-<h2 id="rate-limiting">Rate Limiting</h2>
-<p>Currently, no rate limiting is implemented. For production deployments, consider adding rate limiting middleware.</p>
 <hr />
 <h2 id="openapiswagger-documentation">OpenAPI/Swagger Documentation</h2>
 <p>Interactive API documentation is available at:

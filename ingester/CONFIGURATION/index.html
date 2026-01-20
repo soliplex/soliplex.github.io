@@ -1449,6 +1449,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ollama_base_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OLLAMA_BASE_URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ollama_base_url_docling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OLLAMA_BASE_URL_DOCLING
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2538,6 +2560,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ollama_base_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OLLAMA_BASE_URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ollama_base_url_docling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OLLAMA_BASE_URL_DOCLING
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3387,6 +3431,27 @@
 <p><strong>Notes:</strong>
 - Large documents may require longer timeouts
 - Adjust based on document size and complexity</p>
+<h4 id="ollama_base_url">OLLAMA_BASE_URL</h4>
+<p>Ollama server endpoint for embedding generation.</p>
+<p><strong>Default:</strong> <code>http://ollama:11434</code></p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">OLLAMA_BASE_URL</span><span class="o">=</span><span class="s2">&quot;http://ollama.internal.company.com:11434&quot;</span>
+</span></code></pre></div></p>
+<p><strong>Notes:</strong>
+- Used for generating document embeddings during the embed step
+- Must be accessible from worker nodes
+- The Ollama server should have the required embedding models loaded</p>
+<h4 id="ollama_base_url_docling">OLLAMA_BASE_URL_DOCLING</h4>
+<p>Ollama server endpoint for Docling chunking operations.</p>
+<p><strong>Default:</strong> <code>http://ollama:11434</code></p>
+<p><strong>Example:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">OLLAMA_BASE_URL_DOCLING</span><span class="o">=</span><span class="s2">&quot;http://ollama-chunker.internal.company.com:11434&quot;</span>
+</span></code></pre></div></p>
+<p><strong>Notes:</strong>
+- Used by docling-serve for document chunking operations
+- Can point to a different Ollama instance than <code>OLLAMA_BASE_URL</code> for load distribution
+- If not set, defaults to the same URL as <code>OLLAMA_BASE_URL</code>
+- Useful when running separate Ollama instances to distribute model loading across servers</p>
 <hr />
 <h3 id="logging">Logging</h3>
 <h4 id="log_level">LOG_LEVEL</h4>
@@ -3394,7 +3459,7 @@
 <p><strong>Default:</strong> <code>INFO</code></p>
 <p><strong>Options:</strong> <code>DEBUG</code>, <code>INFO</code>, <code>WARNING</code>, <code>ERROR</code>, <code>CRITICAL</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>DEBUG
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>DEBUG
 </span></code></pre></div></p>
 <hr />
 <h3 id="file-storage">File Storage</h3>
@@ -3405,13 +3470,13 @@
 - <code>fs</code> - Local filesystem
 - <code>s3</code> - S3-compatible storage (requires OpenDAL config)</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>s3
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>s3
 </span></code></pre></div></p>
 <h4 id="file_store_dir">FILE_STORE_DIR</h4>
 <p>Base directory for file storage.</p>
 <p><strong>Default:</strong> <code>file_store</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">FILE_STORE_DIR</span><span class="o">=</span>/var/lib/soliplex/files
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">FILE_STORE_DIR</span><span class="o">=</span>/var/lib/soliplex/files
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Used when <code>FILE_STORE_TARGET=fs</code>
@@ -3439,10 +3504,10 @@
 <p>Directory for LanceDB vector storage.</p>
 <p><strong>Default:</strong> <code>lancedb</code></p>
 <p><strong>Filesystem Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>/var/lib/soliplex/lancedb
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>/var/lib/soliplex/lancedb
 </span></code></pre></div></p>
 <p><strong>S3 Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>s3://my-bucket/lancedb
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>s3://my-bucket/lancedb
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Local filesystem paths or S3 URIs are supported
@@ -3451,16 +3516,16 @@
 - Requires sufficient disk space (filesystem) or S3 bucket access
 - Periodically compact for performance</p>
 <p><strong>Required AWS Environment Variables for S3:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>your_access_key_id
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>your_secret_key
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nv">AWS_REGION</span><span class="o">=</span>us-east-1
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>your_access_key_id
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>your_secret_key
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nv">AWS_REGION</span><span class="o">=</span>us-east-1
 </span></code></pre></div></p>
 <p><strong>Optional AWS Environment Variables:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># For S3-compatible providers (MinIO, SeaweedFS, etc.)</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nv">AWS_ENDPOINT</span><span class="o">=</span>http://127.0.0.1:8333
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Required when using HTTP to connect to endpoint</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="nv">AWS_ALLOW_HTTP</span><span class="o">=</span><span class="m">1</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># For S3-compatible providers (MinIO, SeaweedFS, etc.)</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nv">AWS_ENDPOINT</span><span class="o">=</span>http://127.0.0.1:8333
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Required when using HTTP to connect to endpoint</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="nv">AWS_ALLOW_HTTP</span><span class="o">=</span><span class="m">1</span>
 </span></code></pre></div></p>
 <hr />
 <h3 id="worker-configuration">Worker Configuration</h3>
@@ -3468,7 +3533,7 @@
 <p>Maximum concurrent queue operations.</p>
 <p><strong>Default:</strong> <code>20</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nv">INGEST_QUEUE_CONCURRENCY</span><span class="o">=</span><span class="m">50</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nv">INGEST_QUEUE_CONCURRENCY</span><span class="o">=</span><span class="m">50</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Controls internal queue processing
@@ -3477,7 +3542,7 @@
 <p>Maximum concurrent workflow steps per worker.</p>
 <p><strong>Default:</strong> <code>10</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">20</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">20</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Primary throughput control
@@ -3487,7 +3552,7 @@
 <p>Maximum concurrent Docling requests.</p>
 <p><strong>Default:</strong> <code>3</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">5</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">5</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Prevents overwhelming Docling service
@@ -3497,7 +3562,7 @@
 <p>Number of workflow steps to fetch per query.</p>
 <p><strong>Default:</strong> <code>5</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">10</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">10</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Batch size for step queries
@@ -3507,7 +3572,7 @@
 <p>Worker heartbeat interval in seconds.</p>
 <p><strong>Default:</strong> <code>120</code> (2 minutes)</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">WORKER_CHECKIN_INTERVAL</span><span class="o">=</span><span class="m">60</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nv">WORKER_CHECKIN_INTERVAL</span><span class="o">=</span><span class="m">60</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - How often workers update health status
@@ -3517,7 +3582,7 @@
 <p>Worker timeout threshold in seconds.</p>
 <p><strong>Default:</strong> <code>600</code> (10 minutes)</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nv">WORKER_CHECKIN_TIMEOUT</span><span class="o">=</span><span class="m">300</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nv">WORKER_CHECKIN_TIMEOUT</span><span class="o">=</span><span class="m">300</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - When to consider a worker stale
@@ -3527,7 +3592,7 @@
 <p>Batch size for embedding operations.</p>
 <p><strong>Default:</strong> <code>1000</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nv">EMBED_BATCH_SIZE</span><span class="o">=</span><span class="m">500</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nv">EMBED_BATCH_SIZE</span><span class="o">=</span><span class="m">500</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Number of chunks to embed at once
@@ -3539,7 +3604,7 @@
 <p>Directory containing workflow YAML definitions.</p>
 <p><strong>Default:</strong> <code>config/workflows</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nv">WORKFLOW_DIR</span><span class="o">=</span>/etc/soliplex/workflows
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nv">WORKFLOW_DIR</span><span class="o">=</span>/etc/soliplex/workflows
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Scanned for <code>*.yaml</code> files at startup
@@ -3548,7 +3613,7 @@
 <p>Default workflow to use when not specified.</p>
 <p><strong>Default:</strong> <code>batch_split</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nv">DEFAULT_WORKFLOW_ID</span><span class="o">=</span>batch
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nv">DEFAULT_WORKFLOW_ID</span><span class="o">=</span>batch
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Must match an <code>id</code> in workflow YAML files
@@ -3557,13 +3622,13 @@
 <p>Directory containing parameter set YAML files.</p>
 <p><strong>Default:</strong> <code>config/params</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nv">PARAM_DIR</span><span class="o">=</span>/etc/soliplex/params
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="nv">PARAM_DIR</span><span class="o">=</span>/etc/soliplex/params
 </span></code></pre></div></p>
 <h4 id="default_param_id">DEFAULT_PARAM_ID</h4>
 <p>Default parameter set to use when not specified.</p>
 <p><strong>Default:</strong> <code>default</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nv">DEFAULT_PARAM_ID</span><span class="o">=</span>high_quality
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nv">DEFAULT_PARAM_ID</span><span class="o">=</span>high_quality
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Must match an <code>id</code> in parameter YAML files</p>
@@ -3573,7 +3638,7 @@
 <p>Enable/disable HaikuRAG integration.</p>
 <p><strong>Default:</strong> <code>True</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">false</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">false</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Set to <code>false</code> for testing without RAG backend
@@ -3585,7 +3650,7 @@
 <p>Static API key for programmatic access.</p>
 <p><strong>Default:</strong> None (disabled)</p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nv">API_KEY</span><span class="o">=</span>your-secret-api-key-here
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nv">API_KEY</span><span class="o">=</span>your-secret-api-key-here
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Generate with: <code>openssl rand -hex 32</code>
@@ -3596,7 +3661,7 @@
 <p>Enable API key authentication.</p>
 <p><strong>Default:</strong> <code>False</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - When <code>true</code>, all API requests require valid <code>Authorization: Bearer</code> header
@@ -3606,7 +3671,7 @@
 <p>Trust user identity headers from OAuth2 Proxy.</p>
 <p><strong>Default:</strong> <code>False</code></p>
 <p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nv">AUTH_TRUST_PROXY_HEADERS</span><span class="o">=</span><span class="nb">true</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nv">AUTH_TRUST_PROXY_HEADERS</span><span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - Enable when running behind OAuth2 Proxy
@@ -3617,41 +3682,41 @@
 <h2 id="configuration-file">Configuration File</h2>
 <p>While the system uses environment variables, you can organize them in a <code>.env</code> file:</p>
 <p><strong>.env Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># Database</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>sqlite+aiosqlite:///./db/documents.db
-</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
-</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="c1"># External Services</span>
-</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="nv">DOCLING_SERVER_URL</span><span class="o">=</span>http://localhost:5001/v1
-</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="nv">DOCLING_HTTP_TIMEOUT</span><span class="o">=</span><span class="m">600</span>
-</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>
-</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="c1"># Logging</span>
-</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>INFO
-</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>
-</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="c1"># Storage</span>
-</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>fs
-</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="nv">FILE_STORE_DIR</span><span class="o">=</span>file_store
-</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>lancedb
-</span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a>
-</span><span id="__span-27-16"><a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a><span class="c1"># Worker Settings</span>
-</span><span id="__span-27-17"><a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">10</span>
-</span><span id="__span-27-18"><a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">3</span>
-</span><span id="__span-27-19"><a id="__codelineno-27-19" name="__codelineno-27-19" href="#__codelineno-27-19"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">5</span>
-</span><span id="__span-27-20"><a id="__codelineno-27-20" name="__codelineno-27-20" href="#__codelineno-27-20"></a><span class="nv">WORKER_CHECKIN_INTERVAL</span><span class="o">=</span><span class="m">120</span>
-</span><span id="__span-27-21"><a id="__codelineno-27-21" name="__codelineno-27-21" href="#__codelineno-27-21"></a><span class="nv">WORKER_CHECKIN_TIMEOUT</span><span class="o">=</span><span class="m">600</span>
-</span><span id="__span-27-22"><a id="__codelineno-27-22" name="__codelineno-27-22" href="#__codelineno-27-22"></a><span class="nv">EMBED_BATCH_SIZE</span><span class="o">=</span><span class="m">1000</span>
-</span><span id="__span-27-23"><a id="__codelineno-27-23" name="__codelineno-27-23" href="#__codelineno-27-23"></a>
-</span><span id="__span-27-24"><a id="__codelineno-27-24" name="__codelineno-27-24" href="#__codelineno-27-24"></a><span class="c1"># Workflow Configuration</span>
-</span><span id="__span-27-25"><a id="__codelineno-27-25" name="__codelineno-27-25" href="#__codelineno-27-25"></a><span class="nv">WORKFLOW_DIR</span><span class="o">=</span>config/workflows
-</span><span id="__span-27-26"><a id="__codelineno-27-26" name="__codelineno-27-26" href="#__codelineno-27-26"></a><span class="nv">DEFAULT_WORKFLOW_ID</span><span class="o">=</span>batch
-</span><span id="__span-27-27"><a id="__codelineno-27-27" name="__codelineno-27-27" href="#__codelineno-27-27"></a><span class="nv">PARAM_DIR</span><span class="o">=</span>config/params
-</span><span id="__span-27-28"><a id="__codelineno-27-28" name="__codelineno-27-28" href="#__codelineno-27-28"></a><span class="nv">DEFAULT_PARAM_ID</span><span class="o">=</span>default
-</span><span id="__span-27-29"><a id="__codelineno-27-29" name="__codelineno-27-29" href="#__codelineno-27-29"></a>
-</span><span id="__span-27-30"><a id="__codelineno-27-30" name="__codelineno-27-30" href="#__codelineno-27-30"></a><span class="c1"># Features</span>
-</span><span id="__span-27-31"><a id="__codelineno-27-31" name="__codelineno-27-31" href="#__codelineno-27-31"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">true</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1"># Database</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>sqlite+aiosqlite:///./db/documents.db
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="c1"># External Services</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="nv">DOCLING_SERVER_URL</span><span class="o">=</span>http://localhost:5001/v1
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="nv">DOCLING_HTTP_TIMEOUT</span><span class="o">=</span><span class="m">600</span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="c1"># Logging</span>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>INFO
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="c1"># Storage</span>
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>fs
+</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a><span class="nv">FILE_STORE_DIR</span><span class="o">=</span>file_store
+</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>lancedb
+</span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a>
+</span><span id="__span-29-16"><a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a><span class="c1"># Worker Settings</span>
+</span><span id="__span-29-17"><a id="__codelineno-29-17" name="__codelineno-29-17" href="#__codelineno-29-17"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">10</span>
+</span><span id="__span-29-18"><a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">3</span>
+</span><span id="__span-29-19"><a id="__codelineno-29-19" name="__codelineno-29-19" href="#__codelineno-29-19"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">5</span>
+</span><span id="__span-29-20"><a id="__codelineno-29-20" name="__codelineno-29-20" href="#__codelineno-29-20"></a><span class="nv">WORKER_CHECKIN_INTERVAL</span><span class="o">=</span><span class="m">120</span>
+</span><span id="__span-29-21"><a id="__codelineno-29-21" name="__codelineno-29-21" href="#__codelineno-29-21"></a><span class="nv">WORKER_CHECKIN_TIMEOUT</span><span class="o">=</span><span class="m">600</span>
+</span><span id="__span-29-22"><a id="__codelineno-29-22" name="__codelineno-29-22" href="#__codelineno-29-22"></a><span class="nv">EMBED_BATCH_SIZE</span><span class="o">=</span><span class="m">1000</span>
+</span><span id="__span-29-23"><a id="__codelineno-29-23" name="__codelineno-29-23" href="#__codelineno-29-23"></a>
+</span><span id="__span-29-24"><a id="__codelineno-29-24" name="__codelineno-29-24" href="#__codelineno-29-24"></a><span class="c1"># Workflow Configuration</span>
+</span><span id="__span-29-25"><a id="__codelineno-29-25" name="__codelineno-29-25" href="#__codelineno-29-25"></a><span class="nv">WORKFLOW_DIR</span><span class="o">=</span>config/workflows
+</span><span id="__span-29-26"><a id="__codelineno-29-26" name="__codelineno-29-26" href="#__codelineno-29-26"></a><span class="nv">DEFAULT_WORKFLOW_ID</span><span class="o">=</span>batch
+</span><span id="__span-29-27"><a id="__codelineno-29-27" name="__codelineno-29-27" href="#__codelineno-29-27"></a><span class="nv">PARAM_DIR</span><span class="o">=</span>config/params
+</span><span id="__span-29-28"><a id="__codelineno-29-28" name="__codelineno-29-28" href="#__codelineno-29-28"></a><span class="nv">DEFAULT_PARAM_ID</span><span class="o">=</span>default
+</span><span id="__span-29-29"><a id="__codelineno-29-29" name="__codelineno-29-29" href="#__codelineno-29-29"></a>
+</span><span id="__span-29-30"><a id="__codelineno-29-30" name="__codelineno-29-30" href="#__codelineno-29-30"></a><span class="c1"># Features</span>
+</span><span id="__span-29-31"><a id="__codelineno-29-31" name="__codelineno-29-31" href="#__codelineno-29-31"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div></p>
 <p>Load with:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nb">export</span><span class="w"> </span><span class="k">$(</span>cat<span class="w"> </span>.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="k">)</span>
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>si-cli<span class="w"> </span>serve
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="nb">export</span><span class="w"> </span><span class="k">$(</span>cat<span class="w"> </span>.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="k">)</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>si-cli<span class="w"> </span>serve
 </span></code></pre></div></p>
 <hr />
 <h2 id="s3-configuration-overview">S3 Configuration Overview</h2>
@@ -3660,21 +3725,21 @@
 <p><strong>Purpose:</strong> Stores vector embeddings for RAG retrieval
 <strong>Configuration Method:</strong> Standard AWS environment variables
 <strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>s3://my-vector-bucket/lancedb
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>your_key_id
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>your_secret_key
-</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="nv">AWS_REGION</span><span class="o">=</span>us-east-1
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>s3://my-vector-bucket/lancedb
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>your_key_id
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>your_secret_key
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="nv">AWS_REGION</span><span class="o">=</span>us-east-1
 </span></code></pre></div></p>
 <h3 id="2-artifact-storage-file_store_targets3">2. Artifact Storage (<code>FILE_STORE_TARGET=s3</code>)</h3>
 <p><strong>Purpose:</strong> Stores intermediate processing artifacts (documents, markdown, chunks, embeddings)
 <strong>Configuration Method:</strong> Nested Pydantic settings with <code>__</code> delimiter
 <strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>s3
-</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="nv">ARTIFACT_S3__BUCKET</span><span class="o">=</span>my-artifact-bucket
-</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="nv">ARTIFACT_S3__ACCESS_KEY_ID</span><span class="o">=</span>your_key_id
-</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="nv">ARTIFACT_S3__ACCESS_SECRET</span><span class="o">=</span>your_secret_key
-</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="nv">ARTIFACT_S3__REGION</span><span class="o">=</span>us-east-1
-</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="nv">ARTIFACT_S3__ENDPOINT_URL</span><span class="o">=</span>http://127.0.0.1:8333
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>s3
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="nv">ARTIFACT_S3__BUCKET</span><span class="o">=</span>my-artifact-bucket
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="nv">ARTIFACT_S3__ACCESS_KEY_ID</span><span class="o">=</span>your_key_id
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="nv">ARTIFACT_S3__ACCESS_SECRET</span><span class="o">=</span>your_secret_key
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="nv">ARTIFACT_S3__REGION</span><span class="o">=</span>us-east-1
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="nv">ARTIFACT_S3__ENDPOINT_URL</span><span class="o">=</span>http://127.0.0.1:8333
 </span></code></pre></div></p>
 <p><strong>Important Notes:</strong>
 - These are independent systems and can use different S3 buckets or providers
@@ -3685,18 +3750,18 @@
 <h2 id="nested-configuration-advanced">Nested Configuration (Advanced)</h2>
 <p>Pydantic Settings supports nested configuration using <code>__</code> delimiter for structured settings.</p>
 <p><strong>Artifact S3 Configuration:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nv">ARTIFACT_S3__BUCKET</span><span class="o">=</span>soliplex-artifacts
-</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="nv">ARTIFACT_S3__ACCESS_KEY_ID</span><span class="o">=</span>soliplex
-</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="nv">ARTIFACT_S3__ACCESS_SECRET</span><span class="o">=</span>soliplex
-</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="nv">ARTIFACT_S3__REGION</span><span class="o">=</span>xx
-</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="nv">ARTIFACT_S3__ENDPOINT_URL</span><span class="o">=</span>http://127.0.0.1:8333
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nv">ARTIFACT_S3__BUCKET</span><span class="o">=</span>soliplex-artifacts
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="nv">ARTIFACT_S3__ACCESS_KEY_ID</span><span class="o">=</span>soliplex
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="nv">ARTIFACT_S3__ACCESS_SECRET</span><span class="o">=</span>soliplex
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="nv">ARTIFACT_S3__REGION</span><span class="o">=</span>xx
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a><span class="nv">ARTIFACT_S3__ENDPOINT_URL</span><span class="o">=</span>http://127.0.0.1:8333
 </span></code></pre></div></p>
 <p><strong>Input S3 Configuration:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nv">INPUT_S3__BUCKET</span><span class="o">=</span>soliplex-inputs
-</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="nv">INPUT_S3__ACCESS_KEY_ID</span><span class="o">=</span>soliplex
-</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="nv">INPUT_S3__ACCESS_SECRET</span><span class="o">=</span>soliplex
-</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="nv">INPUT_S3__REGION</span><span class="o">=</span>xx
-</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="nv">INPUT_S3__ENDPOINT_URL</span><span class="o">=</span>http://127.0.0.1:8333
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="nv">INPUT_S3__BUCKET</span><span class="o">=</span>soliplex-inputs
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="nv">INPUT_S3__ACCESS_KEY_ID</span><span class="o">=</span>soliplex
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="nv">INPUT_S3__ACCESS_SECRET</span><span class="o">=</span>soliplex
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="nv">INPUT_S3__REGION</span><span class="o">=</span>xx
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="nv">INPUT_S3__ENDPOINT_URL</span><span class="o">=</span>http://127.0.0.1:8333
 </span></code></pre></div></p>
 <p><strong>Notes:</strong>
 - <code>ACCESS_SECRET</code> (not <code>SECRET_ACCESS_KEY</code>) is used for nested config fields
@@ -3707,129 +3772,129 @@
 <h2 id="configuration-validation">Configuration Validation</h2>
 <h3 id="validate-settings">Validate Settings</h3>
 <p>Check configuration without starting services:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>si-cli<span class="w"> </span>validate-settings
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>si-cli<span class="w"> </span>validate-settings
 </span></code></pre></div>
 <p><strong>Output:</strong>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>doc_db_url=&#39;sqlite+aiosqlite:///./db/documents.db&#39;
-</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>docling_server_url=&#39;http://localhost:5001/v1&#39;
-</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>log_level=&#39;INFO&#39;
-</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>...
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>doc_db_url=&#39;sqlite+aiosqlite:///./db/documents.db&#39;
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>docling_server_url=&#39;http://localhost:5001/v1&#39;
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>log_level=&#39;INFO&#39;
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>...
 </span></code></pre></div></p>
 <p><strong>Validation Errors:</strong>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>invalid settings
-</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>{&#39;type&#39;: &#39;missing&#39;, &#39;loc&#39;: (&#39;doc_db_url&#39;,), &#39;msg&#39;: &#39;Field required&#39;}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>invalid settings
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>{&#39;type&#39;: &#39;missing&#39;, &#39;loc&#39;: (&#39;doc_db_url&#39;,), &#39;msg&#39;: &#39;Field required&#39;}
 </span></code></pre></div></p>
 <hr />
 <h2 id="environment-specific-configuration">Environment-Specific Configuration</h2>
 <h3 id="development">Development</h3>
 <p><strong>dev.env:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>sqlite+aiosqlite:///./db/dev.db
-</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>DEBUG
-</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">5</span>
-</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">false</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>sqlite+aiosqlite:///./db/dev.db
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>DEBUG
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">5</span>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">false</span>
 </span></code></pre></div></p>
 <h3 id="staging">Staging</h3>
 <p><strong>staging.env:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>postgresql+psycopg://user:pass@staging-db:5432/soliplex
-</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>INFO
-</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">10</span>
-</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="nv">DOCLING_SERVER_URL</span><span class="o">=</span>http://docling-staging:5001/v1
-</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">true</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>postgresql+psycopg://user:pass@staging-db:5432/soliplex
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>INFO
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">10</span>
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="nv">DOCLING_SERVER_URL</span><span class="o">=</span>http://docling-staging:5001/v1
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div></p>
 <h3 id="production">Production</h3>
 <p><strong>production.env:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>postgresql+psycopg://user:pass@prod-db:5432/soliplex
-</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>WARNING
-</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">20</span>
-</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">5</span>
-</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="nv">DOCLING_SERVER_URL</span><span class="o">=</span>http://docling-prod:5001/v1
-</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>s3
-</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="nv">WORKER_CHECKIN_INTERVAL</span><span class="o">=</span><span class="m">60</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>postgresql+psycopg://user:pass@prod-db:5432/soliplex
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>WARNING
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">20</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">5</span>
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="nv">DOCLING_SERVER_URL</span><span class="o">=</span>http://docling-prod:5001/v1
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>s3
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a><span class="nv">DO_RAG</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a><span class="nv">WORKER_CHECKIN_INTERVAL</span><span class="o">=</span><span class="m">60</span>
 </span></code></pre></div></p>
 <hr />
 <h2 id="docker-configuration">Docker Configuration</h2>
 <h3 id="docker-compose-example">Docker Compose Example</h3>
 <p><strong>docker-compose.yml:</strong>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.8&#39;</span>
-</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>
-</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="nt">services</span><span class="p">:</span>
-</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="w">  </span><span class="nt">ingester</span><span class="p">:</span>
-</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex-ingester:latest</span>
-</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
-</span><span id="__span-39-7"><a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a><span class="w">      </span><span class="nt">DOC_DB_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgresql+psycopg://postgres:password@db:5432/soliplex</span>
-</span><span id="__span-39-8"><a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a><span class="w">      </span><span class="nt">DOCLING_SERVER_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://docling:5001/v1</span>
-</span><span id="__span-39-9"><a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a><span class="w">      </span><span class="nt">LOG_LEVEL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
-</span><span id="__span-39-10"><a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a><span class="w">      </span><span class="nt">FILE_STORE_DIR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/files</span>
-</span><span id="__span-39-11"><a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a><span class="w">      </span><span class="nt">LANCEDB_DIR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/lancedb</span>
-</span><span id="__span-39-12"><a id="__codelineno-39-12" name="__codelineno-39-12" href="#__codelineno-39-12"></a><span class="w">      </span><span class="nt">INGEST_WORKER_CONCURRENCY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span>
-</span><span id="__span-39-13"><a id="__codelineno-39-13" name="__codelineno-39-13" href="#__codelineno-39-13"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
-</span><span id="__span-39-14"><a id="__codelineno-39-14" name="__codelineno-39-14" href="#__codelineno-39-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./config/workflows:/app/config/workflows</span>
-</span><span id="__span-39-15"><a id="__codelineno-39-15" name="__codelineno-39-15" href="#__codelineno-39-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./config/params:/app/config/params</span>
-</span><span id="__span-39-16"><a id="__codelineno-39-16" name="__codelineno-39-16" href="#__codelineno-39-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data-volume:/data</span>
-</span><span id="__span-39-17"><a id="__codelineno-39-17" name="__codelineno-39-17" href="#__codelineno-39-17"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
-</span><span id="__span-39-18"><a id="__codelineno-39-18" name="__codelineno-39-18" href="#__codelineno-39-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db</span>
-</span><span id="__span-39-19"><a id="__codelineno-39-19" name="__codelineno-39-19" href="#__codelineno-39-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docling</span>
-</span><span id="__span-39-20"><a id="__codelineno-39-20" name="__codelineno-39-20" href="#__codelineno-39-20"></a>
-</span><span id="__span-39-21"><a id="__codelineno-39-21" name="__codelineno-39-21" href="#__codelineno-39-21"></a><span class="w">  </span><span class="nt">db</span><span class="p">:</span>
-</span><span id="__span-39-22"><a id="__codelineno-39-22" name="__codelineno-39-22" href="#__codelineno-39-22"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres:16</span>
-</span><span id="__span-39-23"><a id="__codelineno-39-23" name="__codelineno-39-23" href="#__codelineno-39-23"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
-</span><span id="__span-39-24"><a id="__codelineno-39-24" name="__codelineno-39-24" href="#__codelineno-39-24"></a><span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex</span>
-</span><span id="__span-39-25"><a id="__codelineno-39-25" name="__codelineno-39-25" href="#__codelineno-39-25"></a><span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
-</span><span id="__span-39-26"><a id="__codelineno-39-26" name="__codelineno-39-26" href="#__codelineno-39-26"></a><span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span>
-</span><span id="__span-39-27"><a id="__codelineno-39-27" name="__codelineno-39-27" href="#__codelineno-39-27"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
-</span><span id="__span-39-28"><a id="__codelineno-39-28" name="__codelineno-39-28" href="#__codelineno-39-28"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db-volume:/var/lib/postgresql/data</span>
-</span><span id="__span-39-29"><a id="__codelineno-39-29" name="__codelineno-39-29" href="#__codelineno-39-29"></a>
-</span><span id="__span-39-30"><a id="__codelineno-39-30" name="__codelineno-39-30" href="#__codelineno-39-30"></a><span class="w">  </span><span class="nt">docling</span><span class="p">:</span>
-</span><span id="__span-39-31"><a id="__codelineno-39-31" name="__codelineno-39-31" href="#__codelineno-39-31"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docling-server:latest</span>
-</span><span id="__span-39-32"><a id="__codelineno-39-32" name="__codelineno-39-32" href="#__codelineno-39-32"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
-</span><span id="__span-39-33"><a id="__codelineno-39-33" name="__codelineno-39-33" href="#__codelineno-39-33"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5001:5001&quot;</span>
-</span><span id="__span-39-34"><a id="__codelineno-39-34" name="__codelineno-39-34" href="#__codelineno-39-34"></a>
-</span><span id="__span-39-35"><a id="__codelineno-39-35" name="__codelineno-39-35" href="#__codelineno-39-35"></a><span class="nt">volumes</span><span class="p">:</span>
-</span><span id="__span-39-36"><a id="__codelineno-39-36" name="__codelineno-39-36" href="#__codelineno-39-36"></a><span class="w">  </span><span class="nt">db-volume</span><span class="p">:</span>
-</span><span id="__span-39-37"><a id="__codelineno-39-37" name="__codelineno-39-37" href="#__codelineno-39-37"></a><span class="w">  </span><span class="nt">data-volume</span><span class="p">:</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.8&#39;</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="w">  </span><span class="nt">ingester</span><span class="p">:</span>
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex-ingester:latest</span>
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">      </span><span class="nt">DOC_DB_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgresql+psycopg://postgres:password@db:5432/soliplex</span>
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="w">      </span><span class="nt">DOCLING_SERVER_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://docling:5001/v1</span>
+</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="w">      </span><span class="nt">LOG_LEVEL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
+</span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="w">      </span><span class="nt">FILE_STORE_DIR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/files</span>
+</span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a><span class="w">      </span><span class="nt">LANCEDB_DIR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/lancedb</span>
+</span><span id="__span-41-12"><a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a><span class="w">      </span><span class="nt">INGEST_WORKER_CONCURRENCY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span>
+</span><span id="__span-41-13"><a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-41-14"><a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./config/workflows:/app/config/workflows</span>
+</span><span id="__span-41-15"><a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./config/params:/app/config/params</span>
+</span><span id="__span-41-16"><a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data-volume:/data</span>
+</span><span id="__span-41-17"><a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+</span><span id="__span-41-18"><a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db</span>
+</span><span id="__span-41-19"><a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docling</span>
+</span><span id="__span-41-20"><a id="__codelineno-41-20" name="__codelineno-41-20" href="#__codelineno-41-20"></a>
+</span><span id="__span-41-21"><a id="__codelineno-41-21" name="__codelineno-41-21" href="#__codelineno-41-21"></a><span class="w">  </span><span class="nt">db</span><span class="p">:</span>
+</span><span id="__span-41-22"><a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres:16</span>
+</span><span id="__span-41-23"><a id="__codelineno-41-23" name="__codelineno-41-23" href="#__codelineno-41-23"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+</span><span id="__span-41-24"><a id="__codelineno-41-24" name="__codelineno-41-24" href="#__codelineno-41-24"></a><span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex</span>
+</span><span id="__span-41-25"><a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a><span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
+</span><span id="__span-41-26"><a id="__codelineno-41-26" name="__codelineno-41-26" href="#__codelineno-41-26"></a><span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span>
+</span><span id="__span-41-27"><a id="__codelineno-41-27" name="__codelineno-41-27" href="#__codelineno-41-27"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-41-28"><a id="__codelineno-41-28" name="__codelineno-41-28" href="#__codelineno-41-28"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db-volume:/var/lib/postgresql/data</span>
+</span><span id="__span-41-29"><a id="__codelineno-41-29" name="__codelineno-41-29" href="#__codelineno-41-29"></a>
+</span><span id="__span-41-30"><a id="__codelineno-41-30" name="__codelineno-41-30" href="#__codelineno-41-30"></a><span class="w">  </span><span class="nt">docling</span><span class="p">:</span>
+</span><span id="__span-41-31"><a id="__codelineno-41-31" name="__codelineno-41-31" href="#__codelineno-41-31"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docling-server:latest</span>
+</span><span id="__span-41-32"><a id="__codelineno-41-32" name="__codelineno-41-32" href="#__codelineno-41-32"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+</span><span id="__span-41-33"><a id="__codelineno-41-33" name="__codelineno-41-33" href="#__codelineno-41-33"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5001:5001&quot;</span>
+</span><span id="__span-41-34"><a id="__codelineno-41-34" name="__codelineno-41-34" href="#__codelineno-41-34"></a>
+</span><span id="__span-41-35"><a id="__codelineno-41-35" name="__codelineno-41-35" href="#__codelineno-41-35"></a><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-41-36"><a id="__codelineno-41-36" name="__codelineno-41-36" href="#__codelineno-41-36"></a><span class="w">  </span><span class="nt">db-volume</span><span class="p">:</span>
+</span><span id="__span-41-37"><a id="__codelineno-41-37" name="__codelineno-41-37" href="#__codelineno-41-37"></a><span class="w">  </span><span class="nt">data-volume</span><span class="p">:</span>
 </span></code></pre></div></p>
 <h3 id="kubernetes-configmap">Kubernetes ConfigMap</h3>
 <p><strong>configmap.yaml:</strong>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
-</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex-config</span>
-</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="nt">data</span><span class="p">:</span>
-</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a><span class="w">  </span><span class="nt">DOC_DB_URL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://user:pass@postgres-service:5432/soliplex&quot;</span>
-</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a><span class="w">  </span><span class="nt">DOCLING_SERVER_URL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://docling-service:5001/v1&quot;</span>
-</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a><span class="w">  </span><span class="nt">LOG_LEVEL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;INFO&quot;</span>
-</span><span id="__span-40-9"><a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a><span class="w">  </span><span class="nt">INGEST_WORKER_CONCURRENCY</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20&quot;</span>
-</span><span id="__span-40-10"><a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a><span class="w">  </span><span class="nt">WORKFLOW_DIR</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/config/workflows&quot;</span>
-</span><span id="__span-40-11"><a id="__codelineno-40-11" name="__codelineno-40-11" href="#__codelineno-40-11"></a><span class="w">  </span><span class="nt">PARAM_DIR</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/config/params&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex-config</span>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="nt">data</span><span class="p">:</span>
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="w">  </span><span class="nt">DOC_DB_URL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://user:pass@postgres-service:5432/soliplex&quot;</span>
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="w">  </span><span class="nt">DOCLING_SERVER_URL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://docling-service:5001/v1&quot;</span>
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="w">  </span><span class="nt">LOG_LEVEL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;INFO&quot;</span>
+</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a><span class="w">  </span><span class="nt">INGEST_WORKER_CONCURRENCY</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20&quot;</span>
+</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a><span class="w">  </span><span class="nt">WORKFLOW_DIR</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/config/workflows&quot;</span>
+</span><span id="__span-42-11"><a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a><span class="w">  </span><span class="nt">PARAM_DIR</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/config/params&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h2 id="performance-tuning">Performance Tuning</h2>
 <h3 id="high-throughput">High Throughput</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">50</span>
-</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">10</span>
-</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">20</span>
-</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="nv">EMBED_BATCH_SIZE</span><span class="o">=</span><span class="m">2000</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">50</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">10</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">20</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="nv">EMBED_BATCH_SIZE</span><span class="o">=</span><span class="m">2000</span>
 </span></code></pre></div>
 <p><strong>Notes:</strong>
 - Requires powerful hardware
 - Monitor CPU, memory, and I/O
 - Coordinate with external service capacity</p>
 <h3 id="resource-constrained">Resource Constrained</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">5</span>
-</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">2</span>
-</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">3</span>
-</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="nv">EMBED_BATCH_SIZE</span><span class="o">=</span><span class="m">500</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">5</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">2</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">3</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="nv">EMBED_BATCH_SIZE</span><span class="o">=</span><span class="m">500</span>
 </span></code></pre></div>
 <p><strong>Notes:</strong>
 - Reduces memory and CPU usage
 - Lower throughput but more stable
 - Good for shared environments</p>
 <h3 id="batch-processing">Batch Processing</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">30</span>
-</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">8</span>
-</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">10</span>
-</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="nv">WORKER_CHECKIN_INTERVAL</span><span class="o">=</span><span class="m">300</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="nv">INGEST_WORKER_CONCURRENCY</span><span class="o">=</span><span class="m">30</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="nv">DOCLING_CONCURRENCY</span><span class="o">=</span><span class="m">8</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="nv">WORKER_TASK_COUNT</span><span class="o">=</span><span class="m">10</span>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="nv">WORKER_CHECKIN_INTERVAL</span><span class="o">=</span><span class="m">300</span>
 </span></code></pre></div>
 <p><strong>Notes:</strong>
 - Optimized for processing large batches
@@ -3839,23 +3904,23 @@
 <h2 id="secrets-management">Secrets Management</h2>
 <h3 id="using-environment-files">Using Environment Files</h3>
 <p>Keep secrets out of version control:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="c1"># .env.secrets (add to .gitignore)</span>
-</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>postgresql+psycopg://user:<span class="k">$(</span>cat<span class="w"> </span>/run/secrets/db_password<span class="k">)</span>@db/soliplex
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="c1"># .env.secrets (add to .gitignore)</span>
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span>postgresql+psycopg://user:<span class="k">$(</span>cat<span class="w"> </span>/run/secrets/db_password<span class="k">)</span>@db/soliplex
 </span></code></pre></div>
 <h3 id="using-secret-management-tools">Using Secret Management Tools</h3>
 <p><strong>AWS Secrets Manager:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOC_DB_URL</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>secretsmanager<span class="w"> </span>get-secret-value<span class="w"> </span>--secret-id<span class="w"> </span>db-url<span class="w"> </span>--query<span class="w"> </span>SecretString<span class="w"> </span>--output<span class="w"> </span>text<span class="k">)</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOC_DB_URL</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>secretsmanager<span class="w"> </span>get-secret-value<span class="w"> </span>--secret-id<span class="w"> </span>db-url<span class="w"> </span>--query<span class="w"> </span>SecretString<span class="w"> </span>--output<span class="w"> </span>text<span class="k">)</span>
 </span></code></pre></div></p>
 <p><strong>HashiCorp Vault:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOC_DB_URL</span><span class="o">=</span><span class="k">$(</span>vault<span class="w"> </span>kv<span class="w"> </span>get<span class="w"> </span>-field<span class="o">=</span>url<span class="w"> </span>secret/soliplex/db<span class="k">)</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOC_DB_URL</span><span class="o">=</span><span class="k">$(</span>vault<span class="w"> </span>kv<span class="w"> </span>get<span class="w"> </span>-field<span class="o">=</span>url<span class="w"> </span>secret/soliplex/db<span class="k">)</span>
 </span></code></pre></div></p>
 <p><strong>Kubernetes Secrets:</strong>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="nt">env</span><span class="p">:</span>
-</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DOC_DB_URL</span>
-</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="w">    </span><span class="nt">valueFrom</span><span class="p">:</span>
-</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a><span class="w">      </span><span class="nt">secretKeyRef</span><span class="p">:</span>
-</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db-credentials</span>
-</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a><span class="w">        </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">url</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="nt">env</span><span class="p">:</span>
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DOC_DB_URL</span>
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="w">    </span><span class="nt">valueFrom</span><span class="p">:</span>
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="w">      </span><span class="nt">secretKeyRef</span><span class="p">:</span>
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db-credentials</span>
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a><span class="w">        </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">url</span>
 </span></code></pre></div></p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting</h2>
@@ -4039,6 +4104,20 @@
 <td>No</td>
 <td><code>1000</code></td>
 <td>Embedding batch size</td>
+</tr>
+<tr>
+<td><code>OLLAMA_BASE_URL</code></td>
+<td>str</td>
+<td>No</td>
+<td><code>http://ollama:11434</code></td>
+<td>Ollama server URL for embeddings</td>
+</tr>
+<tr>
+<td><code>OLLAMA_BASE_URL_DOCLING</code></td>
+<td>str</td>
+<td>No</td>
+<td><code>http://ollama:11434</code></td>
+<td>Ollama server URL for Docling chunking (can differ for load distribution)</td>
 </tr>
 <tr>
 <td><code>WORKFLOW_DIR</code></td>
