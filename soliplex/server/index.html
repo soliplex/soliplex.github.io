@@ -1912,9 +1912,15 @@ to OpenAI and provides RAG functionality.</p>
 </li>
 </ul>
 <p>A token from logfire (<a href="https://logfire-us.pydantic.dev/login">login here</a>)
-  allows for visibility into the application. (see the
-  <a href="https://logfire.pydantic.dev/docs/integrations/web-frameworks/fastapi/">docs on FastAPI integration</a>
-  for more information).</p>
+  allows for visibility into the application. See:</p>
+<ul>
+<li>
+<p><a href="../config/logfire/">Soliplex Logfire configuration</a></p>
+</li>
+<li>
+<p><a href="https://logfire.pydantic.dev/docs/integrations/web-frameworks/fastapi/">Logfire docs on FastAPI integration</a></p>
+</li>
+</ul>
 <h2 id="installation">Installation</h2>
 <ol>
 <li>
@@ -1939,10 +1945,9 @@ to OpenAI and provides RAG functionality.</p>
 <p>Set up environment variables:</p>
 </li>
 </ol>
-<p>An environment file can be used to configure secrets.
-   For logfire, create a <code>.env</code> file with:
-   <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>LOGFIRE_TOKEN=&lt;your_token_here&gt;
-</span></code></pre></div></p>
+<p>An environment file (<code>.env</code>) can be used to configure secrets, e.g.:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>SOME_API_TOKEN=&lt;your_token_here&gt;
+</span></code></pre></div>
 <h2 id="running-the-example">Running the example</h2>
 <p>The example configuration provides an overview of how a soliplex
 application is assembled.  It contains four top-level installation
