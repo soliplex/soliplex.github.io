@@ -25,6 +25,33 @@ Individual Repos          Documentation Site
      (+ 3 more)──────┘
 ```
 
+## Prerequisites
+
+### Python Environment
+
+**Required**: This project uses [uv](https://github.com/astral-sh/uv) for Python package management.
+
+- **Python Version**: 3.12 or higher
+- **Package Manager**: uv (required for running build scripts)
+
+**Installation**:
+
+```bash
+# Install uv (see https://github.com/astral-sh/uv for platform-specific instructions)
+curl -LsSf https://astral.sh/uv/install.sh | sh  # Linux/macOS
+# OR
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"  # Windows
+
+# Verify installation
+uv --version
+```
+
+**Why uv?**
+- Fast dependency resolution and installation
+- Reproducible builds via lock files
+- No need to manually manage virtual environments
+- Commands like `uv run python script.py` automatically handle dependencies
+
 ## Architecture
 
 ### 1. Git Submodules
@@ -156,8 +183,8 @@ Each submodule has a workflow that:
 
 6. **Test**:
    ```bash
-   python scripts/build-docs.py --no-update
-   mkdocs serve
+   uv run python scripts/build-docs.py --no-update
+   uv run mkdocs serve
    ```
 
 ### Removing a Project
