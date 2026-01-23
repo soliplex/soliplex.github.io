@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     env:
       SLACK_NOTIFY_URL: ${{ secrets.SLACK_NOTIFY_URL }}
@@ -60,8 +60,36 @@ jobs:
       - name: Build documentation from submodules
         run: python scripts/build-docs.py --no-update
 
+      - name: Build MkDocs site
+        run: mkdocs build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+
+      - name: Notify Slack on failure
+        if: failure()
+        env:
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -X POST \
+            --data-urlencode \
+            "payload={\"channel\": \"#soliplex\", \"username\": \"docs-ci\", \"text\": \":x: Docs build failed\n$RUN_URL\", \"icon_emoji\": \":books:\"}" \
+            "$SLACK_NOTIFY_URL"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      SLACK_NOTIFY_URL: ${{ secrets.SLACK_NOTIFY_URL }}
+    steps:
       - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force
+        id: deployment
+        uses: actions/deploy-pages@v4
 
       - name: Notify Slack on failure
         if: failure()
