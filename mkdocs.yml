@@ -89,7 +89,7 @@ nav:
 
   - User Interfaces:
       - Chatbot Widget: chatbot/readme.md
-      - Flutter UI: flutter/readme.md
+      - Flutter UI: flutter/guides/developer-setup.md
 
   - Supporting Tools:
       - Ingester Agents: ingester-agents/index.md

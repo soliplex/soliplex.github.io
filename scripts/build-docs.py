@@ -177,6 +177,46 @@ def generate_gitignore(docs_dir: Path, projects: List[str]) -> None:
     print(f"\n📝 Updated {gitignore_path}")
 
 
+def discover_projects(projects_root: Path) -> Tuple[Dict[str, str], List[str]]:
+    """
+    Automatically discover projects and categorize them.
+
+    Returns:
+        Tuple of (projects_with_docs, readme_only_projects)
+    """
+    projects_with_docs = {}
+    readme_only_projects = []
+
+    if not projects_root.exists():
+        return projects_with_docs, readme_only_projects
+
+    for project_dir in sorted(projects_root.iterdir()):
+        if not project_dir.is_dir():
+            continue
+
+        # Skip hidden directories and special directories
+        if project_dir.name.startswith('.') or project_dir.name == '__pycache__':
+            continue
+
+        project_name = project_dir.name
+        docs_path = project_dir / 'docs'
+        readme_path = project_dir / 'README.md'
+
+        # Check if project has a docs/ directory with content
+        if docs_path.exists() and docs_path.is_dir():
+            # Verify it has at least one markdown file
+            md_files = list(docs_path.rglob('*.md'))
+            if md_files:
+                projects_with_docs[project_name] = str(docs_path)
+                continue
+
+        # Otherwise, check if it has a README.md
+        if readme_path.exists():
+            readme_only_projects.append(project_name)
+
+    return projects_with_docs, readme_only_projects
+
+
 def main():
     """Main entry point for the documentation build script."""
     import argparse
@@ -203,20 +243,21 @@ def main():
     # Configuration
     docs_dir = Path('docs')
     mkdocs_yml = Path('mkdocs.yml')
+    projects_root = Path('projects')
 
-    # Projects with dedicated docs/ directories
-    projects_with_docs = {
-        'soliplex': 'projects/soliplex/docs',
-        'ingester': 'projects/ingester/docs',
-        'chatbot': 'projects/chatbot/docs',
-        'flutter': 'projects/flutter/docs',
-    }
+    # Auto-discover projects
+    print("\n🔍 Discovering projects...")
+    projects_with_docs, readme_only_projects = discover_projects(projects_root)
 
-    # Projects with only README.md
-    readme_only_projects = [
-        'ingester-agents',
-        'pdf-splitter',
-    ]
+    if projects_with_docs:
+        print(f"   Found {len(projects_with_docs)} projects with docs/:")
+        for name in projects_with_docs.keys():
+            print(f"      - {name}")
+
+    if readme_only_projects:
+        print(f"   Found {len(readme_only_projects)} README-only projects:")
+        for name in readme_only_projects:
+            print(f"      - {name}")
 
     all_projects = list(projects_with_docs.keys()) + readme_only_projects
 
