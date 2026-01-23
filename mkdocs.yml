@@ -76,7 +76,7 @@ nav:
           - RAG: soliplex/config/rag.md
           - Quizzes: soliplex/config/quizzes.md
           - OIDC Authentication: soliplex/config/oidc_providers.md
-          - Logfilre: soliplex/config/logfire.md
+          - Logfire: soliplex/config/logfire.md
       - Usage: soliplex/usage.md
 
   - Ingester:
