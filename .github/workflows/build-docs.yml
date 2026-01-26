@@ -1,102 +1,58 @@
-name: Build and Deploy Docs
+name: Build and Deploy Documentation
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-  repository_dispatch:
-    types: [docs_update]
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      SLACK_NOTIFY_URL: ${{ secrets.SLACK_NOTIFY_URL }}
-    steps:
-      - name: Log trigger information
-        run: |
-          echo "🚀 Documentation build triggered"
-          echo "Trigger: ${{ github.event_name }}"
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            echo "📦 Source repository: ${{ github.event.client_payload.repository }}"
-            echo "🔗 Commit: ${{ github.event.client_payload.sha }}"
-            echo "👤 Pushed by: ${{ github.event.client_payload.pusher }}"
-            echo "💬 Commit message: ${{ github.event.client_payload.commit_message }}"
-          fi
-
-      - uses: actions/checkout@v6
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Update submodules to latest
-        run: |
-          git submodule update --init --recursive --remote
-
-      - name: Configure Git
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.x'
-
-      - name: Cache MkDocs
-        uses: actions/cache@v5
-        with:
-          key: mkdocs-material-${{ github.run_id }}
-          path: .cache
-          restore-keys: mkdocs-material-
-
-      - name: Install dependencies
-        run: pip install mkdocs-material
-
-      - name: Build documentation from submodules
-        run: python scripts/build-docs.py --no-update
-
-      - name: Build MkDocs site
-        run: mkdocs build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./site
-
-      - name: Notify Slack on failure
-        if: failure()
-        env:
-          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          curl -X POST \
-            --data-urlencode \
-            "payload={\"channel\": \"#soliplex\", \"username\": \"docs-ci\", \"text\": \":x: Docs build failed\n$RUN_URL\", \"icon_emoji\": \":books:\"}" \
-            "$SLACK_NOTIFY_URL"
-
-  deploy:
-    needs: build
+  build-and-deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    env:
-      SLACK_NOTIFY_URL: ${{ secrets.SLACK_NOTIFY_URL }}
+
     steps:
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run build-docs.py
+        run: uv run python scripts/build-docs.py --no-update
+
+      - name: Build MkDocs site
+        run: uv run mkdocs build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Notify Slack on failure
-        if: failure()
-        env:
-          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          curl -X POST \
-            --data-urlencode \
-            "payload={\"channel\": \"#soliplex\", \"username\": \"docs-ci\", \"text\": \":x: Docs deployment failed\n$RUN_URL\", \"icon_emoji\": \":books:\"}" \
-            "$SLACK_NOTIFY_URL"
