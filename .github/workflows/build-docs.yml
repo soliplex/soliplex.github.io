@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -44,31 +44,8 @@ jobs:
 
       - name: Build MkDocs site
         run: uv run mkdocs build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: site
-
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: Notify Slack on success
-        if: success()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_NOTIFY_URL }}
-          SLACK_CHANNEL: soliplex
-          SLACK_USERNAME: docs-ci
-          SLACK_ICON_EMOJI: ':books:'
-          SLACK_COLOR: good
-          SLACK_TITLE: Docs Deployed
-          SLACK_MESSAGE: 'Docs deployed successfully to ${{ steps.deployment.outputs.page_url }}'
-
+        run: uv run mkdocs gh-deploy --force
       - name: Notify Slack on failure
         if: failure()
         uses: rtCamp/action-slack-notify@v2

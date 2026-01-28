@@ -1,6 +1,6 @@
 site_name: Soliplex
 site_url: https://soliplex.github.io/
-dev_addr: 127.0.0.1:8001
+dev_addr: 127.0.0.1:9001
 theme:
   name: material
   logo: img/logo.png
@@ -11,14 +11,14 @@ theme:
         name: Switch to light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: deep purple
-      accent: amber
+      primary: gray
+      accent: blue
       toggle:
         icon: material/lightbulb
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: deep purple
+      primary: blue
       accent: amber
       toggle:
         icon: material/lightbulb-outline
@@ -50,8 +50,8 @@ theme:
   # logo: img/icon-white.svg
   # favicon: img/favicon.png
   language: en
-repo_name: soliplex/soliplex.github.io
-repo_url: https://github.com/soliplex/soliplex.github.io
+repo_name: soliplex/soliplex
+repo_url: https://github.com/soliplex/soliplex
 plugins:
   # Material for MkDocs
   search:
@@ -78,6 +78,7 @@ nav:
           - OIDC Authentication: soliplex/config/oidc_providers.md
           - Logfire: soliplex/config/logfire.md
       - Usage: soliplex/usage.md
+      - Docker: soliplex/docker.md
 
   - Ingester:
       - Getting Started: ingester/GETTING_STARTED.md
@@ -86,6 +87,10 @@ nav:
       - Workflows: ingester/WORKFLOWS.md
       - Database Schema: ingester/DATABASE.md
       - Configuration: ingester/CONFIGURATION.md
+      - Authentication: ingester/AUTHENTICATION.md
+      - Docker: ingester/DOCKER.md
+      - Parameter Sets: ingester/PARAMETER_SETS.md
+      - Workflows: ingester/WORKFLOWS.md
       - CLI Reference: ingester/CLI.md
 
   - User Interfaces:
