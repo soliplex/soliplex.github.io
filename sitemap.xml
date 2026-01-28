@@ -2,170 +2,170 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://soliplex.github.io/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/chatbot/readme/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/chatbot/usage/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/flutter/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/flutter/APPSHELL_EXTRACTION/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/flutter/CODEBASE_ANALYSIS/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/flutter/adr/001-whitelabel-architecture/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/flutter/guides/developer-setup/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/flutter/rules/flutter_rules/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/flutter/summary/client/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/API/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/ARCHITECTURE/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/AUTHENTICATION/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/CLI/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/CONFIGURATION/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/DATABASE/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/DOCKER/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/GETTING_STARTED/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/PARAMETER_SETS/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester/WORKFLOWS/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/ingester-agents/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/pdf-splitter/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/client/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/docker/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/overview/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/prerequisites/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/rag/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/server/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/usage/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/agents/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/completions/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/environment/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/filesystem_layout/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/installation/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/logfire/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/meta/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/oidc_providers/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/quizzes/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/rag/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/rooms/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
     <url>
          <loc>https://soliplex.github.io/soliplex/config/secrets/</loc>
-         <lastmod>2026-01-23</lastmod>
+         <lastmod>2026-01-28</lastmod>
     </url>
 </urlset>
