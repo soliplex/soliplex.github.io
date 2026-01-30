@@ -68,14 +68,14 @@ nav:
           - Filesystem Layout: soliplex/config/filesystem_layout.md
           - Installation: soliplex/config/installation.md
           - Meta: soliplex/config/meta.md
-          - Environment: soliplex/config/environment.md
           - Secrets: soliplex/config/secrets.md
+          - Environment: soliplex/config/environment.md
+          - RAG: soliplex/config/rag.md
           - Agents: soliplex/config/agents.md
+          - OIDC Authentication: soliplex/config/oidc_providers.md
           - Rooms: soliplex/config/rooms.md
           - Completions: soliplex/config/completions.md
-          - RAG: soliplex/config/rag.md
           - Quizzes: soliplex/config/quizzes.md
-          - OIDC Authentication: soliplex/config/oidc_providers.md
           - Logfire: soliplex/config/logfire.md
       - Usage: soliplex/usage.md
       - Docker: soliplex/docker.md
