@@ -898,10 +898,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#unconfigured-environment-entries" class="md-nav__link">
+  <a href="#bare-string-environment-entries" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unconfigured Environment Entries
+        Bare-String Environment Entries
       
     </span>
   </a>
@@ -909,10 +909,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bare-string-environment-entries" class="md-nav__link">
+  <a href="#resolving-environment-entry-values" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bare-String Environment Entries
+        Resolving Environment Entry Values
       
     </span>
   </a>
@@ -1871,10 +1871,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#unconfigured-environment-entries" class="md-nav__link">
+  <a href="#bare-string-environment-entries" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unconfigured Environment Entries
+        Bare-String Environment Entries
       
     </span>
   </a>
@@ -1882,10 +1882,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bare-string-environment-entries" class="md-nav__link">
+  <a href="#resolving-environment-entry-values" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bare-String Environment Entries
+        Resolving Environment Entry Values
       
     </span>
   </a>
@@ -1984,15 +1984,12 @@ portions of the Soliplex application.  Application code should use the
 <code>Installation.get_environment</code> API to fetch configured values, rather than
 using <code>os.environ</code>.</p>
 <h2 id="environment-entries">Environment Entries</h2>
-<p>The section consists of a list of mappings, each with keys <code>name</code> and
-<code>value</code>.</p>
+<p>The <code>environment</code> section consists of a list of mappings, each with
+keys <code>name</code> and <code>value</code>.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">environment</span><span class="p">:</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENV_VAR_NAME&quot;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENV_VAR_VALUE&quot;</span>
 </span></code></pre></div>
-<h2 id="unconfigured-environment-entries">Unconfigured Environment Entries</h2>
-<p>If the <code>value</code> key is missing, the Soliplex application will
-attempt to resolve it using <code>os.environ</code> during startup.</p>
 <h2 id="bare-string-environment-entries">Bare-String Environment Entries</h2>
 <p>As an alternative, an item in the list can be a bare string:  such an
 entry corresponds exactly to a mapping with <code>name: "&lt;bare string</code> and
@@ -2005,6 +2002,21 @@ is exactly equivalent to this one:
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">environment</span><span class="p">:</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENV_VAR_NAME&quot;</span>
 </span></code></pre></div></p>
+<h2 id="resolving-environment-entry-values">Resolving Environment Entry Values</h2>
+<p>When resolving environment entry values after an installation configuration,
+Soliplex will use values from the following sources, in order of
+precedence:</p>
+<ul>
+<li>Value explicitly configured in the installation</li>
+<li>Value from an <code>.env</code> file located in the installation directory</li>
+<li>Value from the OS environment</li>
+</ul>
+<p>If the <code>InstallationConfig.disable_dotenv</code> flag is set to <code>True</code>, then
+Soliplex use these sources, in order of precedence:</p>
+<ul>
+<li>Value explicitly configured in the installation</li>
+<li>Value from the OS environment</li>
+</ul>
 <h1 id="checking-configured-environment-values">Checking Configured Environment Values</h1>
 <p>The <code>soliplex-cli</code> application has a sub-command, <code>list-environment</code>.
 It loads the configuration, attempts to resolve any values not found, and
