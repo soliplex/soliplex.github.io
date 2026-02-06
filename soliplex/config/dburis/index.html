@@ -8,13 +8,9 @@
       
       
       
-        <link rel="canonical" href="https://soliplex.github.io/soliplex/config/logfire/">
+        <link rel="canonical" href="https://soliplex.github.io/soliplex/config/dburis/">
       
       
-        <link rel="prev" href="../oidc_providers/">
-      
-      
-        <link rel="next" href="../../usage/">
       
       
         
@@ -25,7 +21,7 @@
     
     
       
-        <title>Logfire - Soliplex</title>
+        <title>SQLAlchemy DBURI Configuration - Soliplex</title>
       
     
     
@@ -76,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#logfire-configuration" class="md-skip">
+        <a href="#sqlalchemy-dburi-configuration" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Logfire
+              SQLAlchemy DBURI Configuration
             
           </span>
         </div>
@@ -250,12 +246,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../../overview/" class="md-tabs__link">
           
   
@@ -417,10 +411,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -438,20 +430,17 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   
@@ -469,7 +458,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -662,10 +651,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -700,11 +687,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
         
           
           <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
@@ -725,7 +712,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1048,37 +1035,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Logfire
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../logfire/" class="md-nav__link">
         
   
   
@@ -1094,59 +1054,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#default-behavior" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Default behavior
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#required-attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Required attributes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#optional-attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Optional attributes
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1860,10 +1767,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#default-behavior" class="md-nav__link">
+  <a href="#thread_persistence_dburi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Default behavior
+        thread_persistence_dburi
       
     </span>
   </a>
@@ -1871,21 +1778,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#required-attributes" class="md-nav__link">
+  <a href="#authorization_dburi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Required attributes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#optional-attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Optional attributes
+        authorization_dburi
       
     </span>
   </a>
@@ -1910,64 +1806,6 @@
   
 
 
-  <nav class="md-path" aria-label="Navigation" >
-    <ol class="md-path__list">
-      
-        
-  
-  
-    <li class="md-path__item">
-      <a href="../../.." class="md-path__link">
-        
-  <span class="md-ellipsis">
-    Home
-  </span>
-
-      </a>
-    </li>
-  
-
-      
-      
-        
-  
-  
-    
-    
-      <li class="md-path__item">
-        <a href="../../overview/" class="md-path__link">
-          
-  <span class="md-ellipsis">
-    Core Platform
-  </span>
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-    
-    
-      <li class="md-path__item">
-        <a href="../filesystem_layout/" class="md-path__link">
-          
-  <span class="md-ellipsis">
-    Configuration
-  </span>
-
-        </a>
-      </li>
-    
-  
-
-      
-    </ol>
-  </nav>
-
               
               <article class="md-content__inner md-typeset">
                 
@@ -1978,123 +1816,112 @@
   
 
 
-<h1 id="logfire-configuration">Logfire Configuration</h1>
-<p>The <code>logfire_config</code> attribute of the Soliplex installation configuration
-allows defining policies for how <a href="https://logfire.pydantic.dev">Logfire</a> is
-<a href="https://logfire.pydantic.dev/docs/reference/api/logfire/#logfire.configure">configured</a>
-at server startup.</p>
-<h2 id="default-behavior">Default behavior</h2>
-<p>If the <code>logfire_config</code> attribute is not present in the Soliplex installation
-configuration, Soliplex configures it as follows:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">logfire</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">send_to_logfire</span><span class="o">=</span><span class="s2">&quot;if-token-present&quot;</span><span class="p">)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">logfire</span><span class="o">.</span><span class="n">instrument_pydantic_ai</span><span class="p">()</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">logfire</span><span class="o">.</span><span class="n">instrument_fastapi</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">capture_headers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></code></pre></div>
-<p>That is, the <code>logfire</code> library will only send spans to the default Logfire
-server if the <code>LOGFIRE_TOKEN</code> environment variable is set:  all other
-configuration is done via OS environment variables (not in the Soliplex
-configuration).  See the Logfire
-<a href="https://logfire.pydantic.dev/docs/reference/configuration/#using-environment-variables">docs on environment variables</a>.</p>
-<h2 id="required-attributes">Required attributes</h2>
+<h1 id="sqlalchemy-dburi-configuration">SQLAlchemy DBURI Configuration</h1>
+<p>Soliplex uses SQLAlchemy to store persistent data in two separate databases:</p>
 <ul>
-<li><code>token</code> should name the <a href="../secrets/">secret</a> which contains the
-  token issued by Logfire.  E.g.:</li>
+<li>
+<p>One database holds history for AG-UI threads and runs, created by clients
+  interacting with its AG-UI endpoints.  See
+  <a href="#thread_persistence_dburi">below</a>.</p>
+</li>
+<li>
+<p>Another database holds authorization information:  a list of
+  administrative users, and a list of room authorization policies and
+  the access control list (ACL) entries they contain. See
+  <a href="#authorization_dburi">below</a>.</p>
+</li>
 </ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;secret:LOGFIRE_TOKEN&quot;</span>
-</span></code></pre></div>
-<h2 id="optional-attributes">Optional attributes</h2>
+<p>Configuration for these databases uses SQLAlchemy
+<a href="https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls">database URLs</a>, in two flavors:</p>
 <ul>
-<li><code>service_name</code> defines the service name reported to Logfire
-  for the appliction.  See
-  <a href="https://logfire.pydantic.dev/docs/reference/api/logfire/#logfire.configure(service_name)">this page</a>
-  for details</li>
+<li>
+<p>Synchronous URLs, used by code which is not written to run using
+  Python's <code>async</code> mechanisms (e.g., the CLI and TUI modules).  This style
+  of database URLs is the default described in the SQLAlchemy docs.</p>
+</li>
+<li>
+<p>Asynchronous URLs, used by code which <em>does</em> use Python's <code>async</code>
+  mechanisms (e.g., FastAPI endpoint functions).  See this SQLAlchemy
+  <a href="https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html">page</a>
+  for details on the extension which adds <code>async</code> support to SQLAlchemy.</p>
+</li>
 </ul>
-<p>It can be a literal, or else use a configured installation
-  environment value.  E.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">service_name</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;env:LOGFIRE_SERVICE_NAME&quot;</span>
-</span></code></pre></div>
+<p>Because of the requirement for <code>async</code> support, Soliplex cannot use
+all possible SQLAlchemy engines.  Known to work:</p>
 <ul>
-<li><code>service_version</code> defines the service version reported to Logfire
-  for the appliction.  See
-  <a href="https://logfire.pydantic.dev/docs/reference/api/logfire/#logfire.configure(service_version)">this page</a>
-  for details</li>
+<li>
+<p><a href="https://docs.sqlalchemy.org/en/20/core/engines.html#sqlite">SQLite</a>
+  via the <a href=""><code>aiosqlite</code></a>
+  async dialect</p>
+</li>
+<li>
+<p><a href="https://docs.sqlalchemy.org/en/20/core/engines.html#postgresql">Postgres</a>
+  via the <a href=""><code>asyncpg</code></a>
+  async dialect</p>
+</li>
 </ul>
-<p>It can be a literal, or else use a configured installation
-  environment value.  E.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">service_version</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;env:LOGFIRE_SERVICE_VERSION&quot;</span>
-</span></code></pre></div>
+<p>Untested:</p>
 <ul>
-<li><code>environment</code> defines the environment reported to Logfire
-  for the appliction.  See
-  <a href="https://logfire.pydantic.dev/docs/reference/api/logfire/#logfire.configure(environment)">this page</a>
-  for details</li>
+<li>
+<p><a href="https://docs.sqlalchemy.org/en/20/dialects/mysql.html">MySQL</a>
+  via the <a href="https://docs.sqlalchemy.org/en/20/dialects/mysql.html#module-sqlalchemy.dialects.mysql.asyncmy"><code>asyncmy</code></a>
+  async dialect</p>
+</li>
+<li>
+<p><a href="https://docs.sqlalchemy.org/en/20/dialects/mysql.html">MySQL</a>
+  via the <a href="https://docs.sqlalchemy.org/en/20/dialects/mysql.html#aiomysql`"><code>aiomysql</code></a>
+  async dialect</p>
+</li>
+<li>
+<p><a href="https://docs.sqlalchemy.org/en/20/dialects/oracle.html">Oracle</a>
+  via its built-in async dialect</p>
+</li>
+<li>
+<p><a href="https://docs.sqlalchemy.org/en/20/dialects/mssql.html">Microsolt SQL Server</a>
+  via the <a href="https://docs.sqlalchemy.org/en/20/dialects/mssql.html#module-sqlalchemy.dialects.mssql.aioodbc"><code>aioodbc</code></a>
+  async dialect</p>
+</li>
 </ul>
-<p>It can be a literal, or else use a configured installation
-  environment value.  E.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">environment</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;env:LOGFIRE_ENVIRONMENT&quot;</span>
+<h2 id="thread_persistence_dburi"><code>thread_persistence_dburi</code></h2>
+<p>Soliplex uses this pair of URLs to record and query information about
+AG-UI threads and runs initiated by clients.  If this sections is
+not configured, Soliplex uses an in-memory Sqlite database, e.g.:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite://&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite://&quot;</span>
 </span></code></pre></div>
-<ul>
-<li><code>data_dir</code> defines the path to local data recorded by Logfire.  See
-  <a href="https://logfire.pydantic.dev/docs/reference/api/logfire/#logfire.configure(data_dir)">this page</a>
-  for details</li>
-</ul>
-<p>It can be a literal, or else use a configured installation environment
-  value.  E.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">data_dir:ib.Path | str = &quot;env:LOGFIRE_DATA_DIR&quot;</span>
+<p>To use an on-disk SQLite database for thread persistence (note the four
+forward-slashes!):</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite:////path/to/thread_persistence.sqlite&quot;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite:////path/to/thread_persistence.sqlite&quot;</span>
 </span></code></pre></div>
-<ul>
-<li><code>min_level</code> defines the minimum log level reported to Logfire.  See
-  <a href="https://logfire.pydantic.dev/docs/reference/api/logfire/#logfire.configure(min_level)">this page</a> for details.</li>
-</ul>
-<p>It can be a literal, or else use a configured installation
-  environment value.  E.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">min_level</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logfire.LevelName = &quot;env:LOGFIRE_MIN_LEVEL&quot;</span>
+<p>To use a Postgres server, assuming the login is <code>"soliplex"</code> and the
+password is defined as a <a href="../secrets/">secret</a> named <code>"POSTGRES_PASSWORD"</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
 </span></code></pre></div>
-<ul>
-<li><code>base_url</code> (string or None, None by default) is the URL of the
-  Logfire server.  This value would ordinarily only be used when self-hosting
-  Logfire, as the library will discover the cloud-hosted URL from the token.</li>
-</ul>
-<p>It can be a literal, or else use a configured installation
-  environment value.  E.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">base_url</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;env:LOGFIRE_BASE_URL&quot;</span>
+<h2 id="authorization_dburi"><code>authorization_dburi</code></h2>
+<p>Soliplex uses this pair of URLs to record and query authorization information:
+a list of administrative users, and a list of room authorization policies
+and the access control list (ACL) entries they contain.  If this sections is
+not configured, Soliplex uses an in-memory Sqlite database, e.g.:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite://&quot;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite://&quot;</span>
 </span></code></pre></div>
-<ul>
-<li><code>inspect_arguments</code> (boolean or None, None by default)  See
-  <a href="https://logfire.pydantic.dev/docs/reference/api/logfire/#logfire.configure(inspect_arguments)">this page</a> for details.</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">inspect_arguments</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<p>To use an on-disk SQLite database for thread persistence (note the four
+forward-slashes!):</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite:////path/to/authorization.sqlite&quot;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite:////path/to/authorization.sqlite&quot;</span>
 </span></code></pre></div>
-<ul>
-<li><code>add_baggage_to_attributes</code> (boolean, True by default)  See
-  <a href="https://logfire.pydantic.dev/docs/reference/api/logfire/#logfire.configure(add_baggage_to_attributes)">this page</a> for details.</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">add_baggage_to_attributes</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span></code></pre></div>
-<ul>
-<li><code>distributed_tracing</code> (boolean or None, None by default).  See
-  <a href="https://logfire.pydantic.dev/docs/reference/api/logfire/#logfire.configure(distributed_tracing)">this page</a> for details.</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">logfire_config</span><span class="p">:</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">distributed_tracing</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<p>To use a Postgres server, assuming the login is <code>"soliplex"</code> and the
+password is defined as a <a href="../secrets/">secret</a> named <code>"POSTGRES_PASSWORD"</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
 </span></code></pre></div>
 
 
@@ -2128,44 +1955,6 @@ configuration).  See the Logfire
       
         <footer class="md-footer">
   
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../oidc_providers/" class="md-footer__link md-footer__link--prev" aria-label="Previous: OIDC Authentication">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                OIDC Authentication
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../../usage/" class="md-footer__link md-footer__link--next" aria-label="Next: Usage">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Usage
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   
   <div class="md-footer-meta md-typeset">
