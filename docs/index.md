@@ -1,6 +1,75 @@
 # Soliplex Documentation
 
 Welcome to the Soliplex ecosystem documentation. Soliplex provides AI-powered retrieval-augmented generation capabilities for intelligent document search and question answering.
+##Soliplex Architecture
+```mermaid
+graph TB
+    
+    subgraph "User Interfaces"
+        FE["Frontend<br/>(Flutter / Dart)"]
+        TUI["Terminal UI<br/>(Textual)"]
+    end
+
+
+    subgraph "Backend"
+        SX["Soliplex<br/>(FastAPI)"]
+        MCP["MCP Server<br/>(FastMCP)"]
+    end
+
+    subgraph "AI & Retrieval"
+        PAI["Pydantic AI<br/>Agents"]
+        HR["Haiku RAG<br/>(LanceDB)"]
+        HS["Haiku Skills"]
+    end
+
+    
+    subgraph "Storage"
+        LDB["LanceDB<br/>(Vectors)"]
+        PG["PostgreSQL / SQLite<br/>(Metadata)"]
+    end
+    subgraph LLM["LLM Providers"]
+        OL["Ollama"]
+        OA["OpenAI"]
+        GE["Gemini"]
+        AN["Anthropic"]
+    end
+        subgraph "Ingestion Pipeline"
+        IA["Ingester Agents"]
+        SI["Soliplex Ingester"]
+        PS["PDF Splitter"]
+        DL["Docling"]
+    end
+    subgraph "Document Sources"
+        FS["Filesystem"]
+        SCM["GitHub / Gitea"]
+        WD["WebDAV"]
+        WEB["Web Pages"]
+        S3["S3"]
+    end
+
+
+    FE -->|"AG-UI Protocol"| SX
+    TUI --> SX
+    SX --> PAI
+    SX --> MCP
+    PAI --> HR
+    PAI --> HS
+    LDB --> HR
+
+    FS --> IA
+    SCM --> IA
+    WD --> IA
+    WEB --> IA
+    S3 --> IA
+    IA -->|"Discovers & fetches"| SI
+    PS -->|"Splits large PDFs"| SI
+    SI -->|"Parse, chunk, embed"| DL
+
+    PAI <-->|"Inference"| LLM
+
+    SI --> LDB
+    SI --> PG
+```
 
 ## Core Components
 
