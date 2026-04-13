@@ -10,9 +10,15 @@
 [submodule "projects/pdf-splitter"]
 	path = projects/pdf-splitter
 	url = https://github.com/soliplex/pdf-splitter.git
-[submodule "projects/flutter"]
-	path = projects/flutter
-	url = https://github.com/soliplex/flutter.git
+[submodule "projects/frontend"]
+	path = projects/frontend
+	url = https://github.com/soliplex/frontend.git
+[submodule "projects/buubble-sandbox"]
+	path = projects/bubble-sandbox
+	url = https://github.com/soliplex/bubble-sandbox.git	
 [submodule "projects/chatbot"]
 	path = projects/chatbot
 	url = https://github.com/soliplex/chatbot.git
+[submodule "projects/bubble-sandbox"]
+	path = projects/bubble-sandbox
+	url = https://github.com/soliplex/bubble-sandbox.git

@@ -93,14 +93,16 @@ nav:
       - Parameter Sets: ingester/PARAMETER_SETS.md
       - Workflows: ingester/WORKFLOWS.md
       - CLI Reference: ingester/CLI.md
+      - Agents: ingester-agents/index.md
 
   - User Interfaces:
       - Chatbot Widget: chatbot/readme.md
-      - Flutter UI: flutter/guides/developer-setup.md
+      - Flutter UI: frontend/docs/developer-setup.md
 
   - Supporting Tools:
       - Ingester Agents: ingester-agents/index.md
       - PDF Splitter: pdf-splitter/index.md
+      - Bubble Sandbox: bubble-sandbox/index.md
 markdown_extensions:
   - admonition
   - attr_list

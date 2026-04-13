@@ -28,6 +28,7 @@ Robust document ingestion system for loading content into RAG databases.
 - [Configuration](ingester/CONFIGURATION.md)
 - [Database Schema](ingester/DATABASE.md)
 - [Workflows](ingester/WORKFLOWS.md)
+- [Agents](ingester-agents/index.md)
 
 ## User Interfaces
 
@@ -36,9 +37,8 @@ Robust document ingestion system for loading content into RAG databases.
 Cross-platform mobile and desktop client application for Soliplex.
 
 **Quick Links:**
-- [Developer Setup Guide](flutter/guides/developer-setup.md)
-- [Flutter Development Rules](flutter/rules/flutter_rules.md)
-- [Client Summary](flutter/summary/client.md)
+- [Developer Setup Guide](frontend/docs/developer-setup.md)
+- [Client Summary](flutter/docs/index.md)
 
 ### [Chatbot Widget](chatbot/readme.md)
 
