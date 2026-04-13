@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1199,6 +1199,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1216,8 +1220,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1231,8 +1236,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
@@ -1698,10 +1709,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#via-configuration-file" class="md-nav__link">
+  <a href="#via-configuration-file-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Via Configuration File
+        Via Configuration File (System)
       
     </span>
   </a>
@@ -2088,6 +2099,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -2186,7 +2199,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -2225,6 +2238,8 @@
       
         
           
+        
+      
         
       
         
@@ -2296,6 +2311,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -2505,10 +2548,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#via-configuration-file" class="md-nav__link">
+  <a href="#via-configuration-file-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Via Configuration File
+        Via Configuration File (System)
       
     </span>
   </a>
@@ -2919,9 +2962,13 @@
 <li><strong>Embedding:</strong> Which model to use for vector embeddings</li>
 <li><strong>Storage:</strong> Where to store the resulting vector database</li>
 </ul>
-<p>Parameter sets are stored as YAML files and can be created via:
+<p>Parameter sets are stored as YAML files in two separate directories:
+- <strong>System parameter sets</strong> (<code>config/params/</code> by default) — built-in, <code>source: app</code>, cannot be deleted via API
+- <strong>User parameter sets</strong> (<code>config/user_params/</code> by default) — user-uploaded, <code>source: user</code>, can be deleted via API</p>
+<p>Both directories are merged transparently at load time. Parameter set IDs must be unique across both directories.</p>
+<p>Parameter sets can be created via:
 - Configuration files in <code>config/params/</code> (built-in)
-- REST API uploads (user-created)
+- REST API uploads (stored in <code>config/user_params/</code>)
 - Web UI (if available)</p>
 <hr />
 <h2 id="yaml-schema">YAML Schema</h2>
@@ -3212,9 +3259,9 @@
 - Include version in name for model upgrades: <code>reports_v2</code>, <code>docs_ada002</code></p>
 <hr />
 <h2 id="creating-parameter-sets">Creating Parameter Sets</h2>
-<h3 id="via-configuration-file">Via Configuration File</h3>
+<h3 id="via-configuration-file-system">Via Configuration File (System)</h3>
 <ol>
-<li><strong>Create YAML file in <code>config/params/</code>:</strong></li>
+<li><strong>Create YAML file in <code>config/params/</code> (system parameter sets):</strong></li>
 </ol>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>config/params
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>nano<span class="w"> </span>my_custom_params.yaml
@@ -3265,13 +3312,13 @@
 </span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="s">EOF</span>
 </span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="k">)</span><span class="s2">&quot;</span>
 </span></code></pre></div>
-<p><strong>Response:</strong>
+<p><strong>Response:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Parameter set created successfully&quot;</span><span class="p">,</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api_created_params&quot;</span><span class="p">,</span>
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="nt">&quot;file_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/params/api_created_params.yaml&quot;</span>
 </span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="via-python">Via Python</h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
@@ -3310,13 +3357,13 @@
 <hr />
 <h2 id="managing-parameter-sets">Managing Parameter Sets</h2>
 <h3 id="list-all-parameter-sets">List All Parameter Sets</h3>
-<p><strong>CLI:</strong>
+<p><strong>CLI:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>si-cli<span class="w"> </span>list-param-sets
-</span></code></pre></div></p>
-<p><strong>REST API:</strong>
+</span></code></pre></div>
+<p><strong>REST API:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets&quot;</span>
-</span></code></pre></div></p>
-<p><strong>Response:</strong>
+</span></code></pre></div>
+<p><strong>Response:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">[</span>
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="p">{</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
@@ -3329,34 +3376,34 @@
 </span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span>
 </span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="p">]</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Source Types:</strong>
 - <code>app</code> - Built-in parameter sets (cannot be deleted)
 - <code>user</code> - User-uploaded parameter sets (can be deleted)</p>
 <h3 id="view-parameter-set">View Parameter Set</h3>
-<p><strong>CLI:</strong>
+<p><strong>CLI:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>si-cli<span class="w"> </span>dump-param-set<span class="w"> </span>default
-</span></code></pre></div></p>
-<p><strong>REST API:</strong>
+</span></code></pre></div>
+<p><strong>REST API:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets/default&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p>Returns the raw YAML content.</p>
 <h3 id="delete-parameter-set">Delete Parameter Set</h3>
 <p><strong>Only user-uploaded parameter sets can be deleted.</strong></p>
-<p><strong>REST API:</strong>
+<p><strong>REST API:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets/my_custom_params&quot;</span>
-</span></code></pre></div></p>
-<p><strong>Response:</strong>
+</span></code></pre></div>
+<p><strong>Response:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">{</span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Parameter set deleted successfully&quot;</span>
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Error if built-in:</strong>
+</span></code></pre></div>
+<p><strong>Error if built-in:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">{</span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cannot delete built-in parameter sets&quot;</span><span class="p">,</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span><span class="nt">&quot;status_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">403</span>
 </span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="query-by-target-database">Query by Target Database</h3>
 <p>Find parameter sets that use a specific LanceDB directory:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param_sets/target/default_db&quot;</span>
@@ -3446,11 +3493,11 @@
 </span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">  </span><span class="nt">store</span><span class="p">:</span>
 </span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="w">    </span><span class="nt">data_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3_lancedb</span>
 </span></code></pre></div>
-<p><strong>Environment configuration:</strong>
+<p><strong>Environment configuration:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>s3
 </span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="nv">S3_ENDPOINT_URL</span><span class="o">=</span>http://seaweedfs:8333
 </span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="nv">S3_BUCKET_NAME</span><span class="o">=</span>soliplex-artifacts
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="multilingual-documents">Multilingual Documents</h3>
 <p>For documents in multiple languages:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">multilingual</span>
@@ -3516,51 +3563,47 @@
 <h3 id="parameter-set-versioning">Parameter Set Versioning</h3>
 <p>When upgrading models or changing configurations:</p>
 <ol>
-<li>
-<p><strong>Create new parameter set with version suffix:</strong>
-   <div class="language-yaml highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reports_v2</span>
+<li><strong>Create new parameter set with version suffix:</strong></li>
+</ol>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reports_v2</span>
 </span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="nt">store</span><span class="p">:</span>
 </span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">  </span><span class="nt">data_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reports_v2_db</span>
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Keep old parameter sets:</strong></p>
-</li>
+</span></code></pre></div>
+<ol>
+<li><strong>Keep old parameter sets:</strong></li>
 <li>Allows comparison between versions</li>
 <li>
 <p>Old databases remain accessible</p>
 </li>
 <li>
-<p><strong>Document changes:</strong>
-   <div class="language-yaml highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reports_v2</span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Report Processing v2 (upgraded to text-embedding-3-small)</span>
-</span></code></pre></div></p>
+<p><strong>Document changes:</strong></p>
 </li>
 </ol>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reports_v2</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Report Processing v2 (upgraded to text-embedding-3-small)</span>
+</span></code></pre></div>
 <h3 id="testing-parameter-sets">Testing Parameter Sets</h3>
 <p>Before processing large batches:</p>
 <ol>
-<li>
-<p><strong>Create test parameter set:</strong>
-   <div class="language-yaml highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test_params</span>
+<li><strong>Create test parameter set:</strong></li>
+</ol>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test_params</span>
 </span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="nt">store</span><span class="p">:</span>
 </span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">  </span><span class="nt">data_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test_db</span>
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Process small sample:</strong>
-   <div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1"># Create test batch with 5-10 documents</span>
+</span></code></pre></div>
+<ol>
+<li><strong>Process small sample:</strong></li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1"># Create test batch with 5-10 documents</span>
 </span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;source=test&quot;</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;name=Parameter Test&quot;</span>
 </span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>
 </span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="c1"># Start workflow with test parameters</span>
 </span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/start-workflows&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;batch_id=1&quot;</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;param_id=test_params&quot;</span>
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Evaluate results:</strong></p>
-</li>
+</span></code></pre></div>
+<ol>
+<li><strong>Evaluate results:</strong></li>
 <li>Query precision</li>
 <li>Processing time</li>
 <li>Storage size</li>
@@ -3568,12 +3611,12 @@
 <p>Embedding quality</p>
 </li>
 <li>
-<p><strong>Iterate and deploy:</strong>
-   <div class="language-yaml highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production_params</span>
-</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="c1"># Copy tested configuration</span>
-</span></code></pre></div></p>
+<p><strong>Iterate and deploy:</strong></p>
 </li>
 </ol>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production_params</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="c1"># Copy tested configuration</span>
+</span></code></pre></div>
 <h3 id="storage-organization">Storage Organization</h3>
 <p><strong>Organize databases by use case:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="c1"># Financial documents</span>
@@ -3601,23 +3644,23 @@
 <h3 id="parameter-set-not-found">Parameter Set Not Found</h3>
 <p><strong>Error:</strong> <code>404 Not Found</code> when accessing parameter set</p>
 <p><strong>Solutions:</strong>
-1. List available parameter sets:
-   <div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>si-cli<span class="w"> </span>list-param-sets
-</span></code></pre></div></p>
+1. List available parameter sets:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>si-cli<span class="w"> </span>list-param-sets
+</span></code></pre></div>
 <ol>
 <li>
 <p>Check parameter set ID matches exactly (case-sensitive)</p>
 </li>
 <li>
-<p>Verify file exists in <code>config/params/</code> or user uploads</p>
+<p>Verify file exists in <code>config/params/</code> (system) or <code>config/user_params/</code> (user uploads)</p>
 </li>
 </ol>
 <h3 id="invalid-yaml-syntax">Invalid YAML Syntax</h3>
 <p><strong>Error:</strong> <code>400 Bad Request - Invalid YAML syntax</code></p>
 <p><strong>Solutions:</strong>
-1. Validate YAML syntax:
-   <div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import yaml; yaml.safe_load(open(&#39;params.yaml&#39;))&quot;</span>
-</span></code></pre></div></p>
+1. Validate YAML syntax:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import yaml; yaml.safe_load(open(&#39;params.yaml&#39;))&quot;</span>
+</span></code></pre></div>
 <ol>
 <li>
 <p>Check indentation (use spaces, not tabs)</p>
@@ -3644,15 +3687,15 @@
 <p><strong>Solution:</strong>
 - Only parameter sets with <code>source: user</code> can be deleted
 - Built-in parameter sets are protected
-- Create a copy if you need to modify:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1"># Copy built-in set</span>
+- Create a copy if you need to modify:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1"># Copy built-in set</span>
 </span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets/default&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>my_params.yaml
 </span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>
 </span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="c1"># Modify and upload</span>
 </span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="c1"># Edit my_params.yaml, change id</span>
 </span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="w">  </span>--data-urlencode<span class="w"> </span><span class="s2">&quot;yaml_content@my_params.yaml&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="related-documentation">Related Documentation</h2>
 <ul>
@@ -3664,10 +3707,10 @@
 <hr />
 <h2 id="additional-resources">Additional Resources</h2>
 <ul>
-<li><strong>HaikuRAG Documentation:</strong> https://github.com/ggozad/haiku.rag</li>
-<li><strong>Docling Documentation:</strong> https://docling-project.github.io/docling/</li>
-<li><strong>Ollama Models:</strong> https://ollama.com/library</li>
-<li><strong>OpenAI Embeddings:</strong> https://platform.openai.com/docs/guides/embeddings</li>
+<li><strong>HaikuRAG Documentation:</strong> <a href="https://github.com/ggozad/haiku.rag">https://github.com/ggozad/haiku.rag</a></li>
+<li><strong>Docling Documentation:</strong> <a href="https://docling-project.github.io/docling/">https://docling-project.github.io/docling/</a></li>
+<li><strong>Ollama Models:</strong> <a href="https://ollama.com/library">https://ollama.com/library</a></li>
+<li><strong>OpenAI Embeddings:</strong> <a href="https://platform.openai.com/docs/guides/embeddings">https://platform.openai.com/docs/guides/embeddings</a></li>
 </ul>
 
 

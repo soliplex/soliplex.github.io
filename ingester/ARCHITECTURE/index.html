@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1199,6 +1199,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1216,8 +1220,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1231,8 +1236,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
@@ -1788,6 +1799,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -1886,7 +1899,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -1925,6 +1938,8 @@
       
         
           
+        
+      
         
       
         
@@ -1996,6 +2011,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -2310,7 +2353,7 @@
 <li><strong>Workflow Routes</strong> (<code>/api/v1/workflow/*</code>) - Workflow execution and monitoring</li>
 <li><strong>Stats Routes</strong> (<code>/api/v1/stats/*</code>) - System statistics and metrics</li>
 </ul>
-<p>Server entry point: <code>src/soliplex_ingester/server/__init__.py:30</code></p>
+<p>Server entry point: <code>src/soliplex/ingester/server/__init__.py:30</code></p>
 <h3 id="2-workflow-system">2. Workflow System</h3>
 <p>The workflow system orchestrates multi-step document processing pipelines:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Document → Validate → Parse → Chunk → Embed → Store
@@ -2322,16 +2365,18 @@
 <li><strong>RunGroup</strong> - Groups multiple workflow runs together</li>
 <li><strong>RunStep</strong> - Individual step execution within a workflow run</li>
 </ul>
-<p><strong>Step Types:</strong>
-- <code>INGEST</code> - Load document into system
-- <code>VALIDATE</code> - Validate document format and content
-- <code>PARSE</code> - Extract text and structure from document
-- <code>CHUNK</code> - Split document into semantic chunks
-- <code>EMBED</code> - Generate vector embeddings
-- <code>STORE</code> - Save to RAG system (LanceDB + HaikuRAG)
-- <code>ENRICH</code> - Add metadata or additional processing
-- <code>ROUTE</code> - Conditional routing logic</p>
-<p>Implementation: <code>src/soliplex_ingester/lib/wf/</code></p>
+<p><strong>Step Types:</strong></p>
+<ul>
+<li><code>INGEST</code> - Load document into system</li>
+<li><code>VALIDATE</code> - Validate document format and content</li>
+<li><code>PARSE</code> - Extract text and structure from document</li>
+<li><code>CHUNK</code> - Split document into semantic chunks</li>
+<li><code>EMBED</code> - Generate vector embeddings</li>
+<li><code>STORE</code> - Save to RAG system (LanceDB + HaikuRAG)</li>
+<li><code>ENRICH</code> - Add metadata or additional processing</li>
+<li><code>ROUTE</code> - Conditional routing logic</li>
+</ul>
+<p>Implementation: <code>src/soliplex/ingester/lib/wf/</code></p>
 <h3 id="3-worker-system">3. Worker System</h3>
 <p>Async workers process workflow steps concurrently:</p>
 <ul>
@@ -2340,23 +2385,29 @@
 <li>Automatic retry logic with configurable retry counts</li>
 <li>Health check/heartbeat system via <code>WorkerCheckin</code></li>
 </ul>
-<p>Worker implementation: <code>src/soliplex_ingester/lib/wf/runner.py</code></p>
+<p>Worker implementation: <code>src/soliplex/ingester/lib/wf/runner.py</code></p>
 <h3 id="4-storage-layer">4. Storage Layer</h3>
-<p><strong>Database:</strong>
-- SQLModel + SQLAlchemy with async support
-- Supports SQLite (dev) and PostgreSQL (production)
-- Alembic for migrations</p>
-<p><strong>File Storage:</strong>
-- Configurable backends (filesystem, S3-compatible via OpenDAL)
-- Separate storage locations for different artifact types:
-  - Raw documents
-  - Parsed markdown
-  - Parsed JSON
-  - Chunks
-  - Embeddings</p>
-<p><strong>Vector Storage:</strong>
-- LanceDB for vector embeddings
-- HaikuRAG client for retrieval operations</p>
+<p><strong>Database:</strong></p>
+<ul>
+<li>SQLModel + SQLAlchemy with async support</li>
+<li>Supports SQLite (dev) and PostgreSQL (production)</li>
+<li>Alembic for migrations</li>
+</ul>
+<p><strong>File Storage:</strong></p>
+<ul>
+<li>Configurable backends (filesystem, S3-compatible via OpenDAL)</li>
+<li>Separate storage locations for different artifact types:</li>
+<li>Raw documents</li>
+<li>Parsed markdown</li>
+<li>Parsed JSON</li>
+<li>Chunks</li>
+<li>Embeddings</li>
+</ul>
+<p><strong>Vector Storage:</strong></p>
+<ul>
+<li>LanceDB for vector embeddings</li>
+<li>HaikuRAG client for retrieval operations</li>
+</ul>
 <h3 id="5-document-processing-pipeline">5. Document Processing Pipeline</h3>
 <pre class="mermaid"><code>graph LR
     A[Upload Document] --&gt; B[Create DocumentURI]
@@ -2369,14 +2420,18 @@
     H --&gt; I[Store in LanceDB]
     I --&gt; J[Update RAG Index]</code></pre>
 <h3 id="6-external-services">6. External Services</h3>
-<p><strong>Docling Server:</strong>
-- Document parsing service
-- Extracts text, structure, and metadata
-- Configurable via <code>DOCLING_SERVER_URL</code></p>
-<p><strong>HaikuRAG:</strong>
-- RAG backend for document retrieval
-- Vector search and document management
-- Optional (controlled by <code>DO_RAG</code> setting)</p>
+<p><strong>Docling Server:</strong></p>
+<ul>
+<li>Document parsing service</li>
+<li>Extracts text, structure, and metadata</li>
+<li>Configurable via <code>DOCLING_SERVER_URL</code></li>
+</ul>
+<p><strong>HaikuRAG:</strong></p>
+<ul>
+<li>RAG backend for document retrieval</li>
+<li>Vector search and document management</li>
+<li>Optional (controlled by <code>DO_RAG</code> setting)</li>
+</ul>
 <h2 id="data-flow">Data Flow</h2>
 <h3 id="document-ingestion-flow">Document Ingestion Flow</h3>
 <ol>
@@ -2409,20 +2464,26 @@
 <li>External service URLs</li>
 <li>Workflow and parameter directories</li>
 </ul>
-<p>See <code>src/soliplex_ingester/lib/config.py:15</code> for full configuration schema.</p>
+<p>See <code>src/soliplex/ingester/lib/config.py:15</code> for full configuration schema.</p>
 <h2 id="scalability">Scalability</h2>
-<p><strong>Horizontal Scaling:</strong>
-- Multiple workers can run concurrently
-- Database row-level locking prevents duplicate processing
-- Stateless API servers can be load balanced</p>
-<p><strong>Vertical Scaling:</strong>
-- Configurable concurrency per worker
-- Batch size controls for embedding operations
-- Connection pooling for database access</p>
-<p><strong>Workflow Parallelism:</strong>
-- Multiple workflows can process simultaneously
-- Steps within a workflow run sequentially
-- Different documents process independently</p>
+<p><strong>Horizontal Scaling:</strong></p>
+<ul>
+<li>Multiple workers can run concurrently</li>
+<li>Database row-level locking prevents duplicate processing</li>
+<li>Stateless API servers can be load balanced</li>
+</ul>
+<p><strong>Vertical Scaling:</strong></p>
+<ul>
+<li>Configurable concurrency per worker</li>
+<li>Batch size controls for embedding operations</li>
+<li>Connection pooling for database access</li>
+</ul>
+<p><strong>Workflow Parallelism:</strong></p>
+<ul>
+<li>Multiple workflows can process simultaneously</li>
+<li>Steps within a workflow run sequentially</li>
+<li>Different documents process independently</li>
+</ul>
 <h2 id="technology-stack">Technology Stack</h2>
 <ul>
 <li><strong>Web Framework:</strong> FastAPI 0.120+</li>
@@ -2436,30 +2497,38 @@
 </ul>
 <h2 id="extension-points">Extension Points</h2>
 <p><strong>Custom Workflow Steps:</strong>
-Define custom step handlers by:
-1. Creating a new async function matching the EventHandler signature
-2. Registering in workflow YAML configuration
-3. Implementing retry logic and error handling</p>
+Define custom step handlers by:</p>
+<ol>
+<li>Creating a new async function matching the EventHandler signature</li>
+<li>Registering in workflow YAML configuration</li>
+<li>Implementing retry logic and error handling</li>
+</ol>
 <p><strong>Custom Storage Backends:</strong>
 Configure via <code>FILE_STORE_TARGET</code> environment variable and OpenDAL configuration.</p>
 <p><strong>Custom Lifecycle Events:</strong>
-Add event handlers in workflow configuration to respond to:
-- <code>GROUP_START</code> / <code>GROUP_END</code>
-- <code>ITEM_START</code> / <code>ITEM_END</code>
-- <code>STEP_START</code> / <code>STEP_END</code>
-- <code>ITEM_FAILED</code> / <code>STEP_FAILED</code></p>
+Add event handlers in workflow configuration to respond to:</p>
+<ul>
+<li><code>GROUP_START</code> / <code>GROUP_END</code></li>
+<li><code>ITEM_START</code> / <code>ITEM_END</code></li>
+<li><code>STEP_START</code> / <code>STEP_END</code></li>
+<li><code>ITEM_FAILED</code> / <code>STEP_FAILED</code></li>
+</ul>
 <h2 id="monitoring">Monitoring</h2>
-<p><strong>Database Tables:</strong>
-- <code>workflowrun</code> - Track run status and duration
-- <code>runstep</code> - Monitor individual step execution
-- <code>workcheckin</code> - Worker health and activity
-- <code>lifecyclehistory</code> - Audit trail of events</p>
-<p><strong>Metrics Available:</strong>
-- Document processing throughput
-- Step success/failure rates
-- Worker utilization
-- Processing durations
-- Batch completion times</p>
+<p><strong>Database Tables:</strong></p>
+<ul>
+<li><code>workflowrun</code> - Track run status and duration</li>
+<li><code>runstep</code> - Monitor individual step execution</li>
+<li><code>workcheckin</code> - Worker health and activity</li>
+<li><code>lifecyclehistory</code> - Audit trail of events</li>
+</ul>
+<p><strong>Metrics Available:</strong></p>
+<ul>
+<li>Document processing throughput</li>
+<li>Step success/failure rates</li>
+<li>Worker utilization</li>
+<li>Processing durations</li>
+<li>Batch completion times</li>
+</ul>
 <p>Access via <code>/api/v1/stats/*</code> endpoints.</p>
 
 

@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -449,6 +449,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#soliplex-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Soliplex Architecture
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#core-components" class="md-nav__link">
@@ -1448,6 +1459,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1462,8 +1477,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1477,8 +1493,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
@@ -1799,6 +1821,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -1897,7 +1921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -1936,6 +1960,8 @@
       
         
           
+        
+      
         
       
         
@@ -2020,6 +2046,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2052,6 +2106,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#soliplex-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Soliplex Architecture
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#core-components" class="md-nav__link">
@@ -2289,6 +2354,73 @@
 
 <h1 id="soliplex-documentation">Soliplex Documentation</h1>
 <p>Welcome to the Soliplex ecosystem documentation. Soliplex provides AI-powered retrieval-augmented generation capabilities for intelligent document search and question answering.</p>
+<h2 id="soliplex-architecture">Soliplex Architecture</h2>
+<pre class="mermaid"><code>graph TB
+
+    subgraph "User Interfaces"
+        FE["Frontend&lt;br/&gt;(Flutter / Dart)"]
+        TUI["Terminal UI&lt;br/&gt;(Textual)"]
+    end
+
+
+    subgraph "Backend"
+        SX["Soliplex&lt;br/&gt;(FastAPI)"]
+        MCP["MCP Server&lt;br/&gt;(FastMCP)"]
+    end
+
+    subgraph "AI &amp; Retrieval"
+        PAI["Pydantic AI&lt;br/&gt;Agents"]
+        HR["Haiku RAG&lt;br/&gt;(LanceDB)"]
+        HS["Haiku Skills"]
+    end
+
+
+    subgraph "Storage"
+        LDB["LanceDB&lt;br/&gt;(Vectors)"]
+        PG["PostgreSQL / SQLite&lt;br/&gt;(Metadata)"]
+    end
+    subgraph LLM["LLM Providers"]
+        OL["Ollama"]
+        OA["OpenAI"]
+        GE["Gemini"]
+        AN["Anthropic"]
+    end
+        subgraph "Ingestion Pipeline"
+        IA["Ingester Agents"]
+        SI["Soliplex Ingester"]
+        PS["PDF Splitter"]
+        DL["Docling"]
+    end
+    subgraph "Document Sources"
+        FS["Filesystem"]
+        SCM["GitHub / Gitea"]
+        WD["WebDAV"]
+        WEB["Web Pages"]
+        S3["S3"]
+    end
+
+
+    FE --&gt;|"AG-UI Protocol"| SX
+    TUI --&gt; SX
+    SX --&gt; PAI
+    SX --&gt; MCP
+    PAI --&gt; HR
+    PAI --&gt; HS
+    LDB --&gt; HR
+
+    FS --&gt; IA
+    SCM --&gt; IA
+    WD --&gt; IA
+    WEB --&gt; IA
+    S3 --&gt; IA
+    IA --&gt;|"Discovers &amp; fetches"| SI
+    PS --&gt;|"Splits large PDFs"| SI
+    SI --&gt;|"Parse, chunk, embed"| DL
+
+    PAI &lt;--&gt;|"Inference"| LLM
+
+    SI --&gt; LDB
+    SI --&gt; PG</code></pre>
 <h2 id="core-components">Core Components</h2>
 <h3 id="soliplex-platform"><a href="soliplex/overview/">Soliplex Platform</a></h3>
 <p>The main Soliplex RAG system with FastAPI backend and Flutter frontend.</p>
@@ -2308,14 +2440,14 @@
 - <a href="ingester/CLI/">CLI Reference</a>
 - <a href="ingester/CONFIGURATION/">Configuration</a>
 - <a href="ingester/DATABASE/">Database Schema</a>
-- <a href="ingester/WORKFLOWS/">Workflows</a></p>
+- <a href="ingester/WORKFLOWS/">Workflows</a>
+- <a href="ingester-agents/">Agents</a></p>
 <h2 id="user-interfaces">User Interfaces</h2>
 <h3 id="flutter-client">Flutter Client</h3>
 <p>Cross-platform mobile and desktop client application for Soliplex.</p>
 <p><strong>Quick Links:</strong>
-- <a href="flutter/guides/developer-setup/">Developer Setup Guide</a>
-- <a href="flutter/rules/flutter_rules/">Flutter Development Rules</a>
-- <a href="flutter/summary/client/">Client Summary</a></p>
+- <a href="frontend/docs/developer-setup.md">Developer Setup Guide</a>
+- <a href="flutter/docs/index.md">Client Summary</a></p>
 <h3 id="chatbot-widget"><a href="chatbot/readme/">Chatbot Widget</a></h3>
 <p>Embeddable Next.js chat widget for integrating Soliplex into web applications.</p>
 <p><strong>Quick Links:</strong>

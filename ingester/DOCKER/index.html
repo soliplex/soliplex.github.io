@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1199,6 +1199,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1216,8 +1220,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1231,8 +1236,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
@@ -2321,6 +2332,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -2419,7 +2432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -2458,6 +2471,8 @@
       
         
           
+        
+      
         
       
         
@@ -2529,6 +2544,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -3382,45 +3425,43 @@
 <h2 id="quick-start">Quick Start</h2>
 <h3 id="starting-services">Starting Services</h3>
 <ol>
-<li>
-<p><strong>Navigate to docker directory:</strong>
+<li><strong>Navigate to docker directory:</strong></li>
+</ol>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>docker
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Start all services:</strong>
+</span></code></pre></div>
+<ol>
+<li><strong>Start all services:</strong></li>
+</ol>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Verify services are running:</strong>
+</span></code></pre></div>
+<ol>
+<li><strong>Verify services are running:</strong></li>
+</ol>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker-compose<span class="w"> </span>ps
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Access the application:</strong></p>
-</li>
-<li><strong>Web UI</strong>: http://localhost:8002</li>
-<li><strong>API Documentation</strong>: http://localhost:8002/docs</li>
+</span></code></pre></div>
+<ol>
+<li><strong>Access the application:</strong></li>
+<li><strong>Web UI</strong>: <a href="http://localhost:8002">http://localhost:8002</a></li>
+<li><strong>API Documentation</strong>: <a href="http://localhost:8002/docs">http://localhost:8002/docs</a></li>
 <li><strong>PostgreSQL</strong>: localhost:5432</li>
 <li>
-<p><strong>SeaweedFS</strong>: http://localhost:8333 (S3) / http://localhost:9333 (Admin)</p>
+<p><strong>SeaweedFS</strong>: <a href="http://localhost:8333">http://localhost:8333</a> (S3) / <a href="http://localhost:9333">http://localhost:9333</a> (Admin)</p>
 </li>
 <li>
-<p><strong>View logs:</strong>
+<p><strong>View logs:</strong></p>
+</li>
+</ol>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># All services</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Specific service</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>soliplex_ingester
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Stop services:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker-compose<span class="w"> </span>down
-</span></code></pre></div></p>
-</li>
+</span></code></pre></div>
+<ol>
+<li><strong>Stop services:</strong></li>
 </ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker-compose<span class="w"> </span>down
+</span></code></pre></div>
 <hr />
 <h2 id="service-overview">Service Overview</h2>
 <h3 id="architecture-diagram">Architecture Diagram</h3>
@@ -3515,36 +3556,38 @@
 </tbody>
 </table>
 <h3 id="resource-requirements">Resource Requirements</h3>
-<p><strong>Minimum (Development - No GPU):</strong>
-- CPU: 4 cores
-- RAM: 8 GB
-- Disk: 20 GB</p>
-<p><strong>Recommended (Production with GPU):</strong>
-- CPU: 16+ cores
-- RAM: 64+ GB
-- GPU: NVIDIA GPU with 24+ GB VRAM (for Docling + Ollama)
-- Disk: 100+ GB</p>
+<p><strong>Minimum (Development - No GPU):</strong></p>
+<ul>
+<li>CPU: 4 cores</li>
+<li>RAM: 8 GB</li>
+<li>Disk: 20 GB</li>
+</ul>
+<p><strong>Recommended (Production with GPU):</strong></p>
+<ul>
+<li>CPU: 16+ cores</li>
+<li>RAM: 64+ GB</li>
+<li>GPU: NVIDIA GPU with 24+ GB VRAM (for Docling + Ollama)</li>
+<li>Disk: 100+ GB</li>
+</ul>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
 <h3 id="required-software">Required Software</h3>
 <ol>
-<li>
-<p><strong>Docker Engine 20.10+</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>--version
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Docker Compose 2.0+</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker-compose<span class="w"> </span>--version
-</span></code></pre></div></p>
-</li>
+<li><strong>Docker Engine 20.10+</strong></li>
 </ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>--version
+</span></code></pre></div>
+<ol>
+<li><strong>Docker Compose 2.0+</strong></li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker-compose<span class="w"> </span>--version
+</span></code></pre></div>
 <h3 id="for-gpu-support">For GPU Support</h3>
 <ol>
 <li><strong>NVIDIA Container Toolkit</strong></li>
 </ol>
 <p>Install NVIDIA Container Toolkit for GPU support:</p>
-<p><strong>Ubuntu/Debian:</strong>
+<p><strong>Ubuntu/Debian:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">distribution</span><span class="o">=</span><span class="k">$(</span>.<span class="w"> </span>/etc/os-release<span class="p">;</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$ID$VERSION_ID</span><span class="k">)</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nvidia.github.io/libnvidia-container/gpgkey<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>-L<span class="w"> </span>https://nvidia.github.io/libnvidia-container/<span class="nv">$distribution</span>/libnvidia-container.list<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
@@ -3554,10 +3597,10 @@
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nvidia-container-toolkit
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>docker
-</span></code></pre></div></p>
-<p><strong>Verify GPU access:</strong>
+</span></code></pre></div>
+<p><strong>Verify GPU access:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--gpus<span class="w"> </span>all<span class="w"> </span>nvidia/cuda:12.8.0-base-ubuntu22.04<span class="w"> </span>nvidia-smi
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="configuration">Configuration</h2>
 <h3 id="environment-variables">Environment Variables</h3>
@@ -3606,20 +3649,20 @@
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">docling_artifacts</span><span class="p">:</span><span class="w">    </span><span class="c1"># Docling temporary artifacts</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">ollama_img_data</span><span class="p">:</span><span class="w">      </span><span class="c1"># Ollama model files</span>
 </span></code></pre></div>
-<p><strong>Local bind mounts:</strong>
+<p><strong>Local bind mounts:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="l l-Scalar l-Scalar-Plain">./file_store:/var/soliplex/file_store</span><span class="w">   </span><span class="c1"># Document artifacts</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="l l-Scalar l-Scalar-Plain">./lancedb:/var/soliplex/lancedb</span><span class="w">         </span><span class="c1"># Vector database</span>
-</span></code></pre></div></p>
-<p><strong>Backup volumes:</strong>
+</span></code></pre></div>
+<p><strong>Backup volumes:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Backup PostgreSQL</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>pg_dump<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>soliplex_attrib<span class="w"> </span>&gt;<span class="w"> </span>backup.sql
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Backup volumes</span>
 </span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>postgres_data:/data<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/backup<span class="w"> </span>alpine<span class="w"> </span>tar<span class="w"> </span>czf<span class="w"> </span>/backup/postgres_data.tar.gz<span class="w"> </span>-C<span class="w"> </span>/data<span class="w"> </span>.
-</span></code></pre></div></p>
-<p><strong>Restore volumes:</strong>
+</span></code></pre></div>
+<p><strong>Restore volumes:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>postgres_data:/data<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/backup<span class="w"> </span>alpine<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;cd /data &amp;&amp; tar xzf /backup/postgres_data.tar.gz&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="gpu-configuration">GPU Configuration</h3>
 <p>The docker-compose.yml configures GPU access for Docling and Ollama services.</p>
 <p><strong>Important:</strong> Adjust <code>device_ids</code> based on your hardware:</p>
@@ -3631,21 +3674,23 @@
 </span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">          </span><span class="nt">device_ids</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;3&#39;</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># ← Change this to match your GPU ID</span>
 </span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">          </span><span class="nt">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpu</span><span class="p p-Indicator">]</span>
 </span></code></pre></div>
-<p><strong>Check available GPUs:</strong>
+<p><strong>Check available GPUs:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nvidia-smi<span class="w"> </span>-L
-</span></code></pre></div></p>
-<p><strong>Example output:</strong>
+</span></code></pre></div>
+<p><strong>Example output:</strong></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>GPU 0: NVIDIA A100-SXM4-80GB
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>GPU 1: NVIDIA A100-SXM4-80GB
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>GPU 2: NVIDIA A100-SXM4-80GB
 </span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>GPU 3: NVIDIA A100-SXM4-80GB
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Multiple services sharing one GPU:</strong></p>
-<p>The default configuration runs 3 Docling instances + Ollama all on GPU 3. This works if:
-- GPU has sufficient VRAM (24+ GB recommended)
-- Memory limits are properly configured
-- Workload is I/O bound (services wait on data)</p>
-<p><strong>Distribute across GPUs:</strong>
+<p>The default configuration runs 3 Docling instances + Ollama all on GPU 3. This works if:</p>
+<ul>
+<li>GPU has sufficient VRAM (24+ GB recommended)</li>
+<li>Memory limits are properly configured</li>
+<li>Workload is I/O bound (services wait on data)</li>
+</ul>
+<p><strong>Distribute across GPUs:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Docling on GPU 0</span>
 </span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nt">device_ids</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;0&#39;</span><span class="p p-Indicator">]</span>
 </span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
@@ -3657,7 +3702,7 @@
 </span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
 </span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="c1"># Ollama on GPU 3</span>
 </span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="nt">device_ids</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;3&#39;</span><span class="p p-Indicator">]</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="network-configuration">Network Configuration</h3>
 <p>All services run on the <code>soliplex_net</code> bridge network for internal communication.</p>
 <p><strong>Port Mappings:</strong></p>
@@ -3715,14 +3760,14 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Change ports if conflicts exist:</strong>
+<p><strong>Change ports if conflicts exist:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">ports</span><span class="p">:</span>
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8080:8000&quot;</span><span class="w">  </span><span class="c1"># Map to different host port</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="service-details">Service Details</h2>
 <h3 id="soliplex-ingester">Soliplex Ingester</h3>
-<p><strong>Configuration:</strong>
+<p><strong>Configuration:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">soliplex_ingester</span><span class="p">:</span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex_ingester:latest</span>
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="nt">environment</span><span class="p">:</span>
@@ -3739,11 +3784,11 @@
 </span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
 </span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./file_store:/var/soliplex/file_store</span>
 </span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./lancedb:/var/soliplex/lancedb</span>
-</span></code></pre></div></p>
-<p><strong>Building the image:</strong>
+</span></code></pre></div>
+<p><strong>Building the image:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># From project root</span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>soliplex_ingester:latest<span class="w"> </span>.
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Scaling workers:</strong></p>
 <p>The default configuration runs the API server with an integrated worker. For production, separate them:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># API Server</span>
@@ -3761,7 +3806,7 @@
 </span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="w">  </span><span class="c1"># ... rest of config</span>
 </span></code></pre></div>
 <h3 id="postgresql">PostgreSQL</h3>
-<p><strong>Configuration:</strong>
+<p><strong>Configuration:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nt">postgres</span><span class="p">:</span>
 </span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres:18-trixie</span>
 </span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span><span class="nt">environment</span><span class="p">:</span>
@@ -3773,7 +3818,7 @@
 </span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
 </span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres_data:/var/lib/postgresql</span>
 </span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./pgsql/config/init.sql:/docker-entrypoint-initdb.d/init.sql</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Initialization Script:</strong></p>
 <p>The <code>init.sql</code> script creates users and databases:</p>
 <div class="language-sql highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1">-- Create application user</span>
@@ -3793,12 +3838,12 @@
 <li>Restrict network access</li>
 <li>Enable SSL/TLS connections</li>
 </ol>
-<p><strong>Connection string format:</strong>
+<p><strong>Connection string format:</strong></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>postgresql+psycopg://user:password@host:port/database
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="docling-services">Docling Services</h3>
 <p>Docling converts PDF documents to markdown and structured JSON.</p>
-<p><strong>Configuration (per instance):</strong>
+<p><strong>Configuration (per instance):</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nt">docling</span><span class="p">:</span>
 </span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/docling-project/docling-serve-cu128</span>
 </span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="nt">environment</span><span class="p">:</span>
@@ -3824,7 +3869,7 @@
 </span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia</span>
 </span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a><span class="w">            </span><span class="nt">device_ids</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;3&#39;</span><span class="p p-Indicator">]</span>
 </span><span id="__span-25-25"><a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a><span class="w">            </span><span class="nt">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpu</span><span class="p p-Indicator">]</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Key Environment Variables:</strong></p>
 <ul>
 <li><code>DOCLING_SERVE_ENG_LOC_NUM_WORKERS: 4</code> - Layout analysis workers</li>
@@ -3842,7 +3887,7 @@
 <li><strong>Health checks:</strong> HAProxy routes around unhealthy instances</li>
 </ol>
 <p><strong>Without GPU:</strong></p>
-<p>Remove GPU configuration and use CPU-only image:
+<p>Remove GPU configuration and use CPU-only image:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nt">docling</span><span class="p">:</span>
 </span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/docling-project/docling-serve</span><span class="w">  </span><span class="c1"># CPU-only</span>
 </span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Remove nvidia runtime</span>
@@ -3851,17 +3896,17 @@
 </span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
 </span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16000M</span>
 </span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">      </span><span class="c1"># Remove GPU reservation</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="haproxy-load-balancer">HAProxy Load Balancer</h3>
 <p>HAProxy distributes requests across multiple Docling instances.</p>
-<p><strong>Configuration:</strong>
+<p><strong>Configuration:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nt">haproxy</span><span class="p">:</span>
 </span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/library/haproxy:3.3-alpine</span>
 </span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
 </span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5004:5004</span>
 </span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
 </span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>HAProxy Configuration (haproxy/haproxy.cfg):</strong></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>global
 </span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>    maxconn 256
@@ -3893,7 +3938,7 @@
 <p>Docling parsing is stateful for multi-step conversions. The ingester client uses cookies to ensure all requests for a document go to the same Docling instance.</p>
 <h3 id="ollama">Ollama</h3>
 <p>Ollama provides embedding generation for vector search.</p>
-<p><strong>Configuration:</strong>
+<p><strong>Configuration:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nt">ollama_img</span><span class="p">:</span>
 </span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ollama/ollama:latest</span>
 </span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ollama_img</span>
@@ -3909,21 +3954,21 @@
 </span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia</span>
 </span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="w">            </span><span class="nt">device_ids</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;3&#39;</span><span class="p p-Indicator">]</span>
 </span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a><span class="w">            </span><span class="nt">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpu</span><span class="p p-Indicator">]</span>
-</span></code></pre></div></p>
-<p><strong>Pull models:</strong>
+</span></code></pre></div>
+<p><strong>Pull models:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ollama_img<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>nomic-embed-text
 </span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ollama_img<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>llama2
-</span></code></pre></div></p>
-<p><strong>List installed models:</strong>
+</span></code></pre></div>
+<p><strong>List installed models:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ollama_img<span class="w"> </span>ollama<span class="w"> </span>list
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Ingester Configuration:</strong></p>
-<p>Set in <code>.env</code>:
+<p>Set in <code>.env</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nv">OLLAMA_BASE_URL</span><span class="o">=</span>http://ollama_img:11434
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="seaweedfs">SeaweedFS</h3>
 <p>SeaweedFS provides S3-compatible object storage for artifacts.</p>
-<p><strong>Configuration:</strong>
+<p><strong>Configuration:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nt">seaweedfs</span><span class="p">:</span>
 </span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/chrislusf/seaweedfs</span>
 </span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">server -s3 -s3.config=/config/config.json</span>
@@ -3933,7 +3978,7 @@
 </span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
 </span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">seaweedfs_data:/data</span>
 </span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./seaweedfs/config:/config</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Initialization:</strong></p>
 <p>The <code>seaweedfs-init</code> container runs setup:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="nt">seaweedfs-init</span><span class="p">:</span>
@@ -3943,7 +3988,7 @@
 </span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./seaweedfs/config/init.sh:/init.sh</span>
 </span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;/init.sh&quot;</span><span class="p p-Indicator">]</span>
 </span></code></pre></div>
-<p><strong>Example init.sh:</strong>
+<p><strong>Example init.sh:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="ch">#!/bin/sh</span>
 </span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="c1"># Wait for SeaweedFS to start</span>
 </span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>sleep<span class="w"> </span><span class="m">5</span>
@@ -3952,15 +3997,15 @@
 </span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span>http://seaweedfs:8333/soliplex-artifacts
 </span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>
 </span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="c1"># Configure credentials (in config.json)</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Ingester Configuration:</strong></p>
-<p>Set in <code>.env</code>:
+<p>Set in <code>.env</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>s3
 </span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="nv">S3_ENDPOINT_URL</span><span class="o">=</span>http://seaweedfs:8333
 </span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="nv">S3_ACCESS_KEY_ID</span><span class="o">=</span>your_access_key
 </span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="nv">S3_SECRET_ACCESS_KEY</span><span class="o">=</span>your_secret_key
 </span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="nv">S3_BUCKET_NAME</span><span class="o">=</span>soliplex-artifacts
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Alternative: Use Cloud S3</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="nv">FILE_STORE_TARGET</span><span class="o">=</span>s3
 </span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="nv">S3_ENDPOINT_URL</span><span class="o">=</span>https://s3.amazonaws.com
@@ -3973,13 +4018,15 @@
 <h2 id="authentication-setup">Authentication Setup</h2>
 <p>For production deployments with authentication, use <code>docker-compose.auth.yml</code>.</p>
 <h3 id="oauth2-proxy-stack">OAuth2 Proxy Stack</h3>
-<p>The auth configuration adds:
-- <strong>NGINX</strong> - Reverse proxy with SSL termination
-- <strong>OAuth2 Proxy</strong> - OIDC authentication
-- <strong>Soliplex Ingester</strong> - Configured to trust proxy headers</p>
-<p><strong>Start with authentication:</strong>
+<p>The auth configuration adds:</p>
+<ul>
+<li><strong>NGINX</strong> - Reverse proxy with SSL termination</li>
+<li><strong>OAuth2 Proxy</strong> - OIDC authentication</li>
+<li><strong>Soliplex Ingester</strong> - Configured to trust proxy headers</li>
+</ul>
+<p><strong>Start with authentication:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>docker-compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker-compose.auth.yml<span class="w"> </span>up<span class="w"> </span>-d
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="configuration_1">Configuration</h3>
 <ol>
 <li><strong>Create <code>.env.auth</code> file:</strong></li>
@@ -4014,14 +4061,14 @@
 <h2 id="production-deployment">Production Deployment</h2>
 <h3 id="security-best-practices">Security Best Practices</h3>
 <ol>
-<li>
-<p><strong>Use Strong Passwords:</strong>
+<li><strong>Use Strong Passwords:</strong></li>
+</ol>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="c1"># Generate secure password</span>
 </span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">32</span>
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Use Docker Secrets:</strong>
+</span></code></pre></div>
+<ol>
+<li><strong>Use Docker Secrets:</strong></li>
+</ol>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nt">secrets</span><span class="p">:</span>
 </span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="nt">db_password</span><span class="p">:</span>
 </span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">    </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./secrets/db_password.txt</span>
@@ -4032,27 +4079,25 @@
 </span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db_password</span>
 </span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
 </span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="w">      </span><span class="nt">POSTGRES_PASSWORD_FILE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/run/secrets/db_password</span>
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Restrict Network Access:</strong>
+</span></code></pre></div>
+<ol>
+<li><strong>Restrict Network Access:</strong></li>
+</ol>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="nt">services</span><span class="p">:</span>
 </span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="w">  </span><span class="nt">postgres</span><span class="p">:</span>
 </span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w">  </span><span class="c1"># Don&#39;t expose to host</span>
 </span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
 </span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex_net</span><span class="w">  </span><span class="c1"># Internal only</span>
-</span></code></pre></div></p>
-</li>
-<li>
-<p><strong>Enable SSL/TLS:</strong></p>
-</li>
+</span></code></pre></div>
+<ol>
+<li><strong>Enable SSL/TLS:</strong></li>
 </ol>
 <p>Use NGINX with Let's Encrypt certificates or cloud load balancer.</p>
 <ol>
-<li><strong>Scan Images:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>docker<span class="w"> </span>scan<span class="w"> </span>soliplex_ingester:latest
-</span></code></pre></div></li>
+<li><strong>Scan Images:</strong></li>
 </ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>docker<span class="w"> </span>scan<span class="w"> </span>soliplex_ingester:latest
+</span></code></pre></div>
 <h3 id="scaling-configuration">Scaling Configuration</h3>
 <p><strong>For high throughput:</strong></p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="nt">services</span><span class="p">:</span>
@@ -4118,239 +4163,263 @@
 <hr />
 <h2 id="monitoring-and-maintenance">Monitoring and Maintenance</h2>
 <h3 id="health-checks_1">Health Checks</h3>
-<p><strong>Check service status:</strong>
+<p><strong>Check service status:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>docker-compose<span class="w"> </span>ps
-</span></code></pre></div></p>
-<p><strong>View resource usage:</strong>
+</span></code></pre></div>
+<p><strong>View resource usage:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>docker<span class="w"> </span>stats
-</span></code></pre></div></p>
-<p><strong>Check specific service:</strong>
+</span></code></pre></div>
+<p><strong>Check specific service:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>curl<span class="w"> </span>http://localhost:8000/api/v1/stats/durations
-</span></code></pre></div></p>
+</span></code></pre></div>
+<p><strong>Use si-diag for diagnostics:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>si-diag<span class="w"> </span>batch<span class="w"> </span>list
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>si-diag<span class="w"> </span>status<span class="w"> </span>running
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>si-diag<span class="w"> </span>status<span class="w"> </span>recent<span class="w"> </span>hour<span class="w"> </span>--status<span class="w"> </span>FAILED
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>si-diag<span class="w"> </span>status<span class="w"> </span>details<span class="w"> </span><span class="m">1</span>
+</span></code></pre></div>
 <h3 id="log-management">Log Management</h3>
-<p><strong>View logs:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="c1"># All services</span>
-</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f
-</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>
-</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="c1"># Specific service</span>
-</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>soliplex_ingester
-</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a>
-</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="c1"># Last 100 lines</span>
-</span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>--tail<span class="o">=</span><span class="m">100</span><span class="w"> </span>docling
-</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a>
-</span><span id="__span-52-10"><a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a><span class="c1"># Since timestamp</span>
-</span><span id="__span-52-11"><a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-01-22T10:00:00
-</span></code></pre></div></p>
-<p><strong>Export logs:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>&gt;<span class="w"> </span>logs.txt
-</span></code></pre></div></p>
+<p><strong>View logs:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="c1"># All services</span>
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>
+</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="c1"># Specific service</span>
+</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>soliplex_ingester
+</span><span id="__span-53-6"><a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a>
+</span><span id="__span-53-7"><a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="c1"># Last 100 lines</span>
+</span><span id="__span-53-8"><a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>--tail<span class="o">=</span><span class="m">100</span><span class="w"> </span>docling
+</span><span id="__span-53-9"><a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a>
+</span><span id="__span-53-10"><a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a><span class="c1"># Since timestamp</span>
+</span><span id="__span-53-11"><a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-01-22T10:00:00
+</span></code></pre></div>
+<p><strong>Export logs:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>&gt;<span class="w"> </span>logs.txt
+</span></code></pre></div>
 <h3 id="database-maintenance">Database Maintenance</h3>
-<p><strong>Backup:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>pg_dump<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>soliplex_attrib<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span>backup_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span>.sql.gz
-</span></code></pre></div></p>
-<p><strong>Restore:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>gunzip<span class="w"> </span>&lt;<span class="w"> </span>backup_20260122.sql.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>soliplex_attrib
-</span></code></pre></div></p>
-<p><strong>Vacuum database:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>soliplex_attrib<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;VACUUM ANALYZE;&quot;</span>
-</span></code></pre></div></p>
+<p><strong>Backup:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>pg_dump<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>soliplex_attrib<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span>backup_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span>.sql.gz
+</span></code></pre></div>
+<p><strong>Restore:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>gunzip<span class="w"> </span>&lt;<span class="w"> </span>backup_20260122.sql.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>soliplex_attrib
+</span></code></pre></div>
+<p><strong>Vacuum database:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>soliplex_attrib<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;VACUUM ANALYZE;&quot;</span>
+</span></code></pre></div>
 <h3 id="vector-database-maintenance">Vector Database Maintenance</h3>
-<p><strong>Vacuum LanceDB:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8002/api/v1/lancedb/vacuum?db=default&quot;</span>
-</span></code></pre></div></p>
-<p><strong>Check database size:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>du<span class="w"> </span>-sh<span class="w"> </span>/var/soliplex/lancedb
-</span></code></pre></div></p>
+<p><strong>Vacuum LanceDB:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8002/api/v1/lancedb/vacuum?db=default&quot;</span>
+</span></code></pre></div>
+<p><strong>Check database size:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>du<span class="w"> </span>-sh<span class="w"> </span>/var/soliplex/lancedb
+</span></code></pre></div>
 <h3 id="updates">Updates</h3>
-<p><strong>Update images:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>docker-compose<span class="w"> </span>pull
-</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
-</span></code></pre></div></p>
-<p><strong>Update single service:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>docker-compose<span class="w"> </span>pull<span class="w"> </span>soliplex_ingester
-</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>soliplex_ingester
-</span></code></pre></div></p>
-<p><strong>Rebuild custom image:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>soliplex_ingester:latest<span class="w"> </span>.
+<p><strong>Update images:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>docker-compose<span class="w"> </span>pull
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
+</span></code></pre></div>
+<p><strong>Update single service:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>docker-compose<span class="w"> </span>pull<span class="w"> </span>soliplex_ingester
 </span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>soliplex_ingester
-</span></code></pre></div></p>
+</span></code></pre></div>
+<p><strong>Rebuild custom image:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>soliplex_ingester:latest<span class="w"> </span>.
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>soliplex_ingester
+</span></code></pre></div>
 <hr />
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="common-issues">Common Issues</h3>
 <h4 id="services-wont-start">Services Won't Start</h4>
-<p><strong>Check logs:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>&lt;service_name&gt;
-</span></code></pre></div></p>
-<p><strong>Check configuration:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>docker-compose<span class="w"> </span>config
-</span></code></pre></div></p>
-<p><strong>Validate environment variables:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>DOC_DB_URL
-</span></code></pre></div></p>
+<p><strong>Check logs:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>&lt;service_name&gt;
+</span></code></pre></div>
+<p><strong>Check configuration:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>docker-compose<span class="w"> </span>config
+</span></code></pre></div>
+<p><strong>Validate environment variables:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>DOC_DB_URL
+</span></code></pre></div>
 <h4 id="database-connection-errors">Database Connection Errors</h4>
 <p><strong>Error:</strong> <code>connection to server at "postgres" (172.18.0.2), port 5432 failed</code></p>
-<p><strong>Solutions:</strong>
-1. Verify postgres is running: <code>docker-compose ps postgres</code>
-2. Check network: <code>docker-compose exec soliplex_ingester ping postgres</code>
-3. Verify credentials in <code>DOC_DB_URL</code>
-4. Check postgres logs: <code>docker-compose logs postgres</code></p>
-<p><strong>Test connection:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>psql<span class="w"> </span><span class="s2">&quot;postgresql://soliplex_attrib:soliplex_attrib@postgres:5432/soliplex_attrib&quot;</span>
-</span></code></pre></div></p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Verify postgres is running: <code>docker-compose ps postgres</code></li>
+<li>Check network: <code>docker-compose exec soliplex_ingester ping postgres</code></li>
+<li>Verify credentials in <code>DOC_DB_URL</code></li>
+<li>Check postgres logs: <code>docker-compose logs postgres</code></li>
+</ol>
+<p><strong>Test connection:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>psql<span class="w"> </span><span class="s2">&quot;postgresql://soliplex_attrib:soliplex_attrib@postgres:5432/soliplex_attrib&quot;</span>
+</span></code></pre></div>
 <h4 id="gpu-not-available">GPU Not Available</h4>
 <p><strong>Error:</strong> <code>could not select device driver "" with capabilities: [[gpu]]</code></p>
-<p><strong>Solutions:</strong>
-1. Install NVIDIA Container Toolkit (see <a href="#prerequisites">Prerequisites</a>)
-2. Restart Docker daemon: <code>sudo systemctl restart docker</code>
-3. Verify GPU access: <code>docker run --rm --gpus all nvidia/cuda:12.8.0-base-ubuntu22.04 nvidia-smi</code></p>
-<p><strong>Check GPU usage:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>docling<span class="w"> </span>nvidia-smi
-</span></code></pre></div></p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Install NVIDIA Container Toolkit (see <a href="#prerequisites">Prerequisites</a>)</li>
+<li>Restart Docker daemon: <code>sudo systemctl restart docker</code></li>
+<li>Verify GPU access: <code>docker run --rm --gpus all nvidia/cuda:12.8.0-base-ubuntu22.04 nvidia-smi</code></li>
+</ol>
+<p><strong>Check GPU usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>docling<span class="w"> </span>nvidia-smi
+</span></code></pre></div>
 <h4 id="docling-memory-errors">Docling Memory Errors</h4>
 <p><strong>Error:</strong> <code>CUDA out of memory</code> or container crashes</p>
-<p><strong>Solutions:</strong>
-1. Reduce <code>DOCLING_NUM_THREADS</code> in docker-compose.yml
-2. Reduce <code>DOCLING_SERVE_ENG_LOC_NUM_WORKERS</code>
-3. Increase GPU memory by using dedicated GPU per instance
-4. Process smaller documents or reduce concurrency</p>
-<p><strong>Monitor memory:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>docker<span class="w"> </span>stats<span class="w"> </span>docling
-</span></code></pre></div></p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Reduce <code>DOCLING_NUM_THREADS</code> in docker-compose.yml</li>
+<li>Reduce <code>DOCLING_SERVE_ENG_LOC_NUM_WORKERS</code></li>
+<li>Increase GPU memory by using dedicated GPU per instance</li>
+<li>Process smaller documents or reduce concurrency</li>
+</ol>
+<p><strong>Monitor memory:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>docker<span class="w"> </span>stats<span class="w"> </span>docling
+</span></code></pre></div>
 <h4 id="port-conflicts">Port Conflicts</h4>
 <p><strong>Error:</strong> <code>bind: address already in use</code></p>
-<p><strong>Solutions:</strong>
-1. Check what's using the port:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a><span class="c1"># Linux/macOS</span>
-</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>lsof<span class="w"> </span>-i<span class="w"> </span>:8002
-</span><span id="__span-68-3"><a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a>
-</span><span id="__span-68-4"><a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a><span class="c1"># Windows</span>
-</span><span id="__span-68-5"><a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a>netstat<span class="w"> </span>-ano<span class="w"> </span><span class="p">|</span><span class="w"> </span>findstr<span class="w"> </span>:8002
-</span></code></pre></div></p>
+<p><strong>Solutions:</strong></p>
 <ol>
-<li>Change port mapping in docker-compose.yml:
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="nt">ports</span><span class="p">:</span>
-</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8080:8000&quot;</span><span class="w">  </span><span class="c1"># Use different host port</span>
-</span></code></pre></div></li>
+<li>Check what's using the port:</li>
 </ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="c1"># Linux/macOS</span>
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>lsof<span class="w"> </span>-i<span class="w"> </span>:8002
+</span><span id="__span-69-3"><a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>
+</span><span id="__span-69-4"><a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a><span class="c1"># Windows</span>
+</span><span id="__span-69-5"><a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>netstat<span class="w"> </span>-ano<span class="w"> </span><span class="p">|</span><span class="w"> </span>findstr<span class="w"> </span>:8002
+</span></code></pre></div>
+<ol>
+<li>Change port mapping in docker-compose.yml:</li>
+</ol>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="nt">ports</span><span class="p">:</span>
+</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8080:8000&quot;</span><span class="w">  </span><span class="c1"># Use different host port</span>
+</span></code></pre></div>
 <h4 id="volume-permission-errors">Volume Permission Errors</h4>
 <p><strong>Error:</strong> <code>permission denied</code> when accessing volumes</p>
-<p><strong>Solutions:</strong>
-1. Check ownership:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>ls<span class="w"> </span>-la<span class="w"> </span>./file_store<span class="w"> </span>./lancedb
-</span></code></pre></div></p>
+<p><strong>Solutions:</strong></p>
 <ol>
-<li>
-<p>Fix permissions:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span>:<span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span>./file_store<span class="w"> </span>./lancedb
-</span></code></pre></div></p>
-</li>
-<li>
-<p>Or use Docker's user mapping:
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;${UID}:${GID}&quot;</span>
-</span></code></pre></div></p>
-</li>
+<li>Check ownership:</li>
 </ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>ls<span class="w"> </span>-la<span class="w"> </span>./file_store<span class="w"> </span>./lancedb
+</span></code></pre></div>
+<ol>
+<li>Fix permissions:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span>:<span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span>./file_store<span class="w"> </span>./lancedb
+</span></code></pre></div>
+<ol>
+<li>Or use Docker's user mapping:</li>
+</ol>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;${UID}:${GID}&quot;</span>
+</span></code></pre></div>
 <h4 id="seaweedfs-connection-errors">SeaweedFS Connection Errors</h4>
 <p><strong>Error:</strong> <code>Unable to connect to S3 endpoint</code></p>
-<p><strong>Solutions:</strong>
-1. Verify SeaweedFS is running: <code>docker-compose ps seaweedfs</code>
-2. Check initialization completed: <code>docker-compose logs seaweedfs-init</code>
-3. Test S3 endpoint:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>curl<span class="w"> </span>http://localhost:8333
-</span></code></pre></div></p>
+<p><strong>Solutions:</strong></p>
 <ol>
-<li>Verify bucket exists:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>seaweedfs<span class="w"> </span>weed<span class="w"> </span>shell
-</span><span id="__span-74-2"><a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a>&gt;<span class="w"> </span>s3.bucket.list
-</span></code></pre></div></li>
+<li>Verify SeaweedFS is running: <code>docker-compose ps seaweedfs</code></li>
+<li>Check initialization completed: <code>docker-compose logs seaweedfs-init</code></li>
+<li>Test S3 endpoint:</li>
 </ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>curl<span class="w"> </span>http://localhost:8333
+</span></code></pre></div>
+<ol>
+<li>Verify bucket exists:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>seaweedfs<span class="w"> </span>weed<span class="w"> </span>shell
+</span><span id="__span-75-2"><a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a>&gt;<span class="w"> </span>s3.bucket.list
+</span></code></pre></div>
 <h4 id="haproxy-routing-issues">HAProxy Routing Issues</h4>
 <p><strong>Symptom:</strong> Requests timing out or routing to unhealthy Docling instances</p>
-<p><strong>Debug:</strong>
-1. Check HAProxy stats (if enabled):
-<div class="language-text highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>http://localhost:5004/stats
-</span></code></pre></div></p>
+<p><strong>Debug:</strong></p>
 <ol>
-<li>
-<p>View HAProxy logs:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>haproxy
-</span></code></pre></div></p>
-</li>
-<li>
-<p>Test Docling instances directly:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>curl<span class="w"> </span>http://localhost:5000/v1/health
-</span><span id="__span-77-2"><a id="__codelineno-77-2" name="__codelineno-77-2" href="#__codelineno-77-2"></a>curl<span class="w"> </span>http://localhost:5001/v1/health
-</span></code></pre></div></p>
-</li>
-<li>
-<p>Restart HAProxy:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>docker-compose<span class="w"> </span>restart<span class="w"> </span>haproxy
-</span></code></pre></div></p>
-</li>
+<li>Check HAProxy stats (if enabled):</li>
 </ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>http://localhost:5004/stats
+</span></code></pre></div>
+<ol>
+<li>View HAProxy logs:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>haproxy
+</span></code></pre></div>
+<ol>
+<li>Test Docling instances directly:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>curl<span class="w"> </span>http://localhost:5000/v1/health
+</span><span id="__span-78-2"><a id="__codelineno-78-2" name="__codelineno-78-2" href="#__codelineno-78-2"></a>curl<span class="w"> </span>http://localhost:5001/v1/health
+</span></code></pre></div>
+<ol>
+<li>Restart HAProxy:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>docker-compose<span class="w"> </span>restart<span class="w"> </span>haproxy
+</span></code></pre></div>
 <h3 id="performance-issues">Performance Issues</h3>
 <h4 id="slow-document-processing">Slow Document Processing</h4>
-<p><strong>Diagnose:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a><span class="c1"># Check worker activity</span>
-</span><span id="__span-79-2"><a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a>curl<span class="w"> </span>http://localhost:8002/api/v1/workflow/steps?status<span class="o">=</span>RUNNING
-</span><span id="__span-79-3"><a id="__codelineno-79-3" name="__codelineno-79-3" href="#__codelineno-79-3"></a>
-</span><span id="__span-79-4"><a id="__codelineno-79-4" name="__codelineno-79-4" href="#__codelineno-79-4"></a><span class="c1"># Check CPU/memory</span>
-</span><span id="__span-79-5"><a id="__codelineno-79-5" name="__codelineno-79-5" href="#__codelineno-79-5"></a>docker<span class="w"> </span>stats
-</span><span id="__span-79-6"><a id="__codelineno-79-6" name="__codelineno-79-6" href="#__codelineno-79-6"></a>
-</span><span id="__span-79-7"><a id="__codelineno-79-7" name="__codelineno-79-7" href="#__codelineno-79-7"></a><span class="c1"># Check Docling queue</span>
-</span><span id="__span-79-8"><a id="__codelineno-79-8" name="__codelineno-79-8" href="#__codelineno-79-8"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>docling<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>queue
-</span></code></pre></div></p>
-<p><strong>Solutions:</strong>
-1. Increase worker concurrency: <code>WORKER_TASK_COUNT=20</code>
-2. Add more Docling instances
-3. Increase <code>DOCLING_CONCURRENCY</code>
-4. Scale workers: <code>docker-compose up -d --scale soliplex_worker=5</code></p>
+<p><strong>Diagnose:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a><span class="c1"># Check worker activity with si-diag</span>
+</span><span id="__span-80-2"><a id="__codelineno-80-2" name="__codelineno-80-2" href="#__codelineno-80-2"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>si-diag<span class="w"> </span>status<span class="w"> </span>running
+</span><span id="__span-80-3"><a id="__codelineno-80-3" name="__codelineno-80-3" href="#__codelineno-80-3"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soliplex_ingester<span class="w"> </span>si-diag<span class="w"> </span>status<span class="w"> </span>recent<span class="w"> </span>hour
+</span><span id="__span-80-4"><a id="__codelineno-80-4" name="__codelineno-80-4" href="#__codelineno-80-4"></a>
+</span><span id="__span-80-5"><a id="__codelineno-80-5" name="__codelineno-80-5" href="#__codelineno-80-5"></a><span class="c1"># Or via API</span>
+</span><span id="__span-80-6"><a id="__codelineno-80-6" name="__codelineno-80-6" href="#__codelineno-80-6"></a>curl<span class="w"> </span>http://localhost:8002/api/v1/workflow/steps?status<span class="o">=</span>RUNNING
+</span><span id="__span-80-7"><a id="__codelineno-80-7" name="__codelineno-80-7" href="#__codelineno-80-7"></a>
+</span><span id="__span-80-8"><a id="__codelineno-80-8" name="__codelineno-80-8" href="#__codelineno-80-8"></a><span class="c1"># Check CPU/memory</span>
+</span><span id="__span-80-9"><a id="__codelineno-80-9" name="__codelineno-80-9" href="#__codelineno-80-9"></a>docker<span class="w"> </span>stats
+</span><span id="__span-80-10"><a id="__codelineno-80-10" name="__codelineno-80-10" href="#__codelineno-80-10"></a>
+</span><span id="__span-80-11"><a id="__codelineno-80-11" name="__codelineno-80-11" href="#__codelineno-80-11"></a><span class="c1"># Check Docling queue</span>
+</span><span id="__span-80-12"><a id="__codelineno-80-12" name="__codelineno-80-12" href="#__codelineno-80-12"></a>docker-compose<span class="w"> </span>logs<span class="w"> </span>docling<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>queue
+</span></code></pre></div>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Increase worker concurrency: <code>WORKER_TASK_COUNT=20</code></li>
+<li>Add more Docling instances</li>
+<li>Increase <code>DOCLING_CONCURRENCY</code></li>
+<li>Scale workers: <code>docker-compose up -d --scale soliplex_worker=5</code></li>
+</ol>
 <h4 id="high-memory-usage">High Memory Usage</h4>
-<p><strong>Monitor:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>docker<span class="w"> </span>stats<span class="w"> </span>--no-stream
-</span></code></pre></div></p>
-<p><strong>Solutions:</strong>
-1. Reduce concurrency settings
-2. Increase memory limits
-3. Add swap space (not recommended for production)
-4. Use smaller batch sizes</p>
+<p><strong>Monitor:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>docker<span class="w"> </span>stats<span class="w"> </span>--no-stream
+</span></code></pre></div>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Reduce concurrency settings</li>
+<li>Increase memory limits</li>
+<li>Add swap space (not recommended for production)</li>
+<li>Use smaller batch sizes</li>
+</ol>
 <h4 id="disk-space-issues">Disk Space Issues</h4>
-<p><strong>Check usage:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>docker<span class="w"> </span>system<span class="w"> </span>df
-</span></code></pre></div></p>
-<p><strong>Clean up:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a><span class="c1"># Remove unused images</span>
-</span><span id="__span-82-2"><a id="__codelineno-82-2" name="__codelineno-82-2" href="#__codelineno-82-2"></a>docker<span class="w"> </span>image<span class="w"> </span>prune<span class="w"> </span>-a
-</span><span id="__span-82-3"><a id="__codelineno-82-3" name="__codelineno-82-3" href="#__codelineno-82-3"></a>
-</span><span id="__span-82-4"><a id="__codelineno-82-4" name="__codelineno-82-4" href="#__codelineno-82-4"></a><span class="c1"># Remove stopped containers</span>
-</span><span id="__span-82-5"><a id="__codelineno-82-5" name="__codelineno-82-5" href="#__codelineno-82-5"></a>docker<span class="w"> </span>container<span class="w"> </span>prune
-</span><span id="__span-82-6"><a id="__codelineno-82-6" name="__codelineno-82-6" href="#__codelineno-82-6"></a>
-</span><span id="__span-82-7"><a id="__codelineno-82-7" name="__codelineno-82-7" href="#__codelineno-82-7"></a><span class="c1"># Remove unused volumes</span>
-</span><span id="__span-82-8"><a id="__codelineno-82-8" name="__codelineno-82-8" href="#__codelineno-82-8"></a>docker<span class="w"> </span>volume<span class="w"> </span>prune
-</span><span id="__span-82-9"><a id="__codelineno-82-9" name="__codelineno-82-9" href="#__codelineno-82-9"></a>
-</span><span id="__span-82-10"><a id="__codelineno-82-10" name="__codelineno-82-10" href="#__codelineno-82-10"></a><span class="c1"># Clean everything</span>
-</span><span id="__span-82-11"><a id="__codelineno-82-11" name="__codelineno-82-11" href="#__codelineno-82-11"></a>docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-a<span class="w"> </span>--volumes
-</span></code></pre></div></p>
+<p><strong>Check usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>docker<span class="w"> </span>system<span class="w"> </span>df
+</span></code></pre></div>
+<p><strong>Clean up:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-83-1"><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a><span class="c1"># Remove unused images</span>
+</span><span id="__span-83-2"><a id="__codelineno-83-2" name="__codelineno-83-2" href="#__codelineno-83-2"></a>docker<span class="w"> </span>image<span class="w"> </span>prune<span class="w"> </span>-a
+</span><span id="__span-83-3"><a id="__codelineno-83-3" name="__codelineno-83-3" href="#__codelineno-83-3"></a>
+</span><span id="__span-83-4"><a id="__codelineno-83-4" name="__codelineno-83-4" href="#__codelineno-83-4"></a><span class="c1"># Remove stopped containers</span>
+</span><span id="__span-83-5"><a id="__codelineno-83-5" name="__codelineno-83-5" href="#__codelineno-83-5"></a>docker<span class="w"> </span>container<span class="w"> </span>prune
+</span><span id="__span-83-6"><a id="__codelineno-83-6" name="__codelineno-83-6" href="#__codelineno-83-6"></a>
+</span><span id="__span-83-7"><a id="__codelineno-83-7" name="__codelineno-83-7" href="#__codelineno-83-7"></a><span class="c1"># Remove unused volumes</span>
+</span><span id="__span-83-8"><a id="__codelineno-83-8" name="__codelineno-83-8" href="#__codelineno-83-8"></a>docker<span class="w"> </span>volume<span class="w"> </span>prune
+</span><span id="__span-83-9"><a id="__codelineno-83-9" name="__codelineno-83-9" href="#__codelineno-83-9"></a>
+</span><span id="__span-83-10"><a id="__codelineno-83-10" name="__codelineno-83-10" href="#__codelineno-83-10"></a><span class="c1"># Clean everything</span>
+</span><span id="__span-83-11"><a id="__codelineno-83-11" name="__codelineno-83-11" href="#__codelineno-83-11"></a>docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-a<span class="w"> </span>--volumes
+</span></code></pre></div>
 <h3 id="recovery-procedures">Recovery Procedures</h3>
 <h4 id="reset-everything">Reset Everything</h4>
-<p><strong>⚠️ This deletes all data!</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-83-1"><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>docker-compose<span class="w"> </span>down<span class="w"> </span>-v
-</span><span id="__span-83-2"><a id="__codelineno-83-2" name="__codelineno-83-2" href="#__codelineno-83-2"></a>rm<span class="w"> </span>-rf<span class="w"> </span>./file_store/*<span class="w"> </span>./lancedb/*
-</span><span id="__span-83-3"><a id="__codelineno-83-3" name="__codelineno-83-3" href="#__codelineno-83-3"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
+<p><strong>This deletes all data!</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-84-1"><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>docker-compose<span class="w"> </span>down<span class="w"> </span>-v
+</span><span id="__span-84-2"><a id="__codelineno-84-2" name="__codelineno-84-2" href="#__codelineno-84-2"></a>rm<span class="w"> </span>-rf<span class="w"> </span>./file_store/*<span class="w"> </span>./lancedb/*
+</span><span id="__span-84-3"><a id="__codelineno-84-3" name="__codelineno-84-3" href="#__codelineno-84-3"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
 </span></code></pre></div>
 <h4 id="reset-database-only">Reset Database Only</h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-84-1"><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>docker-compose<span class="w"> </span>down
-</span><span id="__span-84-2"><a id="__codelineno-84-2" name="__codelineno-84-2" href="#__codelineno-84-2"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>docker_postgres_data
-</span><span id="__span-84-3"><a id="__codelineno-84-3" name="__codelineno-84-3" href="#__codelineno-84-3"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>postgres
-</span><span id="__span-84-4"><a id="__codelineno-84-4" name="__codelineno-84-4" href="#__codelineno-84-4"></a><span class="c1"># Wait for postgres to initialize</span>
-</span><span id="__span-84-5"><a id="__codelineno-84-5" name="__codelineno-84-5" href="#__codelineno-84-5"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-f<span class="w"> </span>/docker-entrypoint-initdb.d/init.sql
-</span><span id="__span-84-6"><a id="__codelineno-84-6" name="__codelineno-84-6" href="#__codelineno-84-6"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-85-1"><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>docker-compose<span class="w"> </span>down
+</span><span id="__span-85-2"><a id="__codelineno-85-2" name="__codelineno-85-2" href="#__codelineno-85-2"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>docker_postgres_data
+</span><span id="__span-85-3"><a id="__codelineno-85-3" name="__codelineno-85-3" href="#__codelineno-85-3"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>postgres
+</span><span id="__span-85-4"><a id="__codelineno-85-4" name="__codelineno-85-4" href="#__codelineno-85-4"></a><span class="c1"># Wait for postgres to initialize</span>
+</span><span id="__span-85-5"><a id="__codelineno-85-5" name="__codelineno-85-5" href="#__codelineno-85-5"></a>docker-compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-f<span class="w"> </span>/docker-entrypoint-initdb.d/init.sql
+</span><span id="__span-85-6"><a id="__codelineno-85-6" name="__codelineno-85-6" href="#__codelineno-85-6"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
 </span></code></pre></div>
 <h4 id="restart-single-service">Restart Single Service</h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-85-1"><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>docker-compose<span class="w"> </span>restart<span class="w"> </span>soliplex_ingester
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-86-1"><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>docker-compose<span class="w"> </span>restart<span class="w"> </span>soliplex_ingester
 </span></code></pre></div>
 <h4 id="force-recreate-service">Force Recreate Service</h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-86-1"><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--force-recreate<span class="w"> </span>soliplex_ingester
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-87-1"><a id="__codelineno-87-1" name="__codelineno-87-1" href="#__codelineno-87-1"></a>docker-compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--force-recreate<span class="w"> </span>soliplex_ingester
 </span></code></pre></div>
 <hr />
 <h2 id="additional-resources">Additional Resources</h2>
@@ -4359,9 +4428,9 @@
 <li><strong>API Reference:</strong> <a href="../API/">API.md</a></li>
 <li><strong>Configuration Guide:</strong> <a href="../CONFIGURATION/">CONFIGURATION.md</a></li>
 <li><strong>Authentication Guide:</strong> <a href="../AUTHENTICATION/">AUTHENTICATION.md</a></li>
-<li><strong>Docling Documentation:</strong> https://docling-project.github.io/docling/</li>
-<li><strong>Docker Compose Documentation:</strong> https://docs.docker.com/compose/</li>
-<li><strong>NVIDIA Container Toolkit:</strong> https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/</li>
+<li><strong>Docling Documentation:</strong> <a href="https://docling-project.github.io/docling/">https://docling-project.github.io/docling/</a></li>
+<li><strong>Docker Compose Documentation:</strong> <a href="https://docs.docker.com/compose/">https://docs.docker.com/compose/</a></li>
+<li><strong>NVIDIA Container Toolkit:</strong> <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/">https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/</a></li>
 </ul>
 <hr />
 <h2 id="getting-help">Getting Help</h2>

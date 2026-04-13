@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1026,14 +1026,25 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Tool Configurations">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skill Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skill Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#rag-search-related" class="md-nav__link">
+  <a href="#default-skill-configuration-kinds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        RAG / search-related
+        Default Skill Configuration Kinds
       
     </span>
   </a>
@@ -1351,6 +1362,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1365,8 +1380,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1380,8 +1396,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
@@ -1702,6 +1724,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -1800,7 +1824,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -1839,6 +1863,8 @@
       
         
           
+        
+      
         
       
         
@@ -1910,6 +1936,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -2010,14 +2064,25 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Tool Configurations">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skill Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skill Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#rag-search-related" class="md-nav__link">
+  <a href="#default-skill-configuration-kinds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        RAG / search-related
+        Default Skill Configuration Kinds
       
     </span>
   </a>
@@ -2242,67 +2307,132 @@ for configuring an agent.</p>
 </span></code></pre></div>
   Each tool mapping can contain additional elements, which are used to 
   configure the tool's behavior.</p>
-<h4 id="rag-search-related">RAG / search-related</h4>
-<p>The <code>soliplex.tools.search_documents</code> tool takes a number of configuration
-values.  <em>Exactly one</em> of the following two elements is required:</p>
+<h3 id="skill-configuration">Skill Configuration</h3>
 <ul>
-<li><code>rag_lancedb_stem</code> is a string:  it should be the "base name" (without
-  path or <code>.lancedb</code> suffix) of the LanceDB file containing the RAG document
-  data for the tool. This file must exist in the "standard" location
-  (typically under the <code>db/rag/</code> directory;  see below).</li>
+<li>
+<p><code>installation_skill_names</code> (a list of strings, default empty);  if set,
+  names the installation skills which are enabled for the room.</p>
+</li>
+<li>
+<p><code>skill_configs</code> (a list of mappings, default empty); if set, configue
+  skills locally to the room.</p>
+</li>
 </ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;room_id&gt;&quot;</span>
+<p>E.g.:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">skills</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">installation_skill_names</span><span class="p">:</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;bare-bones&quot;</span><span class="w">           </span><span class="c1"># a filesytem skill</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;image-generation&quot;</span><span class="w">     </span><span class="c1"># an entrypoint skill</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="nt">skill_configs</span><span class="p">:</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skill.rag&quot;</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">        </span><span class="nt">tool_names</span><span class="p">:</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;search&quot;</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;ask&quot;</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;get_document&quot;</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;list_documents&quot;</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;research&quot;</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rlm&quot;</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skill.rag&quot;</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
 </span></code></pre></div>
+<h4 id="default-skill-configuration-kinds">Default Skill Configuration Kinds</h4>
+<p>Soliplex provides two such skill configuration classes by default:
+one of kind <code>haiku.rag.skill.rag</code> and one of kind
+<code>haiku.rag.skill.rlm</code>.  Both of hese configuraions have options for
+configuring the RAG database and RAG client:</p>
 <ul>
-<li><code>rag_lancedb_override_path</code> is a string:  it should be a fully-qualified
-  pathname, including the suffix, of the LanceDB directory containing the RAG
-  document data for the tool. </li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">rag_lancedb_override_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&lt;path-to-rag-databases&gt;/&lt;room_id&gt;.&lt;extension&gt;&quot;</span>
-</span></code></pre></div>
-<p>Other, optional elements for the <code>search_documents</code> tool:</p>
+<li>
+<p>One of the following (exactly one must be provided):</p>
 <ul>
-<li><code>search_documents_limit</code> is a positive integer (default <code>5</code>), used to
-  control the number of results returned by the <code>search_documents</code> tool. E.g.:</li>
+<li>
+<p><code>rag_lancedb_stem</code>: a string, the "base name" (without path or
+  <code>.lancedb</code> suffix) of the LanceDB file containing the RAG document
+  data.  This file must exist in the standard location (typically
+  under the <code>db/rag/</code> directory; see <a href="./">rooms</a> for details).</p>
+</li>
+<li>
+<p><code>rag_lancedb_override_path</code>: a string, a fully-qualified pathname,
+  including the suffix, of the LanceDB directory.</p>
+</li>
 </ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">search_documents_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
-</span></code></pre></div>
-<p>Minimal <code>search_documents</code> configuration, with RAG database file found
-in the standard location:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">agent</span><span class="p">:</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">tools</span><span class="p">:</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tool_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.tools.search_documents&quot;</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">      </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;chat&quot;</span>
-</span></code></pre></div>
-<p>Minimal <code>search_documents</code> configuration, with RAG database file found
-in an overridden location:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">agent</span><span class="p">:</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">tools</span><span class="p">:</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tool_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.tools.search_documents&quot;</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">      </span><span class="nt">rag_lancedb_override_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/rag/db/filename.lancedb&quot;</span>
-</span></code></pre></div>
-<p>Maximal <code>search_documents</code> configuration</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">agent</span><span class="p">:</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nt">tools</span><span class="p">:</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tool_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.tools.search_documents&quot;</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">      </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;chat&quot;</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">      </span><span class="nt">search_documents_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
-</span></code></pre></div>
+</li>
+<li>
+<p><code>haiku_rag_config</code>: a path to the <code>haiku.rag.yaml</code> file used to configure
+  the RAG client.  If not absolute, this path is resolved relative to
+  the directory containing the room configuration file.  If passed,
+  values from this file are overlaid on the the installation configuration's
+  <code>haiku_rag_config</code>.</p>
+</li>
+</ul>
+<p>Skill configurations with the <code>kind</code> of <code>"haiku.rag.skill.rag"</code> have these
+additional options:</p>
+<ul>
+<li><code>tool_names</code> (a list of strings, from among this list:  <code>"search"</code>,
+  <code>"ask"</code>, <code>"list_documents"</code>, <code>"get_document"</code>, and <code>"research"</code>.
+  Defaults to <code>["search", "ask", "list_documents", "get_document"]</code>.</li>
+</ul>
+<p>Available tools:</p>
+<div class="language-text highlight"><pre><span></span><code>- `&quot;search&quot;` — semantic document search with multi-query expansion.
+  Gives the agent a `search` tool that returns ranked passages with
+  citations.
+
+- `&quot;list_documents&quot;` — list the documents in the RAG datbase.
+
+- `&quot;get_document&quot;` — return the content of a single document in the
+  RAG datbase.
+
+- `&quot;ask&quot;` — question-answering via a research graph.  Gives the agent
+  an `ask` tool that searches, synthesizes an answer with citations,
+  and caches results for similar follow-up questions.
+
+- `&quot;research&quot;` — deep research via a research graph. Gives the agent
+  a `research` tool that performs a more elaborate search, analysis,
+  and syntheses,. Slower than the `ask` tool, and more expensive in
+  terms of token budget, but potentially produces a higher-quality
+  result.
+</code></pre></div>
+<ul>
+<li><code>rag_features</code> (a list of strings) controls which haiku.rag toolsets
+  are enabled.  A deprecated alternative to <code>tool_names</code>:  each "features"
+  maps to one or more of the tools enumerated above.</li>
+</ul>
+<p>Available features:</p>
+<div class="language-text highlight"><pre><span></span><code>- `&quot;search&quot;` — equivalent to the `search` tool above.
+
+- `&quot;documents&quot;` — equivalent to the `list_documents` and `get_document`
+  tools above.
+
+- `&quot;qa&quot;` — equivalent to the `ask` tool above.
+
+- `&quot;analysis&quot;` — formerly equivalent to the `haiku.rag.skills.rml`
+  skill below.  This feature is no longer supported.
+</code></pre></div>
+<p>The <code>haiku.rag.skils.rlm</code> skill gives the agent an <code>analyze</code> tool that
+iteratively writes and executes Python code in a Docker sandbox with
+access to <code>haiku.rag</code> functions (<code>search</code>, <code>list_documents</code>, <code>get_document</code>,
+<code>llm</code>, etc.).  Suited for aggregation, multi-document comparison, and
+structured data extraction.  Requires Docker.  This skill does not offer
+any additional options.</p>
 <h3 id="quiz-related-elements">Quiz-related elements</h3>
 <ul>
 <li><code>quizzes</code> is a list of mappings (default <code>()</code>):  each mapping defines a
   quiz which can be run in the room (see <a href="../quizzes/">this page</a> for
   details of the quiz dataset).</li>
 </ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">quizzes</span><span class="p">:</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test_quiz&quot;</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test</span><span class="nv"> </span><span class="s">Quiz&quot;</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="nt">question_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/questions.json&quot;</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="nt">randomize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="nt">max_questions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">quizzes</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test_quiz&quot;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test</span><span class="nv"> </span><span class="s">Quiz&quot;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="nt">question_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/questions.json&quot;</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nt">randomize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="nt">max_questions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </span></code></pre></div>
 <h2 id="location-of-rag-database-files">Location of RAG database files</h2>
-<p>Rooms using the <code>search_documents</code> tool need to be able to find the
+<p>Rooms using the <code>haiku_chat</code> agent kind need to be able to find the
 LanceDB database containing the chunks and embeddings extracted by
 Haiku-RAG.  At present, there should be a single database per room,
 named by convention <code>&lt;stem&gt;.lancedb</code>, and stored in the <code>db/rag/</code>

@@ -17,7 +17,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1191,6 +1191,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1205,8 +1209,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1220,8 +1225,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
@@ -1542,6 +1553,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -1640,7 +1653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -1679,6 +1692,8 @@
       
         
           
+        
+      
         
       
         
@@ -1750,6 +1765,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -2244,7 +2287,7 @@
 <h2 id="system-requirements">System Requirements</h2>
 <h3 id="software-prerequisites">Software Prerequisites</h3>
 <ul>
-<li>[ ] <strong>Python 3.13+</strong> - Required for backend server</li>
+<li>[ ] <strong>Python 3.12+</strong> - Required for backend server</li>
 <li>[ ] <strong>pip</strong> - Python package installer (usually included with Python)</li>
 <li>[ ] <strong>Git</strong> - For cloning the repository</li>
 <li>[ ] <strong>Docker &amp; Docker Compose</strong> (Optional) - For containerized deployment</li>
@@ -2510,8 +2553,8 @@ an explanation of when to configure Soliplex using OS environment variables.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>soliplex-cli<span class="w"> </span>list-rooms<span class="w"> </span>example/minimal.yaml
 </span></code></pre></div>
 <p>You should see rooms like:
-- <code>ask_soliplex</code> - RAG-powered Soliplex documentation assistant
-- <code>haiku</code> - General purpose chat
+- <code>chat</code> - Conversational RAG with search and document retrieval
+- <code>search</code> - Search the knowledge base and answer questions
 - <code>joker</code> - Entertainment/joke generation
 - <code>faux</code> - Test room</p>
 <h3 id="step-12-start-backend-server">Step 12: Start Backend Server</h3>

@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -712,6 +712,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#running-behind-a-load-balancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Behind a Load Balancer
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1345,6 +1356,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1359,8 +1374,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1374,8 +1390,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
@@ -1696,6 +1718,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -1794,7 +1818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -1833,6 +1857,8 @@
       
         
           
+        
+      
         
       
         
@@ -1904,6 +1930,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -2028,6 +2082,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#running-behind-a-load-balancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Behind a Load Balancer
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2136,7 +2201,7 @@ to OpenAI and provides RAG functionality.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
 <li>
-<p>Python 3.13+</p>
+<p>Python 3.12+</p>
 </li>
 <li>
 <p>Access to LLM:</p>
@@ -2199,20 +2264,20 @@ configurations:</p>
 </li>
 <li>
 <p><code>example/installation.yaml</code> is a more fleshed-out example using Ollama:
-  it requires secrets for the exernal Model-Control Protocol (MCP) client
-  toosets for the room <code>mcptest</code>.</p>
+  it requires secrets for the external Model-Control Protocol (MCP) client
+  toolsets for the room <code>mcptest</code>.</p>
 </li>
 <li>
-<p><code>example/minimal-openai.yaml</code> is a minimal example using OpenAI: 
+<p><code>example/minimal-openai.yaml</code> is a minimal example using OpenAI:
   it requires no secrets beyond the <code>OPENAI_API_KEY</code>.</p>
 </li>
 <li>
-<p><code>example/installation.yaml</code> is a more fleshed-out example using OpenAI:
-  in addition tothe <code>OPENAI_API_KEY</code> secret, it requires secrets for the
-  exernal Model-Control Protocol (MCP) client toosets for the room <code>mcptest</code>.</p>
+<p><code>example/installation-openai.yaml</code> is a more fleshed-out example using OpenAI:
+  in addition to the <code>OPENAI_API_KEY</code> secret, it requires secrets for the
+  external Model-Control Protocol (MCP) client toolsets for the room <code>mcptest</code>.</p>
 </li>
 </ul>
-<p>Each installation configuration includes a number of rooms that </p>
+<p>Each installation configuration includes a number of rooms that</p>
 <ol>
 <li>Configure resources:</li>
 </ol>
@@ -2306,10 +2371,10 @@ configurations:</p>
 </ul>
 <p><strong>Hot Reload Options:</strong></p>
 <ul>
-<li><code>--reload {code,config,both}</code> / <code>-r {code,config,both}</code> - Enable hot reload</li>
-<li><code>code</code> - Watch Python source files for changes</li>
+<li><code>--reload {python,config,both}</code> / <code>-r {python,config,both}</code> - Enable hot reload</li>
+<li><code>python</code> - Watch Python source files for changes</li>
 <li><code>config</code> - Watch YAML configuration files for changes</li>
-<li><code>both</code> - Watch both code and config files</li>
+<li><code>both</code> - Watch both Python and config files</li>
 <li>
 <p>Example: <code>--reload both</code> or <code>-r both</code></p>
 </li>
@@ -2369,6 +2434,39 @@ configurations:</p>
 <p>To check server health:
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span>http://127.0.0.1:8000/health
 </span></code></pre></div></p>
+<h3 id="running-behind-a-load-balancer">Running Behind a Load Balancer</h3>
+<p>Several features of an installation configuration require special handling
+when running multiple Soliplex server instances behind a load balancer:</p>
+<ul>
+<li>
+<p>The SQLAlchemy DBURI used to store AGUI threads and runs should not
+  be configured to use the <code>sqlite</code> engine, using either the RAM-based
+  storage (the default), or a filesystem-based storage (<code>sqlite</code> does not
+  support multiple writers to a shared filesystem database).  Instead,
+  configure the SQLAlchemy using a supported relational database
+  server, as described <a href="../config/dburis/#thread_persistence_dburi">here</a>.</p>
+</li>
+<li>
+<p>The SQLAlchemy DBURI used to store authorization data should not
+  be configured to use the <code>sqlite</code> engine, using either the RAM-based
+  storage (the default), or a filesystem-based storage (<code>sqlite</code> does not
+  support multiple writers to a shared filesystem database).  Instead,
+  configure the SQLAlchemy using a supported relational database
+  server, as described <a href="../config/dburis/#authorization_dburi">here</a>.</p>
+</li>
+<li>
+<p>The <a href="../config/secrets/#session_middleware_token">secret</a> used to manage
+  session encryption should not be configured to use a <code>random_chars</code> secret
+  source, because that value cannot be shared across Soliplex server
+  instances.</p>
+</li>
+<li>
+<p>The <a href="../config/secrets/#url_safe_token_secret">secret</a> used to generate
+  bearer tokens for MCP clients should not be configured to use the
+  <code>random_chars</code> secret source, because that value cannot be shared across
+  Soliplex server instances.</p>
+</li>
+</ul>
 <h2 id="api-endpoints">API Endpoints</h2>
 <p>If the <code>soliplex-cli</code> server is running, you can browse the
 <a href="http://localhost:8000/docs">live OpenAPI documentation</a>.</p>

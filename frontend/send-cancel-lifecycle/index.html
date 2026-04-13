@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://soliplex.github.io/flutter/APPSHELL_EXTRACTION/">
+        <link rel="canonical" href="https://soliplex.github.io/frontend/send-cancel-lifecycle/">
       
       
       
@@ -17,11 +17,11 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>AppShell Extraction Branch - Soliplex</title>
+        <title>Send and Cancel Message Lifecycle - Soliplex</title>
       
     
     
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#appshell-extraction-branch" class="md-skip">
+        <a href="#send-and-cancel-message-lifecycle" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AppShell Extraction Branch
+              Send and Cancel Message Lifecycle
             
           </span>
         </div>
@@ -1191,6 +1191,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1205,8 +1209,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1220,8 +1225,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
@@ -1542,6 +1553,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -1640,7 +1653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/developer-setup/" class="md-nav__link">
+      <a href="../developer-setup/" class="md-nav__link">
         
   
   
@@ -1679,6 +1692,8 @@
       
         
           
+        
+      
         
       
         
@@ -1763,6 +1778,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1797,22 +1840,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-this-branch-does" class="md-nav__link">
+  <a href="#core-principle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What This Branch Does
+        Core principle
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="What This Branch Does">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-send-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two send paths
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two send paths">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#before-main-branch" class="md-nav__link">
+  <a href="#new-thread-roomstatesendtonewthread" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Before (main branch)
+        New thread (RoomState.sendToNewThread)
       
     </span>
   </a>
@@ -1820,10 +1896,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#after-this-branch" class="md-nav__link">
+  <a href="#existing-thread-threadviewstatesendmessage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        After (this branch)
+        Existing thread (ThreadViewState.sendMessage)
       
     </span>
   </a>
@@ -1836,33 +1912,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
+  <a href="#cancel-paths" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture
+        Cancel paths
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration-options" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration Options
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration Options">
+    <nav class="md-nav" aria-label="Cancel paths">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#soliplexconfig" class="md-nav__link">
+  <a href="#cancel-during-spawn-cancelrun-cancelspawn" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SoliplexConfig
+        Cancel during spawn (cancelRun / cancelSpawn)
       
     </span>
   </a>
@@ -1870,32 +1935,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#cancel-during-active-run-cancelrun" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Features
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#themeconfig" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ThemeConfig
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#routeconfig" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        RouteConfig
+        Cancel during active run (cancelRun)
       
     </span>
   </a>
@@ -1908,33 +1951,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#file-organization" class="md-nav__link">
+  <a href="#dispose-behavior" class="md-nav__link">
     <span class="md-ellipsis">
       
-        File Organization
+        Dispose behavior
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing-with-whitelabel" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing with Whitelabel
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Testing with Whitelabel">
+    <nav class="md-nav" aria-label="Dispose behavior">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#local-development-setup" class="md-nav__link">
+  <a href="#threadviewstatedispose-navigate-between-threads" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Local Development Setup
+        ThreadViewState.dispose (navigate between threads)
       
     </span>
   </a>
@@ -1942,10 +1974,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#running-integration-tests" class="md-nav__link">
+  <a href="#roomstatedispose-leave-room" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running Integration Tests
+        RoomState.dispose (leave room)
       
     </span>
   </a>
@@ -1953,21 +1985,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#verifying-white-label-customization" class="md-nav__link">
+  <a href="#runregistrydispose-app-shutdown" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verifying White-Label Customization
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#testing-configuration-changes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing Configuration Changes
+        RunRegistry.dispose (app shutdown)
       
     </span>
   </a>
@@ -1980,55 +2001,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-commits" class="md-nav__link">
+  <a href="#scenarios" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Commits
+        Scenarios
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#production-deployment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Production Deployment
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#whats-not-included-v1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What's NOT Included (v1)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#roadmap-configuration-vs-composition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Roadmap: Configuration vs Composition
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Roadmap: Configuration vs Composition">
+    <nav class="md-nav" aria-label="Scenarios">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#current-v1-configuration-based-skinning" class="md-nav__link">
+  <a href="#send-on-thread-a-navigate-to-thread-b-mid-run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Current: v1 Configuration-Based (Skinning)
+        Send on thread A, navigate to thread B mid-run
       
     </span>
   </a>
@@ -2036,10 +2024,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#future-v2-composition-based-framework" class="md-nav__link">
+  <a href="#send-on-thread-a-navigate-away-mid-spawn" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Future: v2 Composition-Based (Framework)
+        Send on thread A, navigate away mid-spawn
       
     </span>
   </a>
@@ -2047,10 +2035,93 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#v2-migration-path" class="md-nav__link">
+  <a href="#multiple-concurrent-runs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        v2 Migration Path
+        Multiple concurrent runs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send-to-new-thread-navigate-to-lobby-mid-spawn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Send to new thread, navigate to lobby mid-spawn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cancel-mid-spawn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cancel mid-spawn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cancel-mid-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cancel mid-run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spawn-error-concurrent-with-cancel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spawn error concurrent with cancel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#app-closed-during-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        App closed during run
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known limitations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Known limitations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rapid-navigation-miss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rapid navigation miss
       
     </span>
   </a>
@@ -2090,316 +2161,199 @@
   
 
 
-<h1 id="appshell-extraction-branch">AppShell Extraction Branch</h1>
-<p>Branch: <code>feat/appshell-extraction</code></p>
-<p>This branch extracts the Soliplex Flutter app into a reusable white-label shell
-that external teams can customize with their own branding, features, and backend.</p>
-<h2 id="what-this-branch-does">What This Branch Does</h2>
-<h3 id="before-main-branch">Before (main branch)</h3>
-<p>The Soliplex app was a monolithic Flutter application with hardcoded:</p>
-<ul>
-<li>App name ("Soliplex")</li>
-<li>Backend URL (<code>https://api.soliplex.ai</code>)</li>
-<li>Theme colors</li>
-<li>Feature availability</li>
-<li>Global state scattered throughout</li>
-</ul>
-<h3 id="after-this-branch">After (this branch)</h3>
-<p>The app is now a <strong>configurable shell</strong> that:</p>
-<ol>
-<li>Exports a single entry point: <code>runSoliplexApp(config: SoliplexConfig(...))</code></li>
-<li>Accepts all customization via <code>SoliplexConfig</code></li>
-<li>Uses no global state - configuration flows through Riverpod providers</li>
-<li>Can be imported as a package dependency</li>
-</ol>
-<h2 id="architecture">Architecture</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌─────────────────────────────────────────────────────────────────┐
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│                     White-Label App (e.g., ACME Box)            │
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│  ┌───────────────────────────────────────────────────────────┐  │
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│  │  main.dart                                                 │  │
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│  │    runSoliplexApp(config: SoliplexConfig(...))            │  │
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│  └───────────────────────────────────────────────────────────┘  │
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│                              │                                   │
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│                              ▼                                   │
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│  ┌───────────────────────────────────────────────────────────┐  │
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│  │  soliplex_frontend (this package)                         │  │
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│  │    - SoliplexConfig (branding, features, theme, routes)   │  │
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│  │    - SoliplexApp (MaterialApp + router)                   │  │
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│  │    - All screens, widgets, providers                      │  │
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│  └───────────────────────────────────────────────────────────┘  │
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│                              │                                   │
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│                              ▼                                   │
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│  ┌───────────────────────────────────────────────────────────┐  │
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│  │  soliplex_client (pure Dart)                              │  │
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│  │    - REST API client                                       │  │
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│  │    - AG-UI protocol                                        │  │
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│  └───────────────────────────────────────────────────────────┘  │
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>└─────────────────────────────────────────────────────────────────┘
-</span></code></pre></div>
-<h2 id="configuration-options">Configuration Options</h2>
-<h3 id="soliplexconfig">SoliplexConfig</h3>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">const</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SoliplexConfig</span><span class="p">(</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nl">appName:</span><span class="w"> </span><span class="s1">&#39;ACME Box&#39;</span><span class="p">,</span><span class="w">                           </span><span class="c1">// Display name</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nl">defaultBackendUrl:</span><span class="w"> </span><span class="s1">&#39;https://api.acme.com&#39;</span><span class="p">,</span><span class="w">     </span><span class="c1">// API endpoint</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nl">features:</span><span class="w"> </span><span class="n">Features</span><span class="p">(...),</span><span class="w">                        </span><span class="c1">// Feature flags</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nl">theme:</span><span class="w"> </span><span class="n">ThemeConfig</span><span class="p">(...),</span><span class="w">                        </span><span class="c1">// Custom colors</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nl">routes:</span><span class="w"> </span><span class="n">RouteConfig</span><span class="p">(...),</span><span class="w">                       </span><span class="c1">// Navigation</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">);</span>
-</span></code></pre></div>
-<h3 id="features">Features</h3>
+<h1 id="send-and-cancel-message-lifecycle">Send and Cancel Message Lifecycle</h1>
+<p>How message sending and cancellation work across the room module.</p>
+<h2 id="core-principle">Core principle</h2>
+<p><strong>Only the cancel button cancels work.</strong> Navigation, dispose, backgrounding,
+closing the app — none of these cancel a session or spawn. They only stop
+observing. The backend run completes independently, and the user sees results
+when they return.</p>
+<h2 id="components">Components</h2>
 <table>
 <thead>
 <tr>
-<th>Flag</th>
-<th>Default</th>
-<th>Description</th>
+<th>Component</th>
+<th>Role</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>enableHttpInspector</code></td>
-<td><code>true</code></td>
-<td>Show HTTP traffic inspector</td>
+<td><code>RoomState</code></td>
+<td>Coordinates room-level state. Owns the no-thread send path (<code>sendToNewThread</code>).</td>
 </tr>
 <tr>
-<td><code>enableQuizzes</code></td>
-<td><code>true</code></td>
-<td>Enable quiz feature</td>
+<td><code>ThreadViewState</code></td>
+<td>State for a single thread. Owns the existing-thread send path (<code>sendMessage</code>).</td>
 </tr>
 <tr>
-<td><code>enableSettings</code></td>
-<td><code>true</code></td>
-<td>Show settings screen</td>
+<td><code>RunRegistry</code></td>
+<td>Holds sessions across navigation. Keyed by <code>ThreadKey</code>. One per app.</td>
 </tr>
 <tr>
-<td><code>showVersionInfo</code></td>
-<td><code>true</code></td>
-<td>Display version in settings</td>
+<td><code>AgentRuntime</code></td>
+<td>Spawns sessions. Owns session lifetime and thread history cache.</td>
+</tr>
+<tr>
+<td><code>ChatInput</code></td>
+<td>UI widget. Shows send or cancel button based on <code>sessionState</code> signal.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="themeconfig">ThemeConfig</h3>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">ThemeConfig</span><span class="p">(</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nl">lightColors:</span><span class="w"> </span><span class="n">SoliplexColors</span><span class="p">(</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nl">background:</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="mh">0xFFFFFFFF</span><span class="p">),</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nl">foreground:</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="mh">0xFF000000</span><span class="p">),</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nl">primary:</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="mh">0xFF6200EE</span><span class="p">),</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="c1">// ... 15 color tokens total</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="p">),</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="nl">darkColors:</span><span class="w"> </span><span class="n">SoliplexColors</span><span class="p">(...),</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">)</span>
+<h2 id="state-machine">State machine</h2>
+<p>Both <code>RoomState</code> and <code>ThreadViewState</code> track <code>_sessionState: Signal&lt;AgentSessionState?&gt;</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>null (idle) ──→ spawning ──→ running ──→ null (terminal)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                  │                        ↑
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                  └── cancel / error ──────┘
 </span></code></pre></div>
-<h3 id="routeconfig">RouteConfig</h3>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">RouteConfig</span><span class="p">(</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nl">showHomeRoute:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">      </span><span class="c1">// Show home/connect screen</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nl">showRoomsRoute:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">     </span><span class="c1">// Show rooms list</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nl">initialRoute:</span><span class="w"> </span><span class="s1">&#39;/rooms&#39;</span><span class="p">,</span><span class="w">   </span><span class="c1">// Starting route</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">)</span>
-</span></code></pre></div>
-<h2 id="file-organization">File Organization</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lib/
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>├── soliplex_frontend.dart      # Public API exports
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>├── run_soliplex_app.dart       # Entry point function
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>├── app.dart                    # SoliplexApp widget
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>├── core/
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>│   ├── models/
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>│   │   ├── soliplex_config.dart   # Root config
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>│   │   ├── features.dart          # Feature flags
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>│   │   ├── theme_config.dart      # Theme wrapper
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>│   │   └── route_config.dart      # Navigation config
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>│   ├── providers/
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>│   │   ├── shell_config_provider.dart  # Injected config
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>│   │   └── config_provider.dart        # Runtime state
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>│   └── router/
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>│       └── app_router.dart        # GoRouter setup
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>├── design/
-</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>│   └── tokens/
-</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>│       └── colors.dart            # SoliplexColors
-</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>└── features/                      # Screen implementations
-</span></code></pre></div>
-<h2 id="testing-with-whitelabel">Testing with Whitelabel</h2>
-<p>The <a href="https://github.com/soliplex/whitelabel">soliplex/whitelabel</a> repository
-provides an example white-label app that consumes this package.</p>
-<h3 id="local-development-setup">Local Development Setup</h3>
+<p><code>_sessionState</code> serves three roles:</p>
 <ol>
-<li>Clone both repositories side-by-side:</li>
+<li><strong>Concurrency guard</strong> — <code>sendMessage</code>/<code>sendToNewThread</code> reject if non-null.</li>
+<li><strong>UI signal</strong> — <code>ChatInput</code> watches it to show the cancel button.</li>
+<li><strong>Error suppression</strong> — if null in the catch block, the spawn was cancelled
+   and the error is swallowed.</li>
 </ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>~/dev
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/soliplex/flutter.git<span class="w"> </span>soliplex-flutter
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/soliplex/whitelabel.git<span class="w"> </span>whitelabel
+<h2 id="two-send-paths">Two send paths</h2>
+<h3 id="new-thread-roomstatesendtonewthread">New thread (<code>RoomState.sendToNewThread</code>)</h3>
+<p>No thread exists. The spawn creates one server-side.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>1. Guard: sessionState != null → reject
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>2. Set sessionState = spawning
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>3. runtime.spawn(roomId, prompt)  [no threadId]
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>4. Track _pendingSpawn for cancel detection
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>5. await spawn
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>6. Staleness check: _pendingSpawn != spawnFuture → cancelled, return
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>7. Null _pendingSpawn and _sessionState
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>8. Register session in RunRegistry
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>9. Check _isDisposed → return if disposed
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>10. Create ThreadViewState, attach session, navigate
 </span></code></pre></div>
-<ol>
-<li>Checkout the appshell branch:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>soliplex-flutter
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>feat/appshell-extraction
+<h3 id="existing-thread-threadviewstatesendmessage">Existing thread (<code>ThreadViewState.sendMessage</code>)</h3>
+<p>Thread exists. The spawn continues an existing conversation.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>1. Guard: sessionState != null → reject
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>2. Set sessionState = spawning
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>3. runtime.spawn(roomId, prompt, threadId)
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>4. Track _pendingSpawn for cancel detection
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>5. await spawn
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>6. Staleness check: _pendingSpawn != spawnFuture → cancelled, return
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>7. Null _pendingSpawn
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>8. Register session in RunRegistry  [before _isDisposed check]
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>9. Check _isDisposed → return if disposed
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>10. Attach session (sets sessionState = session.state, subscribes to runState)
 </span></code></pre></div>
-<ol>
-<li>Configure whitelabel to use local path:</li>
-</ol>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># ~/dev/whitelabel/pubspec.yaml</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">dependencies</span><span class="p">:</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">soliplex_frontend</span><span class="p">:</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../soliplex-flutter</span>
+<h2 id="cancel-paths">Cancel paths</h2>
+<h3 id="cancel-during-spawn-cancelrun-cancelspawn">Cancel during spawn (<code>cancelRun</code> / <code>cancelSpawn</code>)</h3>
+<p>User clicks the cancel button while the spawn is awaiting.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>1. Null _pendingSpawn (triggers staleness check in sendMessage/sendToNewThread)
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>2. Null _sessionState (unblocks UI, suppresses error in catch)
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>3. Fire-and-forget: when spawn completes, cancel and dispose the session
 </span></code></pre></div>
-<ol>
-<li>Run the whitelabel app:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>~/dev/whitelabel
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>flutter<span class="w"> </span>pub<span class="w"> </span>get
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>macos<span class="w">   </span><span class="c1"># or -d chrome --web-port 59003</span>
+<p>The <code>sendMessage</code>/<code>sendToNewThread</code> method resumes from await, sees
+<code>_pendingSpawn != spawnFuture</code>, and returns early. The session is never
+registered in the registry.</p>
+<h3 id="cancel-during-active-run-cancelrun">Cancel during active run (<code>cancelRun</code>)</h3>
+<p>User clicks the cancel button while a session is streaming.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>1. _pendingSpawn is null → falls through
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>2. _activeSession?.cancel()
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>3. Session transitions to CancelledState
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>4. _onRunState handles CancelledState → detach, apply conversation
 </span></code></pre></div>
-<h3 id="running-integration-tests">Running Integration Tests</h3>
-<p>Integration tests require a running Soliplex backend:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Terminal 1: Start backend</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">cd</span><span class="w"> </span>~/path/to/soliplex-backend
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>soliplex-cli<span class="w"> </span>serve<span class="w"> </span>example/minimal.yaml<span class="w"> </span>--no-auth-mode
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># Terminal 2: Run integration tests</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="nb">cd</span><span class="w"> </span>~/dev/soliplex-flutter
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nv">SOLIPLEX_BACKEND_URL</span><span class="o">=</span>http://localhost:8000<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span>flutter<span class="w"> </span><span class="nb">test</span><span class="w"> </span>integration_tests/<span class="w"> </span>-d<span class="w"> </span>macos
+<h2 id="dispose-behavior">Dispose behavior</h2>
+<h3 id="threadviewstatedispose-navigate-between-threads"><code>ThreadViewState.dispose</code> (navigate between threads)</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>1. _isDisposed = true
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>2. Cancel history HTTP fetch (_cancelToken)
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>3. Detach from session (stop observing runState)
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>4. Dispose tracker registry
 </span></code></pre></div>
-<h3 id="verifying-white-label-customization">Verifying White-Label Customization</h3>
-<ol>
-<li><strong>Custom branding</strong>: The whitelabel app shows "ACME Box" in titles</li>
-<li><strong>Custom colors</strong>: Uses DOS-green terminal theme</li>
-<li><strong>Feature flags</strong>: HTTP inspector disabled</li>
-<li><strong>Backend URL</strong>: Points to custom API endpoint</li>
-</ol>
-<h3 id="testing-configuration-changes">Testing Configuration Changes</h3>
-<p>Edit <code>~/dev/whitelabel/lib/main.dart</code>:</p>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">runSoliplexApp</span><span class="p">(</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nl">config:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">SoliplexConfig</span><span class="p">(</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nl">appName:</span><span class="w"> </span><span class="s1">&#39;Test Brand&#39;</span><span class="p">,</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="nl">defaultBackendUrl:</span><span class="w"> </span><span class="s1">&#39;http://localhost:8000&#39;</span><span class="p">,</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="nl">features:</span><span class="w"> </span><span class="n">Features</span><span class="p">(</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">      </span><span class="nl">enableHttpInspector:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">  </span><span class="c1">// Enable for debugging</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">      </span><span class="nl">enableQuizzes:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">       </span><span class="c1">// Disable quizzes</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="p">),</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">  </span><span class="p">),</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="p">);</span>
-</span></code></pre></div>
-<p>Hot reload preserves the config changes.</p>
-<h2 id="key-commits">Key Commits</h2>
-<table>
-<thead>
-<tr>
-<th>Commit</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>1d888e0</code></td>
-<td>Initial extraction - <code>runSoliplexApp</code>, <code>SoliplexConfig</code></td>
-</tr>
-<tr>
-<td><code>a54e81b</code></td>
-<td>Remove global state from shell config provider</td>
-</tr>
-<tr>
-<td><code>9b1d81d</code></td>
-<td>Wire <code>defaultBackendUrl</code>, remove remaining global state</td>
-</tr>
-<tr>
-<td><code>f0c22a0</code></td>
-<td>Simplify route config, enhance router tests</td>
-</tr>
-</tbody>
-</table>
-<h2 id="production-deployment">Production Deployment</h2>
-<p>For production, switch to git dependency:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># pubspec.yaml</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nt">dependencies</span><span class="p">:</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">soliplex_frontend</span><span class="p">:</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nt">git</span><span class="p">:</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/soliplex/flutter.git</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">      </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">feat/appshell-extraction</span><span class="w">  </span><span class="c1"># or main after merge</span>
-</span></code></pre></div>
-<h2 id="whats-not-included-v1">What's NOT Included (v1)</h2>
-<p>This branch focuses on the shell extraction. The following are out of scope:</p>
+<p>Does NOT cancel spawns or sessions. If a spawn was in progress, it completes
+naturally:</p>
 <ul>
-<li>Documentation generation (dartdoc)</li>
-<li>Example app within this repo</li>
-<li>Custom route injection</li>
-<li>Screen replacement via builders</li>
-<li>Provider injection for analytics/services</li>
+<li><code>_registry.register</code> runs (session enters registry).</li>
+<li><code>_isDisposed</code> check prevents <code>_attachSession</code>.</li>
+<li>Session runs in the background. Registry holds it.</li>
+<li>User navigates back → new <code>ThreadViewState</code> → <code>_restoreFromRegistry</code> finds it.</li>
 </ul>
-<h2 id="roadmap-configuration-vs-composition">Roadmap: Configuration vs Composition</h2>
-<h3 id="current-v1-configuration-based-skinning">Current: v1 Configuration-Based (Skinning)</h3>
-<p>The current architecture is <strong>configuration-based whitelabeling</strong>. Consumers can:</p>
+<h3 id="roomstatedispose-leave-room"><code>RoomState.dispose</code> (leave room)</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>1. _isDisposed = true
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>2. Cancel room metadata HTTP fetch
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>3. Dispose ThreadListState
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>4. Dispose active ThreadViewState
+</span></code></pre></div>
+<p>Does NOT cancel <code>sendToNewThread</code> spawn. If in progress, the spawn completes:</p>
 <ul>
-<li>Customize branding (app name, colors, theme)</li>
-<li>Toggle features on/off</li>
-<li>Configure backend URL</li>
-<li>Control which routes are visible</li>
+<li>Session is registered in RunRegistry.</li>
+<li><code>_isDisposed</code> check prevents navigation/UI updates.</li>
+<li>Thread is created on the server.</li>
+<li>When user returns, the thread appears in the thread list.</li>
 </ul>
-<p>This covers ~80% of typical whitelabel needs.</p>
-<h3 id="future-v2-composition-based-framework">Future: v2 Composition-Based (Framework)</h3>
-<p>If customer demand requires it, v2 will evolve to <strong>composition-based whitelabeling</strong>
-where consumers can inject custom functionality:</p>
-<table>
-<thead>
-<tr>
-<th>Capability</th>
-<th>v1 (Current)</th>
-<th>v2 (Future)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Custom theme/colors</td>
-<td>✅</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Feature toggles</td>
-<td>✅</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Backend URL</td>
-<td>✅</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Hide/show routes</td>
-<td>✅</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Add custom routes</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Replace core screens</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Inject providers (analytics, etc.)</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Own <code>runApp()</code> entry point</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-</tbody>
-</table>
-<h3 id="v2-migration-path">v2 Migration Path</h3>
-<p>When v2 is needed, the changes involve:</p>
+<h3 id="runregistrydispose-app-shutdown"><code>RunRegistry.dispose</code> (app shutdown)</h3>
+<p>Cancels all active sessions and clears entries. Only called on app termination
+from the flavor's <code>onDispose</code> callback.</p>
+<h2 id="scenarios">Scenarios</h2>
+<h3 id="send-on-thread-a-navigate-to-thread-b-mid-run">Send on thread A, navigate to thread B mid-run</h3>
 <ol>
-<li><strong>Invert control</strong>: Return <code>Widget</code> instead of calling <code>runApp()</code>, letting
-   consumers wrap with their own <code>ProviderScope</code></li>
-<li><strong>Open the router</strong>: Add <code>additionalRoutes</code> parameter to <code>SoliplexConfig</code></li>
-<li><strong>Widget builders</strong>: Add <code>ScreenBuilders</code> for replacing Login, Home, etc.</li>
-<li><strong>Provider injection</strong>: Define interfaces (e.g., <code>AnalyticsService</code>) that
-   consumers can override</li>
+<li>ThreadViewState(A) has active session SA.</li>
+<li>User navigates to B → ThreadViewState(A) disposed (detaches from SA).</li>
+<li>SA continues running in RunRegistry.</li>
+<li>ThreadViewState(B) created, independent.</li>
+<li>User navigates back to A → new ThreadViewState(A) → restores SA from registry.</li>
 </ol>
+<h3 id="send-on-thread-a-navigate-away-mid-spawn">Send on thread A, navigate away mid-spawn</h3>
+<ol>
+<li>ThreadViewState(A) spawning.</li>
+<li>User navigates → ThreadViewState(A) disposed. <code>_pendingSpawn</code> untouched.</li>
+<li>Spawn completes → session registered in registry → <code>_isDisposed</code> → return.</li>
+<li>User navigates back → restores from registry.</li>
+</ol>
+<h3 id="multiple-concurrent-runs">Multiple concurrent runs</h3>
+<ol>
+<li>Send on A → session SA registered and running.</li>
+<li>Navigate to B → ThreadViewState(A) detaches from SA (SA keeps running).</li>
+<li>Send on B → session SB registered and running.</li>
+<li>SA and SB both active in registry, independent.</li>
+</ol>
+<h3 id="send-to-new-thread-navigate-to-lobby-mid-spawn">Send to new thread, navigate to lobby mid-spawn</h3>
+<ol>
+<li><code>sendToNewThread</code> spawning.</li>
+<li>User goes to lobby → RoomState disposed. Spawn continues.</li>
+<li>Spawn completes → session registered → <code>_isDisposed</code> → return.</li>
+<li>Thread created on server. When user returns to room, thread list shows it.</li>
+</ol>
+<h3 id="cancel-mid-spawn">Cancel mid-spawn</h3>
+<ol>
+<li>User sends, spawn is awaiting.</li>
+<li>User clicks cancel → <code>_pendingSpawn</code> nulled, <code>_sessionState</code> nulled.</li>
+<li>Spawn completes → staleness check returns early → session NOT registered.</li>
+<li>Fire-and-forget cleans up the session.</li>
+</ol>
+<h3 id="cancel-mid-run">Cancel mid-run</h3>
+<ol>
+<li>Session is streaming.</li>
+<li>User clicks cancel → <code>_activeSession.cancel()</code>.</li>
+<li>Session transitions to <code>CancelledState</code>.</li>
+<li><code>_onRunState</code> handles it → detach, apply partial conversation.</li>
+</ol>
+<h3 id="spawn-error-concurrent-with-cancel">Spawn error concurrent with cancel</h3>
+<ol>
+<li>User clicks cancel → <code>_sessionState</code> set to null.</li>
+<li>Spawn fails (network error).</li>
+<li>Catch block: <code>_sessionState.value == null</code> → return (error suppressed).</li>
+<li>User sees clean cancel, no error banner.</li>
+</ol>
+<h3 id="app-closed-during-run">App closed during run</h3>
+<ol>
+<li>Session is running on the server.</li>
+<li>App process terminates. No cleanup runs.</li>
+<li>Server completes the run independently.</li>
+<li>App reopens → thread list fetched → user sees completed results.</li>
+</ol>
+<h2 id="known-limitations">Known limitations</h2>
+<h3 id="rapid-navigation-miss">Rapid navigation miss</h3>
+<p>If the user sends on thread A, navigates away (ThreadViewState disposed), and
+navigates back before the spawn completes, the new ThreadViewState checks the
+registry once on construction. At that point the session isn't registered yet.
+When the spawn completes and registers, the new ThreadViewState doesn't know.</p>
+<p>The user sees a static screen until they navigate away and back again (or
+refresh). Making <code>RunRegistry</code> observable would fix this but is tracked as a
+separate enhancement.</p>
 
 
 

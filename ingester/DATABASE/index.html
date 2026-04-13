@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1199,6 +1199,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1216,8 +1220,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1231,8 +1236,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
@@ -2254,6 +2265,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -2352,7 +2365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -2391,6 +2404,8 @@
       
         
           
+        
+      
         
       
         
@@ -2462,6 +2477,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -3236,11 +3279,11 @@
 <p>Database models defined in: <code>src/soliplex/ingester/lib/models.py</code></p>
 <h2 id="database-connection">Database Connection</h2>
 <h3 id="configuration">Configuration</h3>
-<p>Set via environment variable:
+<p>Set via environment variable:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span><span class="s2">&quot;sqlite+aiosqlite:///./db/documents.db&quot;</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># or</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nv">DOC_DB_URL</span><span class="o">=</span><span class="s2">&quot;postgresql+asyncpg://user:pass@localhost/soliplex&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h3 id="database-manager">Database Manager</h3>
 <p>The <code>Database</code> class manages engine lifecycle and session creation with automatic connection pooling.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">soliplex.ingester.lib.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Database</span>
@@ -3274,16 +3317,20 @@
 <h3 id="documentbatch">DocumentBatch</h3>
 <p>Represents a batch of documents ingested together.</p>
 <p><strong>Table:</strong> <code>documentbatch</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (int, primary key) - Auto-increment batch ID
-- <code>name</code> (str) - Human-readable batch name
-- <code>source</code> (str) - Source system identifier
-- <code>start_date</code> (datetime) - When batch processing started
-- <code>completed_date</code> (datetime, nullable) - When batch completed
-- <code>batch_params</code> (dict[str, str]) - JSON metadata</p>
-<p><strong>Computed Fields:</strong>
-- <code>duration</code> (float) - Processing time in seconds (None if not completed)</p>
-<p><strong>Example:</strong>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (int, primary key) - Auto-increment batch ID</li>
+<li><code>name</code> (str) - Human-readable batch name</li>
+<li><code>source</code> (str) - Source system identifier</li>
+<li><code>start_date</code> (datetime) - When batch processing started</li>
+<li><code>completed_date</code> (datetime, nullable) - When batch completed</li>
+<li><code>batch_params</code> (dict[str, str]) - JSON metadata</li>
+</ul>
+<p><strong>Computed Fields:</strong></p>
+<ul>
+<li><code>duration</code> (float) - Processing time in seconds (None if not completed)</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q4 Financial Reports&quot;</span><span class="p">,</span>
@@ -3293,21 +3340,25 @@
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="nt">&quot;batch_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;department&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;finance&quot;</span><span class="p">},</span>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nt">&quot;duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">9000.0</span>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="document">Document</h3>
 <p>Represents a unique document identified by content hash.</p>
 <p><strong>Table:</strong> <code>document</code></p>
-<p><strong>Fields:</strong>
-- <code>hash</code> (str, primary key) - SHA256 content hash (format: "sha256-...")
-- <code>mime_type</code> (str) - Document MIME type
-- <code>file_size</code> (int, nullable) - Size in bytes
-- <code>doc_meta</code> (dict[str, str]) - JSON metadata</p>
-<p><strong>Relationships:</strong>
-- Multiple <code>DocumentURI</code> records can reference the same document</p>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>hash</code> (str, primary key) - SHA256 content hash (format: "sha256-...")</li>
+<li><code>mime_type</code> (str) - Document MIME type</li>
+<li><code>file_size</code> (int, nullable) - Size in bytes</li>
+<li><code>doc_meta</code> (dict[str, str]) - JSON metadata</li>
+</ul>
+<p><strong>Relationships:</strong></p>
+<ul>
+<li>Multiple <code>DocumentURI</code> records can reference the same document</li>
+</ul>
 <p><strong>Deduplication:</strong>
 Documents are deduplicated by hash. If the same file is ingested multiple times, only one Document record exists.</p>
-<p><strong>Example:</strong>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-a1b2c3d4e5f6...&quot;</span><span class="p">,</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;mime_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application/pdf&quot;</span><span class="p">,</span>
@@ -3317,25 +3368,31 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Q4 Report&quot;</span>
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="documenturi">DocumentURI</h3>
 <p>Maps source URIs to document hashes, allowing multiple URIs to reference the same document.</p>
 <p><strong>Table:</strong> <code>documenturi</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (int, primary key) - Auto-increment ID
-- <code>doc_hash</code> (str, foreign key) - References <code>document.hash</code>
-- <code>uri</code> (str) - Source system path/identifier
-- <code>source</code> (str) - Source system name
-- <code>version</code> (int) - Version number (increments on changes)
-- <code>batch_id</code> (int, foreign key, nullable) - Associated batch</p>
-<p><strong>Constraints:</strong>
-- Unique constraint on <code>(uri, source)</code> - One active URI per source</p>
-<p><strong>Use Cases:</strong>
-- Track document locations across source systems
-- Detect when a document at a URI has changed (hash mismatch)
-- Support document versioning</p>
-<p><strong>Example:</strong>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (int, primary key) - Auto-increment ID</li>
+<li><code>doc_hash</code> (str, foreign key) - References <code>document.hash</code></li>
+<li><code>uri</code> (str) - Source system path/identifier</li>
+<li><code>source</code> (str) - Source system name</li>
+<li><code>version</code> (int) - Version number (increments on changes)</li>
+<li><code>batch_id</code> (int, foreign key, nullable) - Associated batch</li>
+</ul>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>Unique constraint on <code>(uri, source)</code> - One active URI per source</li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>Track document locations across source systems</li>
+<li>Detect when a document at a URI has changed (hash mismatch)</li>
+<li>Support document versioning</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;doc_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-a1b2c3d4e5f6...&quot;</span><span class="p">,</span>
@@ -3344,25 +3401,29 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="documenturihistory">DocumentURIHistory</h3>
 <p>Tracks historical versions of documents at specific URIs.</p>
 <p><strong>Table:</strong> <code>documenturihistory</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (int, primary key) - Auto-increment ID
-- <code>doc_uri_id</code> (int, foreign key) - References <code>documenturi.id</code>
-- <code>version</code> (int) - Version number
-- <code>hash</code> (str) - Document hash at this version
-- <code>process_date</code> (datetime) - When this version was processed
-- <code>action</code> (str) - Action taken ("created", "updated", "deleted")
-- <code>batch_id</code> (int, foreign key, nullable) - Associated batch
-- <code>histmeta</code> (dict[str, str]) - JSON metadata</p>
-<p><strong>Use Cases:</strong>
-- Audit trail of document changes
-- Rollback to previous versions
-- Compliance and record-keeping</p>
-<p><strong>Example:</strong>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (int, primary key) - Auto-increment ID</li>
+<li><code>doc_uri_id</code> (int, foreign key) - References <code>documenturi.id</code></li>
+<li><code>version</code> (int) - Version number</li>
+<li><code>hash</code> (str) - Document hash at this version</li>
+<li><code>process_date</code> (datetime) - When this version was processed</li>
+<li><code>action</code> (str) - Action taken ("created", "updated", "deleted")</li>
+<li><code>batch_id</code> (int, foreign key, nullable) - Associated batch</li>
+<li><code>histmeta</code> (dict[str, str]) - JSON metadata</li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>Audit trail of document changes</li>
+<li>Rollback to previous versions</li>
+<li>Compliance and record-keeping</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;doc_uri_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
@@ -3373,26 +3434,30 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 </span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nt">&quot;histmeta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;importer&quot;</span><span class="p">}</span>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="documentbytes">DocumentBytes</h3>
 <p>Stores raw file bytes and artifacts in the database.</p>
 <p><strong>Table:</strong> <code>documentbytes</code></p>
-<p><strong>Fields:</strong>
-- <code>hash</code> (str, primary key) - Document hash
-- <code>artifact_type</code> (str, primary key) - Type of artifact
-- <code>storage_root</code> (str, primary key) - Storage location identifier
-- <code>file_size</code> (int, nullable) - Size in bytes (auto-computed from file_bytes)
-- <code>file_bytes</code> (bytes) - Raw binary data</p>
-<p><strong>Artifact Types:</strong>
-- <code>document</code> - Raw document
-- <code>parsed_markdown</code> - Extracted markdown
-- <code>parsed_json</code> - Structured JSON
-- <code>chunks</code> - Text chunks
-- <code>embeddings</code> - Vector embeddings
-- <code>rag</code> - RAG metadata</p>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>hash</code> (str, primary key) - Document hash</li>
+<li><code>artifact_type</code> (str, primary key) - Type of artifact</li>
+<li><code>storage_root</code> (str, primary key) - Storage location identifier</li>
+<li><code>file_size</code> (int, nullable) - Size in bytes (auto-computed from file_bytes)</li>
+<li><code>file_bytes</code> (bytes) - Raw binary data</li>
+</ul>
+<p><strong>Artifact Types:</strong></p>
+<ul>
+<li><code>document</code> - Raw document</li>
+<li><code>parsed_markdown</code> - Extracted markdown</li>
+<li><code>parsed_json</code> - Structured JSON</li>
+<li><code>chunks</code> - Text chunks</li>
+<li><code>embeddings</code> - Vector embeddings</li>
+<li><code>rag</code> - RAG metadata</li>
+</ul>
 <p><strong>Note:</strong> For production, consider using file storage instead of database storage for large binaries.</p>
-<p><strong>Example:</strong>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-a1b2c3d4e5f6...&quot;</span><span class="p">,</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;artifact_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;parsed_markdown&quot;</span><span class="p">,</span>
@@ -3400,29 +3465,33 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">&quot;file_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50000</span><span class="p">,</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">&quot;file_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="workflow-models">Workflow Models</h2>
 <h3 id="rungroup">RunGroup</h3>
 <p>Groups related workflow runs together.</p>
 <p><strong>Table:</strong> <code>rungroup</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (int, primary key) - Auto-increment ID
-- <code>name</code> (str, nullable) - Optional group name
-- <code>workflow_definition_id</code> (str) - Workflow used
-- <code>param_definition_id</code> (str) - Parameter set used
-- <code>batch_id</code> (int, foreign key, nullable) - Associated batch
-- <code>created_date</code> (datetime) - When group was created
-- <code>start_date</code> (datetime) - When first run started
-- <code>completed_date</code> (datetime, nullable) - When all runs completed
-- <code>status</code> (RunStatus) - Overall group status
-- <code>status_date</code> (datetime, nullable) - When status last changed
-- <code>status_message</code> (str, nullable) - Status description
-- <code>status_meta</code> (dict[str, str]) - JSON metadata</p>
-<p><strong>Relationships:</strong>
-- Has many <code>WorkflowRun</code> records
-- Has many <code>LifecycleHistory</code> records</p>
-<p><strong>Example:</strong>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (int, primary key) - Auto-increment ID</li>
+<li><code>name</code> (str, nullable) - Optional group name</li>
+<li><code>workflow_definition_id</code> (str) - Workflow used</li>
+<li><code>param_definition_id</code> (str) - Parameter set used</li>
+<li><code>batch_id</code> (int, foreign key, nullable) - Associated batch</li>
+<li><code>created_date</code> (datetime) - When group was created</li>
+<li><code>start_date</code> (datetime) - When first run started</li>
+<li><code>completed_date</code> (datetime, nullable) - When all runs completed</li>
+<li><code>status</code> (RunStatus) - Overall group status</li>
+<li><code>status_date</code> (datetime, nullable) - When status last changed</li>
+<li><code>status_message</code> (str, nullable) - Status description</li>
+<li><code>status_meta</code> (dict[str, str]) - JSON metadata</li>
+</ul>
+<p><strong>Relationships:</strong></p>
+<ul>
+<li>Has many <code>WorkflowRun</code> records</li>
+<li>Has many <code>LifecycleHistory</code> records</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Batch 1 Processing&quot;</span><span class="p">,</span>
@@ -3437,33 +3506,39 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">  </span><span class="nt">&quot;status_message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Processing documents&quot;</span><span class="p">,</span>
 </span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">  </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
 </span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="workflowrun">WorkflowRun</h3>
 <p>Represents a single workflow execution for one document.</p>
 <p><strong>Table:</strong> <code>workflowrun</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (int, primary key) - Auto-increment ID
-- <code>workflow_definition_id</code> (str) - Workflow definition ID
-- <code>run_group_id</code> (int, foreign key) - Parent group
-- <code>batch_id</code> (int, foreign key) - Associated batch
-- <code>doc_id</code> (str) - Document hash being processed
-- <code>priority</code> (int) - Processing priority (higher = more urgent)
-- <code>created_date</code> (datetime) - When run was created
-- <code>start_date</code> (datetime) - When first step started
-- <code>completed_date</code> (datetime, nullable) - When all steps completed
-- <code>status</code> (RunStatus) - Current status
-- <code>status_date</code> (datetime, nullable) - When status last changed
-- <code>status_message</code> (str, nullable) - Status description
-- <code>status_meta</code> (dict[str, str]) - JSON metadata
-- <code>run_params</code> (dict[str, str|int|bool]) - Runtime parameters</p>
-<p><strong>Computed Fields:</strong>
-- <code>duration</code> (float) - Processing time in seconds (None if not completed)</p>
-<p><strong>Relationships:</strong>
-- Has many <code>RunStep</code> records
-- Belongs to <code>RunGroup</code>
-- References <code>Document</code> via <code>doc_id</code></p>
-<p><strong>Example:</strong>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (int, primary key) - Auto-increment ID</li>
+<li><code>workflow_definition_id</code> (str) - Workflow definition ID</li>
+<li><code>run_group_id</code> (int, foreign key) - Parent group</li>
+<li><code>batch_id</code> (int, foreign key) - Associated batch</li>
+<li><code>doc_id</code> (str) - Document hash being processed</li>
+<li><code>priority</code> (int) - Processing priority (higher = more urgent)</li>
+<li><code>created_date</code> (datetime) - When run was created</li>
+<li><code>start_date</code> (datetime) - When first step started</li>
+<li><code>completed_date</code> (datetime, nullable) - When all steps completed</li>
+<li><code>status</code> (RunStatus) - Current status</li>
+<li><code>status_date</code> (datetime, nullable) - When status last changed</li>
+<li><code>status_message</code> (str, nullable) - Status description</li>
+<li><code>status_meta</code> (dict[str, str]) - JSON metadata</li>
+<li><code>run_params</code> (dict[str, str|int|bool]) - Runtime parameters</li>
+</ul>
+<p><strong>Computed Fields:</strong></p>
+<ul>
+<li><code>duration</code> (float) - Processing time in seconds (None if not completed)</li>
+</ul>
+<p><strong>Relationships:</strong></p>
+<ul>
+<li>Has many <code>RunStep</code> records</li>
+<li>Belongs to <code>RunGroup</code></li>
+<li>References <code>Document</code> via <code>doc_id</code></li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">&quot;workflow_definition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
@@ -3481,36 +3556,42 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">  </span><span class="nt">&quot;run_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
 </span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">  </span><span class="nt">&quot;duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
 </span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="runstep">RunStep</h3>
 <p>Represents one step within a workflow run.</p>
 <p><strong>Table:</strong> <code>runstep</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (int, primary key) - Auto-increment ID
-- <code>workflow_run_id</code> (int, foreign key) - Parent workflow run
-- <code>workflow_step_number</code> (int) - Step sequence number
-- <code>workflow_step_name</code> (str) - Step name/identifier
-- <code>step_config_id</code> (int, foreign key) - Configuration used
-- <code>step_type</code> (WorkflowStepType) - Type of step
-- <code>is_last_step</code> (bool) - Whether this is the final step
-- <code>created_date</code> (datetime) - When step was created
-- <code>priority</code> (int) - Processing priority
-- <code>start_date</code> (datetime, nullable) - When step started executing
-- <code>status_date</code> (datetime, nullable) - When status last changed
-- <code>completed_date</code> (datetime, nullable) - When step completed
-- <code>retry</code> (int) - Current retry attempt (0-indexed)
-- <code>retries</code> (int) - Maximum retry attempts
-- <code>status</code> (RunStatus) - Current status
-- <code>status_message</code> (str, nullable) - Status description
-- <code>status_meta</code> (dict[str, str]) - JSON metadata
-- <code>worker_id</code> (str, nullable) - Worker processing this step</p>
-<p><strong>Computed Fields:</strong>
-- <code>duration</code> (float) - Execution time in seconds (None if not completed)</p>
-<p><strong>Relationships:</strong>
-- Belongs to <code>WorkflowRun</code>
-- References <code>StepConfig</code></p>
-<p><strong>Example:</strong>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (int, primary key) - Auto-increment ID</li>
+<li><code>workflow_run_id</code> (int, foreign key) - Parent workflow run</li>
+<li><code>workflow_step_number</code> (int) - Step sequence number</li>
+<li><code>workflow_step_name</code> (str) - Step name/identifier</li>
+<li><code>step_config_id</code> (int, foreign key) - Configuration used</li>
+<li><code>step_type</code> (WorkflowStepType) - Type of step</li>
+<li><code>is_last_step</code> (bool) - Whether this is the final step</li>
+<li><code>created_date</code> (datetime) - When step was created</li>
+<li><code>priority</code> (int) - Processing priority</li>
+<li><code>start_date</code> (datetime, nullable) - When step started executing</li>
+<li><code>status_date</code> (datetime, nullable) - When status last changed</li>
+<li><code>completed_date</code> (datetime, nullable) - When step completed</li>
+<li><code>retry</code> (int) - Current retry attempt (0-indexed)</li>
+<li><code>retries</code> (int) - Maximum retry attempts</li>
+<li><code>status</code> (RunStatus) - Current status</li>
+<li><code>status_message</code> (str, nullable) - Status description</li>
+<li><code>status_meta</code> (dict[str, str]) - JSON metadata</li>
+<li><code>worker_id</code> (str, nullable) - Worker processing this step</li>
+</ul>
+<p><strong>Computed Fields:</strong></p>
+<ul>
+<li><code>duration</code> (float) - Execution time in seconds (None if not completed)</li>
+</ul>
+<p><strong>Relationships:</strong></p>
+<ul>
+<li>Belongs to <code>WorkflowRun</code></li>
+<li>References <code>StepConfig</code></li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;workflow_run_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
@@ -3532,22 +3613,26 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">  </span><span class="nt">&quot;worker_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;worker-abc-123&quot;</span><span class="p">,</span>
 </span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">  </span><span class="nt">&quot;duration&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
 </span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="stepconfig">StepConfig</h3>
 <p>Stores step configuration for reuse and tracking.</p>
 <p><strong>Table:</strong> <code>stepconfig</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (int, primary key) - Auto-increment ID
-- <code>created_date</code> (datetime, nullable) - When config was created
-- <code>step_type</code> (WorkflowStepType) - Type of step
-- <code>config_json</code> (dict[str, str|int|bool], nullable) - Step parameters
-- <code>cuml_config_json</code> (str, nullable) - Cumulative config from previous steps</p>
-<p><strong>Use Cases:</strong>
-- Deduplicate identical configurations
-- Track which configuration was used for each run
-- Audit changes to processing parameters</p>
-<p><strong>Example:</strong>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (int, primary key) - Auto-increment ID</li>
+<li><code>created_date</code> (datetime, nullable) - When config was created</li>
+<li><code>step_type</code> (WorkflowStepType) - Type of step</li>
+<li><code>config_json</code> (dict[str, str|int|bool], nullable) - Step parameters</li>
+<li><code>cuml_config_json</code> (str, nullable) - Cumulative config from previous steps</li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>Deduplicate identical configurations</li>
+<li>Track which configuration was used for each run</li>
+<li>Audit changes to processing parameters</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">&quot;created_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T09:00:00&quot;</span><span class="p">,</span>
@@ -3558,76 +3643,96 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="p">},</span>
 </span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">  </span><span class="nt">&quot;cuml_config_json&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;validate\&quot;:{...},\&quot;parse\&quot;:{...}}&quot;</span>
 </span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="configset">ConfigSet</h3>
 <p>Represents a complete parameter set configuration.</p>
 <p><strong>Table:</strong> <code>configset</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (int, primary key) - Auto-increment ID
-- <code>yaml_id</code> (str) - Parameter set ID from YAML
-- <code>yaml_contents</code> (str) - Full YAML contents
-- <code>created_date</code> (datetime, nullable) - When loaded</p>
-<p><strong>Relationships:</strong>
-- Has many <code>ConfigSetItem</code> records (junction table)
-- Links to multiple <code>StepConfig</code> records</p>
-<p><strong>Use Cases:</strong>
-- Track which parameter sets were used
-- Reproduce exact configurations
-- Version control for processing parameters</p>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (int, primary key) - Auto-increment ID</li>
+<li><code>yaml_id</code> (str) - Parameter set ID from YAML</li>
+<li><code>yaml_contents</code> (str) - Full YAML contents</li>
+<li><code>created_date</code> (datetime, nullable) - When loaded</li>
+</ul>
+<p><strong>Relationships:</strong></p>
+<ul>
+<li>Has many <code>ConfigSetItem</code> records (junction table)</li>
+<li>Links to multiple <code>StepConfig</code> records</li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>Track which parameter sets were used</li>
+<li>Reproduce exact configurations</li>
+<li>Version control for processing parameters</li>
+</ul>
 <hr />
 <h3 id="configsetitem">ConfigSetItem</h3>
 <p>Junction table linking config sets to step configs.</p>
 <p><strong>Table:</strong> <code>configsetitem</code></p>
-<p><strong>Fields:</strong>
-- <code>config_set_id</code> (int, primary key, foreign key) - References <code>configset.id</code>
-- <code>config_id</code> (int, primary key, foreign key) - References <code>stepconfig.id</code></p>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>config_set_id</code> (int, primary key, foreign key) - References <code>configset.id</code></li>
+<li><code>config_id</code> (int, primary key, foreign key) - References <code>stepconfig.id</code></li>
+</ul>
 <hr />
 <h3 id="lifecyclehistory">LifecycleHistory</h3>
 <p>Tracks lifecycle events during workflow execution.</p>
 <p><strong>Table:</strong> <code>lifecyclehistory</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (int, primary key) - Auto-increment ID
-- <code>event</code> (LifeCycleEvent) - Type of event
-- <code>handler_name</code> (str, nullable) - Name of the handler processing the event
-- <code>run_group_id</code> (int, foreign key) - Associated run group
-- <code>workflow_run_id</code> (int, foreign key) - Associated workflow run
-- <code>step_id</code> (int, nullable) - Associated step (if applicable)
-- <code>start_date</code> (datetime) - When event started
-- <code>completed_date</code> (datetime, nullable) - When event completed
-- <code>status</code> (RunStatus) - Event status
-- <code>status_date</code> (datetime, nullable) - When status changed
-- <code>status_message</code> (str, nullable) - Status description
-- <code>status_meta</code> (dict[str, str]) - JSON metadata</p>
-<p><strong>Event Types:</strong>
-- <code>group_start</code> / <code>group_end</code>
-- <code>item_start</code> / <code>item_end</code> / <code>item_failed</code>
-- <code>step_start</code> / <code>step_end</code> / <code>step_failed</code></p>
-<p><strong>Use Cases:</strong>
-- Audit trail of workflow execution
-- Performance monitoring
-- Debugging workflow issues</p>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (int, primary key) - Auto-increment ID</li>
+<li><code>event</code> (LifeCycleEvent) - Type of event</li>
+<li><code>handler_name</code> (str, nullable) - Name of the handler processing the event</li>
+<li><code>run_group_id</code> (int, foreign key) - Associated run group</li>
+<li><code>workflow_run_id</code> (int, foreign key) - Associated workflow run</li>
+<li><code>step_id</code> (int, nullable) - Associated step (if applicable)</li>
+<li><code>start_date</code> (datetime) - When event started</li>
+<li><code>completed_date</code> (datetime, nullable) - When event completed</li>
+<li><code>status</code> (RunStatus) - Event status</li>
+<li><code>status_date</code> (datetime, nullable) - When status changed</li>
+<li><code>status_message</code> (str, nullable) - Status description</li>
+<li><code>status_meta</code> (dict[str, str]) - JSON metadata</li>
+</ul>
+<p><strong>Event Types:</strong></p>
+<ul>
+<li><code>group_start</code> / <code>group_end</code></li>
+<li><code>item_start</code> / <code>item_end</code> / <code>item_failed</code></li>
+<li><code>step_start</code> / <code>step_end</code> / <code>step_failed</code></li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>Audit trail of workflow execution</li>
+<li>Performance monitoring</li>
+<li>Debugging workflow issues</li>
+</ul>
 <hr />
 <h3 id="workercheckin">WorkerCheckin</h3>
 <p>Tracks worker health and activity.</p>
 <p><strong>Table:</strong> <code>workercheckin</code></p>
-<p><strong>Fields:</strong>
-- <code>id</code> (str, primary key) - Worker identifier
-- <code>first_checkin</code> (datetime) - When worker first registered
-- <code>last_checkin</code> (datetime) - Most recent heartbeat</p>
-<p><strong>Constraints:</strong>
-- Unique constraint on <code>id</code></p>
-<p><strong>Use Cases:</strong>
-- Monitor active workers
-- Detect stale/crashed workers
-- Worker load balancing</p>
-<p><strong>Example:</strong>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><code>id</code> (str, primary key) - Worker identifier</li>
+<li><code>first_checkin</code> (datetime) - When worker first registered</li>
+<li><code>last_checkin</code> (datetime) - Most recent heartbeat</li>
+</ul>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>Unique constraint on <code>id</code></li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>Monitor active workers</li>
+<li>Detect stale/crashed workers</li>
+<li>Worker load balancing</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;worker-abc-123&quot;</span><span class="p">,</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">&quot;first_checkin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:00:00&quot;</span><span class="p">,</span>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="nt">&quot;last_checkin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-15T10:30:00&quot;</span>
 </span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="enums">Enums</h2>
 <h3 id="runstatus">RunStatus</h3>
@@ -3675,12 +3780,14 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span></code></pre></div>
 <hr />
 <h2 id="artifact-mapping">Artifact Mapping</h2>
-<p><strong>Workflow Steps to Artifacts:</strong>
-- INGEST - DOC
-- PARSE - PARSED_MD, PARSED_JSON
-- CHUNK - CHUNKS
-- EMBED - EMBEDDINGS
-- STORE - RAG</p>
+<p><strong>Workflow Steps to Artifacts:</strong></p>
+<ul>
+<li>INGEST - DOC</li>
+<li>PARSE - PARSED_MD, PARSED_JSON</li>
+<li>CHUNK - CHUNKS</li>
+<li>EMBED - EMBEDDINGS</li>
+<li>STORE - RAG</li>
+</ul>
 <hr />
 <h2 id="relationships-diagram">Relationships Diagram</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>DocumentBatch
@@ -3753,22 +3860,26 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 <h3 id="delete_run_group">delete_run_group</h3>
 <p>Cascading deletion function for run groups and all dependent records.</p>
 <p><strong>Location:</strong> <code>src/soliplex/ingester/lib/wf/operations.py</code></p>
-<p><strong>Signature:</strong>
+<p><strong>Signature:</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">delete_run_group</span><span class="p">(</span><span class="n">run_group_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
-</span></code></pre></div></p>
-<p><strong>Database Compatibility:</strong>
-- SQLite (via aiosqlite)
-- PostgreSQL (via asyncpg)</p>
-<p><strong>Behavior:</strong>
-1. Verifies the RunGroup exists (raises <code>NotFoundError</code> if not found)
-2. Retrieves all WorkflowRun IDs for the RunGroup
-3. Deletes all RunStep records for those WorkflowRuns
-4. Deletes all LifecycleHistory records (for both RunGroup and WorkflowRuns)
-5. Deletes all WorkflowRun records in the group
-6. Deletes the RunGroup itself
-7. Returns deletion statistics</p>
+</span></code></pre></div>
+<p><strong>Database Compatibility:</strong></p>
+<ul>
+<li>SQLite (via aiosqlite)</li>
+<li>PostgreSQL (via asyncpg)</li>
+</ul>
+<p><strong>Behavior:</strong></p>
+<ol>
+<li>Verifies the RunGroup exists (raises <code>NotFoundError</code> if not found)</li>
+<li>Retrieves all WorkflowRun IDs for the RunGroup</li>
+<li>Deletes all RunStep records for those WorkflowRuns</li>
+<li>Deletes all LifecycleHistory records (for both RunGroup and WorkflowRuns)</li>
+<li>Deletes all WorkflowRun records in the group</li>
+<li>Deletes the RunGroup itself</li>
+<li>Returns deletion statistics</li>
+</ol>
 <p>All operations occur within a single database transaction to ensure atomicity.</p>
-<p><strong>Usage:</strong>
+<p><strong>Usage:</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">soliplex.ingester.lib.wf.operations</span><span class="w"> </span><span class="kn">import</span> <span class="n">delete_run_group</span><span class="p">,</span> <span class="n">NotFoundError</span>
 </span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
 </span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="c1"># Delete a run group and all dependent records</span>
@@ -3779,8 +3890,8 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleted </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;deleted_runsteps&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> run step(s)&quot;</span><span class="p">)</span>
 </span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleted </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;deleted_lifecyclehistory&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> lifecycle history record(s)&quot;</span><span class="p">)</span>
 </span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total records deleted: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;total_deleted&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span></code></pre></div></p>
-<p><strong>Returns:</strong>
+</span></code></pre></div>
+<p><strong>Returns:</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="p">{</span>
 </span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>    <span class="s2">&quot;deleted_runsteps&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
 </span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>    <span class="s2">&quot;deleted_lifecyclehistory&quot;</span><span class="p">:</span> <span class="mi">45</span><span class="p">,</span>
@@ -3788,33 +3899,37 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>    <span class="s2">&quot;deleted_rungroups&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 </span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>    <span class="s2">&quot;total_deleted&quot;</span><span class="p">:</span> <span class="mi">206</span>
 </span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Raises:</strong>
-- <code>NotFoundError</code> - If the RunGroup with the specified ID does not exist</p>
+</span></code></pre></div>
+<p><strong>Raises:</strong></p>
+<ul>
+<li><code>NotFoundError</code> - If the RunGroup with the specified ID does not exist</li>
+</ul>
 <hr />
 <h3 id="delete_document_uri_by_uri">delete_document_uri_by_uri</h3>
 <p>Cascading deletion function for DocumentURI and all dependent records.</p>
 <p><strong>Location:</strong> <code>src/soliplex/ingester/lib/operations.py</code></p>
-<p><strong>Signature:</strong>
+<p><strong>Signature:</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">delete_document_uri_by_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
-</span></code></pre></div></p>
-<p><strong>Behavior:</strong>
-1. Finds the DocumentURI by <code>uri</code> and <code>source</code>
-2. Counts how many DocumentURIs reference the same document hash
-3. If only one URI references the document (cascade delete):
-   - Deletes all RunStep records for WorkflowRuns with this doc_id
-   - Deletes all LifecycleHistory records for those WorkflowRuns
-   - Deletes all WorkflowRun records with this doc_id
-   - Deletes all DocumentBytes artifacts for this hash
-   - Deletes file artifacts from storage
-   - Deletes the DocumentURIHistory records
-   - Deletes the DocumentURI record
-   - Deletes the Document record
-4. If multiple URIs reference the document (preserve document):
-   - Deletes only the DocumentURIHistory records for this URI
-   - Deletes only the DocumentURI record
-   - Preserves the Document and all workflow-related records</p>
-<p><strong>Returns:</strong>
+</span></code></pre></div>
+<p><strong>Behavior:</strong></p>
+<ol>
+<li>Finds the DocumentURI by <code>uri</code> and <code>source</code></li>
+<li>Counts how many DocumentURIs reference the same document hash</li>
+<li>If only one URI references the document (cascade delete):</li>
+<li>Deletes all RunStep records for WorkflowRuns with this doc_id</li>
+<li>Deletes all LifecycleHistory records for those WorkflowRuns</li>
+<li>Deletes all WorkflowRun records with this doc_id</li>
+<li>Deletes all DocumentBytes artifacts for this hash</li>
+<li>Deletes file artifacts from storage</li>
+<li>Deletes the DocumentURIHistory records</li>
+<li>Deletes the DocumentURI record</li>
+<li>Deletes the Document record</li>
+<li>If multiple URIs reference the document (preserve document):</li>
+<li>Deletes only the DocumentURIHistory records for this URI</li>
+<li>Deletes only the DocumentURI record</li>
+<li>Preserves the Document and all workflow-related records</li>
+</ol>
+<p><strong>Returns:</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">{</span>
 </span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>    <span class="s2">&quot;deleted_document_uris&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 </span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>    <span class="s2">&quot;deleted_uri_history&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -3824,8 +3939,8 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>    <span class="s2">&quot;deleted_lifecycle_history&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
 </span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>    <span class="s2">&quot;total_deleted&quot;</span><span class="p">:</span> <span class="mi">23</span>
 </span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Usage:</strong>
+</span></code></pre></div>
+<p><strong>Usage:</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">soliplex.ingester.lib.operations</span><span class="w"> </span><span class="kn">import</span> <span class="n">delete_document_uri_by_uri</span>
 </span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">soliplex.ingester.lib.operations</span><span class="w"> </span><span class="kn">import</span> <span class="n">DocumentURINotFoundError</span>
 </span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
@@ -3837,12 +3952,14 @@ Documents are deduplicated by hash. If the same file is ingested multiple times,
 </span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total deleted: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_deleted&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="k">except</span> <span class="n">DocumentURINotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 </span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span></code></pre></div></p>
-<p><strong>Notes:</strong>
-- All deletions occur within a single transaction
-- Works with both SQLite and PostgreSQL
-- Raises <code>DocumentURINotFoundError</code> if the URI/source combination does not exist
-- Used by the <code>DELETE /api/v1/document/by-uri</code> endpoint</p>
+</span></code></pre></div>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>All deletions occur within a single transaction</li>
+<li>Works with both SQLite and PostgreSQL</li>
+<li>Raises <code>DocumentURINotFoundError</code> if the URI/source combination does not exist</li>
+<li>Used by the <code>DELETE /api/v1/document/by-uri</code> endpoint</li>
+</ul>
 <hr />
 <h2 id="migrations">Migrations</h2>
 <h3 id="location">Location</h3>

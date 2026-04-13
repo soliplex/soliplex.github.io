@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -971,6 +971,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#filesystem-skill-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filesystem Skill Paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-skill-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enabling Skill Configurations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#room-configuration-paths" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1422,6 +1444,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1436,8 +1462,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1451,8 +1478,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
@@ -1773,6 +1806,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -1871,7 +1906,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -1910,6 +1945,8 @@
       
         
           
+        
+      
         
       
         
@@ -1981,6 +2018,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -2159,6 +2224,28 @@
     <span class="md-ellipsis">
       
         OIDC Auth Provider Paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filesystem-skill-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filesystem Skill Paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-skill-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enabling Skill Configurations
       
     </span>
   </a>
@@ -2409,6 +2496,45 @@ these providers.</p>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 Or else run 'soliplex-cli serve --no-auth-mode'</p>
+<h2 id="filesystem-skill-paths">Filesystem Skill Paths</h2>
+<p>The <code>filesystem_skills_paths</code> stanza specifies one or more filesystem paths to
+search for AI Skill configurations.</p>
+<p>Please see <a href="../skills/">this page</a> for documentation on AI skills.</p>
+<p>Each path can be either:</p>
+<ul>
+<li>
+<p>a directory containing its own <code>SKILLS.md</code> file:  this
+  directory will be mapped as a single skill.</p>
+</li>
+<li>
+<p>a directory whose immediate subdirectories will be treated as skills
+  IFF they contain a <code>SKILLS.md</code> file.</p>
+</li>
+</ul>
+<p>Non-absolute paths will be evaluated relative to the installation directory.</p>
+<p>The order of entries in the <code>filesystem_skills_paths</code> list controls which
+skill configuration is used for any conflict on skill name:  filesystem
+skills found earlier in the list "win" over later ones with the same name.</p>
+<p>By default, Soliplex loads skill configurations found under the path
+'./skills', just as though we had configured:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">filesystem_skills_paths</span><span class="p">:</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./skillss&quot;</span>
+</span></code></pre></div>
+<p>To disable filesystem skill discovery, list a single, "null" path, e.g.:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">filesystem_skills_paths</span><span class="p">:</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
+</span></code></pre></div></p>
+<h2 id="enabling-skill-configurations">Enabling Skill Configurations</h2>
+<p>To enable discovered filesystem or entryponit skills, add them to the
+<code>skill_configs</code> stanza of the installation configuration.  E.g.:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">skill_configs</span><span class="p">:</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bare-bones&quot;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;filesystem&quot;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;image-generation&quot;</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;entrypoint&quot;</span>
+</span></code></pre></div>
+<p>Discovered skills which are not mentioned in this stanza cannot be
+referenced by other parts of the configuration, e.g. rooms.</p>
 <h2 id="room-configuration-paths">Room Configuration Paths</h2>
 <p>The <code>room_paths</code> element specify one or more filesystem paths to
 search for room configs.</p>
@@ -2431,15 +2557,15 @@ is used for any conflict on room ID:  rooms found earlier in the list
 "win" over later ones with the same ID.</p>
 <p>By default, Soliplex loads room configurations found under the path './rooms',
 just as though we had configured:</p>
-<p><div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">room_paths</span><span class="p">:</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./rooms&quot;</span>
+<p><div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">room_paths</span><span class="p">:</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./rooms&quot;</span>
 </span></code></pre></div>
 To disable all rooms, list a single, "null" path, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">room_paths</span><span class="p">:</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">   </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">room_paths</span><span class="p">:</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">   </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 <h2 id="completion-configuration-paths">Completion Configuration Paths</h2>
-<p>The <code>completion_paths</code> entry specifies one or more filesystem paths to
+<p>The <code>completion_paths</code> stanza specifies one or more filesystem paths to
 search for completion configs.</p>
 <p>Please see <a href="../completions/">this page</a> for details on how to configure
 these providers.</p>
@@ -2460,12 +2586,12 @@ configuration is used for any conflict on completion ID:  completions
 found earlier in the list "win" over later ones with the same ID.</p>
 <p>By default, Soliplex loads completion configurations found under the path
 './completions', just as though we had configured:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./completions&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./completions&quot;</span>
 </span></code></pre></div>
 <p>To disable all completions, list a single, "null" path, e.g.:
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
 </span></code></pre></div></p>
 <h2 id="logfire-configuration">Logfire Configuration</h2>
 <p>See the <a href="../logfire/">Solipex logfire configuration</a> page.</p>

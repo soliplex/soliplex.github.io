@@ -14,14 +14,14 @@
         <link rel="prev" href="../WORKFLOWS/">
       
       
-        <link rel="next" href="../../chatbot/readme/">
+        <link rel="next" href="../../ingester-agents/">
       
       
         
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1199,6 +1199,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1216,8 +1220,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1231,8 +1236,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
@@ -1670,17 +1681,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#validate-haiku" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        validate-haiku
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#list-workflows" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1718,6 +1718,39 @@
     <span class="md-ellipsis">
       
         dump-param-set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vacuum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vacuum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vacuum-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vacuum-all
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        verify-db
       
     </span>
   </a>
@@ -1974,6 +2007,210 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#si-diag-diagnostic-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        si-diag: Diagnostic CLI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="si-diag: Diagnostic CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command Groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        batch list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        document list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-find" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        document find
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        document info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        document history
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config workflows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-params" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config params
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-workflow-def" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config workflow-def
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-param-def" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config param-def
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-group-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run-group list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-group-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run-group info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        workflow list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        workflow info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status running
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-recent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status recent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status details
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#future-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2002,6 +2239,8 @@
     </li>
   
 
+              
+            
               
             
           </ul>
@@ -2102,7 +2341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -2141,6 +2380,8 @@
       
         
           
+        
+      
         
       
         
@@ -2212,6 +2453,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -2337,17 +2606,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#validate-haiku" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        validate-haiku
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#list-workflows" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2385,6 +2643,39 @@
     <span class="md-ellipsis">
       
         dump-param-set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vacuum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vacuum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vacuum-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vacuum-all
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        verify-db
       
     </span>
   </a>
@@ -2641,6 +2932,210 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#si-diag-diagnostic-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        si-diag: Diagnostic CLI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="si-diag: Diagnostic CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command Groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        batch list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        document list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-find" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        document find
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        document info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#document-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        document history
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config workflows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-params" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config params
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-workflow-def" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config workflow-def
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-param-def" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config param-def
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-group-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run-group list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-group-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run-group info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        workflow list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        workflow info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status running
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-recent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status recent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status details
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#future-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2732,35 +3227,48 @@
 
 <h1 id="cli-reference">CLI Reference</h1>
 <h2 id="overview">Overview</h2>
-<p>Soliplex Ingester provides a command-line interface (CLI) built with Typer. The CLI binary is named <code>si-cli</code>.</p>
-<p><strong>Installation:</strong>
-After installing the package, the <code>si-cli</code> command is available:
+<p>Soliplex Ingester provides two command-line interfaces built with Typer:</p>
+<ul>
+<li><strong><code>si-cli</code></strong> - Main CLI for server management, worker processes, and database operations</li>
+<li><strong><code>si-diag</code></strong> - Read-only diagnostic CLI for inspecting batches, documents, workflows, and system status</li>
+</ul>
+<p><strong>Installation:</strong></p>
+<p>After installing the package, both commands are available:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>si-cli<span class="w"> </span>--help
-</span></code></pre></div></p>
-<p><strong>Entry Point:</strong> <code>src/soliplex_ingester/cli.py:35</code></p>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>si-diag<span class="w"> </span>--help
+</span></code></pre></div>
+<p><strong>Entry Points:</strong></p>
+<ul>
+<li><code>si-cli</code> → <code>src/soliplex/ingester/cli.py</code></li>
+<li><code>si-diag</code> → <code>src/soliplex/ingester/diag_cli.py</code></li>
+</ul>
 <hr />
 <h2 id="global-options">Global Options</h2>
 <p>All commands support these options:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>si-cli<span class="w"> </span>--help<span class="w">           </span><span class="c1"># Show help for all commands</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>si-cli<span class="w"> </span>COMMAND<span class="w"> </span>--help<span class="w">   </span><span class="c1"># Show help for specific command</span>
 </span></code></pre></div>
-<p><strong>Initialization:</strong>
-Before running any command, the CLI automatically:
-1. Validates settings
-2. Sets up logging based on <code>LOG_LEVEL</code></p>
+<p><strong>Initialization:</strong></p>
+<p>Before running any command, the CLI automatically:</p>
+<ol>
+<li>Validates settings</li>
+<li>Sets up logging based on <code>LOG_LEVEL</code></li>
+</ol>
 <hr />
 <h2 id="commands">Commands</h2>
 <h3 id="validate-settings">validate-settings</h3>
 <p>Validate and display application settings.</p>
-<p><strong>Usage:</strong>
+<p><strong>Usage:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>si-cli<span class="w"> </span>validate-settings
-</span></code></pre></div></p>
-<p><strong>Description:</strong>
-- Validates all environment variables
-- Displays current configuration
-- Exits with error code if validation fails</p>
-<p><strong>Example Output:</strong>
+</span></code></pre></div>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Validates all environment variables</li>
+<li>Displays current configuration</li>
+<li>Exits with error code if validation fails</li>
+</ul>
+<p><strong>Example Output:</strong></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>doc_db_url=&#39;sqlite+aiosqlite:///./db/documents.db&#39;
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>docling_server_url=&#39;http://localhost:5001/v1&#39;
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>docling_http_timeout=600
@@ -2768,44 +3276,52 @@ Before running any command, the CLI automatically:
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>file_store_target=&#39;fs&#39;
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>file_store_dir=&#39;file_store&#39;
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>...
-</span></code></pre></div></p>
-<p><strong>Error Output:</strong>
+</span></code></pre></div>
+<p><strong>Error Output:</strong></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>invalid settings
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>{&#39;type&#39;: &#39;missing&#39;, &#39;loc&#39;: (&#39;doc_db_url&#39;,), &#39;msg&#39;: &#39;Field required&#39;}
-</span></code></pre></div></p>
-<p><strong>Exit Codes:</strong>
-- <code>0</code> - Settings valid
-- <code>1</code> - Validation failed</p>
-<p><strong>Implementation:</strong> <code>src/soliplex_ingester/cli.py:38</code></p>
+</span></code></pre></div>
+<p><strong>Exit Codes:</strong></p>
+<ul>
+<li><code>0</code> - Settings valid</li>
+<li><code>1</code> - Validation failed</li>
+</ul>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py:38</code></p>
 <hr />
 <h3 id="db-init">db-init</h3>
 <p>Initialize database tables and run migrations.</p>
-<p><strong>Usage:</strong>
+<p><strong>Usage:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>si-cli<span class="w"> </span>db-init
-</span></code></pre></div></p>
-<p><strong>Description:</strong>
-- Creates all database tables using SQLModel metadata
-- Runs Alembic migrations to latest version
-- Idempotent (safe to run multiple times)</p>
-<p><strong>Prerequisites:</strong>
-- <code>DOC_DB_URL</code> environment variable must be set
-- Database server must be accessible
-- User must have CREATE TABLE permissions</p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Creates all database tables using SQLModel metadata</li>
+<li>Runs Alembic migrations to latest version</li>
+<li>Idempotent (safe to run multiple times)</li>
+</ul>
+<p><strong>Prerequisites:</strong></p>
+<ul>
+<li><code>DOC_DB_URL</code> environment variable must be set</li>
+<li>Database server must be accessible</li>
+<li>User must have CREATE TABLE permissions</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOC_DB_URL</span><span class="o">=</span><span class="s2">&quot;sqlite+aiosqlite:///./db/documents.db&quot;</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>si-cli<span class="w"> </span>db-init
-</span></code></pre></div></p>
-<p><strong>Notes:</strong>
-- For SQLite, creates database file if it doesn't exist
-- For PostgreSQL, database must already exist
-- Uses synchronous SQLAlchemy engine (not async)</p>
-<p><strong>Implementation:</strong> <code>src/soliplex_ingester/cli.py:68</code></p>
+</span></code></pre></div>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>For SQLite, creates database file if it doesn't exist</li>
+<li>For PostgreSQL, database must already exist</li>
+<li>Uses synchronous SQLAlchemy engine (not async)</li>
+</ul>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py:68</code></p>
 <hr />
 <h3 id="serve">serve</h3>
 <p>Start the FastAPI web server.</p>
-<p><strong>Usage:</strong>
+<p><strong>Usage:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Options:</strong></p>
 <table>
 <thead>
@@ -2884,54 +3400,62 @@ Before running any command, the CLI automatically:
 </tbody>
 </table>
 <p><strong>Examples:</strong></p>
-<p><strong>Basic server:</strong>
+<p><strong>Basic server:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>si-cli<span class="w"> </span>serve
-</span></code></pre></div></p>
-<p><strong>Custom host and port:</strong>
+</span></code></pre></div>
+<p><strong>Custom host and port:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">9000</span>
-</span></code></pre></div></p>
-<p><strong>Development mode with auto-reload:</strong>
+</span></code></pre></div>
+<p><strong>Development mode with auto-reload:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--reload
-</span></code></pre></div></p>
-<p><strong>Production with multiple workers:</strong>
+</span></code></pre></div>
+<p><strong>Production with multiple workers:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--workers<span class="w"> </span><span class="m">4</span><span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0
-</span></code></pre></div></p>
-<p><strong>Unix socket:</strong>
+</span></code></pre></div>
+<p><strong>Unix socket:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--uds<span class="w"> </span>/tmp/soliplex.sock
-</span></code></pre></div></p>
-<p><strong>Behind proxy:</strong>
+</span></code></pre></div>
+<p><strong>Behind proxy:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="w"> </span><span class="s2">&quot;10.0.0.0/8&quot;</span>
-</span></code></pre></div></p>
-<p><strong>Reload Configuration:</strong>
-When <code>--reload</code> is enabled:
-- Watches Python files in <code>soliplex_ingester</code> package
-- Watches <code>*.yaml</code>, <code>*.yml</code>, <code>*.txt</code> files
-- Automatically restarts on changes</p>
-<p><strong>Worker Note:</strong>
-The server automatically starts a background worker on startup. The worker processes workflow steps concurrently with serving API requests.</p>
-<p><strong>Environment Variables:</strong>
-- <code>WEB_CONCURRENCY</code> - Default number of workers if not specified</p>
-<p><strong>Implementation:</strong> <code>src/soliplex_ingester/cli.py:207</code></p>
+</span></code></pre></div>
+<p><strong>Reload Configuration:</strong></p>
+<p>When <code>--reload</code> is enabled:</p>
+<ul>
+<li>Watches Python files in <code>soliplex.ingester</code> package</li>
+<li>Watches <code>*.yaml</code>, <code>*.yml</code>, <code>*.txt</code> files</li>
+<li>Automatically restarts on changes</li>
+</ul>
+<p><strong>Worker Note:</strong></p>
+<p>The server automatically starts a background worker on startup. The worker processes workflow steps concurrently with serving API requests.</p>
+<p><strong>Environment Variables:</strong></p>
+<ul>
+<li><code>WEB_CONCURRENCY</code> - Default number of workers if not specified</li>
+</ul>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py:207</code></p>
 <hr />
 <h3 id="worker">worker</h3>
 <p>Run a standalone workflow processing worker.</p>
-<p><strong>Usage:</strong>
+<p><strong>Usage:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>si-cli<span class="w"> </span>worker
-</span></code></pre></div></p>
-<p><strong>Description:</strong>
-- Starts a worker that polls for pending workflow steps
-- Executes steps according to workflow definitions
-- Runs indefinitely until interrupted (Ctrl+C)</p>
-<p><strong>Behavior:</strong>
-- Registers worker with unique ID in database
-- Sends heartbeat every <code>WORKER_CHECKIN_INTERVAL</code> seconds
-- Processes steps based on priority and availability
-- Handles retries according to step configuration</p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Starts a worker that polls for pending workflow steps</li>
+<li>Executes steps according to workflow definitions</li>
+<li>Runs indefinitely until interrupted (Ctrl+C)</li>
+</ul>
+<p><strong>Behavior:</strong></p>
+<ul>
+<li>Registers worker with unique ID in database</li>
+<li>Sends heartbeat every <code>WORKER_CHECKIN_INTERVAL</code> seconds</li>
+<li>Processes steps based on priority and availability</li>
+<li>Handles retries according to step configuration</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>si-cli<span class="w"> </span>worker
-</span></code></pre></div></p>
-<p><strong>Multiple Workers:</strong>
-Run multiple instances for increased throughput:
+</span></code></pre></div>
+<p><strong>Multiple Workers:</strong></p>
+<p>Run multiple instances for increased throughput:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Terminal 1</span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>si-cli<span class="w"> </span>worker
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
@@ -2940,242 +3464,322 @@ Run multiple instances for increased throughput:
 </span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
 </span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># Terminal 3</span>
 </span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>si-cli<span class="w"> </span>worker
-</span></code></pre></div></p>
-<p><strong>Graceful Shutdown:</strong>
-- Press <code>Ctrl+C</code> to stop worker
-- Worker will finish current step before exiting
-- Pending steps remain in database for other workers</p>
-<p><strong>Monitoring:</strong>
-Check worker status via API:
+</span></code></pre></div>
+<p><strong>Graceful Shutdown:</strong></p>
+<ul>
+<li>Press <code>Ctrl+C</code> to stop worker</li>
+<li>Worker will finish current step before exiting</li>
+<li>Pending steps remain in database for other workers</li>
+</ul>
+<p><strong>Monitoring:</strong></p>
+<p>Check worker status via API:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/workflow/steps?status<span class="o">=</span>RUNNING
-</span></code></pre></div></p>
-<p><strong>Implementation:</strong> <code>src/soliplex_ingester/cli.py:148</code></p>
-<hr />
-<h3 id="validate-haiku">validate-haiku</h3>
-<p>Validate HaikuRAG integration for a batch.</p>
-<p><strong>Usage:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>si-cli<span class="w"> </span>validate-haiku<span class="w"> </span>BATCH_ID<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
-</span></code></pre></div></p>
-<p><strong>Arguments:</strong>
-- <code>BATCH_ID</code> (int, required) - Batch ID to validate</p>
-<p><strong>Options:</strong>
-- <code>--detail</code> (bool) - Show detailed output (not yet implemented)</p>
-<p><strong>Description:</strong>
-- Checks all documents in batch
-- Verifies parsed markdown exists
-- Confirms documents are indexed in HaikuRAG
-- Reports any errors or missing documents</p>
-<p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>si-cli<span class="w"> </span>validate-haiku<span class="w"> </span><span class="m">1</span>
-</span></code></pre></div></p>
-<p><strong>Output:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="mi">-----------</span><span class="err">resul</span><span class="kc">ts</span><span class="mi">--------------</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w"> </span><span class="kc">f</span><span class="err">ou</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="err">resul</span><span class="kc">ts</span>
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="mi">-----------</span><span class="kc">fa</span><span class="err">ils</span><span class="mi">--------------</span>
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="p">[</span>
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">  </span><span class="p">{</span>
-</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">    </span><span class="nt">&quot;doc&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256-abc123...&quot;</span><span class="p">,</span>
-</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">    </span><span class="nt">&quot;haiku&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Document not found in HaikuRAG&quot;</span><span class="p">,</span>
-</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;haiku error&quot;</span>
-</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="p">]</span>
-</span></code></pre></div></p>
-<p><strong>Status Values:</strong>
-- <code>success</code> - Document indexed correctly
-- <code>no_id</code> - Document has no <code>rag_id</code> (not yet stored)
-- <code>md error</code> - Parsed markdown not found
-- <code>haiku error</code> - Error fetching from HaikuRAG</p>
-<p><strong>Implementation:</strong> <code>src/soliplex_ingester/cli.py:133</code></p>
+</span></code></pre></div>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py</code></p>
 <hr />
 <h3 id="list-workflows">list-workflows</h3>
 <p>List all available workflow definitions.</p>
-<p><strong>Usage:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>si-cli<span class="w"> </span>list-workflows
-</span></code></pre></div></p>
-<p><strong>Description:</strong>
-- Scans <code>WORKFLOW_DIR</code> for YAML files
-- Displays workflow IDs</p>
-<p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>si-cli<span class="w"> </span>list-workflows
-</span></code></pre></div></p>
-<p><strong>Output:</strong>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>batch
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>batch_split
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>interactive
-</span></code></pre></div></p>
-<p><strong>Implementation:</strong> <code>src/soliplex_ingester/cli.py:189</code></p>
+<p><strong>Usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>si-cli<span class="w"> </span>list-workflows
+</span></code></pre></div>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Scans <code>WORKFLOW_DIR</code> for YAML files</li>
+<li>Displays workflow IDs</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>si-cli<span class="w"> </span>list-workflows
+</span></code></pre></div>
+<p><strong>Output:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>batch
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>batch_split
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>interactive
+</span></code></pre></div>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py:189</code></p>
 <hr />
 <h3 id="dump-workflow">dump-workflow</h3>
 <p>Display complete workflow definition.</p>
-<p><strong>Usage:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>si-cli<span class="w"> </span>dump-workflow<span class="w"> </span>WORKFLOW_ID
-</span></code></pre></div></p>
-<p><strong>Arguments:</strong>
-- <code>WORKFLOW_ID</code> (str, required) - Workflow definition ID</p>
-<p><strong>Description:</strong>
-- Loads workflow from YAML
-- Displays as formatted JSON</p>
-<p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>si-cli<span class="w"> </span>dump-workflow<span class="w"> </span>batch
-</span></code></pre></div></p>
-<p><strong>Output:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="p">{</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Batch Workflow&quot;</span><span class="p">,</span>
-</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">  </span><span class="nt">&quot;meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">  </span><span class="nt">&quot;item_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">    </span><span class="nt">&quot;validate&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;docling validate&quot;</span><span class="p">,</span>
-</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">      </span><span class="nt">&quot;retries&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">      </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;soliplex_ingester.lib.workflow.validate_document&quot;</span><span class="p">,</span>
-</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">      </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="w">    </span><span class="p">},</span>
-</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="w">    </span><span class="err">...</span>
-</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="w">  </span><span class="nt">&quot;lifecycle_events&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
-</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Implementation:</strong> <code>src/soliplex_ingester/cli.py:162</code></p>
+<p><strong>Usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>si-cli<span class="w"> </span>dump-workflow<span class="w"> </span>WORKFLOW_ID
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>WORKFLOW_ID</code> (str, required) - Workflow definition ID</li>
+</ul>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Loads workflow from YAML</li>
+<li>Displays as formatted JSON</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>si-cli<span class="w"> </span>dump-workflow<span class="w"> </span>batch
+</span></code></pre></div>
+<p><strong>Output:</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Batch Workflow&quot;</span><span class="p">,</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">  </span><span class="nt">&quot;meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span><span class="nt">&quot;item_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">    </span><span class="nt">&quot;validate&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;docling validate&quot;</span><span class="p">,</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">      </span><span class="nt">&quot;retries&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">      </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;soliplex.ingester.lib.workflow.validate_document&quot;</span><span class="p">,</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">      </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">    </span><span class="err">...</span>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="w">  </span><span class="nt">&quot;lifecycle_events&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py:162</code></p>
 <hr />
 <h3 id="list-param-sets">list-param-sets</h3>
 <p>List all available parameter sets.</p>
-<p><strong>Usage:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>si-cli<span class="w"> </span>list-param-sets
-</span></code></pre></div></p>
-<p><strong>Description:</strong>
-- Scans <code>PARAM_DIR</code> for YAML files
-- Displays parameter set IDs</p>
-<p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>si-cli<span class="w"> </span>list-param-sets
-</span></code></pre></div></p>
-<p><strong>Output:</strong>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>default
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>high_quality
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>fast_processing
-</span></code></pre></div></p>
-<p><strong>Implementation:</strong> <code>src/soliplex_ingester/cli.py:201</code></p>
+<p><strong>Usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>si-cli<span class="w"> </span>list-param-sets
+</span></code></pre></div>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Scans <code>PARAM_DIR</code> for YAML files</li>
+<li>Displays parameter set IDs</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>si-cli<span class="w"> </span>list-param-sets
+</span></code></pre></div>
+<p><strong>Output:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>default
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>high_quality
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>fast_processing
+</span></code></pre></div>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py:201</code></p>
 <hr />
 <h3 id="dump-param-set">dump-param-set</h3>
 <p>Display complete parameter set configuration.</p>
-<p><strong>Usage:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>si-cli<span class="w"> </span>dump-param-set<span class="w"> </span><span class="o">[</span>PARAM_ID<span class="o">]</span>
-</span></code></pre></div></p>
-<p><strong>Arguments:</strong>
-- <code>PARAM_ID</code> (str, optional) - Parameter set ID (default: "default")</p>
-<p><strong>Description:</strong>
-- Loads parameter set from YAML
-- Displays as formatted JSON</p>
-<p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>si-cli<span class="w"> </span>dump-param-set<span class="w"> </span>default
-</span></code></pre></div></p>
-<p><strong>Output:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
-</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
-</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Default Parameters&quot;</span><span class="p">,</span>
-</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">  </span><span class="nt">&quot;meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="w">  </span><span class="nt">&quot;config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="w">    </span><span class="nt">&quot;parse&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markdown&quot;</span><span class="p">,</span>
-</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="w">      </span><span class="nt">&quot;ocr_enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="w">    </span><span class="p">},</span>
-</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="w">    </span><span class="nt">&quot;chunk&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="w">      </span><span class="nt">&quot;chunk_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span>
-</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="w">      </span><span class="nt">&quot;chunk_overlap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span>
-</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="w">    </span><span class="p">},</span>
-</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a><span class="w">    </span><span class="err">...</span>
-</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Implementation:</strong> <code>src/soliplex_ingester/cli.py:175</code></p>
+<p><strong>Usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>si-cli<span class="w"> </span>dump-param-set<span class="w"> </span><span class="o">[</span>PARAM_ID<span class="o">]</span>
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>PARAM_ID</code> (str, optional) - Parameter set ID (default: "default")</li>
+</ul>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Loads parameter set from YAML</li>
+<li>Displays as formatted JSON</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>si-cli<span class="w"> </span>dump-param-set<span class="w"> </span>default
+</span></code></pre></div>
+<p><strong>Output:</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="p">{</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Default Parameters&quot;</span><span class="p">,</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">  </span><span class="nt">&quot;meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">  </span><span class="nt">&quot;config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">    </span><span class="nt">&quot;parse&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markdown&quot;</span><span class="p">,</span>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="w">      </span><span class="nt">&quot;ocr_enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="w">    </span><span class="nt">&quot;chunk&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="w">      </span><span class="nt">&quot;chunk_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span>
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="w">      </span><span class="nt">&quot;chunk_overlap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span>
+</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="w">    </span><span class="err">...</span>
+</span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-29-16"><a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py:175</code></p>
+<hr />
+<h3 id="vacuum">vacuum</h3>
+<p>Vacuum a LanceDB database to reclaim space from deleted rows.</p>
+<p><strong>Usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>si-cli<span class="w"> </span>vacuum<span class="w"> </span>DB_NAME<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>DB_NAME</code> (str, required) - Name of the database directory under <code>LANCEDB_DIR</code></li>
+</ul>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--sign</code></td>
+<td>bool</td>
+<td>False</td>
+<td>Write an HMAC-SHA512 signature after vacuuming (requires <code>LANCEDB_HMAC_KEY</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Resolves the database path under the configured <code>LANCEDB_DIR</code></li>
+<li>If the directory contains a <code>haiku.rag.lancedb</code> subfolder, vacuums that instead</li>
+<li>Automatically runs pending migrations before vacuuming if required</li>
+<li>Sets <code>vacuum_retention_seconds</code> to 0 to ensure all deleted data is reclaimed</li>
+<li>Will not create a new database — errors if the path does not exist</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>si-cli<span class="w"> </span>vacuum<span class="w"> </span>my_database
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>si-cli<span class="w"> </span>vacuum<span class="w"> </span>my_database<span class="w"> </span>--sign
+</span></code></pre></div>
+<p><strong>Exit Codes:</strong></p>
+<ul>
+<li><code>0</code> - Vacuum completed successfully</li>
+<li><code>1</code> - Database not found or error during vacuum</li>
+</ul>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py</code> → <code>src/soliplex/ingester/lib/rag.py:vacuum_db</code></p>
+<hr />
+<h3 id="vacuum-all">vacuum-all</h3>
+<p>Vacuum every LanceDB database under the configured <code>LANCEDB_DIR</code>.</p>
+<p><strong>Usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>si-cli<span class="w"> </span>vacuum-all<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--sign</code></td>
+<td>bool</td>
+<td>False</td>
+<td>Write an HMAC-SHA512 signature after vacuuming each database (requires <code>LANCEDB_HMAC_KEY</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Scans <code>LANCEDB_DIR</code> for all database directories</li>
+<li>Vacuums each one sequentially</li>
+<li>Logs and continues on failure so one bad database does not block the rest</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>si-cli<span class="w"> </span>vacuum-all
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>si-cli<span class="w"> </span>vacuum-all<span class="w"> </span>--sign
+</span></code></pre></div>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py</code> → <code>src/soliplex/ingester/lib/rag.py:vacuum_all</code></p>
+<hr />
+<h3 id="verify-db">verify-db</h3>
+<p>Verify the HMAC-SHA512 signature of a LanceDB database.</p>
+<p><strong>Usage:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>si-cli<span class="w"> </span>verify-db<span class="w"> </span>DB_NAME
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>DB_NAME</code> (str, required) - Name of the database directory under <code>LANCEDB_DIR</code></li>
+</ul>
+<p><strong>Description:</strong></p>
+<ul>
+<li>Reads the <code>.hmac</code> sidecar file next to the database directory</li>
+<li>Recomputes the HMAC-SHA512 over all files in the database</li>
+<li>Uses constant-time comparison to verify the signature</li>
+<li>Requires <code>LANCEDB_HMAC_KEY</code> environment variable (must be 64 bytes)</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>si-cli<span class="w"> </span>verify-db<span class="w"> </span>my_database
+</span></code></pre></div>
+<p><strong>Exit Codes:</strong></p>
+<ul>
+<li><code>0</code> - HMAC verification passed</li>
+<li><code>1</code> - Verification failed, HMAC file not found, or key misconfigured</li>
+</ul>
+<p><strong>Implementation:</strong> <code>src/soliplex/ingester/cli.py</code> → <code>src/soliplex/ingester/lib/rag.py:verify_db</code></p>
 <hr />
 <h2 id="usage-patterns">Usage Patterns</h2>
 <h3 id="development-workflow">Development Workflow</h3>
-<p><strong>1. Validate configuration:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>si-cli<span class="w"> </span>validate-settings
-</span></code></pre></div></p>
-<p><strong>2. Initialize database:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>si-cli<span class="w"> </span>db-init
-</span></code></pre></div></p>
-<p><strong>3. Start server with reload:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--reload
-</span></code></pre></div></p>
-<p><strong>4. (Optional) Start additional workers:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>si-cli<span class="w"> </span>worker
-</span></code></pre></div></p>
+<p><strong>1. Validate configuration:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>si-cli<span class="w"> </span>validate-settings
+</span></code></pre></div>
+<p><strong>2. Initialize database:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>si-cli<span class="w"> </span>db-init
+</span></code></pre></div>
+<p><strong>3. Start server with reload:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--reload
+</span></code></pre></div>
+<p><strong>4. (Optional) Start additional workers:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>si-cli<span class="w"> </span>worker
+</span></code></pre></div>
 <hr />
 <h3 id="production-deployment">Production Deployment</h3>
-<p><strong>1. Validate configuration:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>si-cli<span class="w"> </span>validate-settings
-</span></code></pre></div></p>
-<p><strong>2. Run migrations:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>si-cli<span class="w"> </span>db-init
-</span></code></pre></div></p>
-<p><strong>3. Start server with multiple workers:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span><span class="w"> </span>--workers<span class="w"> </span><span class="m">4</span>
-</span></code></pre></div></p>
-<p><strong>4. Start dedicated worker processes:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="c1"># In separate terminals/services</span>
-</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>si-cli<span class="w"> </span>worker<span class="w">  </span><span class="c1"># Process 1</span>
-</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>si-cli<span class="w"> </span>worker<span class="w">  </span><span class="c1"># Process 2</span>
-</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>si-cli<span class="w"> </span>worker<span class="w">  </span><span class="c1"># Process 3</span>
-</span></code></pre></div></p>
+<p><strong>1. Validate configuration:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>si-cli<span class="w"> </span>validate-settings
+</span></code></pre></div>
+<p><strong>2. Run migrations:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>si-cli<span class="w"> </span>db-init
+</span></code></pre></div>
+<p><strong>3. Start server with multiple workers:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span><span class="w"> </span>--workers<span class="w"> </span><span class="m">4</span>
+</span></code></pre></div>
+<p><strong>4. Start dedicated worker processes:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="c1"># In separate terminals/services</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>si-cli<span class="w"> </span>worker<span class="w">  </span><span class="c1"># Process 1</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>si-cli<span class="w"> </span>worker<span class="w">  </span><span class="c1"># Process 2</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>si-cli<span class="w"> </span>worker<span class="w">  </span><span class="c1"># Process 3</span>
+</span></code></pre></div>
 <hr />
 <h3 id="batch-processing">Batch Processing</h3>
-<p><strong>1. Create batch and ingest documents:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="c1"># Use API or client library</span>
-</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/batch/<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;source=filesystem&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;name=Test Batch&quot;</span>
-</span></code></pre></div></p>
-<p><strong>2. Start workflows:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/batch/start-workflows<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;batch_id=1&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;workflow_definition_id=batch&quot;</span>
-</span></code></pre></div></p>
-<p><strong>3. Start workers to process:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>si-cli<span class="w"> </span>worker
-</span></code></pre></div></p>
-<p><strong>4. Monitor progress:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/batch/status?batch_id<span class="o">=</span><span class="m">1</span>
-</span></code></pre></div></p>
-<p><strong>5. Validate results:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>si-cli<span class="w"> </span>validate-haiku<span class="w"> </span><span class="m">1</span>
-</span></code></pre></div></p>
+<p><strong>1. Create batch and ingest documents:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="c1"># Use API or client library</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/batch/<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;source=filesystem&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;name=Test Batch&quot;</span>
+</span></code></pre></div>
+<p><strong>2. Start workflows:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/batch/start-workflows<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;batch_id=1&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;workflow_definition_id=batch&quot;</span>
+</span></code></pre></div>
+<p><strong>3. Start workers to process:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>si-cli<span class="w"> </span>worker
+</span></code></pre></div>
+<p><strong>4. Monitor progress:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>curl<span class="w"> </span>http://localhost:8000/api/v1/batch/status?batch_id<span class="o">=</span><span class="m">1</span>
+</span></code></pre></div>
 <hr />
 <h3 id="configuration-management">Configuration Management</h3>
-<p><strong>List available workflows:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>si-cli<span class="w"> </span>list-workflows
-</span></code></pre></div></p>
-<p><strong>Inspect workflow:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>si-cli<span class="w"> </span>dump-workflow<span class="w"> </span>batch
-</span></code></pre></div></p>
-<p><strong>List parameter sets:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>si-cli<span class="w"> </span>list-param-sets
-</span></code></pre></div></p>
-<p><strong>Inspect parameters:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>si-cli<span class="w"> </span>dump-param-set<span class="w"> </span>default
-</span></code></pre></div></p>
+<p><strong>List available workflows:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>si-cli<span class="w"> </span>list-workflows
+</span></code></pre></div>
+<p><strong>Inspect workflow:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>si-cli<span class="w"> </span>dump-workflow<span class="w"> </span>batch
+</span></code></pre></div>
+<p><strong>List parameter sets:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>si-cli<span class="w"> </span>list-param-sets
+</span></code></pre></div>
+<p><strong>Inspect parameters:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>si-cli<span class="w"> </span>dump-param-set<span class="w"> </span>default
+</span></code></pre></div>
 <hr />
 <h3 id="troubleshooting">Troubleshooting</h3>
-<p><strong>Check configuration:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>si-cli<span class="w"> </span>validate-settings
-</span></code></pre></div></p>
-<p><strong>Verify database connection:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>si-cli<span class="w"> </span>db-init
-</span></code></pre></div></p>
-<p><strong>Test server startup:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span>localhost<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
-</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="c1"># Press Ctrl+C to stop</span>
-</span></code></pre></div></p>
-<p><strong>Check worker connectivity:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>si-cli<span class="w"> </span>worker
-</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="c1"># Should start without errors</span>
-</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="c1"># Press Ctrl+C to stop</span>
-</span></code></pre></div></p>
-<p><strong>Validate batch processing:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>si-cli<span class="w"> </span>validate-haiku<span class="w"> </span>BATCH_ID
-</span></code></pre></div></p>
+<p><strong>Check configuration:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>si-cli<span class="w"> </span>validate-settings
+</span></code></pre></div>
+<p><strong>Verify database connection:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>si-cli<span class="w"> </span>db-init
+</span></code></pre></div>
+<p><strong>Test server startup:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span>localhost<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a><span class="c1"># Press Ctrl+C to stop</span>
+</span></code></pre></div>
+<p><strong>Check worker connectivity:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>si-cli<span class="w"> </span>worker
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="c1"># Should start without errors</span>
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="c1"># Press Ctrl+C to stop</span>
+</span></code></pre></div>
 <hr />
 <h2 id="exit-codes">Exit Codes</h2>
 <table>
@@ -3209,57 +3813,67 @@ Check worker status via API:
 <li><code>WORKFLOW_DIR</code> - Workflow definitions directory</li>
 <li><code>PARAM_DIR</code> - Parameter sets directory</li>
 <li><code>DOCLING_SERVER_URL</code> - Docling service endpoint</li>
+<li><code>LANCEDB_DIR</code> - Directory containing LanceDB databases (used by vacuum/verify commands)</li>
+<li><code>LANCEDB_HMAC_KEY</code> - 64-byte key for HMAC-SHA512 database signing (used by <code>--sign</code> and <code>verify-db</code>)</li>
 </ul>
 <p>See <a href="../CONFIGURATION/">CONFIGURATION.md</a> for complete list.</p>
 <hr />
 <h2 id="logging">Logging</h2>
 <h3 id="log-levels">Log Levels</h3>
 <p>Set via <code>LOG_LEVEL</code> environment variable:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>DEBUG<span class="w"> </span>si-cli<span class="w"> </span>serve
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="nv">LOG_LEVEL</span><span class="o">=</span>DEBUG<span class="w"> </span>si-cli<span class="w"> </span>serve
 </span></code></pre></div>
-<p><strong>Levels:</strong>
-- <code>DEBUG</code> - Detailed diagnostic information
-- <code>INFO</code> - General informational messages (default)
-- <code>WARNING</code> - Warning messages
-- <code>ERROR</code> - Error messages
-- <code>CRITICAL</code> - Critical error messages</p>
+<p><strong>Levels:</strong></p>
+<ul>
+<li><code>DEBUG</code> - Detailed diagnostic information</li>
+<li><code>INFO</code> - General informational messages (default)</li>
+<li><code>WARNING</code> - Warning messages</li>
+<li><code>ERROR</code> - Error messages</li>
+<li><code>CRITICAL</code> - Critical error messages</li>
+</ul>
 <h3 id="log-output">Log Output</h3>
 <p>Logs are written to stderr. Redirect as needed:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>si-cli<span class="w"> </span>worker<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>worker.log
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>si-cli<span class="w"> </span>worker<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>worker.log
 </span></code></pre></div>
 <h3 id="log-format">Log Format</h3>
-<p>Default format includes:
-- Timestamp
-- Log level
-- Logger name
-- Message</p>
-<p>Example:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>2025-01-15 10:00:00,123 INFO soliplex_ingester.cli Starting server
-</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>2025-01-15 10:00:01,456 INFO soliplex_ingester.server Starting worker
-</span></code></pre></div></p>
+<p>Default format includes:</p>
+<ul>
+<li>Timestamp</li>
+<li>Log level</li>
+<li>Logger name</li>
+<li>Message</li>
+</ul>
+<p>Example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>2025-01-15 10:00:00,123 INFO soliplex.ingester.cli Starting server
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>2025-01-15 10:00:01,456 INFO soliplex.ingester.server Starting worker
+</span></code></pre></div>
 <hr />
 <h2 id="signal-handling">Signal Handling</h2>
 <h3 id="graceful-shutdown">Graceful Shutdown</h3>
 <p>The CLI handles signals for graceful shutdown:</p>
-<p><strong>Signals:</strong>
-- <code>SIGINT</code> (Ctrl+C) - Graceful shutdown
-- <code>SIGTERM</code> - Graceful shutdown</p>
-<p><strong>Behavior:</strong>
-1. Stop accepting new work
-2. Complete current operations
-3. Clean up resources
-4. Exit with code 0</p>
-<p><strong>Example:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>si-cli<span class="w"> </span>worker
-</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="c1"># Press Ctrl+C</span>
-</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="c1"># Worker completes current step and exits</span>
-</span></code></pre></div></p>
+<p><strong>Signals:</strong></p>
+<ul>
+<li><code>SIGINT</code> (Ctrl+C) - Graceful shutdown</li>
+<li><code>SIGTERM</code> - Graceful shutdown</li>
+</ul>
+<p><strong>Behavior:</strong></p>
+<ol>
+<li>Stop accepting new work</li>
+<li>Complete current operations</li>
+<li>Clean up resources</li>
+<li>Exit with code 0</li>
+</ol>
+<p><strong>Example:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>si-cli<span class="w"> </span>worker
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="c1"># Press Ctrl+C</span>
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="c1"># Worker completes current step and exits</span>
+</span></code></pre></div>
 <hr />
 <h2 id="platform-notes">Platform Notes</h2>
 <h3 id="windows">Windows</h3>
 <p>On Windows, the CLI automatically sets the event loop policy for compatibility:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
-</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>    <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop_policy</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">WindowsSelectorEventLoopPolicy</span><span class="p">())</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>    <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop_policy</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">WindowsSelectorEventLoopPolicy</span><span class="p">())</span>
 </span></code></pre></div>
 <p>This is handled automatically; no user action required.</p>
 <h3 id="unixlinux">Unix/Linux</h3>
@@ -3267,44 +3881,26 @@ Check worker status via API:
 <hr />
 <h2 id="running-with-python">Running with Python</h2>
 <p>If <code>si-cli</code> is not in PATH, run directly:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>python<span class="w"> </span>-m<span class="w"> </span>soliplex_ingester.cli<span class="w"> </span>--help
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>python<span class="w"> </span>-m<span class="w"> </span>soliplex.ingester.cli<span class="w"> </span>--help
 </span></code></pre></div>
 <hr />
 <h2 id="docker-usage">Docker Usage</h2>
 <p><strong>Dockerfile CMD examples:</strong></p>
-<p><strong>Server:</strong>
-<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;si-cli&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;serve&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--host&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--port&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;8000&quot;</span><span class="p">]</span>
-</span></code></pre></div></p>
-<p><strong>Worker:</strong>
-<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;si-cli&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;worker&quot;</span><span class="p">]</span>
-</span></code></pre></div></p>
-<p><strong>Init container:</strong>
-<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;si-cli&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;db-init&quot;</span><span class="p">]</span>
-</span></code></pre></div></p>
+<p><strong>Server:</strong></p>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;si-cli&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;serve&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--host&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--port&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;8000&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+<p><strong>Worker:</strong></p>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;si-cli&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;worker&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+<p><strong>Init container:</strong></p>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;si-cli&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;db-init&quot;</span><span class="p">]</span>
+</span></code></pre></div>
 <hr />
 <h2 id="systemd-service">Systemd Service</h2>
 <p><strong>Example service file:</strong></p>
-<p><strong>/etc/systemd/system/soliplex-ingester.service:</strong>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="k">[Unit]</span>
-</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a><span class="na">Description</span><span class="o">=</span><span class="s">Soliplex Ingester API Server</span>
-</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a><span class="na">After</span><span class="o">=</span><span class="s">network.target postgresql.service</span>
-</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a>
-</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a><span class="k">[Service]</span>
-</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a><span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
-</span><span id="__span-64-7"><a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a><span class="na">User</span><span class="o">=</span><span class="s">soliplex</span>
-</span><span id="__span-64-8"><a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a><span class="na">Group</span><span class="o">=</span><span class="s">soliplex</span>
-</span><span id="__span-64-9"><a id="__codelineno-64-9" name="__codelineno-64-9" href="#__codelineno-64-9"></a><span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/opt/soliplex-ingester</span>
-</span><span id="__span-64-10"><a id="__codelineno-64-10" name="__codelineno-64-10" href="#__codelineno-64-10"></a><span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">/etc/soliplex/config.env</span>
-</span><span id="__span-64-11"><a id="__codelineno-64-11" name="__codelineno-64-11" href="#__codelineno-64-11"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/soliplex-ingester/.venv/bin/si-cli serve --host 0.0.0.0 --port 8000</span>
-</span><span id="__span-64-12"><a id="__codelineno-64-12" name="__codelineno-64-12" href="#__codelineno-64-12"></a><span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
-</span><span id="__span-64-13"><a id="__codelineno-64-13" name="__codelineno-64-13" href="#__codelineno-64-13"></a><span class="na">RestartSec</span><span class="o">=</span><span class="s">5s</span>
-</span><span id="__span-64-14"><a id="__codelineno-64-14" name="__codelineno-64-14" href="#__codelineno-64-14"></a>
-</span><span id="__span-64-15"><a id="__codelineno-64-15" name="__codelineno-64-15" href="#__codelineno-64-15"></a><span class="k">[Install]</span>
-</span><span id="__span-64-16"><a id="__codelineno-64-16" name="__codelineno-64-16" href="#__codelineno-64-16"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
-</span></code></pre></div></p>
-<p><strong>/etc/systemd/system/soliplex-worker@.service:</strong>
+<p><strong>/etc/systemd/system/soliplex-ingester.service:</strong></p>
 <div class="language-ini highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="k">[Unit]</span>
-</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a><span class="na">Description</span><span class="o">=</span><span class="s">Soliplex Ingester Worker %i</span>
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a><span class="na">Description</span><span class="o">=</span><span class="s">Soliplex Ingester API Server</span>
 </span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a><span class="na">After</span><span class="o">=</span><span class="s">network.target postgresql.service</span>
 </span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>
 </span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a><span class="k">[Service]</span>
@@ -3313,21 +3909,301 @@ Check worker status via API:
 </span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a><span class="na">Group</span><span class="o">=</span><span class="s">soliplex</span>
 </span><span id="__span-65-9"><a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a><span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/opt/soliplex-ingester</span>
 </span><span id="__span-65-10"><a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a><span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">/etc/soliplex/config.env</span>
-</span><span id="__span-65-11"><a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a><span class="na">Environment</span><span class="o">=</span><span class="s">&quot;WORKER_ID=worker-%i&quot;</span>
-</span><span id="__span-65-12"><a id="__codelineno-65-12" name="__codelineno-65-12" href="#__codelineno-65-12"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/soliplex-ingester/.venv/bin/si-cli worker</span>
-</span><span id="__span-65-13"><a id="__codelineno-65-13" name="__codelineno-65-13" href="#__codelineno-65-13"></a><span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
-</span><span id="__span-65-14"><a id="__codelineno-65-14" name="__codelineno-65-14" href="#__codelineno-65-14"></a><span class="na">RestartSec</span><span class="o">=</span><span class="s">10s</span>
-</span><span id="__span-65-15"><a id="__codelineno-65-15" name="__codelineno-65-15" href="#__codelineno-65-15"></a>
-</span><span id="__span-65-16"><a id="__codelineno-65-16" name="__codelineno-65-16" href="#__codelineno-65-16"></a><span class="k">[Install]</span>
-</span><span id="__span-65-17"><a id="__codelineno-65-17" name="__codelineno-65-17" href="#__codelineno-65-17"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
-</span></code></pre></div></p>
-<p><strong>Start services:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
-</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>soliplex-ingester
-</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>soliplex-ingester
-</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>soliplex-worker@<span class="o">{</span><span class="m">1</span>..3<span class="o">}</span>
-</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>soliplex-worker@<span class="o">{</span><span class="m">1</span>..3<span class="o">}</span>
-</span></code></pre></div></p>
+</span><span id="__span-65-11"><a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/soliplex-ingester/.venv/bin/si-cli serve --host 0.0.0.0 --port 8000</span>
+</span><span id="__span-65-12"><a id="__codelineno-65-12" name="__codelineno-65-12" href="#__codelineno-65-12"></a><span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
+</span><span id="__span-65-13"><a id="__codelineno-65-13" name="__codelineno-65-13" href="#__codelineno-65-13"></a><span class="na">RestartSec</span><span class="o">=</span><span class="s">5s</span>
+</span><span id="__span-65-14"><a id="__codelineno-65-14" name="__codelineno-65-14" href="#__codelineno-65-14"></a>
+</span><span id="__span-65-15"><a id="__codelineno-65-15" name="__codelineno-65-15" href="#__codelineno-65-15"></a><span class="k">[Install]</span>
+</span><span id="__span-65-16"><a id="__codelineno-65-16" name="__codelineno-65-16" href="#__codelineno-65-16"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</span></code></pre></div>
+<p><strong>/etc/systemd/system/soliplex-worker@.service:</strong></p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="k">[Unit]</span>
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a><span class="na">Description</span><span class="o">=</span><span class="s">Soliplex Ingester Worker %i</span>
+</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a><span class="na">After</span><span class="o">=</span><span class="s">network.target postgresql.service</span>
+</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>
+</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a><span class="k">[Service]</span>
+</span><span id="__span-66-6"><a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a><span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+</span><span id="__span-66-7"><a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a><span class="na">User</span><span class="o">=</span><span class="s">soliplex</span>
+</span><span id="__span-66-8"><a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a><span class="na">Group</span><span class="o">=</span><span class="s">soliplex</span>
+</span><span id="__span-66-9"><a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a><span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/opt/soliplex-ingester</span>
+</span><span id="__span-66-10"><a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a><span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">/etc/soliplex/config.env</span>
+</span><span id="__span-66-11"><a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a><span class="na">Environment</span><span class="o">=</span><span class="s">&quot;WORKER_ID=worker-%i&quot;</span>
+</span><span id="__span-66-12"><a id="__codelineno-66-12" name="__codelineno-66-12" href="#__codelineno-66-12"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/soliplex-ingester/.venv/bin/si-cli worker</span>
+</span><span id="__span-66-13"><a id="__codelineno-66-13" name="__codelineno-66-13" href="#__codelineno-66-13"></a><span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
+</span><span id="__span-66-14"><a id="__codelineno-66-14" name="__codelineno-66-14" href="#__codelineno-66-14"></a><span class="na">RestartSec</span><span class="o">=</span><span class="s">10s</span>
+</span><span id="__span-66-15"><a id="__codelineno-66-15" name="__codelineno-66-15" href="#__codelineno-66-15"></a>
+</span><span id="__span-66-16"><a id="__codelineno-66-16" name="__codelineno-66-16" href="#__codelineno-66-16"></a><span class="k">[Install]</span>
+</span><span id="__span-66-17"><a id="__codelineno-66-17" name="__codelineno-66-17" href="#__codelineno-66-17"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</span></code></pre></div>
+<p><strong>Start services:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>soliplex-ingester
+</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>soliplex-ingester
+</span><span id="__span-67-4"><a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>soliplex-worker@<span class="o">{</span><span class="m">1</span>..3<span class="o">}</span>
+</span><span id="__span-67-5"><a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>soliplex-worker@<span class="o">{</span><span class="m">1</span>..3<span class="o">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="si-diag-diagnostic-cli">si-diag: Diagnostic CLI</h2>
+<p>The <code>si-diag</code> CLI provides read-only access to system state for debugging and monitoring. It uses the same database connection and configuration as <code>si-cli</code>.</p>
+<p><strong>Entry Point:</strong> <code>src/soliplex/ingester/diag_cli.py</code></p>
+<h3 id="command-groups">Command Groups</h3>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>batch</code></td>
+<td>List batches</td>
+</tr>
+<tr>
+<td><code>document</code></td>
+<td>List, find, inspect, and view history of documents</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>List and inspect workflow definitions and parameter sets</td>
+</tr>
+<tr>
+<td><code>run-group</code></td>
+<td>List and inspect run groups</td>
+</tr>
+<tr>
+<td><code>workflow</code></td>
+<td>List and inspect workflow runs and steps</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>View running steps, recent activity, and aggregated details</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="batch-list">batch list</h3>
+<p>List all batches in the database.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>si-diag<span class="w"> </span>batch<span class="w"> </span>list
+</span></code></pre></div>
+<p><strong>Output columns:</strong> id, name, source, start_date, completed_date, duration</p>
+<hr />
+<h3 id="document-list">document list</h3>
+<p>List document URIs filtered by source or batch ID.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>si-diag<span class="w"> </span>document<span class="w"> </span>list<span class="w"> </span>--source<span class="w"> </span>filesystem
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>si-diag<span class="w"> </span>document<span class="w"> </span>list<span class="w"> </span>--batch-id<span class="w"> </span><span class="m">1</span>
+</span></code></pre></div>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--source</code></td>
+<td>str</td>
+<td>Filter by source</td>
+</tr>
+<tr>
+<td><code>--batch-id</code></td>
+<td>int</td>
+<td>Filter by batch ID</td>
+</tr>
+</tbody>
+</table>
+<p>One of <code>--source</code> or <code>--batch-id</code> is required.</p>
+<hr />
+<h3 id="document-find">document find</h3>
+<p>Search for document URIs by pattern (case-insensitive substring match).</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>si-diag<span class="w"> </span>document<span class="w"> </span>find<span class="w"> </span><span class="s2">&quot;quarterly&quot;</span>
+</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>si-diag<span class="w"> </span>document<span class="w"> </span>find<span class="w"> </span><span class="s2">&quot;.pdf&quot;</span>
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>PATTERN</code> (str, required) - Search pattern for URI</li>
+</ul>
+<hr />
+<h3 id="document-info">document info</h3>
+<p>Display detailed information about a document by its hash.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>si-diag<span class="w"> </span>document<span class="w"> </span>info<span class="w"> </span>sha256-abc123...
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>DOC_HASH</code> (str, required) - Document hash</li>
+</ul>
+<p><strong>Shows:</strong> mime_type, file_size, doc_meta (as JSON), and associated URIs.</p>
+<hr />
+<h3 id="document-history">document history</h3>
+<p>Show DocumentURIHistory records for a document hash.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>si-diag<span class="w"> </span>document<span class="w"> </span><span class="nb">history</span><span class="w"> </span>sha256-abc123...
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>DOC_HASH</code> (str, required) - Document hash</li>
+</ul>
+<hr />
+<h3 id="config-workflows">config workflows</h3>
+<p>List all available workflow definitions from the workflow registry.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>si-diag<span class="w"> </span>config<span class="w"> </span>workflows
+</span></code></pre></div>
+<hr />
+<h3 id="config-params">config params</h3>
+<p>List all available parameter sets from the parameter registry.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>si-diag<span class="w"> </span>config<span class="w"> </span>params
+</span></code></pre></div>
+<hr />
+<h3 id="config-workflow-def">config workflow-def</h3>
+<p>Display a workflow definition as YAML.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>si-diag<span class="w"> </span>config<span class="w"> </span>workflow-def<span class="w"> </span>batch
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>WF_ID</code> (str, required) - Workflow definition ID</li>
+</ul>
+<hr />
+<h3 id="config-param-def">config param-def</h3>
+<p>Display a parameter set definition as YAML.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>si-diag<span class="w"> </span>config<span class="w"> </span>param-def<span class="w"> </span>default
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>PARAM_ID</code> (str, required) - Parameter set ID</li>
+</ul>
+<hr />
+<h3 id="run-group-list">run-group list</h3>
+<p>List run groups, optionally filtered by batch ID.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>si-diag<span class="w"> </span>run-group<span class="w"> </span>list
+</span><span id="__span-77-2"><a id="__codelineno-77-2" name="__codelineno-77-2" href="#__codelineno-77-2"></a>si-diag<span class="w"> </span>run-group<span class="w"> </span>list<span class="w"> </span>--batch-id<span class="w"> </span><span class="m">1</span>
+</span></code></pre></div>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--batch-id</code></td>
+<td>int</td>
+<td>Filter by batch ID</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="run-group-info">run-group info</h3>
+<p>Display run group details including a status breakdown of workflow runs.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>si-diag<span class="w"> </span>run-group<span class="w"> </span>info<span class="w"> </span><span class="m">1</span>
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>RUN_GROUP_ID</code> (int, required) - Run group ID</li>
+</ul>
+<hr />
+<h3 id="workflow-list">workflow list</h3>
+<p>List workflow runs for a run group.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>si-diag<span class="w"> </span>workflow<span class="w"> </span>list<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-79-2"><a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a>si-diag<span class="w"> </span>workflow<span class="w"> </span>list<span class="w"> </span><span class="m">1</span><span class="w"> </span>--status<span class="w"> </span>FAILED
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>RUN_GROUP_ID</code> (int, required) - Run group ID</li>
+</ul>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--status</code></td>
+<td>str</td>
+<td>Filter by status (PENDING, RUNNING, COMPLETED, FAILED)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="workflow-info">workflow info</h3>
+<p>Display workflow run info and its steps.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>si-diag<span class="w"> </span>workflow<span class="w"> </span>info<span class="w"> </span><span class="m">42</span>
+</span><span id="__span-80-2"><a id="__codelineno-80-2" name="__codelineno-80-2" href="#__codelineno-80-2"></a>si-diag<span class="w"> </span>workflow<span class="w"> </span>info<span class="w"> </span><span class="m">42</span><span class="w"> </span>--status<span class="w"> </span>FAILED
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>WORKFLOW_RUN_ID</code> (int, required) - Workflow run ID</li>
+</ul>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--status</code></td>
+<td>str</td>
+<td>Filter steps by status</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="status-running">status running</h3>
+<p>List all run steps currently in RUNNING status with enriched context.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>si-diag<span class="w"> </span>status<span class="w"> </span>running
+</span></code></pre></div>
+<p><strong>Output columns:</strong> workflow_id, doc_hash, doc_uri, run_group, param_def_id, step_type, started, elapsed</p>
+<hr />
+<h3 id="status-recent">status recent</h3>
+<p>List steps with status updates within a time interval.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>si-diag<span class="w"> </span>status<span class="w"> </span>recent<span class="w"> </span>minute
+</span><span id="__span-82-2"><a id="__codelineno-82-2" name="__codelineno-82-2" href="#__codelineno-82-2"></a>si-diag<span class="w"> </span>status<span class="w"> </span>recent<span class="w"> </span>hour<span class="w"> </span>--status<span class="w"> </span>COMPLETED
+</span><span id="__span-82-3"><a id="__codelineno-82-3" name="__codelineno-82-3" href="#__codelineno-82-3"></a>si-diag<span class="w"> </span>status<span class="w"> </span>recent<span class="w"> </span>day<span class="w"> </span>--status<span class="w"> </span>FAILED
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>INTERVAL</code> (str, default: "minute") - Time interval: minute, hour, day, week</li>
+</ul>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--status</code></td>
+<td>str</td>
+<td>Filter by status</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="status-details">status details</h3>
+<p>Display aggregated step details for a run group. <strong>PostgreSQL only.</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-83-1"><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>si-diag<span class="w"> </span>status<span class="w"> </span>details<span class="w"> </span><span class="m">1</span>
+</span></code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>RUN_GROUP_ID</code> (int, required) - Run group ID</li>
+</ul>
+<p><strong>Output columns:</strong> batch_name, param_def_id, step_type, status, count, pages</p>
+<p><strong>Note:</strong> This command uses PostgreSQL-specific JSONB functions and will return an error on SQLite.</p>
 <hr />
 <h2 id="future-commands">Future Commands</h2>
 <p>Commands planned for future releases:</p>
@@ -3341,15 +4217,19 @@ Check worker status via API:
 </ul>
 <hr />
 <h2 id="getting-help">Getting Help</h2>
-<p><strong>Command help:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>si-cli<span class="w"> </span>--help
-</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--help
-</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>si-cli<span class="w"> </span>worker<span class="w"> </span>--help
-</span></code></pre></div></p>
-<p><strong>Report issues:</strong>
-- GitHub: https://github.com/your-repo/soliplex-ingester/issues
-- Include <code>si-cli validate-settings</code> output
-- Include relevant logs with <code>LOG_LEVEL=DEBUG</code></p>
+<p><strong>Command help:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-84-1"><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>si-cli<span class="w"> </span>--help
+</span><span id="__span-84-2"><a id="__codelineno-84-2" name="__codelineno-84-2" href="#__codelineno-84-2"></a>si-cli<span class="w"> </span>serve<span class="w"> </span>--help
+</span><span id="__span-84-3"><a id="__codelineno-84-3" name="__codelineno-84-3" href="#__codelineno-84-3"></a>si-cli<span class="w"> </span>worker<span class="w"> </span>--help
+</span><span id="__span-84-4"><a id="__codelineno-84-4" name="__codelineno-84-4" href="#__codelineno-84-4"></a>si-diag<span class="w"> </span>--help
+</span><span id="__span-84-5"><a id="__codelineno-84-5" name="__codelineno-84-5" href="#__codelineno-84-5"></a>si-diag<span class="w"> </span>status<span class="w"> </span>--help
+</span></code></pre></div>
+<p><strong>Report issues:</strong></p>
+<ul>
+<li>GitHub: <a href="https://github.com/your-repo/soliplex-ingester/issues">https://github.com/your-repo/soliplex-ingester/issues</a></li>
+<li>Include <code>si-cli validate-settings</code> output</li>
+<li>Include relevant logs with <code>LOG_LEVEL=DEBUG</code></li>
+</ul>
 
 
 
@@ -3404,13 +4284,13 @@ Check worker status via API:
         
         
           
-          <a href="../../chatbot/readme/" class="md-footer__link md-footer__link--next" aria-label="Next: Chatbot Widget">
+          <a href="../../ingester-agents/" class="md-footer__link md-footer__link--next" aria-label="Next: Agents">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Chatbot Widget
+                Agents
               </div>
             </div>
             <div class="md-footer__button md-icon">

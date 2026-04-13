@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1199,6 +1199,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1216,8 +1220,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1231,8 +1236,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
@@ -2247,6 +2258,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -2345,7 +2358,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -2384,6 +2397,8 @@
       
         
           
+        
+      
         
       
         
@@ -2455,6 +2470,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -3225,34 +3268,42 @@
 <h2 id="document-endpoints">Document Endpoints</h2>
 <h3 id="get-apiv1document">GET /api/v1/document/</h3>
 <p>Get documents by source or batch ID.</p>
-<p><strong>Query Parameters:</strong>
-- <code>source</code> (string, optional) - Source identifier to filter documents
-- <code>batch_id</code> (integer, optional) - Batch ID to filter documents</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of DocumentURI objects
-- <code>400 Bad Request</code> - Neither source nor batch_id provided</p>
-<p><strong>Example:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>source</code> (string, optional) - Source identifier to filter documents</li>
+<li><code>batch_id</code> (integer, optional) - Batch ID to filter documents</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of DocumentURI objects</li>
+<li><code>400 Bad Request</code> - Neither source nor batch_id provided</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/document/?batch_id=1&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="post-apiv1documentingest-document">POST /api/v1/document/ingest-document</h3>
 <p>Ingest a new document into the system.</p>
 <p><strong>Content-Type:</strong> <code>multipart/form-data</code></p>
-<p><strong>Form Parameters:</strong>
-- <code>file</code> (file, optional) - Document file to upload
-- <code>input_uri</code> (string, optional) - URI to fetch document from
-- <code>mime_type</code> (string, optional) - MIME type of the document
-- <code>source_uri</code> (string, required) - Source URI/path identifier
-- <code>source</code> (string, required) - Source system identifier
-- <code>batch_id</code> (integer, required) - Batch ID to assign document
-- <code>doc_meta</code> (string, optional) - JSON string of metadata (default: <code>{}</code>)
-- <code>priority</code> (integer, optional) - Processing priority (default: 0)</p>
-<p><strong>Response:</strong>
-- <code>201 Created</code> - Document ingested successfully (new document)
-- <code>203 Non-Authoritative Information</code> - Document already exists in a different batch
-- <code>400 Bad Request</code> - Invalid parameters or metadata
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Success Response Body:</strong>
+<p><strong>Form Parameters:</strong></p>
+<ul>
+<li><code>file</code> (file, optional) - Document file to upload</li>
+<li><code>input_uri</code> (string, optional) - URI to fetch document from</li>
+<li><code>mime_type</code> (string, optional) - MIME type of the document</li>
+<li><code>source_uri</code> (string, required) - Source URI/path identifier</li>
+<li><code>source</code> (string, required) - Source system identifier</li>
+<li><code>batch_id</code> (integer, required) - Batch ID to assign document</li>
+<li><code>doc_meta</code> (string, optional) - JSON string of metadata (default: <code>{}</code>)</li>
+<li><code>priority</code> (integer, optional) - Processing priority (default: 0)</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>201 Created</code> - Document ingested successfully (new document)</li>
+<li><code>203 Non-Authoritative Information</code> - Document already exists in a different batch</li>
+<li><code>400 Bad Request</code> - Invalid parameters or metadata</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Success Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">&quot;document_uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/doc.pdf&quot;</span><span class="p">,</span>
@@ -3260,26 +3311,30 @@
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;filesystem&quot;</span><span class="p">,</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">&quot;uri_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Notes:</strong>
-- The <code>batch_id</code> in the response reflects the batch where the document URI actually resides
-- If a document with the same hash already exists in a different batch, the response returns <code>203</code> with the original batch ID
-- This prevents duplicate processing while informing the caller that the document was previously ingested</p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>The <code>batch_id</code> in the response reflects the batch where the document URI actually resides</li>
+<li>If a document with the same hash already exists in a different batch, the response returns <code>203</code> with the original batch ID</li>
+<li>This prevents duplicate processing while informing the caller that the document was previously ingested</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/document/ingest-document&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;file=@document.pdf&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source_uri=/documents/report.pdf&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=filesystem&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;batch_id=1&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;doc_meta={\&quot;author\&quot;:\&quot;John Doe\&quot;}&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="post-apiv1documentcleanup-orphans">POST /api/v1/document/cleanup-orphans</h3>
 <p>Delete orphaned documents with no URI references.</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Cleanup successful with statistics
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Success Response Body:</strong>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Cleanup successful with statistics</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Success Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Orphaned documents cleaned up&quot;</span><span class="p">,</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;statistics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -3287,23 +3342,27 @@
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">&quot;deleted_history&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/document/cleanup-orphans&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="delete-apiv1documentby-uri">DELETE /api/v1/document/by-uri</h3>
 <p>Delete a DocumentURI by URI and source with cascading deletion.</p>
 <p>If only one DocumentURI references the underlying document, all associated records are deleted including workflow runs, steps, lifecycle history, artifacts, and the document itself.</p>
 <p>If multiple DocumentURIs reference the same document, only the specified DocumentURI and its history are deleted; the document is preserved.</p>
-<p><strong>Query Parameters:</strong>
-- <code>uri</code> (string, required) - The document URI to delete
-- <code>source</code> (string, required) - The source system identifier</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Deletion successful with statistics
-- <code>404 Not Found</code> - DocumentURI not found
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Success Response Body:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>uri</code> (string, required) - The document URI to delete</li>
+<li><code>source</code> (string, required) - The source system identifier</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Deletion successful with statistics</li>
+<li><code>404 Not Found</code> - DocumentURI not found</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Success Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DocumentURI deleted successfully&quot;</span><span class="p">,</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/documents/report.pdf&quot;</span><span class="p">,</span>
@@ -3318,77 +3377,93 @@
 </span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="nt">&quot;total_deleted&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span>
 </span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Notes:</strong>
-- When <code>deleted_documents</code> is 0, other DocumentURIs still reference the document
-- All deletions occur within a single transaction for atomicity
-- File artifacts are also deleted from configured storage (filesystem, S3, or database)</p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>When <code>deleted_documents</code> is 0, other DocumentURIs still reference the document</li>
+<li>All deletions occur within a single transaction for atomicity</li>
+<li>File artifacts are also deleted from configured storage (filesystem, S3, or database)</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/document/by-uri?uri=/documents/report.pdf&amp;source=filesystem&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="batch-endpoints">Batch Endpoints</h2>
 <h3 id="get-apiv1batch">GET /api/v1/batch/</h3>
 <p>List all document batches.</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of DocumentBatch objects</p>
-<p><strong>Example:</strong>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of DocumentBatch objects</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="post-apiv1batch">POST /api/v1/batch/</h3>
 <p>Create a new document batch.</p>
 <p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code></p>
-<p><strong>Form Parameters:</strong>
-- <code>source</code> (string, required) - Source system identifier
-- <code>name</code> (string, required) - Human-readable batch name</p>
-<p><strong>Response:</strong>
-- <code>201 Created</code> - Batch created successfully</p>
-<p><strong>Response Body:</strong>
+<p><strong>Form Parameters:</strong></p>
+<ul>
+<li><code>source</code> (string, required) - Source system identifier</li>
+<li><code>name</code> (string, required) - Human-readable batch name</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>201 Created</code> - Batch created successfully</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;batch_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;source=filesystem&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;name=Q4 Reports&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="post-apiv1batchstart-workflows">POST /api/v1/batch/start-workflows</h3>
 <p>Start workflow processing for all documents in a batch.</p>
 <p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code></p>
-<p><strong>Form Parameters:</strong>
-- <code>batch_id</code> (integer, required) - Batch ID to process
-- <code>workflow_definition_id</code> (string, optional) - Workflow to use (default: from config)
-- <code>priority</code> (integer, optional) - Processing priority (default: 0)
-- <code>param_id</code> (string, optional) - Parameter set ID (default: from config)</p>
-<p><strong>Response:</strong>
-- <code>201 Created</code> - Workflows started successfully
-- <code>404 Not Found</code> - Batch not found
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Response Body:</strong>
+<p><strong>Form Parameters:</strong></p>
+<ul>
+<li><code>batch_id</code> (integer, required) - Batch ID to process</li>
+<li><code>workflow_definition_id</code> (string, optional) - Workflow to use (default: from config)</li>
+<li><code>priority</code> (integer, optional) - Processing priority (default: 0)</li>
+<li><code>param_id</code> (string, optional) - Parameter set ID (default: from config)</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>201 Created</code> - Workflows started successfully</li>
+<li><code>404 Not Found</code> - Batch not found</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Workflows started&quot;</span><span class="p">,</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;workflows&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;run_group&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/start-workflows&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;batch_id=1&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;workflow_definition_id=batch&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;param_id=default&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1batchstatus">GET /api/v1/batch/status</h3>
 <p>Get detailed status for a batch.</p>
-<p><strong>Query Parameters:</strong>
-- <code>batch_id</code> (integer, required) - Batch ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Batch status details
-- <code>404 Not Found</code> - Batch not found</p>
-<p><strong>Response Body:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>batch_id</code> (integer, required) - Batch ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Batch status details</li>
+<li><code>404 Not Found</code> - Batch not found</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;batch&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
@@ -3407,34 +3482,42 @@
 </span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">  </span><span class="nt">&quot;parsed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
 </span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">  </span><span class="nt">&quot;remaining&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
 </span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/status?batch_id=1&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1batchbatch_idsteps">GET /api/v1/batch/{batch_id}/steps</h3>
 <p>Get all workflow steps for a batch.</p>
-<p><strong>Path Parameters:</strong>
-- <code>batch_id</code> (integer, required) - Batch ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of RunStep objects
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Example:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>batch_id</code> (integer, required) - Batch ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of RunStep objects</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/batch/1/steps&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="workflow-endpoints">Workflow Endpoints</h2>
 <h3 id="get-apiv1workflow">GET /api/v1/workflow/</h3>
 <p>Get workflow runs with optional pagination.</p>
-<p><strong>Query Parameters:</strong>
-- <code>batch_id</code> (integer, optional) - Filter by batch ID
-- <code>include_steps</code> (boolean, optional) - Include step details (default: false)
-- <code>include_doc_info</code> (boolean, optional) - Include document info (default: false)
-- <code>page</code> (integer, optional) - Page number (1-indexed)
-- <code>rows_per_page</code> (integer, optional) - Results per page (default: 10 when paginated)</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of WorkflowRun objects (unpaginated) or PaginatedResponse (paginated)</p>
-<p><strong>Paginated Response Body:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>batch_id</code> (integer, optional) - Filter by batch ID</li>
+<li><code>include_steps</code> (boolean, optional) - Include step details (default: false)</li>
+<li><code>include_doc_info</code> (boolean, optional) - Include document info (default: false)</li>
+<li><code>page</code> (integer, optional) - Page number (1-indexed)</li>
+<li><code>rows_per_page</code> (integer, optional) - Results per page (default: 10 when paginated)</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of WorkflowRun objects (unpaginated) or PaginatedResponse (paginated)</li>
+</ul>
+<p><strong>Paginated Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">...</span><span class="p">],</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
@@ -3442,30 +3525,36 @@
 </span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="nt">&quot;rows_per_page&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
 </span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="nt">&quot;total_pages&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
 </span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/?batch_id=1&amp;page=1&amp;rows_per_page=20&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowby-status">GET /api/v1/workflow/by-status</h3>
 <p>Get workflow runs filtered by status with optional pagination.</p>
-<p><strong>Query Parameters:</strong>
-- <code>status</code> (enum, required) - One of: PENDING, RUNNING, COMPLETED, ERROR, FAILED
-- <code>batch_id</code> (integer, optional) - Filter by batch ID
-- <code>include_doc_info</code> (boolean, optional) - Include document info (default: false)
-- <code>page</code> (integer, optional) - Page number (1-indexed)
-- <code>rows_per_page</code> (integer, optional) - Results per page</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of WorkflowRun objects or PaginatedResponse</p>
-<p><strong>Example:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>status</code> (enum, required) - One of: PENDING, RUNNING, COMPLETED, ERROR, FAILED</li>
+<li><code>batch_id</code> (integer, optional) - Filter by batch ID</li>
+<li><code>include_doc_info</code> (boolean, optional) - Include document info (default: false)</li>
+<li><code>page</code> (integer, optional) - Page number (1-indexed)</li>
+<li><code>rows_per_page</code> (integer, optional) - Results per page</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of WorkflowRun objects or PaginatedResponse</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/by-status?status=FAILED&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowdefinitions">GET /api/v1/workflow/definitions</h3>
 <p>List all available workflow definitions.</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of workflow definition summaries</p>
-<p><strong>Response Body:</strong>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of workflow definition summaries</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">[</span>
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="p">{</span>
 </span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
@@ -3476,27 +3565,33 @@
 </span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Interactive Workflow&quot;</span>
 </span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="p">]</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/definitions&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowdefinitionsworkflow_id">GET /api/v1/workflow/definitions/{workflow_id}</h3>
 <p>Get workflow definition YAML content by ID.</p>
-<p><strong>Path Parameters:</strong>
-- <code>workflow_id</code> (string, required) - Workflow definition ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - YAML content (Content-Type: text/yaml)
-- <code>404 Not Found</code> - Workflow definition not found</p>
-<p><strong>Example:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>workflow_id</code> (string, required) - Workflow definition ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - YAML content (Content-Type: text/yaml)</li>
+<li><code>404 Not Found</code> - Workflow definition not found</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/definitions/batch&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowparam-sets">GET /api/v1/workflow/param-sets</h3>
 <p>List all available parameter sets.</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of parameter set summaries</p>
-<p><strong>Response Body:</strong>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of parameter set summaries</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">[</span>
 </span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="p">{</span>
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
@@ -3509,114 +3604,150 @@
 </span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span>
 </span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="p">]</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowparam-setsset_id">GET /api/v1/workflow/param-sets/{set_id}</h3>
 <p>Get parameter set YAML content by ID.</p>
-<p><strong>Path Parameters:</strong>
-- <code>set_id</code> (string, required) - Parameter set ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - YAML content (Content-Type: text/yaml)
-- <code>404 Not Found</code> - Parameter set not found</p>
-<p><strong>Example:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>set_id</code> (string, required) - Parameter set ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - YAML content (Content-Type: text/yaml)</li>
+<li><code>404 Not Found</code> - Parameter set not found</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets/default&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowparam_setstargettarget">GET /api/v1/workflow/param_sets/target/{target}</h3>
 <p>Get parameter sets that target a specific LanceDB directory.</p>
-<p><strong>Path Parameters:</strong>
-- <code>target</code> (string, required) - LanceDB data directory path</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of matching WorkflowParams objects</p>
-<p><strong>Example:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>target</code> (string, required) - LanceDB data directory path</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of matching WorkflowParams objects</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param_sets/target/lancedb&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="post-apiv1workflowparam-sets">POST /api/v1/workflow/param-sets</h3>
 <p>Upload a new parameter set from YAML content.</p>
 <p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code></p>
-<p><strong>Form Parameters:</strong>
-- <code>yaml_content</code> (string, required) - Raw YAML content</p>
-<p><strong>Response:</strong>
-- <code>201 Created</code> - Parameter set created successfully
-- <code>400 Bad Request</code> - Invalid YAML syntax or format
-- <code>409 Conflict</code> - Parameter set with same ID already exists
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Success Response Body:</strong>
+<p><strong>Form Parameters:</strong></p>
+<ul>
+<li><code>yaml_content</code> (string, required) - Raw YAML content</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>201 Created</code> - Parameter set created successfully</li>
+<li><code>400 Bad Request</code> - Invalid YAML syntax or format</li>
+<li><code>409 Conflict</code> - Parameter set with same ID already exists</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Success Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">{</span>
 </span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Parameter set created successfully&quot;</span><span class="p">,</span>
 </span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_params&quot;</span><span class="p">,</span>
 </span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span><span class="nt">&quot;file_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/params/my_params.yaml&quot;</span>
 </span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Notes:</strong>
-- Uploaded parameter sets have <code>source</code> set to "user"
-- The parameter set ID is taken from the YAML content</p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Uploaded parameter sets have <code>source</code> set to "user"</li>
+<li>The parameter set ID is taken from the YAML content</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;yaml_content=id: my_params\nname: My Parameters\nconfig:\n  parse:\n    format: markdown&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="delete-apiv1workflowparam-setsset_id">DELETE /api/v1/workflow/param-sets/{set_id}</h3>
 <p>Delete a user-uploaded parameter set.</p>
-<p><strong>Path Parameters:</strong>
-- <code>set_id</code> (string, required) - Parameter set ID to delete</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Parameter set deleted successfully
-- <code>403 Forbidden</code> - Cannot delete built-in parameter sets
-- <code>404 Not Found</code> - Parameter set not found
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Notes:</strong>
-- Only parameter sets with <code>source="user"</code> can be deleted
-- Built-in parameter sets cannot be deleted via API</p>
-<p><strong>Example:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>set_id</code> (string, required) - Parameter set ID to delete</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Parameter set deleted successfully</li>
+<li><code>403 Forbidden</code> - Cannot delete built-in parameter sets</li>
+<li><code>404 Not Found</code> - Parameter set not found</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Only parameter sets with <code>source="user"</code> can be deleted</li>
+<li>Built-in parameter sets cannot be deleted via API</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/param-sets/my_params&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowsteps">GET /api/v1/workflow/steps</h3>
 <p>Get workflow steps filtered by status.</p>
-<p><strong>Query Parameters:</strong>
-- <code>status</code> (enum, required) - One of: PENDING, RUNNING, COMPLETED, ERROR, FAILED</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of RunStep objects</p>
-<p><strong>Example:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>status</code> (enum, required) - One of: PENDING, RUNNING, COMPLETED, ERROR, FAILED</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of RunStep objects</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/steps?status=RUNNING&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowrun-groups">GET /api/v1/workflow/run-groups</h3>
 <p>Get workflow run groups, optionally filtered by batch ID.</p>
-<p><strong>Query Parameters:</strong>
-- <code>batch_id</code> (integer, optional) - Filter by batch ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of RunGroup objects
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Example:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>batch_id</code> (integer, optional) - Filter by batch ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of RunGroup objects</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run-groups?batch_id=1&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowrun_groupsrun_group_id">GET /api/v1/workflow/run_groups/{run_group_id}</h3>
 <p>Get specific run group by ID.</p>
-<p><strong>Path Parameters:</strong>
-- <code>run_group_id</code> (integer, required) - Run group ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - RunGroup object
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Example:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>run_group_id</code> (integer, required) - Run group ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - RunGroup object</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run_groups/5&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="delete-apiv1workflowrun_groupsrun_group_id">DELETE /api/v1/workflow/run_groups/{run_group_id}</h3>
 <p>Delete a run group and all dependent records.</p>
-<p><strong>Path Parameters:</strong>
-- <code>run_group_id</code> (integer, required) - Run group ID to delete</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Run group deleted successfully
-- <code>404 Not Found</code> - Run group does not exist
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Response Body:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>run_group_id</code> (integer, required) - Run group ID to delete</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Run group deleted successfully</li>
+<li><code>404 Not Found</code> - Run group does not exist</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
 </span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RunGroup 5 deleted successfully&quot;</span><span class="p">,</span>
 </span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">  </span><span class="nt">&quot;statistics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -3627,55 +3758,73 @@
 </span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="w">    </span><span class="nt">&quot;total_deleted&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">206</span>
 </span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Notes:</strong>
-- Works with both SQLite and PostgreSQL databases
-- Deletes all dependent records: RunSteps, LifecycleHistory, WorkflowRuns, and the RunGroup
-- The deletion is performed within a transaction and rolled back if any error occurs</p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Works with both SQLite and PostgreSQL databases</li>
+<li>Deletes all dependent records: RunSteps, LifecycleHistory, WorkflowRuns, and the RunGroup</li>
+<li>The deletion is performed within a transaction and rolled back if any error occurs</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run_groups/5&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowrun_groupsrun_group_idstats">GET /api/v1/workflow/run_groups/{run_group_id}/stats</h3>
 <p>Get statistics for a run group.</p>
-<p><strong>Path Parameters:</strong>
-- <code>run_group_id</code> (integer, required) - Run group ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Statistics object with status counts
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Example:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>run_group_id</code> (integer, required) - Run group ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Statistics object with status counts</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/run_groups/5/stats&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowruns">GET /api/v1/workflow/runs</h3>
 <p>Get workflow runs for a batch.</p>
-<p><strong>Query Parameters:</strong>
-- <code>batch_id</code> (integer, required) - Batch ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of WorkflowRun objects</p>
-<p><strong>Example:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>batch_id</code> (integer, required) - Batch ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of WorkflowRun objects</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/runs?batch_id=1&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowrunsworkflow_id">GET /api/v1/workflow/runs/{workflow_id}</h3>
 <p>Get specific workflow run by ID, including steps.</p>
-<p><strong>Path Parameters:</strong>
-- <code>workflow_id</code> (integer, required) - Workflow run ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - WorkflowRun object with steps array</p>
-<p><strong>Example:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>workflow_id</code> (integer, required) - Workflow run ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - WorkflowRun object with steps array</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/runs/42&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1workflowrunsworkflow_idlifecycle">GET /api/v1/workflow/runs/{workflow_id}/lifecycle</h3>
 <p>Get lifecycle history events for a specific workflow run.</p>
-<p><strong>Path Parameters:</strong>
-- <code>workflow_id</code> (integer, required) - Workflow run ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Array of LifecycleHistory objects ordered by start_date
-- <code>400 Bad Request</code> - Invalid workflow ID
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Response Body:</strong>
+<p><strong>Path Parameters:</strong></p>
+<ul>
+<li><code>workflow_id</code> (integer, required) - Workflow run ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Array of LifecycleHistory objects ordered by start_date</li>
+<li><code>400 Bad Request</code> - Invalid workflow ID</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="p">[</span>
 </span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">  </span><span class="p">{</span>
 </span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
@@ -3692,90 +3841,114 @@
 </span><span id="__span-36-14"><a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a><span class="w">    </span><span class="nt">&quot;status_meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
 </span><span id="__span-36-15"><a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-36-16"><a id="__codelineno-36-16" name="__codelineno-36-16" href="#__codelineno-36-16"></a><span class="p">]</span>
-</span></code></pre></div></p>
-<p><strong>Event Types:</strong>
-- <code>group_start</code> / <code>group_end</code> - Run group lifecycle
-- <code>item_start</code> / <code>item_end</code> / <code>item_failed</code> - Item processing lifecycle
-- <code>step_start</code> / <code>step_end</code> / <code>step_failed</code> - Individual step lifecycle</p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Event Types:</strong></p>
+<ul>
+<li><code>group_start</code> / <code>group_end</code> - Run group lifecycle</li>
+<li><code>item_start</code> / <code>item_end</code> / <code>item_failed</code> - Item processing lifecycle</li>
+<li><code>step_start</code> / <code>step_end</code> / <code>step_failed</code> - Individual step lifecycle</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/runs/42/lifecycle&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="post-apiv1workflow">POST /api/v1/workflow/</h3>
 <p>Start a new workflow run for a single document.</p>
 <p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code></p>
-<p><strong>Form Parameters:</strong>
-- <code>doc_id</code> (string, required) - Document hash to process
-- <code>workflow_definiton_id</code> (string, optional) - Workflow to use
-- <code>param_id</code> (string, optional) - Parameter set ID
-- <code>priority</code> (integer, optional) - Processing priority (default: 0)</p>
-<p><strong>Response:</strong>
-- <code>201 Created</code> - Workflow run created
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Example:</strong>
+<p><strong>Form Parameters:</strong></p>
+<ul>
+<li><code>doc_id</code> (string, required) - Document hash to process</li>
+<li><code>workflow_definiton_id</code> (string, optional) - Workflow to use</li>
+<li><code>param_id</code> (string, optional) - Parameter set ID</li>
+<li><code>priority</code> (integer, optional) - Processing priority (default: 0)</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>201 Created</code> - Workflow run created</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;doc_id=sha256-abc123...&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;workflow_definiton_id=batch&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;priority=10&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="post-apiv1workflowretry">POST /api/v1/workflow/retry</h3>
 <p>Retry failed workflow steps for a run group.</p>
 <p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code></p>
-<p><strong>Form Parameters:</strong>
-- <code>run_group_id</code> (integer, required) - Run group ID to retry</p>
-<p><strong>Response:</strong>
-- <code>201 Created</code> - Failed steps reset successfully
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Example:</strong>
+<p><strong>Form Parameters:</strong></p>
+<ul>
+<li><code>run_group_id</code> (integer, required) - Run group ID to retry</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>201 Created</code> - Failed steps reset successfully</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/workflow/retry&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;run_group_id=5&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="source-status-endpoint">Source Status Endpoint</h2>
 <h3 id="post-apiv1source-status">POST /api/v1/source-status</h3>
 <p>Check document status for a source system.</p>
 <p><strong>Content-Type:</strong> <code>application/x-www-form-urlencoded</code></p>
-<p><strong>Form Parameters:</strong>
-- <code>source</code> (string, required) - Source system identifier
-- <code>hashes</code> (string, required) - JSON object mapping URIs to hashes</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Status object indicating new/changed/deleted documents</p>
-<p><strong>Example:</strong>
+<p><strong>Form Parameters:</strong></p>
+<ul>
+<li><code>source</code> (string, required) - Source system identifier</li>
+<li><code>hashes</code> (string, required) - JSON object mapping URIs to hashes</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Status object indicating new/changed/deleted documents</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/source-status&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;source=filesystem&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;hashes={&quot;file1.pdf&quot;:&quot;sha256-abc&quot;,&quot;file2.pdf&quot;:&quot;sha256-def&quot;}&#39;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="stats-endpoints">Stats Endpoints</h2>
 <h3 id="get-apiv1statsdurations">GET /api/v1/stats/durations</h3>
 <p>Get workflow durations by run group.</p>
-<p><strong>Query Parameters:</strong>
-- <code>run_group_id</code> (integer, required) - Run group ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Duration statistics
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Example:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>run_group_id</code> (integer, required) - Run group ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Duration statistics</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/stats/durations?run_group_id=5&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1statsstep-stats">GET /api/v1/stats/step-stats</h3>
 <p>Get workflow step statistics by run group.</p>
-<p><strong>Query Parameters:</strong>
-- <code>run_group_id</code> (integer, required) - Run group ID</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Step statistics
-- <code>500 Internal Server Error</code> - Processing error</p>
-<p><strong>Example:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>run_group_id</code> (integer, required) - Run group ID</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Step statistics</li>
+<li><code>500 Internal Server Error</code> - Processing error</li>
+</ul>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/stats/step-stats?run_group_id=5&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="lancedb-endpoints">LanceDB Endpoints</h2>
 <h3 id="get-apiv1lancedblist">GET /api/v1/lancedb/list</h3>
 <p>List all LanceDB vector databases in the configured directory.</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - List of databases with metadata</p>
-<p><strong>Response Body:</strong>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - List of databases with metadata</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="p">{</span>
 </span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 </span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="w">  </span><span class="nt">&quot;lancedb_dir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/data/lancedb&quot;</span><span class="p">,</span>
@@ -3789,20 +3962,24 @@
 </span><span id="__span-43-11"><a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-43-12"><a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a><span class="w">  </span><span class="p">]</span>
 </span><span id="__span-43-13"><a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/list&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="get-apiv1lancedbinfo">GET /api/v1/lancedb/info</h3>
 <p>Get detailed information about a specific LanceDB database.</p>
-<p><strong>Query Parameters:</strong>
-- <code>db</code> (string, required) - Database name relative to lancedb_dir</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Database information
-- <code>404 Not Found</code> - Database does not exist
-- <code>500 Internal Server Error</code> - Failed to open database</p>
-<p><strong>Response Body:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>db</code> (string, required) - Database name relative to lancedb_dir</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Database information</li>
+<li><code>404 Not Found</code> - Database does not exist</li>
+<li><code>500 Internal Server Error</code> - Failed to open database</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="p">{</span>
 </span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 </span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/data/lancedb/default&quot;</span><span class="p">,</span>
@@ -3835,41 +4012,49 @@
 </span><span id="__span-45-30"><a id="__codelineno-45-30" name="__codelineno-45-30" href="#__codelineno-45-30"></a><span class="w">  </span><span class="p">},</span>
 </span><span id="__span-45-31"><a id="__codelineno-45-31" name="__codelineno-45-31" href="#__codelineno-45-31"></a><span class="w">  </span><span class="nt">&quot;tables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;documents&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;chunks&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;settings&quot;</span><span class="p">]</span>
 </span><span id="__span-45-32"><a id="__codelineno-45-32" name="__codelineno-45-32" href="#__codelineno-45-32"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/info?db=default&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Note:</strong> The <code>db</code> parameter supports nested paths (e.g., <code>project/data</code>).</p>
 <hr />
 <h3 id="get-apiv1lancedbvacuum">GET /api/v1/lancedb/vacuum</h3>
 <p>Optimize and clean up database tables to reduce disk usage.</p>
-<p><strong>Query Parameters:</strong>
-- <code>db</code> (string, required) - Database name relative to lancedb_dir</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - Vacuum completed successfully
-- <code>500 Internal Server Error</code> - Vacuum failed</p>
-<p><strong>Response Body:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>db</code> (string, required) - Database name relative to lancedb_dir</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - Vacuum completed successfully</li>
+<li><code>500 Internal Server Error</code> - Vacuum failed</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="p">{</span>
 </span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span>
 </span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/vacuum?db=default&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Note:</strong> Vacuum removes deleted rows and compacts table files. Run periodically after bulk deletions.</p>
 <hr />
 <h3 id="get-apiv1lancedbdocuments">GET /api/v1/lancedb/documents</h3>
 <p>List documents stored in a LanceDB database.</p>
-<p><strong>Query Parameters:</strong>
-- <code>db</code> (string, required) - Database name relative to lancedb_dir
-- <code>limit</code> (integer, optional) - Maximum number of documents to return
-- <code>offset</code> (integer, optional) - Number of documents to skip
-- <code>filter</code> (string, optional) - SQL WHERE clause to filter documents</p>
-<p><strong>Response:</strong>
-- <code>200 OK</code> - List of documents
-- <code>404 Not Found</code> - Database does not exist
-- <code>500 Internal Server Error</code> - Query error</p>
-<p><strong>Response Body:</strong>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>db</code> (string, required) - Database name relative to lancedb_dir</li>
+<li><code>limit</code> (integer, optional) - Maximum number of documents to return</li>
+<li><code>offset</code> (integer, optional) - Number of documents to skip</li>
+<li><code>filter</code> (string, optional) - SQL WHERE clause to filter documents</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code> - List of documents</li>
+<li><code>404 Not Found</code> - Database does not exist</li>
+<li><code>500 Internal Server Error</code> - Query error</li>
+</ul>
+<p><strong>Response Body:</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="p">{</span>
 </span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 </span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/data/lancedb/default&quot;</span><span class="p">,</span>
@@ -3886,13 +4071,13 @@
 </span><span id="__span-49-14"><a id="__codelineno-49-14" name="__codelineno-49-14" href="#__codelineno-49-14"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-49-15"><a id="__codelineno-49-15" name="__codelineno-49-15" href="#__codelineno-49-15"></a><span class="w">  </span><span class="p">]</span>
 </span><span id="__span-49-16"><a id="__codelineno-49-16" name="__codelineno-49-16" href="#__codelineno-49-16"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<p><strong>Example:</strong>
+</span></code></pre></div>
+<p><strong>Example:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/documents?db=default&amp;limit=10&quot;</span>
-</span></code></pre></div></p>
-<p><strong>Example with filter:</strong>
+</span></code></pre></div>
+<p><strong>Example with filter:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/v1/lancedb/documents?db=default&amp;filter=uri%20LIKE%20&#39;%25report%25&#39;&quot;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h2 id="data-models">Data Models</h2>
 <h3 id="documentbatch">DocumentBatch</h3>
@@ -4025,17 +4210,21 @@
 </span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="w">  </span><span class="nt">&quot;status_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span>
 </span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Common HTTP status codes:
-- <code>400 Bad Request</code> - Invalid parameters
-- <code>403 Forbidden</code> - Permission denied
-- <code>404 Not Found</code> - Resource not found
-- <code>409 Conflict</code> - Duplicate resource
-- <code>500 Internal Server Error</code> - Server-side error</p>
+<p>Common HTTP status codes:</p>
+<ul>
+<li><code>400 Bad Request</code> - Invalid parameters</li>
+<li><code>403 Forbidden</code> - Permission denied</li>
+<li><code>404 Not Found</code> - Resource not found</li>
+<li><code>409 Conflict</code> - Duplicate resource</li>
+<li><code>500 Internal Server Error</code> - Server-side error</li>
+</ul>
 <hr />
 <h2 id="openapiswagger-documentation">OpenAPI/Swagger Documentation</h2>
-<p>Interactive API documentation is available at:
-- Swagger UI: <code>http://localhost:8000/docs</code>
-- ReDoc: <code>http://localhost:8000/redoc</code></p>
+<p>Interactive API documentation is available at:</p>
+<ul>
+<li>Swagger UI: <code>http://localhost:8000/docs</code></li>
+<li>ReDoc: <code>http://localhost:8000/redoc</code></li>
+</ul>
 
 
 

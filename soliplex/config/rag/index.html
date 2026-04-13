@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1273,6 +1273,10 @@
       
         
       
+        
+          
+        
+      
     
     
     
@@ -1287,8 +1291,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ingester-agents/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1302,8 +1307,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
@@ -1624,6 +1635,8 @@
 
               
             
+              
+            
           </ul>
         </nav>
       
@@ -1722,7 +1735,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../flutter/guides/developer-setup/" class="md-nav__link">
+      <a href="../../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -1761,6 +1774,8 @@
       
         
           
+        
+      
         
       
         
@@ -1832,6 +1847,34 @@
     
   
     PDF Splitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bubble Sandbox
   
 
     
@@ -2001,10 +2044,10 @@ installation directory (next to the main installation config file).</p>
 <p>See the <a href="https://ggozad.github.io/haiku.rag/configuration/"><code>haiku-rag</code> docs</a>
 for the format and semantics of this file.</p>
 <h2 id="room-level-and-completion-level-configuration">Room-level and Completion-level Configuration</h2>
-<p>Rooms and completions which use the <code>soliplex.tools.search_documents</code>
-tool can also define a <code>haiku.rag.yaml</code> file, next to their own
+<p>Rooms and completions which use the <code>haiku_chat</code> agent kind
+can also define a <code>haiku.rag.yaml</code> file, next to their own
 config files.  Soliplex overlays any configuration defined in such files
-on top of the global configuration when using the tool.</p>
+on top of the global configuration.</p>
 <p>E.g., to override only the reranking used by <code>haiku-rag</code> in a given room:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">reranking</span><span class="p">:</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">model</span><span class="p">:</span>
