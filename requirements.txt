@@ -6,4 +6,4 @@ mkdocs-material>=9.6.19
 pymdown-extensions>=10.11.2
 
 # Python Markdown (core dependency)
-markdown>=3.6
+markdown>=3.10.2
