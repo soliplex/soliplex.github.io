@@ -60,14 +60,16 @@ nav:
 
   - Core Platform:
       - Overview: soliplex/overview.md
-      - Setup:
-          - Server: soliplex/server.md
-          - Client: soliplex/client.md
-          - RAG Database: soliplex/rag.md
+      - Server:
+        - "Setup": soliplex/server/index.md
+        - "CLI": soliplex/server/cli.md
+        - "OS Environment": soliplex/server/environment.md
+        - "SSE Resume Support": soliplex/server/sse_resume.md
+      - RAG Database: soliplex/rag.md
       - Configuration:
           - Filesystem Layout: soliplex/config/filesystem_layout.md
           - Installation: soliplex/config/installation.md
-          - Meta: soliplex/config/meta.md
+          - Meta-configuration: soliplex/config/meta.md
           - Environment: soliplex/config/environment.md
           - Secrets: soliplex/config/secrets.md
           - Agents: soliplex/config/agents.md
@@ -76,8 +78,11 @@ nav:
           - RAG: soliplex/config/rag.md
           - Quizzes: soliplex/config/quizzes.md
           - OIDC Authentication: soliplex/config/oidc_providers.md
+          - Python Logging: soliplex/config/logging.md
           - Logfire: soliplex/config/logfire.md
           - SQLAlchemy DBURIs: soliplex/config/dburis.md
+          - AI Skills: soliplex/config/skills.md
+          - AG-UI Features: soliplex/config/agui.md
       - Usage: soliplex/usage.md
       - Docker: soliplex/docker.md
 
