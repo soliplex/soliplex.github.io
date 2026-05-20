@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://soliplex.github.io/ingester/CLI/">
       
       
-        <link rel="prev" href="../WORKFLOWS/">
+        <link rel="prev" href="../PARAMETER_SETS/">
       
       
         <link rel="next" href="../../ingester-agents/">
@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="zensical-0.0.43">
     
     
       
@@ -29,10 +29,15 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.fba56155.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.dfe2e883.min.css">
       
       
 
@@ -46,12 +51,12 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -72,7 +77,7 @@
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
     <div data-md-component="skip">
       
         
@@ -94,12 +99,12 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Soliplex" class="md-header__button md-logo" aria-label="Soliplex" data-md-component="logo">
       
-  <img src="../../img/logo.png" alt="logo">
+  <img src="../../img/logo.png" alt="Soliplex">
 
     </a>
-    <label class="md-header__button md-icon" for="__drawer">
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
       
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -161,64 +166,30 @@
     
       
       
-        <label class="md-header__button md-icon" for="__search">
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
           
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
         </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
-            
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
-          </a>
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-        <div class="md-search__suggest" data-md-component="search-suggest"></div>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
 </div>
       
     
-    
-      <div class="md-header__source">
+    <div class="md-header__source">
+      
         <a href="https://github.com/soliplex/soliplex" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
   </div>
   <div class="md-source__repository">
     soliplex/soliplex
   </div>
 </a>
-      </div>
-    
+      
+    </div>
   </nav>
   
     
@@ -236,9 +207,6 @@
       <a href="../.." class="md-tabs__link">
         
   
-  
-    
-  
   Home
 
       </a>
@@ -252,13 +220,25 @@
   
   
     
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
     
       <li class="md-tabs__item">
         <a href="../../soliplex/overview/" class="md-tabs__link">
           
-  
-  
-    
   
   Core Platform
 
@@ -276,13 +256,39 @@
   
   
     
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+    
+    
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../GETTING_STARTED/" class="md-tabs__link">
+        <a href="../../ingester-agents/" class="md-tabs__link">
           
-  
-  
-    
   
   Ingester
 
@@ -298,13 +304,19 @@
   
   
     
+      
+      
+        
+      
+        
+      
+    
+    
+    
     
       <li class="md-tabs__item">
         <a href="../../chatbot/readme/" class="md-tabs__link">
           
-  
-  
-    
   
   User Interfaces
 
@@ -320,13 +332,23 @@
   
   
     
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
     
       <li class="md-tabs__item">
         <a href="../../ingester-agents/" class="md-tabs__link">
           
-  
-  
-    
   
   Supporting Tools
 
@@ -366,7 +388,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Soliplex" class="md-nav__button md-logo" aria-label="Soliplex" data-md-component="logo">
       
-  <img src="../../img/logo.png" alt="logo">
+  <img src="../../img/logo.png" alt="Soliplex">
 
     </a>
     Soliplex
@@ -376,7 +398,7 @@
       <a href="https://github.com/soliplex/soliplex" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
   </div>
   <div class="md-source__repository">
     soliplex/soliplex
@@ -400,8 +422,7 @@
   <span class="md-ellipsis">
     
   
-    Home
-  
+  Home
 
     
   </span>
@@ -453,8 +474,7 @@
   <span class="md-ellipsis">
     
   
-    Core Platform
-  
+  Core Platform
 
     
   </span>
@@ -469,8 +489,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Core Platform
-  
+  Core Platform
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -489,8 +508,7 @@
   <span class="md-ellipsis">
     
   
-    Overview
-  
+  Overview
 
     
   </span>
@@ -539,8 +557,7 @@
   <span class="md-ellipsis">
     
   
-    Setup
-  
+  Setup
 
     
   </span>
@@ -555,8 +572,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Setup
-  
+  Setup
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -575,8 +591,7 @@
   <span class="md-ellipsis">
     
   
-    Server
-  
+  Server
 
     
   </span>
@@ -603,8 +618,7 @@
   <span class="md-ellipsis">
     
   
-    Client
-  
+  Client
 
     
   </span>
@@ -631,8 +645,7 @@
   <span class="md-ellipsis">
     
   
-    RAG Database
-  
+  RAG Database
 
     
   </span>
@@ -709,8 +722,7 @@
   <span class="md-ellipsis">
     
   
-    Configuration
-  
+  Configuration
 
     
   </span>
@@ -725,8 +737,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Configuration
-  
+  Configuration
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -745,8 +756,7 @@
   <span class="md-ellipsis">
     
   
-    Filesystem Layout
-  
+  Filesystem Layout
 
     
   </span>
@@ -773,8 +783,7 @@
   <span class="md-ellipsis">
     
   
-    Installation
-  
+  Installation
 
     
   </span>
@@ -801,8 +810,7 @@
   <span class="md-ellipsis">
     
   
-    Meta
-  
+  Meta
 
     
   </span>
@@ -829,8 +837,7 @@
   <span class="md-ellipsis">
     
   
-    Environment
-  
+  Environment
 
     
   </span>
@@ -857,8 +864,7 @@
   <span class="md-ellipsis">
     
   
-    Secrets
-  
+  Secrets
 
     
   </span>
@@ -885,8 +891,7 @@
   <span class="md-ellipsis">
     
   
-    Agents
-  
+  Agents
 
     
   </span>
@@ -913,8 +918,7 @@
   <span class="md-ellipsis">
     
   
-    Rooms
-  
+  Rooms
 
     
   </span>
@@ -941,8 +945,7 @@
   <span class="md-ellipsis">
     
   
-    Completions
-  
+  Completions
 
     
   </span>
@@ -969,8 +972,7 @@
   <span class="md-ellipsis">
     
   
-    RAG
-  
+  RAG
 
     
   </span>
@@ -997,8 +999,7 @@
   <span class="md-ellipsis">
     
   
-    Quizzes
-  
+  Quizzes
 
     
   </span>
@@ -1025,8 +1026,7 @@
   <span class="md-ellipsis">
     
   
-    OIDC Authentication
-  
+  OIDC Authentication
 
     
   </span>
@@ -1053,8 +1053,7 @@
   <span class="md-ellipsis">
     
   
-    Logfire
-  
+  Logfire
 
     
   </span>
@@ -1081,8 +1080,7 @@
   <span class="md-ellipsis">
     
   
-    SQLAlchemy DBURIs
-  
+  SQLAlchemy DBURIs
 
     
   </span>
@@ -1117,8 +1115,7 @@
   <span class="md-ellipsis">
     
   
-    Usage
-  
+  Usage
 
     
   </span>
@@ -1145,8 +1142,7 @@
   <span class="md-ellipsis">
     
   
-    Docker
-  
+  Docker
 
     
   </span>
@@ -1176,8 +1172,6 @@
   
     
     
-      
-        
       
         
       
@@ -1228,8 +1222,7 @@
   <span class="md-ellipsis">
     
   
-    Ingester
-  
+  Ingester
 
     
   </span>
@@ -1250,8 +1243,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Ingester
-  
+  Ingester
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -1270,8 +1262,7 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
-  
+  Getting Started
 
     
   </span>
@@ -1298,8 +1289,7 @@
   <span class="md-ellipsis">
     
   
-    Architecture
-  
+  Architecture
 
     
   </span>
@@ -1326,8 +1316,7 @@
   <span class="md-ellipsis">
     
   
-    API Reference
-  
+  API Reference
 
     
   </span>
@@ -1354,8 +1343,7 @@
   <span class="md-ellipsis">
     
   
-    Workflows
-  
+  Workflows
 
     
   </span>
@@ -1382,8 +1370,7 @@
   <span class="md-ellipsis">
     
   
-    Database Schema
-  
+  Database Schema
 
     
   </span>
@@ -1410,8 +1397,7 @@
   <span class="md-ellipsis">
     
   
-    Configuration
-  
+  Configuration
 
     
   </span>
@@ -1438,8 +1424,7 @@
   <span class="md-ellipsis">
     
   
-    Authentication
-  
+  Authentication
 
     
   </span>
@@ -1466,8 +1451,7 @@
   <span class="md-ellipsis">
     
   
-    Docker
-  
+  Docker
 
     
   </span>
@@ -1494,36 +1478,7 @@
   <span class="md-ellipsis">
     
   
-    Parameter Sets
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../WORKFLOWS/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Workflows
-  
+  Parameter Sets
 
     
   </span>
@@ -1546,7 +1501,7 @@
   
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
       
       
         
@@ -1559,8 +1514,7 @@
   <span class="md-ellipsis">
     
   
-    CLI Reference
-  
+  CLI Reference
 
     
   </span>
@@ -1570,15 +1524,14 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="./" class="md-nav__link md-nav__link--active">
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     
   
-    CLI Reference
-  
+  CLI Reference
 
     
   </span>
@@ -1589,7 +1542,8 @@
       
         
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
   
   
   
@@ -1598,16 +1552,16 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      On this page
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Overview
-      
+      </span>
     </span>
   </a>
   
@@ -1616,9 +1570,9 @@
         <li class="md-nav__item">
   <a href="#global-options" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Global Options
-      
+      </span>
     </span>
   </a>
   
@@ -1627,9 +1581,9 @@
         <li class="md-nav__item">
   <a href="#commands" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Commands
-      
+      </span>
     </span>
   </a>
   
@@ -1639,9 +1593,9 @@
           <li class="md-nav__item">
   <a href="#validate-settings" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         validate-settings
-      
+      </span>
     </span>
   </a>
   
@@ -1650,9 +1604,9 @@
           <li class="md-nav__item">
   <a href="#db-init" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         db-init
-      
+      </span>
     </span>
   </a>
   
@@ -1661,9 +1615,9 @@
           <li class="md-nav__item">
   <a href="#serve" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         serve
-      
+      </span>
     </span>
   </a>
   
@@ -1672,9 +1626,9 @@
           <li class="md-nav__item">
   <a href="#worker" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         worker
-      
+      </span>
     </span>
   </a>
   
@@ -1683,9 +1637,9 @@
           <li class="md-nav__item">
   <a href="#list-workflows" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         list-workflows
-      
+      </span>
     </span>
   </a>
   
@@ -1694,9 +1648,9 @@
           <li class="md-nav__item">
   <a href="#dump-workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         dump-workflow
-      
+      </span>
     </span>
   </a>
   
@@ -1705,9 +1659,9 @@
           <li class="md-nav__item">
   <a href="#list-param-sets" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         list-param-sets
-      
+      </span>
     </span>
   </a>
   
@@ -1716,9 +1670,9 @@
           <li class="md-nav__item">
   <a href="#dump-param-set" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         dump-param-set
-      
+      </span>
     </span>
   </a>
   
@@ -1727,9 +1681,9 @@
           <li class="md-nav__item">
   <a href="#vacuum" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         vacuum
-      
+      </span>
     </span>
   </a>
   
@@ -1738,9 +1692,9 @@
           <li class="md-nav__item">
   <a href="#vacuum-all" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         vacuum-all
-      
+      </span>
     </span>
   </a>
   
@@ -1749,9 +1703,9 @@
           <li class="md-nav__item">
   <a href="#verify-db" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         verify-db
-      
+      </span>
     </span>
   </a>
   
@@ -1765,9 +1719,9 @@
         <li class="md-nav__item">
   <a href="#usage-patterns" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Usage Patterns
-      
+      </span>
     </span>
   </a>
   
@@ -1777,9 +1731,9 @@
           <li class="md-nav__item">
   <a href="#development-workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Development Workflow
-      
+      </span>
     </span>
   </a>
   
@@ -1788,9 +1742,9 @@
           <li class="md-nav__item">
   <a href="#production-deployment" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Production Deployment
-      
+      </span>
     </span>
   </a>
   
@@ -1799,9 +1753,9 @@
           <li class="md-nav__item">
   <a href="#batch-processing" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Batch Processing
-      
+      </span>
     </span>
   </a>
   
@@ -1810,9 +1764,9 @@
           <li class="md-nav__item">
   <a href="#configuration-management" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Configuration Management
-      
+      </span>
     </span>
   </a>
   
@@ -1821,9 +1775,9 @@
           <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Troubleshooting
-      
+      </span>
     </span>
   </a>
   
@@ -1837,9 +1791,9 @@
         <li class="md-nav__item">
   <a href="#exit-codes" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Exit Codes
-      
+      </span>
     </span>
   </a>
   
@@ -1848,9 +1802,9 @@
         <li class="md-nav__item">
   <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Environment Variables
-      
+      </span>
     </span>
   </a>
   
@@ -1859,9 +1813,9 @@
         <li class="md-nav__item">
   <a href="#logging" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Logging
-      
+      </span>
     </span>
   </a>
   
@@ -1871,9 +1825,9 @@
           <li class="md-nav__item">
   <a href="#log-levels" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Log Levels
-      
+      </span>
     </span>
   </a>
   
@@ -1882,9 +1836,9 @@
           <li class="md-nav__item">
   <a href="#log-output" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Log Output
-      
+      </span>
     </span>
   </a>
   
@@ -1893,9 +1847,9 @@
           <li class="md-nav__item">
   <a href="#log-format" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Log Format
-      
+      </span>
     </span>
   </a>
   
@@ -1909,9 +1863,9 @@
         <li class="md-nav__item">
   <a href="#signal-handling" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Signal Handling
-      
+      </span>
     </span>
   </a>
   
@@ -1921,9 +1875,9 @@
           <li class="md-nav__item">
   <a href="#graceful-shutdown" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Graceful Shutdown
-      
+      </span>
     </span>
   </a>
   
@@ -1937,9 +1891,9 @@
         <li class="md-nav__item">
   <a href="#platform-notes" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Platform Notes
-      
+      </span>
     </span>
   </a>
   
@@ -1949,9 +1903,9 @@
           <li class="md-nav__item">
   <a href="#windows" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Windows
-      
+      </span>
     </span>
   </a>
   
@@ -1960,9 +1914,9 @@
           <li class="md-nav__item">
   <a href="#unixlinux" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Unix/Linux
-      
+      </span>
     </span>
   </a>
   
@@ -1976,9 +1930,9 @@
         <li class="md-nav__item">
   <a href="#running-with-python" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Running with Python
-      
+      </span>
     </span>
   </a>
   
@@ -1987,9 +1941,9 @@
         <li class="md-nav__item">
   <a href="#docker-usage" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Docker Usage
-      
+      </span>
     </span>
   </a>
   
@@ -1998,9 +1952,9 @@
         <li class="md-nav__item">
   <a href="#systemd-service" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Systemd Service
-      
+      </span>
     </span>
   </a>
   
@@ -2009,9 +1963,9 @@
         <li class="md-nav__item">
   <a href="#si-diag-diagnostic-cli" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         si-diag: Diagnostic CLI
-      
+      </span>
     </span>
   </a>
   
@@ -2021,9 +1975,9 @@
           <li class="md-nav__item">
   <a href="#command-groups" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Command Groups
-      
+      </span>
     </span>
   </a>
   
@@ -2032,9 +1986,9 @@
           <li class="md-nav__item">
   <a href="#batch-list" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         batch list
-      
+      </span>
     </span>
   </a>
   
@@ -2043,9 +1997,9 @@
           <li class="md-nav__item">
   <a href="#document-list" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         document list
-      
+      </span>
     </span>
   </a>
   
@@ -2054,9 +2008,9 @@
           <li class="md-nav__item">
   <a href="#document-find" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         document find
-      
+      </span>
     </span>
   </a>
   
@@ -2065,9 +2019,9 @@
           <li class="md-nav__item">
   <a href="#document-info" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         document info
-      
+      </span>
     </span>
   </a>
   
@@ -2076,9 +2030,9 @@
           <li class="md-nav__item">
   <a href="#document-history" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         document history
-      
+      </span>
     </span>
   </a>
   
@@ -2087,9 +2041,9 @@
           <li class="md-nav__item">
   <a href="#config-workflows" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         config workflows
-      
+      </span>
     </span>
   </a>
   
@@ -2098,9 +2052,9 @@
           <li class="md-nav__item">
   <a href="#config-params" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         config params
-      
+      </span>
     </span>
   </a>
   
@@ -2109,9 +2063,9 @@
           <li class="md-nav__item">
   <a href="#config-workflow-def" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         config workflow-def
-      
+      </span>
     </span>
   </a>
   
@@ -2120,9 +2074,9 @@
           <li class="md-nav__item">
   <a href="#config-param-def" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         config param-def
-      
+      </span>
     </span>
   </a>
   
@@ -2131,9 +2085,9 @@
           <li class="md-nav__item">
   <a href="#run-group-list" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         run-group list
-      
+      </span>
     </span>
   </a>
   
@@ -2142,9 +2096,9 @@
           <li class="md-nav__item">
   <a href="#run-group-info" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         run-group info
-      
+      </span>
     </span>
   </a>
   
@@ -2153,9 +2107,9 @@
           <li class="md-nav__item">
   <a href="#workflow-list" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         workflow list
-      
+      </span>
     </span>
   </a>
   
@@ -2164,9 +2118,9 @@
           <li class="md-nav__item">
   <a href="#workflow-info" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         workflow info
-      
+      </span>
     </span>
   </a>
   
@@ -2175,9 +2129,9 @@
           <li class="md-nav__item">
   <a href="#status-running" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         status running
-      
+      </span>
     </span>
   </a>
   
@@ -2186,9 +2140,9 @@
           <li class="md-nav__item">
   <a href="#status-recent" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         status recent
-      
+      </span>
     </span>
   </a>
   
@@ -2197,9 +2151,9 @@
           <li class="md-nav__item">
   <a href="#status-details" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         status details
-      
+      </span>
     </span>
   </a>
   
@@ -2213,9 +2167,9 @@
         <li class="md-nav__item">
   <a href="#future-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Future Commands
-      
+      </span>
     </span>
   </a>
   
@@ -2224,9 +2178,9 @@
         <li class="md-nav__item">
   <a href="#getting-help" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Getting Help
-      
+      </span>
     </span>
   </a>
   
@@ -2284,8 +2238,7 @@
   <span class="md-ellipsis">
     
   
-    User Interfaces
-  
+  User Interfaces
 
     
   </span>
@@ -2300,8 +2253,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    User Interfaces
-  
+  User Interfaces
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2320,8 +2272,7 @@
   <span class="md-ellipsis">
     
   
-    Chatbot Widget
-  
+  Chatbot Widget
 
     
   </span>
@@ -2348,8 +2299,7 @@
   <span class="md-ellipsis">
     
   
-    Flutter UI
-  
+  Flutter UI
 
     
   </span>
@@ -2408,8 +2358,7 @@
   <span class="md-ellipsis">
     
   
-    Supporting Tools
-  
+  Supporting Tools
 
     
   </span>
@@ -2430,8 +2379,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Supporting Tools
-  
+  Supporting Tools
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2452,8 +2400,7 @@
   <span class="md-ellipsis">
     
   
-    PDF Splitter
-  
+  PDF Splitter
 
     
   </span>
@@ -2480,8 +2427,7 @@
   <span class="md-ellipsis">
     
   
-    Bubble Sandbox
-  
+  Bubble Sandbox
 
     
   </span>
@@ -2511,10 +2457,24 @@
               
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
   
   
   
@@ -2523,16 +2483,16 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      On this page
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Overview
-      
+      </span>
     </span>
   </a>
   
@@ -2541,9 +2501,9 @@
         <li class="md-nav__item">
   <a href="#global-options" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Global Options
-      
+      </span>
     </span>
   </a>
   
@@ -2552,9 +2512,9 @@
         <li class="md-nav__item">
   <a href="#commands" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Commands
-      
+      </span>
     </span>
   </a>
   
@@ -2564,9 +2524,9 @@
           <li class="md-nav__item">
   <a href="#validate-settings" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         validate-settings
-      
+      </span>
     </span>
   </a>
   
@@ -2575,9 +2535,9 @@
           <li class="md-nav__item">
   <a href="#db-init" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         db-init
-      
+      </span>
     </span>
   </a>
   
@@ -2586,9 +2546,9 @@
           <li class="md-nav__item">
   <a href="#serve" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         serve
-      
+      </span>
     </span>
   </a>
   
@@ -2597,9 +2557,9 @@
           <li class="md-nav__item">
   <a href="#worker" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         worker
-      
+      </span>
     </span>
   </a>
   
@@ -2608,9 +2568,9 @@
           <li class="md-nav__item">
   <a href="#list-workflows" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         list-workflows
-      
+      </span>
     </span>
   </a>
   
@@ -2619,9 +2579,9 @@
           <li class="md-nav__item">
   <a href="#dump-workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         dump-workflow
-      
+      </span>
     </span>
   </a>
   
@@ -2630,9 +2590,9 @@
           <li class="md-nav__item">
   <a href="#list-param-sets" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         list-param-sets
-      
+      </span>
     </span>
   </a>
   
@@ -2641,9 +2601,9 @@
           <li class="md-nav__item">
   <a href="#dump-param-set" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         dump-param-set
-      
+      </span>
     </span>
   </a>
   
@@ -2652,9 +2612,9 @@
           <li class="md-nav__item">
   <a href="#vacuum" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         vacuum
-      
+      </span>
     </span>
   </a>
   
@@ -2663,9 +2623,9 @@
           <li class="md-nav__item">
   <a href="#vacuum-all" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         vacuum-all
-      
+      </span>
     </span>
   </a>
   
@@ -2674,9 +2634,9 @@
           <li class="md-nav__item">
   <a href="#verify-db" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         verify-db
-      
+      </span>
     </span>
   </a>
   
@@ -2690,9 +2650,9 @@
         <li class="md-nav__item">
   <a href="#usage-patterns" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Usage Patterns
-      
+      </span>
     </span>
   </a>
   
@@ -2702,9 +2662,9 @@
           <li class="md-nav__item">
   <a href="#development-workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Development Workflow
-      
+      </span>
     </span>
   </a>
   
@@ -2713,9 +2673,9 @@
           <li class="md-nav__item">
   <a href="#production-deployment" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Production Deployment
-      
+      </span>
     </span>
   </a>
   
@@ -2724,9 +2684,9 @@
           <li class="md-nav__item">
   <a href="#batch-processing" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Batch Processing
-      
+      </span>
     </span>
   </a>
   
@@ -2735,9 +2695,9 @@
           <li class="md-nav__item">
   <a href="#configuration-management" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Configuration Management
-      
+      </span>
     </span>
   </a>
   
@@ -2746,9 +2706,9 @@
           <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Troubleshooting
-      
+      </span>
     </span>
   </a>
   
@@ -2762,9 +2722,9 @@
         <li class="md-nav__item">
   <a href="#exit-codes" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Exit Codes
-      
+      </span>
     </span>
   </a>
   
@@ -2773,9 +2733,9 @@
         <li class="md-nav__item">
   <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Environment Variables
-      
+      </span>
     </span>
   </a>
   
@@ -2784,9 +2744,9 @@
         <li class="md-nav__item">
   <a href="#logging" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Logging
-      
+      </span>
     </span>
   </a>
   
@@ -2796,9 +2756,9 @@
           <li class="md-nav__item">
   <a href="#log-levels" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Log Levels
-      
+      </span>
     </span>
   </a>
   
@@ -2807,9 +2767,9 @@
           <li class="md-nav__item">
   <a href="#log-output" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Log Output
-      
+      </span>
     </span>
   </a>
   
@@ -2818,9 +2778,9 @@
           <li class="md-nav__item">
   <a href="#log-format" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Log Format
-      
+      </span>
     </span>
   </a>
   
@@ -2834,9 +2794,9 @@
         <li class="md-nav__item">
   <a href="#signal-handling" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Signal Handling
-      
+      </span>
     </span>
   </a>
   
@@ -2846,9 +2806,9 @@
           <li class="md-nav__item">
   <a href="#graceful-shutdown" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Graceful Shutdown
-      
+      </span>
     </span>
   </a>
   
@@ -2862,9 +2822,9 @@
         <li class="md-nav__item">
   <a href="#platform-notes" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Platform Notes
-      
+      </span>
     </span>
   </a>
   
@@ -2874,9 +2834,9 @@
           <li class="md-nav__item">
   <a href="#windows" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Windows
-      
+      </span>
     </span>
   </a>
   
@@ -2885,9 +2845,9 @@
           <li class="md-nav__item">
   <a href="#unixlinux" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Unix/Linux
-      
+      </span>
     </span>
   </a>
   
@@ -2901,9 +2861,9 @@
         <li class="md-nav__item">
   <a href="#running-with-python" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Running with Python
-      
+      </span>
     </span>
   </a>
   
@@ -2912,9 +2872,9 @@
         <li class="md-nav__item">
   <a href="#docker-usage" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Docker Usage
-      
+      </span>
     </span>
   </a>
   
@@ -2923,9 +2883,9 @@
         <li class="md-nav__item">
   <a href="#systemd-service" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Systemd Service
-      
+      </span>
     </span>
   </a>
   
@@ -2934,9 +2894,9 @@
         <li class="md-nav__item">
   <a href="#si-diag-diagnostic-cli" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         si-diag: Diagnostic CLI
-      
+      </span>
     </span>
   </a>
   
@@ -2946,9 +2906,9 @@
           <li class="md-nav__item">
   <a href="#command-groups" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Command Groups
-      
+      </span>
     </span>
   </a>
   
@@ -2957,9 +2917,9 @@
           <li class="md-nav__item">
   <a href="#batch-list" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         batch list
-      
+      </span>
     </span>
   </a>
   
@@ -2968,9 +2928,9 @@
           <li class="md-nav__item">
   <a href="#document-list" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         document list
-      
+      </span>
     </span>
   </a>
   
@@ -2979,9 +2939,9 @@
           <li class="md-nav__item">
   <a href="#document-find" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         document find
-      
+      </span>
     </span>
   </a>
   
@@ -2990,9 +2950,9 @@
           <li class="md-nav__item">
   <a href="#document-info" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         document info
-      
+      </span>
     </span>
   </a>
   
@@ -3001,9 +2961,9 @@
           <li class="md-nav__item">
   <a href="#document-history" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         document history
-      
+      </span>
     </span>
   </a>
   
@@ -3012,9 +2972,9 @@
           <li class="md-nav__item">
   <a href="#config-workflows" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         config workflows
-      
+      </span>
     </span>
   </a>
   
@@ -3023,9 +2983,9 @@
           <li class="md-nav__item">
   <a href="#config-params" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         config params
-      
+      </span>
     </span>
   </a>
   
@@ -3034,9 +2994,9 @@
           <li class="md-nav__item">
   <a href="#config-workflow-def" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         config workflow-def
-      
+      </span>
     </span>
   </a>
   
@@ -3045,9 +3005,9 @@
           <li class="md-nav__item">
   <a href="#config-param-def" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         config param-def
-      
+      </span>
     </span>
   </a>
   
@@ -3056,9 +3016,9 @@
           <li class="md-nav__item">
   <a href="#run-group-list" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         run-group list
-      
+      </span>
     </span>
   </a>
   
@@ -3067,9 +3027,9 @@
           <li class="md-nav__item">
   <a href="#run-group-info" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         run-group info
-      
+      </span>
     </span>
   </a>
   
@@ -3078,9 +3038,9 @@
           <li class="md-nav__item">
   <a href="#workflow-list" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         workflow list
-      
+      </span>
     </span>
   </a>
   
@@ -3089,9 +3049,9 @@
           <li class="md-nav__item">
   <a href="#workflow-info" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         workflow info
-      
+      </span>
     </span>
   </a>
   
@@ -3100,9 +3060,9 @@
           <li class="md-nav__item">
   <a href="#status-running" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         status running
-      
+      </span>
     </span>
   </a>
   
@@ -3111,9 +3071,9 @@
           <li class="md-nav__item">
   <a href="#status-recent" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         status recent
-      
+      </span>
     </span>
   </a>
   
@@ -3122,9 +3082,9 @@
           <li class="md-nav__item">
   <a href="#status-details" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         status details
-      
+      </span>
     </span>
   </a>
   
@@ -3138,9 +3098,9 @@
         <li class="md-nav__item">
   <a href="#future-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Future Commands
-      
+      </span>
     </span>
   </a>
   
@@ -3149,9 +3109,9 @@
         <li class="md-nav__item">
   <a href="#getting-help" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      <span class="md-typeset">
         Getting Help
-      
+      </span>
     </span>
   </a>
   
@@ -3184,6 +3144,7 @@
     <li class="md-path__item">
       <a href="../.." class="md-path__link">
         
+  
   <span class="md-ellipsis">
     Home
   </span>
@@ -3199,9 +3160,39 @@
   
     
     
-      <li class="md-path__item">
-        <a href="../GETTING_STARTED/" class="md-path__link">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
           
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../../ingester-agents/" class="md-path__link">
+          
+  
   <span class="md-ellipsis">
     Ingester
   </span>
@@ -3219,8 +3210,6 @@
               <article class="md-content__inner md-typeset">
                 
                   
-
-
   
   
 
@@ -4242,6 +4231,8 @@
 
 
 
+
+
                 
               </article>
             </div>
@@ -4254,7 +4245,7 @@
         
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
   Back to top
 </button>
         
@@ -4267,17 +4258,17 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../WORKFLOWS/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Workflows">
+          <a href="../PARAMETER_SETS/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Parameter Sets">
             <div class="md-footer__button md-icon">
               
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
             </div>
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Previous
               </span>
               <div class="md-ellipsis">
-                Workflows
+                Parameter Sets
               </div>
             </div>
           </a>
@@ -4295,7 +4286,7 @@
             </div>
             <div class="md-footer__button md-icon">
               
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
         
@@ -4308,8 +4299,8 @@
   
   
     Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
     </a>
   
 </div>
@@ -4329,10 +4320,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.code.select", "content.footnote.tooltips", "content.tabs.link", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.path", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.instant.progress","navigation.path","navigation.tabs","navigation.tabs.sticky","navigation.top","navigation.tracking","search.highlight","search.share","search.suggest","toc.follow"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
     
   </body>
