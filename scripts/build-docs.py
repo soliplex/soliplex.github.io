@@ -4,7 +4,7 @@
 Documentation build script for Soliplex multi-project documentation.
 
 This script copies documentation from git submodules in the projects/ directory
-into the docs/ directory for MkDocs to build. It handles:
+into the docs/ directory for Zensical to build. It handles:
 - Updating git submodules
 - Copying docs/ directories from each project
 - Converting README.md to index.md for projects without docs/
@@ -109,37 +109,23 @@ def copy_readme_only_projects(
     return copied, errors
 
 
-def validate_mkdocs_nav(mkdocs_yml: Path, docs_dir: Path) -> List[str]:
-    """Validate that all files referenced in mkdocs.yml navigation exist."""
+def validate_nav(config_file: Path, docs_dir: Path) -> List[str]:
+    """Validate that all files referenced in navigation exist."""
     print("\n🔍 Validating navigation references...")
     errors = []
 
-    if not mkdocs_yml.exists():
-        errors.append(f"mkdocs.yml not found at {mkdocs_yml}")
+    if not config_file.exists():
+        errors.append(f"Config file not found at {config_file}")
         return errors
 
-    # Simple validation - check if referenced paths exist
-    # This is a basic check; could be expanded to parse YAML properly
-    with open(mkdocs_yml, 'r', encoding='utf-8') as f:
+    with open(config_file, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Look for .md file references in the nav section
     import re
-    nav_started = False
-    for line in content.split('\n'):
-        if line.strip().startswith('nav:'):
-            nav_started = True
-            continue
-        if nav_started:
-            if line and not line[0].isspace():
-                break  # End of nav section
-
-            # Match patterns like "- Something: path/to/file.md"
-            match = re.search(r':\s+([a-zA-Z0-9_/-]+\.md)', line)
-            if match:
-                file_path = docs_dir / match.group(1)
-                if not file_path.exists():
-                    errors.append(f"Referenced file not found: {match.group(1)}")
+    for match in re.finditer(r'=\s*"([a-zA-Z0-9_/-]+\.md)"', content):
+        file_path = docs_dir / match.group(1)
+        if not file_path.exists():
+            errors.append(f"Referenced file not found: {match.group(1)}")
 
     if errors:
         print(f"   ⚠️  Found {len(errors)} broken references")
@@ -242,7 +228,7 @@ def main():
 
     # Configuration
     docs_dir = Path('docs')
-    mkdocs_yml = Path('mkdocs.yml')
+    config_file = Path('zensical.toml')
     projects_root = Path('projects')
 
     # Auto-discover projects
@@ -263,7 +249,7 @@ def main():
 
     # Validate only mode
     if args.validate_only:
-        errors = validate_mkdocs_nav(mkdocs_yml, docs_dir)
+        errors = validate_nav(config_file, docs_dir)
         if errors:
             print("\n❌ Validation failed:")
             for error in errors:
@@ -301,7 +287,7 @@ def main():
             print(f"   - {error}")
 
     # Validate navigation
-    nav_errors = validate_mkdocs_nav(mkdocs_yml, docs_dir)
+    nav_errors = validate_nav(config_file, docs_dir)
 
     # Update .gitignore
     generate_gitignore(docs_dir, all_projects)
@@ -311,14 +297,14 @@ def main():
     if all_errors or nav_errors:
         print("⚠️  Build completed with warnings")
         print("\nTo build documentation, run:")
-        print("   mkdocs serve    # For local preview")
-        print("   mkdocs build    # For production build")
+        print("   zensical serve    # For local preview")
+        print("   zensical build    # For production build")
         return 1
     else:
         print("✅ Documentation build completed successfully!")
         print("\nTo build documentation, run:")
-        print("   mkdocs serve    # For local preview")
-        print("   mkdocs build    # For production build")
+        print("   zensical serve    # For local preview")
+        print("   zensical build    # For production build")
         return 0
 
 
