@@ -1,0 +1,129 @@
+[project]
+site_name = "Soliplex"
+site_url = "https://soliplex.github.io/"
+dev_addr = "127.0.0.1:9001"
+repo_name = "soliplex/soliplex"
+repo_url = "https://github.com/soliplex/soliplex"
+
+nav = [
+  { "Home" = "index.md" },
+  { "Core Platform" = [
+    { "Overview" = "soliplex/overview.md" },
+    { "Setup" = [
+      { "Server" = "soliplex/server.md" },
+      { "Client" = "soliplex/client.md" },
+      { "RAG Database" = "soliplex/rag.md" },
+    ]},
+    { "Configuration" = [
+      { "Filesystem Layout" = "soliplex/config/filesystem_layout.md" },
+      { "Installation" = "soliplex/config/installation.md" },
+      { "Meta" = "soliplex/config/meta.md" },
+      { "Environment" = "soliplex/config/environment.md" },
+      { "Secrets" = "soliplex/config/secrets.md" },
+      { "Agents" = "soliplex/config/agents.md" },
+      { "Rooms" = "soliplex/config/rooms.md" },
+      { "Completions" = "soliplex/config/completions.md" },
+      { "RAG" = "soliplex/config/rag.md" },
+      { "Quizzes" = "soliplex/config/quizzes.md" },
+      { "OIDC Authentication" = "soliplex/config/oidc_providers.md" },
+      { "Logfire" = "soliplex/config/logfire.md" },
+      { "SQLAlchemy DBURIs" = "soliplex/config/dburis.md" },
+    ]},
+    { "Usage" = "soliplex/usage.md" },
+    { "Docker" = "soliplex/docker.md" },
+  ]},
+  { "Ingester" = [
+    { "Getting Started" = "ingester/GETTING_STARTED.md" },
+    { "Architecture" = "ingester/ARCHITECTURE.md" },
+    { "API Reference" = "ingester/API.md" },
+    { "Workflows" = "ingester/WORKFLOWS.md" },
+    { "Database Schema" = "ingester/DATABASE.md" },
+    { "Configuration" = "ingester/CONFIGURATION.md" },
+    { "Authentication" = "ingester/AUTHENTICATION.md" },
+    { "Docker" = "ingester/DOCKER.md" },
+    { "Parameter Sets" = "ingester/PARAMETER_SETS.md" },
+    { "CLI Reference" = "ingester/CLI.md" },
+    { "Agents" = "ingester-agents/index.md" },
+  ]},
+  { "User Interfaces" = [
+    { "Chatbot Widget" = "chatbot/readme.md" },
+    { "Flutter UI" = "frontend/developer-setup.md" },
+  ]},
+  { "Supporting Tools" = [
+    { "Ingester Agents" = "ingester-agents/index.md" },
+    { "PDF Splitter" = "pdf-splitter/index.md" },
+    { "Bubble Sandbox" = "bubble-sandbox/index.md" },
+  ]},
+]
+
+# --------------------------------------------------------------------------
+# Theme
+# --------------------------------------------------------------------------
+[project.theme]
+logo = "img/logo.png"
+language = "en"
+
+features = [
+  "content.code.annotate",
+  "content.code.copy",
+  "content.code.select",
+  "content.footnote.tooltips",
+  "content.tabs.link",
+  "content.tooltips",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.instant.progress",
+  "navigation.path",
+  "navigation.tabs",
+  "navigation.tabs.sticky",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+  "search.share",
+  "search.suggest",
+  "toc.follow",
+]
+
+[project.theme.icon]
+repo = "fontawesome/brands/github-alt"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "material/lightbulb-auto"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "gray"
+accent = "blue"
+toggle.icon = "material/lightbulb"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "blue"
+accent = "amber"
+toggle.icon = "material/lightbulb-outline"
+toggle.name = "Switch to system preference"
+
+# --------------------------------------------------------------------------
+# Markdown extensions
+# --------------------------------------------------------------------------
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+line_spans = "__span"
+pygments_lang_class = true
+use_pygments = true
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.snippets]
+[project.markdown_extensions.pymdownx.superfences]
+custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
