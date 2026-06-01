@@ -1,0 +1,45 @@
+name: Validate
+
+# Produces the `validate` status check required by branch protection on `main`.
+# Runs the same gate as the deploy workflow (lint + navigation validation + build),
+# but does not deploy.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Job id MUST stay `validate` — it is the status-check context that branch
+  # protection requires.
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Lint
+        run: uv run ruff check .
+
+      # --no-update validates the submodule commits pinned in this PR (it copies
+      # the checked-out docs, generates zensical.toml, and fails on broken nav
+      # references or orphaned pages).
+      - name: Copy docs, generate config, validate navigation
+        run: uv run python scripts/build-docs.py --no-update
+
+      - name: Build site
+        run: uv run zensical build
