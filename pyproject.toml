@@ -8,3 +8,28 @@ dependencies = [
     "zensical",
     "ghp-import",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+# Submodules under projects/ are upstream code, not ours — don't lint them.
+extend-exclude = ["projects", "site"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP"]
+
+[tool.pymarkdown]
+# These fire heavily across the existing prose/dev notes and are stylistic rather
+# than correctness issues; the remaining rules (incl. heading/space checks) stay on.
+plugins.line-length.enabled = false             # MD013
+plugins.blanks-around-headings.enabled = false  # MD022
+plugins.blanks-around-fences.enabled = false    # MD031
+plugins.blanks-around-lists.enabled = false     # MD032
+plugins.no-bare-urls.enabled = false            # MD034
+plugins.no-emphasis-as-heading.enabled = false  # MD036
+plugins.fenced-code-language.enabled = false    # MD040

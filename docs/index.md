@@ -1,10 +1,12 @@
 # Soliplex Documentation
 
 Welcome to the Soliplex ecosystem documentation. Soliplex provides AI-powered retrieval-augmented generation capabilities for intelligent document search and question answering.
-##Soliplex Architecture
+
+## Soliplex Architecture
+
 ```mermaid
 graph TB
-    
+
     subgraph "User Interfaces"
         FE["Frontend<br/>(Flutter / Dart)"]
         TUI["Terminal UI<br/>(Textual)"]
@@ -22,7 +24,7 @@ graph TB
         HS["Haiku Skills"]
     end
 
-    
+
     subgraph "Storage"
         LDB["LanceDB<br/>(Vectors)"]
         PG["PostgreSQL / SQLite<br/>(Metadata)"]
@@ -180,8 +182,3 @@ This documentation is automatically synchronized from multiple repositories:
 - **PDF Splitter**: [soliplex/pdf-splitter](https://github.com/soliplex/pdf-splitter)
 
 Documentation is updated automatically when changes are made to the source repositories via git submodules.
-
-
-
-
-

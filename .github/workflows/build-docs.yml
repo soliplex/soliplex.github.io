@@ -26,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository with submodules
@@ -45,6 +44,9 @@ jobs:
 
       - name: Install dependencies
         run: uv sync
+
+      - name: Lint
+        run: uv run ruff check .
 
       - name: Run build-docs.py
         run: uv run python scripts/build-docs.py
