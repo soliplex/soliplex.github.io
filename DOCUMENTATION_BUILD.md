@@ -32,8 +32,7 @@ soliplex.github.io/
 │   ├── ingester-agents/
 │   └── pdf-splitter/
 ├── scripts/
-│   ├── build-docs.py              # Main build script
-│   └── compare-methods.py         # Comparison tool for different approaches
+│   └── build-docs.py              # Main build script
 └── mkdocs.yml                     # MkDocs configuration
 
 ```
@@ -137,16 +136,6 @@ Options:
 - `--no-update`: Skip git submodule update
 - `--validate-only`: Only validate navigation, don't copy files
 - `-h, --help`: Show help message
-
-### compare-methods.py
-
-Compare different approaches for multi-project documentation:
-
-```bash
-uv run scripts/compare-methods.py
-```
-
-This analyzes your system and recommends the best method for your setup.
 
 ## Workflow
 
@@ -276,8 +265,6 @@ The current implementation uses **Method 3 (Copy Files)**. Other methods were ev
 
 1. **Symlinks**: Not cross-platform compatible (Windows issues)
 2. **MkDocs Monorepo Plugin**: Requires additional plugin and configuration
-
-See `scripts/compare-methods.py` for detailed comparison.
 
 ## Maintenance
 

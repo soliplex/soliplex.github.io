@@ -473,9 +473,6 @@ python scripts/build-docs.py --validate-only --no-update
 # Build for production
 python scripts/build-docs.py && mkdocs build
 
-# Compare documentation methods
-python scripts/compare-methods.py
-
 # Test repository_dispatch event
 export GITHUB_TOKEN=your_token
 ./test-dispatch.sh
