@@ -15,13 +15,13 @@ into the docs/ directory for Zensical to build. It handles:
 import argparse
 import io
 import json
+import pathlib
 import platform
 import re
 import shutil
 import subprocess
 import sys
 import tomllib
-from pathlib import Path
 
 # Configure stdout for UTF-8 on Windows
 if platform.system() == 'Windows':
@@ -75,7 +75,7 @@ def update_submodules(skip_update: bool = False) -> bool:
         return False
 
 
-def clean_docs_directory(docs_dir: Path, projects: list[str]) -> None:
+def clean_docs_directory(docs_dir: pathlib.Path, projects: list[str]) -> None:
     """Remove existing project directories from docs/."""
     print("\n🧹 Cleaning existing project documentation...")
     for project in projects:
@@ -87,7 +87,7 @@ def clean_docs_directory(docs_dir: Path, projects: list[str]) -> None:
 
 def copy_project_docs(
     projects_with_docs: dict[str, str],
-    docs_dir: Path,
+    docs_dir: pathlib.Path,
 ) -> tuple[int, list[str]]:
     """Copy docs/ directories from projects to main docs/."""
     print("\n📚 Copying documentation from projects...")
@@ -95,7 +95,7 @@ def copy_project_docs(
     errors = []
 
     for name, source_path in projects_with_docs.items():
-        src = Path(source_path)
+        src = pathlib.Path(source_path)
         if not src.exists():
             errors.append(f"Source directory not found: {source_path}")
             continue
@@ -114,7 +114,7 @@ def copy_project_docs(
 
 def copy_readme_only_projects(
     readme_projects: list[str],
-    docs_dir: Path,
+    docs_dir: pathlib.Path,
 ) -> tuple[int, list[str]]:
     """Copy README.md as index.md for projects without docs/ directory."""
     print("\n📄 Copying README.md files for projects without docs/...")
@@ -122,7 +122,7 @@ def copy_readme_only_projects(
     errors = []
 
     for project in readme_projects:
-        readme = Path(f'projects/{project}/README.md')
+        readme = pathlib.Path(f'projects/{project}/README.md')
         if not readme.exists():
             errors.append(f"README.md not found for project: {project}")
             continue
@@ -168,8 +168,8 @@ def _title_for(rel: str, fallback_name: str, overrides: dict[str, str]) -> str:
 
 
 def build_dir_nodes(
-    dir_path: Path,
-    docs_dir: Path,
+    dir_path: pathlib.Path,
+    docs_dir: pathlib.Path,
     overrides: dict[str, str],
 ) -> list[NavNode]:
     """Build nav nodes for the entries directly under ``dir_path``.
@@ -213,8 +213,8 @@ def build_dir_nodes(
 
 
 def build_dir_value(
-    dir_path: Path,
-    docs_dir: Path,
+    dir_path: pathlib.Path,
+    docs_dir: pathlib.Path,
     overrides: dict[str, str],
 ) -> NavValue | None:
     """Nav value for a directory: a list of nodes, or a single page collapsed to a
@@ -230,8 +230,8 @@ def build_dir_value(
 
 
 def build_project_value(
-    project_dir: Path,
-    docs_dir: Path,
+    project_dir: pathlib.Path,
+    docs_dir: pathlib.Path,
     overrides: dict[str, str],
 ) -> NavValue | None:
     """Nav value for a whole project's copied docs directory."""
@@ -242,7 +242,7 @@ def build_project_value(
 
 def expand_nav(
     nodes: list[NavNode],
-    docs_dir: Path,
+    docs_dir: pathlib.Path,
     overrides: dict[str, str],
     errors: list[str],
 ) -> list[NavNode]:
@@ -326,9 +326,9 @@ def render_provenance(hashes: dict[str, str]) -> str:
 
 
 def generate_config(
-    template_file: Path,
-    config_file: Path,
-    docs_dir: Path,
+    template_file: pathlib.Path,
+    config_file: pathlib.Path,
+    docs_dir: pathlib.Path,
     projects: list[str],
 ) -> list[str]:
     """Generate zensical.toml from the template, expanding per-project nav stubs."""
@@ -383,8 +383,8 @@ def generate_config(
 
 
 def validate_nav(
-    config_file: Path,
-    docs_dir: Path,
+    config_file: pathlib.Path,
+    docs_dir: pathlib.Path,
     projects: list[str],
 ) -> list[str]:
     """Validate navigation references against the copied documentation.
@@ -437,7 +437,7 @@ def validate_nav(
     return errors
 
 
-def generate_gitignore(docs_dir: Path, projects: list[str]) -> None:
+def generate_gitignore(docs_dir: pathlib.Path, projects: list[str]) -> None:
     """Generate or update .gitignore to exclude copied project docs."""
     gitignore_path = docs_dir / '.gitignore'
 
@@ -465,7 +465,7 @@ def generate_gitignore(docs_dir: Path, projects: list[str]) -> None:
     print(f"\n📝 Updated {gitignore_path}")
 
 
-def discover_projects(projects_root: Path) -> tuple[dict[str, str], list[str]]:
+def discover_projects(projects_root: pathlib.Path) -> tuple[dict[str, str], list[str]]:
     """
     Automatically discover projects and categorize them.
 
@@ -528,10 +528,10 @@ def main():
     print("=" * 60)
 
     # Configuration
-    docs_dir = Path('docs')
-    template_file = Path('zensical.toml.template')
-    config_file = Path('zensical.toml')
-    projects_root = Path('projects')
+    docs_dir = pathlib.Path('docs')
+    template_file = pathlib.Path('zensical.toml.template')
+    config_file = pathlib.Path('zensical.toml')
+    projects_root = pathlib.Path('projects')
 
     # Auto-discover projects
     print("\n🔍 Discovering projects...")
