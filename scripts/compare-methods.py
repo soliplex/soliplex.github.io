@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Comparison script for different MkDocs multi-project documentation methods.
 
@@ -17,7 +16,6 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 # Configure stdout for UTF-8 on Windows
 if platform.system() == 'Windows':
@@ -50,7 +48,7 @@ def print_section(text: str):
     print(f"{Colors.OKBLUE}{'-' * len(text)}{Colors.ENDC}")
 
 
-def check_system_info() -> Dict[str, str]:
+def check_system_info() -> dict[str, str]:
     """Gather system information."""
     print_section("System Information")
 
@@ -69,7 +67,7 @@ def check_system_info() -> Dict[str, str]:
         try:
             import ctypes
             info['is_admin'] = ctypes.windll.shell32.IsUserAnAdmin() != 0
-        except:
+        except Exception:
             pass
     else:
         info['is_admin'] = os.geteuid() == 0
@@ -108,15 +106,17 @@ def check_system_info() -> Dict[str, str]:
     # Print info
     print(f"  Platform:         {info['platform']} {info['platform_release']}")
     print(f"  Python:           {info['python_version']}")
-    print(f"  Admin/Root:       {Colors.OKGREEN if info['is_admin'] else Colors.WARNING}{info['is_admin']}{Colors.ENDC}")
-    print(f"  Symlink Support:  {Colors.OKGREEN if info['has_symlink'] else Colors.FAIL}{info['has_symlink']}{Colors.ENDC}")
+    admin_color = Colors.OKGREEN if info['is_admin'] else Colors.WARNING
+    symlink_color = Colors.OKGREEN if info['has_symlink'] else Colors.FAIL
+    print(f"  Admin/Root:       {admin_color}{info['is_admin']}{Colors.ENDC}")
+    print(f"  Symlink Support:  {symlink_color}{info['has_symlink']}{Colors.ENDC}")
     print(f"  Git:              {info['git_version']}")
     print(f"  MkDocs:           {info['mkdocs_version']}")
 
     return info
 
 
-def test_method1_symlinks(info: Dict[str, str]) -> Dict[str, any]:
+def test_method1_symlinks(info: dict[str, str]) -> dict[str, any]:
     """Test Method 1: Symlinks."""
     print_section("Method 1: Symlinks")
 
@@ -183,7 +183,7 @@ def test_method1_symlinks(info: Dict[str, str]) -> Dict[str, any]:
     return result
 
 
-def test_method2_monorepo() -> Dict[str, any]:
+def test_method2_monorepo() -> dict[str, any]:
     """Test Method 2: MkDocs Monorepo Plugin."""
     print_section("Method 2: MkDocs Monorepo Plugin")
 
@@ -221,7 +221,7 @@ def test_method2_monorepo() -> Dict[str, any]:
             print(f"{Colors.OKGREEN}  ✓ mkdocs-monorepo-plugin is installed{Colors.ENDC}")
         else:
             print(f"{Colors.WARNING}  ⚠ mkdocs-monorepo-plugin not installed{Colors.ENDC}")
-            print(f"    Install with: pip install mkdocs-monorepo-plugin")
+            print("    Install with: pip install mkdocs-monorepo-plugin")
             result['errors'].append('Plugin not installed')
 
     except Exception as e:
@@ -231,7 +231,7 @@ def test_method2_monorepo() -> Dict[str, any]:
     return result
 
 
-def test_method3_copy_files() -> Dict[str, any]:
+def test_method3_copy_files() -> dict[str, any]:
     """Test Method 3: Copy Files with Build Script."""
     print_section("Method 3: Copy Files with Build Script")
 
@@ -288,7 +288,7 @@ def test_method3_copy_files() -> Dict[str, any]:
     return result
 
 
-def generate_comparison_table(results: List[Dict[str, any]], info: Dict[str, str]):
+def generate_comparison_table(results: list[dict[str, any]], info: dict[str, str]):
     """Generate a comparison table of all methods."""
     print_header("Comparison Summary")
 
@@ -356,13 +356,13 @@ def generate_comparison_table(results: List[Dict[str, any]], info: Dict[str, str
             print(f"    {reason}")
 
     print(f"\n{Colors.BOLD}Next Steps:{Colors.ENDC}\n")
-    print(f"  1. Review the comparison above")
-    print(f"  2. Choose a method based on your requirements")
-    print(f"  3. Run the appropriate implementation:")
-    print(f"     - Method 3: python scripts/build-docs.py")
-    print(f"     - Method 2: pip install mkdocs-monorepo-plugin (then configure)")
-    print(f"  4. Update mkdocs.yml navigation")
-    print(f"  5. Update index.md to reference all projects")
+    print("  1. Review the comparison above")
+    print("  2. Choose a method based on your requirements")
+    print("  3. Run the appropriate implementation:")
+    print("     - Method 3: python scripts/build-docs.py")
+    print("     - Method 2: pip install mkdocs-monorepo-plugin (then configure)")
+    print("  4. Update mkdocs.yml navigation")
+    print("  5. Update index.md to reference all projects")
 
 
 def main():
