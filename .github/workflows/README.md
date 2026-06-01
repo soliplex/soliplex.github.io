@@ -2,16 +2,21 @@
 
 ## Build and Deploy Docs Workflow
 
-This workflow automatically builds and deploys the Soliplex documentation site to GitHub Pages.
+[`build-docs.yml`](build-docs.yml) builds the Soliplex documentation site with
+[Zensical](https://github.com/squidfunk/zensical) and deploys it to the
+`gh-pages` branch.
 
 ### Trigger Events
 
-- **Push to main branch**: Automatically rebuilds and deploys documentation
-- **Manual trigger**: Can be manually triggered via `workflow_dispatch`
+- **Push to `main`**: rebuilds and deploys
+- **Schedule**: nightly (`cron: 0 6 * * *`) to pick up upstream submodule changes
+- **`repository_dispatch` (`docs_update`)**: sent by submodule repos when their docs change (see [`TRIGGER_TEMPLATES/`](TRIGGER_TEMPLATES/))
+- **Manual**: via `workflow_dispatch` in the Actions UI
 
 ### Workflow Steps
 
-#### 1. Checkout with Submodules
+#### 1. Checkout with submodules
+
 ```yaml
 - uses: actions/checkout@v6
   with:
@@ -19,146 +24,120 @@ This workflow automatically builds and deploys the Soliplex documentation site t
     fetch-depth: 0
 ```
 
-**Critical**: The `submodules: recursive` option ensures all git submodules in the `projects/` directory are checked out. Without this, the documentation from individual projects won't be available.
+Ensures all git submodules in `projects/` are available; without this the
+per-project documentation is missing.
 
-#### 2. Update Submodules to Latest
-```yaml
-- name: Update submodules to latest
-  run: git submodule update --init --recursive --remote
-```
+#### 2. Set up Python and uv
 
-This pulls the latest documentation from each submodule repository, ensuring the documentation is always up-to-date.
-
-#### 3. Setup Python and Dependencies
 ```yaml
 - uses: actions/setup-python@v6
   with:
-    python-version: '3.x'
-
+    python-version: '3.13'
+- uses: astral-sh/setup-uv@v7
 - name: Install dependencies
-  run: pip install mkdocs-material
+  run: uv sync
 ```
 
-Installs Python and the Material for MkDocs theme.
+`uv sync` installs the project plus the dev dependency group (including `ruff`).
 
-#### 4. Build Documentation from Submodules
+#### 3. Lint
+
 ```yaml
-- name: Build documentation from submodules
-  run: python scripts/build-docs.py --no-update
+- name: Lint
+  run: uv run ruff check .
 ```
 
-**Critical Step**: Runs the `build-docs.py` script to copy documentation from all submodules into the `docs/` directory. This step is essential because:
+A lint failure blocks the build.
 
-- Copies docs from projects with `docs/` directories (soliplex, ingester, ag-ui, chatbot, flutter)
-- Converts README.md to index.md for projects without docs/ (ingester-agents, pdf-splitter)
-- Validates all navigation references
-- Updates `.gitignore` for copied files
+#### 4. Build docs (copy + generate config)
 
-The `--no-update` flag is used because we already updated submodules in step 2.
+```yaml
+- name: Run build-docs.py
+  run: uv run python scripts/build-docs.py
+```
 
-#### 5. Deploy to GitHub Pages
+Updates submodules to their latest commits, copies each project's docs into
+`docs/<project>/`, generates `zensical.toml` from `zensical.toml.template`
+(expanding `@auto:` nav stubs), and validates the navigation. (No `--no-update`
+flag — the script performs the submodule update itself.)
+
+#### 5. Build the site
+
+```yaml
+- name: Build site
+  run: uv run zensical build
+```
+
+Renders the static site into `site/`.
+
+#### 6. Deploy to GitHub Pages
+
 ```yaml
 - name: Deploy to GitHub Pages
-  run: mkdocs gh-deploy --force
+  run: |
+    git config user.name "github-actions[bot]"
+    git config user.email "github-actions[bot]@users.noreply.github.com"
+    uv run ghp-import -n -p -f site
 ```
 
-Builds the MkDocs site and deploys it to the `gh-pages` branch.
+Publishes `site/` to the `gh-pages` branch with `ghp-import`.
 
-#### 6. Slack Notification on Failure
-Sends a notification to the `#soliplex` Slack channel if the deployment fails.
+#### 7. Slack notification on failure
+
+Posts to the `#soliplex` Slack channel if the run fails.
 
 ### Required Secrets
 
-- `SLACK_NOTIFY_URL`: Webhook URL for Slack notifications (optional)
+- `SLACK_NOTIFY_URL`: Webhook URL for failure notifications (optional)
 
 ### Required Permissions
 
 ```yaml
 permissions:
   contents: write      # To push to gh-pages branch
-  pages: write         # To deploy to GitHub Pages
-  id-token: write      # For GitHub Pages deployment
+  pages: write         # GitHub Pages
+  id-token: write      # GitHub Pages deployment
 ```
 
-## What Was Fixed
+## Submodule Trigger Template
 
-### Previous Issues
-
-1. **Missing Submodule Checkout**: The workflow checked out the main repository but didn't initialize submodules, so documentation from `projects/*/` was missing.
-
-2. **No Documentation Build Step**: The workflow went directly from installing dependencies to deploying, skipping the critical step of copying documentation from submodules using `build-docs.py`.
-
-3. **Outdated Submodules**: Even if submodules existed, they weren't being updated to the latest version.
-
-### Current Solution
-
-The workflow now:
-1. ✅ Checks out all submodules recursively
-2. ✅ Updates submodules to latest commits
-3. ✅ Runs `build-docs.py` to copy all documentation
-4. ✅ Validates navigation references automatically
-5. ✅ Deploys the complete, unified documentation site
+[`TRIGGER_TEMPLATES/submodule-trigger-template.yml`](TRIGGER_TEMPLATES/) is
+copied into each submodule repository. When that repo pushes documentation
+changes, it sends a `repository_dispatch` (`docs_update`) event here using the
+`DOCS_DEPLOY_TOKEN` secret, triggering an immediate rebuild.
 
 ## Testing the Workflow
 
-### Test Locally
-
-Before pushing, test the build process locally:
+Before pushing, test the build locally:
 
 ```bash
-# Update submodules
-git submodule update --init --recursive --remote
-
-# Run build script
-python scripts/build-docs.py --no-update
-
-# Test MkDocs build
-mkdocs build
-
-# Preview locally
-mkdocs serve
+uv sync
+uv run ruff check .
+uv run python scripts/build-docs.py --no-update
+uv run zensical build
+uv run zensical serve   # Preview at http://127.0.0.1:9001/
 ```
-
-### Monitor Deployment
-
-1. Push to main branch
-2. Go to Actions tab: https://github.com/soliplex/soliplex.github.io/actions
-3. Watch the "Build and Deploy Docs" workflow
-4. Check deployment at: https://soliplex.github.io/
 
 ## Troubleshooting
 
-### Submodule Update Failures
+### Submodule update failures
 
-If submodules fail to update, check:
-- Repository access permissions
-- Submodule URLs in `.gitmodules`
-- Branch references in submodules
+Check repository access permissions, submodule URLs in `.gitmodules`, and the
+branch references in each submodule.
 
-### Build Script Failures
+### Build script failures
 
-If `build-docs.py` fails:
-- Check that all projects in the script configuration exist
-- Verify file paths match what's in the submodules
-- Check script output for specific error messages
+Run `uv run python scripts/build-docs.py --validate-only` to see broken
+navigation references or orphaned pages.
 
-### MkDocs Build Failures
+### Zensical build failures
 
-If MkDocs build fails:
-- Check for broken navigation references in `mkdocs.yml`
-- Verify all referenced files exist after build script runs
-- Check MkDocs Material theme is installed
+Verify that referenced files exist after the build script runs, and check the
+upstream markdown for errors. Navigation structure lives in
+`zensical.toml.template`, not in the generated `zensical.toml`.
 
 ## Manual Deployment
 
-To manually trigger deployment:
-
-1. Go to Actions tab
-2. Select "Build and Deploy Docs" workflow
-3. Click "Run workflow"
-4. Select branch (main)
-5. Click "Run workflow"
-
----
-
-**Last Updated**: 2026-01-09
+1. Go to the Actions tab
+2. Select the "Build and Deploy Documentation" workflow
+3. Click "Run workflow" → select `main` → "Run workflow"
