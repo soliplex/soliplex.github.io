@@ -109,8 +109,19 @@ def copy_readme_only_projects(
     return copied, errors
 
 
-def validate_nav(config_file: Path, docs_dir: Path) -> List[str]:
-    """Validate that all files referenced in navigation exist."""
+def validate_nav(
+    config_file: Path,
+    docs_dir: Path,
+    projects: List[str]
+) -> List[str]:
+    """Validate navigation references against the copied documentation.
+
+    Reports two kinds of problems, both of which fail the build:
+    - Broken references: a file named in the nav does not exist on disk.
+    - Orphaned pages: a copied project .md file that no nav entry
+      references, so it would silently never appear on the site (this is
+      how structural changes in upstream repos get lost).
+    """
     print("\n🔍 Validating navigation references...")
     errors = []
 
@@ -122,14 +133,33 @@ def validate_nav(config_file: Path, docs_dir: Path) -> List[str]:
         content = f.read()
 
     import re
-    for match in re.finditer(r'=\s*"([a-zA-Z0-9_/-]+\.md)"', content):
-        file_path = docs_dir / match.group(1)
-        if not file_path.exists():
-            errors.append(f"Referenced file not found: {match.group(1)}")
+    referenced = {
+        match.group(1)
+        for match in re.finditer(r'=\s*"([a-zA-Z0-9_/-]+\.md)"', content)
+    }
+
+    # Broken references: nav points at a file that isn't there.
+    for ref in sorted(referenced):
+        if not (docs_dir / ref).exists():
+            errors.append(f"Referenced file not found: {ref}")
+
+    # Orphaned pages: copied project docs that no nav entry references.
+    for project in projects:
+        project_dir = docs_dir / project
+        if not project_dir.is_dir():
+            continue
+        for md_file in sorted(project_dir.rglob('*.md')):
+            rel = md_file.relative_to(docs_dir).as_posix()
+            if rel not in referenced:
+                errors.append(f"Orphaned page not in navigation: {rel}")
 
     if errors:
-        print(f"   ⚠️  Found {len(errors)} broken references")
+        print("\n❌ Navigation validation failed:")
+        print(f"   ⚠️  Found {len(errors)} navigation problems")
+        for error in errors:
+            print(f"      - {error}")
     else:
+        print("\n✅ Navigation validation passed!")
         print("   ✓ All navigation references valid")
 
     return errors
@@ -249,14 +279,8 @@ def main():
 
     # Validate only mode
     if args.validate_only:
-        errors = validate_nav(config_file, docs_dir)
-        if errors:
-            print("\n❌ Validation failed:")
-            for error in errors:
-                print(f"   - {error}")
-            return 1
-        print("\n✅ Validation passed!")
-        return 0
+        errors = validate_nav(config_file, docs_dir, all_projects)
+        return 1 if errors else 0
 
     # Update submodules
     if not update_submodules(args.no_update):
@@ -287,7 +311,7 @@ def main():
             print(f"   - {error}")
 
     # Validate navigation
-    nav_errors = validate_nav(config_file, docs_dir)
+    nav_errors = validate_nav(config_file, docs_dir, all_projects)
 
     # Update .gitignore
     generate_gitignore(docs_dir, all_projects)
