@@ -5,54 +5,23 @@ dev_addr = "127.0.0.1:9001"
 repo_name = "soliplex/soliplex"
 repo_url = "https://github.com/soliplex/soliplex"
 
+# Navigation. Local pages are listed literally; each "@auto:<project>" stub is
+# expanded by scripts/build-docs.py from the copied docs/<project>/ tree, so new,
+# renamed, or removed upstream pages flow into the site automatically. Edit section
+# structure here; tune individual titles via the [nav_title_overrides] table at the
+# end of this template (that table is stripped from the generated zensical.toml).
 nav = [
   { "Home" = "index.md" },
-  { "Core Platform" = [
-    { "Overview" = "soliplex/overview.md" },
-    { "Setup" = [
-      { "Server" = "soliplex/server.md" },
-      { "Client" = "soliplex/client.md" },
-      { "RAG Database" = "soliplex/rag.md" },
-    ]},
-    { "Configuration" = [
-      { "Filesystem Layout" = "soliplex/config/filesystem_layout.md" },
-      { "Installation" = "soliplex/config/installation.md" },
-      { "Meta" = "soliplex/config/meta.md" },
-      { "Environment" = "soliplex/config/environment.md" },
-      { "Secrets" = "soliplex/config/secrets.md" },
-      { "Agents" = "soliplex/config/agents.md" },
-      { "Rooms" = "soliplex/config/rooms.md" },
-      { "Completions" = "soliplex/config/completions.md" },
-      { "RAG" = "soliplex/config/rag.md" },
-      { "Quizzes" = "soliplex/config/quizzes.md" },
-      { "OIDC Authentication" = "soliplex/config/oidc_providers.md" },
-      { "Logfire" = "soliplex/config/logfire.md" },
-      { "SQLAlchemy DBURIs" = "soliplex/config/dburis.md" },
-    ]},
-    { "Usage" = "soliplex/usage.md" },
-    { "Docker" = "soliplex/docker.md" },
-  ]},
-  { "Ingester" = [
-    { "Getting Started" = "ingester/GETTING_STARTED.md" },
-    { "Architecture" = "ingester/ARCHITECTURE.md" },
-    { "API Reference" = "ingester/API.md" },
-    { "Workflows" = "ingester/WORKFLOWS.md" },
-    { "Database Schema" = "ingester/DATABASE.md" },
-    { "Configuration" = "ingester/CONFIGURATION.md" },
-    { "Authentication" = "ingester/AUTHENTICATION.md" },
-    { "Docker" = "ingester/DOCKER.md" },
-    { "Parameter Sets" = "ingester/PARAMETER_SETS.md" },
-    { "CLI Reference" = "ingester/CLI.md" },
-    { "Agents" = "ingester-agents/index.md" },
-  ]},
+  { "Core Platform" = "@auto:soliplex" },
+  { "Ingester" = "@auto:ingester" },
   { "User Interfaces" = [
-    { "Chatbot Widget" = "chatbot/readme.md" },
-    { "Flutter UI" = "frontend/developer-setup.md" },
+    { "Chatbot Widget" = "@auto:chatbot" },
+    { "Flutter UI" = "@auto:frontend" },
   ]},
   { "Supporting Tools" = [
-    { "Ingester Agents" = "ingester-agents/index.md" },
-    { "PDF Splitter" = "pdf-splitter/index.md" },
-    { "Bubble Sandbox" = "bubble-sandbox/index.md" },
+    { "Ingester Agents" = "@auto:ingester-agents" },
+    { "PDF Splitter" = "@auto:pdf-splitter" },
+    { "Bubble Sandbox" = "@auto:bubble-sandbox" },
   ]},
 ]
 
@@ -127,3 +96,20 @@ use_pygments = true
 custom_fences = [
   { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
 ]
+
+# >>> build-docs settings (everything below is stripped from the generated
+# zensical.toml by scripts/build-docs.py — it is NOT zensical config) >>>
+#
+# Optional nav title overrides, keyed by a copied doc's relative path OR a
+# directory's relative path. Anything not listed here is auto-titled from its
+# file/directory name (acronym-aware). Use this to hand-tune awkward auto-titles.
+[nav_title_overrides]
+"soliplex/overview.md" = "Platform Overview"
+"soliplex/config" = "Configuration"
+"soliplex/server" = "Setup"
+"soliplex/examples" = "Examples"
+"soliplex/config/oidc_providers.md" = "OIDC Authentication"
+"soliplex/config/dburis.md" = "SQLAlchemy DBURIs"
+"soliplex/config/agui.md" = "AG-UI"
+"soliplex/config/filesystem_layout.md" = "Filesystem Layout"
+"soliplex/server/sse_resume.md" = "SSE Resume"

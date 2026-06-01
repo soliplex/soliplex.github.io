@@ -108,7 +108,7 @@ on:
 
 **⚠️ Use only if you don't have organization admin access**
 
-### Setup Steps
+### Repository Secret Setup Steps
 
 1. Create the same PAT as above
 2. Add the secret to **each individual repository**:

@@ -26,7 +26,7 @@ Run these commands for each of the 7 repositories. Replace `<REPO>` with the rep
 
 ## Step-by-Step Commands
 
-### For each repository, run:
+### Commands for each repository
 
 ```bash
 # Navigate to the submodule

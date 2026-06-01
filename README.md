@@ -1,210 +1,116 @@
 # Soliplex Documentation
 
 [![Deploy Docs](https://github.com/soliplex/soliplex.github.io/actions/workflows/build-docs.yml/badge.svg)](https://github.com/soliplex/soliplex.github.io/actions/workflows/build-docs.yml)
-[![Sync Docs](https://github.com/soliplex/soliplex.github.io/actions/workflows/sync-docs.yml/badge.svg)](https://github.com/soliplex/soliplex.github.io/actions/workflows/sync-docs.yml)
 
-Unified documentation site for the Soliplex ecosystem, built with MkDocs Material.
+Unified documentation site for the Soliplex ecosystem, built with [Zensical](https://github.com/squidfunk/zensical).
 
-**Live site:** https://soliplex.github.io/
+**Live site:** <https://soliplex.github.io/>
 
 ## Overview
 
-This repository hosts the unified documentation for all Soliplex projects. Documentation is automatically synchronized from multiple upstream repositories:
+This repository aggregates documentation from several upstream repositories, included here as **git submodules** under `projects/`:
 
-- **[soliplex/soliplex](https://github.com/soliplex/soliplex)** - Core Platform
-- **[soliplex/ingester](https://github.com/soliplex/ingester)** - Document Ingestion
-- **[soliplex/ingester-agents](https://github.com/soliplex/ingester-agents)** - Ingester Agents
-- **[soliplex/chatbot](https://github.com/soliplex/chatbot)** - Chatbot Interface
-- **[soliplex/flutter](https://github.com/soliplex/flutter)** - Flutter Frontend
-- **[soliplex/ag-ui](https://github.com/soliplex/ag-ui)** - AG UI Components
+- **[soliplex/soliplex](https://github.com/soliplex/soliplex)** — Core Platform
+- **[soliplex/ingester](https://github.com/soliplex/ingester)** — Document Ingestion
+- **[soliplex/chatbot](https://github.com/soliplex/chatbot)** — Chatbot Widget
+- **[soliplex/frontend](https://github.com/soliplex/frontend)** — Flutter Client
+- **[soliplex/ingester-agents](https://github.com/soliplex/ingester-agents)** — Ingester Agents (README only)
+- **[soliplex/pdf-splitter](https://github.com/soliplex/pdf-splitter)** — PDF Splitter (README only)
+- **[soliplex/bubble-sandbox](https://github.com/soliplex/bubble-sandbox)** — Bubble Sandbox (README only)
 
-## Documentation Synchronization
+## How It Works
 
-Documentation is automatically synchronized using GitHub Actions:
+1. Each project is a git submodule in `projects/`.
+2. `scripts/build-docs.py` copies each submodule's `docs/` (or its `README.md`) into `docs/<project>/`.
+3. The same script generates `zensical.toml` from `zensical.toml.template`, expanding each `@auto:<project>` navigation stub by walking the copied docs tree — so new, renamed, or removed upstream pages flow into the site automatically.
+4. `zensical build` renders the static site into `site/`.
+5. The [build-docs.yml](.github/workflows/build-docs.yml) workflow deploys `site/` to the `gh-pages` branch via `ghp-import`.
 
-### Automatic Sync
+The copied `docs/<project>/` directories and the generated `zensical.toml` are git-ignored build artifacts — only `docs/index.md`, shared assets, and `zensical.toml.template` are tracked.
 
-- **Daily**: Syncs all repositories at 2 AM UTC
-- **On Demand**: Triggered when upstream repositories publish changes via `repository_dispatch`
-- **Manual**: Can be triggered manually via GitHub Actions UI
+### Rebuild triggers
 
-### How It Works
+The deploy workflow runs on:
 
-1. The [sync-docs.yml](.github/workflows/sync-docs.yml) workflow runs on schedule or trigger
-2. For each repository, [sync-repo-docs.sh](scripts/sync-repo-docs.sh) fetches documentation using git sparse checkout
-3. Documentation is copied to corresponding `docs/` subdirectories
-4. Changes are committed and pushed automatically
-5. GitHub Pages builds and deploys the updated site
-
-### Manual Sync
-
-To manually sync documentation from specific repositories:
-
-1. Go to [Actions → Sync Documentation from Repos](https://github.com/soliplex/soliplex.github.io/actions/workflows/sync-docs.yml)
-2. Click "Run workflow"
-3. Select which repository to sync (or "all")
-4. Click "Run workflow"
-
-### Local Testing
-
-To test documentation sync locally:
-
-```bash
-# Sync specific repository
-./scripts/sync-repo-docs.sh soliplex/soliplex docs/soliplex docs
-
-# Sync all repositories
-./scripts/sync-repo-docs.sh soliplex/soliplex docs/soliplex docs
-./scripts/sync-repo-docs.sh soliplex/ingester docs/ingester docs
-```
-
-**Note**: Synced directories (docs/soliplex/, docs/ingester/, etc.) are in .gitignore and should not be committed.
+- **Push** to `main`
+- **Nightly** schedule (`cron: 0 6 * * *`) to pick up upstream submodule changes
+- **`repository_dispatch`** (`docs_update`) sent by submodule repos when their docs change (see `.github/workflows/TRIGGER_TEMPLATES/`)
+- **Manual** dispatch via the GitHub Actions UI
 
 ## Development
 
-### Setup
+Requires Python 3.13+ and [uv](https://github.com/astral-sh/uv).
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
+# Install dependencies (including dev tools like ruff)
+uv sync
 
-# Or install directly
-pip install mkdocs-material
+# Pull the latest docs and generate zensical.toml from the template
+uv run python scripts/build-docs.py
 
-# Serve locally (default port 8001)
-mkdocs serve
+# ...or generate/validate without updating submodules
+uv run python scripts/build-docs.py --no-update
 
-# Serve on different port
-mkdocs serve -a localhost:8002
-```
+# Preview locally (http://127.0.0.1:9001/)
+uv run zensical serve
 
-The documentation site will be available at http://127.0.0.1:8001/
-
-### Building
-
-```bash
-# Build static site
-mkdocs build
-
-# Output will be in site/
+# Production build (outputs to site/)
+uv run zensical build
 ```
 
 ### Project Structure
 
-```
+```text
 soliplex.github.io/
-├── .github/
-│   └── workflows/
-│       ├── build-docs.yml    # Build and deploy to GitHub Pages
-│       └── sync-docs.yml      # Sync from upstream repos
+├── .github/workflows/
+│   ├── build-docs.yml          # Build & deploy to GitHub Pages
+│   └── TRIGGER_TEMPLATES/      # Per-submodule repository_dispatch trigger
+├── projects/                   # Git submodules (upstream sources)
 ├── scripts/
-│   └── sync-repo-docs.sh      # Sync script
+│   └── build-docs.py           # Copy docs + generate zensical.toml + validate nav
 ├── docs/
-│   ├── index.md               # Landing page (manually maintained)
-│   ├── soliplex/              # Auto-synced from soliplex/soliplex
-│   ├── ingester/              # Auto-synced from soliplex/ingester
-│   ├── agents/                # Auto-synced from soliplex/ingester-agents
-│   ├── chatbot/               # Auto-synced from soliplex/chatbot
-│   ├── flutter/               # Auto-synced from soliplex/flutter
-│   └── ag-ui/                 # Auto-synced from soliplex/ag-ui
-├── mkdocs.yml                 # MkDocs configuration
-├── requirements.txt           # Python dependencies
-└── README.md                  # This file
+│   ├── index.md                # Landing page (tracked)
+│   ├── img/                    # Shared assets (tracked)
+│   └── <project>/              # Copied from submodules (git-ignored)
+├── zensical.toml.template      # Source of truth for site config + nav (tracked)
+├── zensical.toml               # Generated from the template (git-ignored)
+└── pyproject.toml              # Dependencies, ruff & pymarkdown config
 ```
 
-### Adding New Repositories
+### Adding a New Project
 
-To add documentation from a new repository:
-
-1. Edit [.github/workflows/sync-docs.yml](.github/workflows/sync-docs.yml):
-   - Add the repository to the `workflow_dispatch` input options
-   - Add a new sync step using the sync script
-   - Add the repository to the commit message generation
-
-2. Update [mkdocs.yml](mkdocs.yml):
-   - Add navigation entries for the new documentation
-
-3. Update [.gitignore](.gitignore):
-   - Add the new docs subdirectory to ignored paths
-
-4. Update this README:
-   - Add the repository to the Overview list
+1. Add the repository as a submodule under `projects/` and commit the `.gitmodules` change.
+2. Add an `@auto:<project>` nav stub (and any title overrides) to `zensical.toml.template`.
+3. Add a trigger workflow to the new repo from `.github/workflows/TRIGGER_TEMPLATES/`.
+4. Run `uv run python scripts/build-docs.py --no-update` and confirm the nav validates.
 
 ## Troubleshooting
 
-### Sync Issues
-
-If documentation sync fails:
-
-1. Check the [Sync Docs workflow runs](https://github.com/soliplex/soliplex.github.io/actions/workflows/sync-docs.yml)
-2. Verify the upstream repository has a `docs/` directory or specified path
-3. Check that the sync script has correct permissions (`chmod +x scripts/sync-repo-docs.sh`)
-4. Try running the sync script locally to identify issues
-
-**Branch Protection Error:**
-
-If the workflow fails with "Protected branch update failed - Required status check 'validate' is expected":
-
-1. Go to repository Settings → Branches → Branch protection rules for `main`
-2. Either:
-   - **Option A (Recommended)**: Under "Allow specified actors to bypass required pull requests", add `github-actions[bot]`
-   - **Option B**: Under "Require status checks to pass before merging", remove the `validate` check or ensure a `validate` workflow exists
-   - **Option C**: Disable branch protection temporarily for testing
-
-The sync workflow needs to push commits directly to `main`, so it must either bypass protection or have all required checks pass.
-
 ### Build Issues
 
-If the documentation build fails:
-
-1. Check the [Build Docs workflow runs](https://github.com/soliplex/soliplex.github.io/actions/workflows/build-docs.yml)
-2. Verify all navigation paths in `mkdocs.yml` point to existing files
-3. Check for Markdown syntax errors in documentation files
-4. Test the build locally with `mkdocs build --strict`
+1. Check the [Build Docs workflow runs](https://github.com/soliplex/soliplex.github.io/actions/workflows/build-docs.yml).
+2. Run `uv run python scripts/build-docs.py --validate-only` — it reports broken nav references **and** orphaned pages (copied but not in the nav).
+3. Check for Markdown errors in the upstream docs.
 
 ### Local Development
 
-If local development server has issues:
-
 ```bash
-# Clean build cache
-rm -rf site/ .cache/
+# Clean build artifacts
+rm -rf site/ .cache/ zensical.toml
 
-# Reinstall dependencies
-pip install -r requirements.txt --upgrade
-
-# Serve with verbose output
-mkdocs serve --verbose
+# Reinstall dependencies and rebuild
+uv sync
+uv run python scripts/build-docs.py
+uv run zensical serve
 ```
 
 ## Contributing
 
-### Documentation Updates
+**Do not edit the copied `docs/<project>/` directories or `zensical.toml` directly** — both are regenerated on every build. To change:
 
-**Do not edit synced directories directly** (docs/soliplex/, docs/ingester/, etc.). These are automatically overwritten.
-
-To update documentation:
-
-1. Make changes in the upstream repository (e.g., soliplex/soliplex)
-2. Documentation will sync automatically within 24 hours
-3. Or manually trigger sync via GitHub Actions
-
-### Site Configuration
-
-To update site configuration or landing page:
-
-1. Edit `mkdocs.yml` for navigation and theme settings
-2. Edit `docs/index.md` for the landing page content
-3. Create a pull request with changes
-
-## Related Repositories
-
-- [soliplex/soliplex](https://github.com/soliplex/soliplex) - Core Platform
-- [soliplex/ingester](https://github.com/soliplex/ingester) - Document Ingestion System
-- [soliplex/ingester-agents](https://github.com/soliplex/ingester-agents) - Ingester Agent Framework
-- [soliplex/chatbot](https://github.com/soliplex/chatbot) - Chatbot Interface
-- [soliplex/flutter](https://github.com/soliplex/flutter) - Flutter Mobile/Web Frontend
-- [soliplex/ag-ui](https://github.com/soliplex/ag-ui) - AG UI Component Library
+- **Upstream documentation**: edit it in the source repository; it syncs on the next build (nightly, on dispatch, or manually).
+- **Site config / navigation structure**: edit `zensical.toml.template`.
+- **Landing page**: edit `docs/index.md`.
 
 ## License
 

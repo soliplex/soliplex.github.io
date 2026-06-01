@@ -13,12 +13,9 @@
 [submodule "projects/frontend"]
 	path = projects/frontend
 	url = https://github.com/soliplex/frontend.git
-[submodule "projects/buubble-sandbox"]
-	path = projects/bubble-sandbox
-	url = https://github.com/soliplex/bubble-sandbox.git	
-[submodule "projects/chatbot"]
-	path = projects/chatbot
-	url = https://github.com/soliplex/chatbot.git
 [submodule "projects/bubble-sandbox"]
 	path = projects/bubble-sandbox
 	url = https://github.com/soliplex/bubble-sandbox.git
+[submodule "projects/chatbot"]
+	path = projects/chatbot
+	url = https://github.com/soliplex/chatbot.git

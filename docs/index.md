@@ -1,10 +1,12 @@
 # Soliplex Documentation
 
 Welcome to the Soliplex ecosystem documentation. Soliplex provides AI-powered retrieval-augmented generation capabilities for intelligent document search and question answering.
-##Soliplex Architecture
+
+## Soliplex Architecture
+
 ```mermaid
 graph TB
-    
+
     subgraph "User Interfaces"
         FE["Frontend<br/>(Flutter / Dart)"]
         TUI["Terminal UI<br/>(Textual)"]
@@ -22,7 +24,7 @@ graph TB
         HS["Haiku Skills"]
     end
 
-    
+
     subgraph "Storage"
         LDB["LanceDB<br/>(Vectors)"]
         PG["PostgreSQL / SQLite<br/>(Metadata)"]
@@ -79,7 +81,7 @@ The main Soliplex RAG system with FastAPI backend and Flutter frontend.
 
 **Quick Links:**
 - [Overview](soliplex/overview.md)
-- [Server Setup](soliplex/server.md)
+- [Server Setup](soliplex/server/index.md)
 - [Client Setup](soliplex/client.md)
 - [RAG Database](soliplex/rag.md)
 - [Configuration Guide](soliplex/config/installation.md)
@@ -106,8 +108,8 @@ Robust document ingestion system for loading content into RAG databases.
 Cross-platform mobile and desktop client application for Soliplex.
 
 **Quick Links:**
-- [Developer Setup Guide](frontend/docs/developer-setup.md)
-- [Client Summary](flutter/docs/index.md)
+- [Developer Setup Guide](frontend/developer-setup.md)
+- [State Bus Overview](frontend/state-bus.md)
 
 ### [Chatbot Widget](chatbot/readme.md)
 
@@ -138,7 +140,7 @@ Utility for splitting and processing PDF documents for ingestion.
 ### For New Users
 
 1. [Core Platform Overview](soliplex/overview.md) - Understanding the Soliplex system
-2. [Server Setup](soliplex/server.md) - Set up the backend server
+2. [Server Setup](soliplex/server/index.md) - Set up the backend server
 3. [Client Setup](soliplex/client.md) - Configure the client application
 4. [Getting Started with Ingester](ingester/GETTING_STARTED.md) - Document ingestion basics
 
@@ -174,14 +176,10 @@ This documentation is automatically synchronized from multiple repositories:
 
 - **Core Platform**: [soliplex/soliplex](https://github.com/soliplex/soliplex)
 - **Ingester**: [soliplex/ingester](https://github.com/soliplex/ingester)
-- **Flutter Client**: [soliplex/flutter](https://github.com/soliplex/flutter)
+- **Flutter Client**: [soliplex/frontend](https://github.com/soliplex/frontend)
 - **Chatbot Widget**: [soliplex/chatbot](https://github.com/soliplex/chatbot)
 - **Ingester Agents**: [soliplex/ingester-agents](https://github.com/soliplex/ingester-agents)
 - **PDF Splitter**: [soliplex/pdf-splitter](https://github.com/soliplex/pdf-splitter)
+- **Bubble Sandbox**: [soliplex/bubble-sandbox](https://github.com/soliplex/bubble-sandbox)
 
 Documentation is updated automatically when changes are made to the source repositories via git submodules.
-
-
-
-
-

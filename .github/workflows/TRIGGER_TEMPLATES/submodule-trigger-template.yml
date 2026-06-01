@@ -25,6 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger soliplex.github.io documentation rebuild
+        env:
+          # Pass untrusted commit message via env var, not inline interpolation.
+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
           echo "📚 Triggering documentation rebuild for ${{ github.repository }}"
 
@@ -34,7 +37,7 @@ jobs:
             --arg ref "${{ github.ref }}" \
             --arg sha "${{ github.sha }}" \
             --arg pusher "${{ github.actor }}" \
-            --arg message "${{ github.event.head_commit.message }}" \
+            --arg message "$HEAD_COMMIT_MESSAGE" \
             '{
               event_type: "docs_update",
               client_payload: {
