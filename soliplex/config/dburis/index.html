@@ -3223,7 +3223,7 @@ password is defined as a <a href="../secrets/">secret</a> named <code>"POSTGRES_
 </span></code></pre></div>
 <h2 id="interpolation">Interpolation</h2>
 <p>Each of the DBURI values can include values
-<a href="../installation/#installation-environment-interpolation">interpolated</a>
+<a href="../installation/#installation-secret-environment-interpolation">interpolated</a>
 from the installation configuration's environment.  E.g:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>

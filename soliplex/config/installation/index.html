@@ -1159,14 +1159,47 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Environment">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-secret-environment-interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Installation Secret / Environment Interpolation
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Secret &#x2f; Environment Interpolation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#installation-environment-interpolation" class="md-nav__link">
+  <a href="#fields-which-interpolate-only-secrets" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Installation Environment Interpolation
+        Fields which interpolate only secrets
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fields-which-interpolate-only-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Fields which interpolate only environment variables
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fields-which-interpolate-both-secrets-and-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Fields which interpolate both secrets and environment variables
       </span>
     </span>
   </a>
@@ -3141,14 +3174,47 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Environment">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-secret-environment-interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Installation Secret / Environment Interpolation
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Secret &#x2f; Environment Interpolation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#installation-environment-interpolation" class="md-nav__link">
+  <a href="#fields-which-interpolate-only-secrets" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Installation Environment Interpolation
+        Fields which interpolate only secrets
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fields-which-interpolate-only-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Fields which interpolate only environment variables
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fields-which-interpolate-both-secrets-and-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Fields which interpolate both secrets and environment variables
       </span>
     </span>
   </a>
@@ -3508,11 +3574,39 @@ installation environment.</p>
 <p><strong>Note:</strong> this configuration is distinct from adding variables to
 the operating system environment: see <a href="../../server/environment/">this page</a>
 for that topic.</p>
-<h3 id="installation-environment-interpolation">Installation Environment Interpolation</h3>
-<p>Certain configuration elements can interpolate values from the installation
-configuration's environment, by spelling their own value as
-<code>"env:SOME_INSTALLATION_ENVIRONMENT_NAME"</code>.  Fields which support this
-interpolation:</p>
+<h2 id="installation-secret-environment-interpolation">Installation Secret / Environment Interpolation</h2>
+<p>Certain configuration elements can interpolate values resolved by the
+installation configuration.  Two marker styles are used:</p>
+<ul>
+<li><code>"secret:SOME_SECRET_NAME"</code> resolves an installation
+  <a href="../secrets/">secret</a>.</li>
+<li><code>"env:SOME_INSTALLATION_ENVIRONMENT_NAME"</code> resolves an installation
+  <a href="../environment/">environment</a> value.</li>
+</ul>
+<p>Which markers a given field honors depends on the field, as enumerated
+below.</p>
+<h3 id="fields-which-interpolate-only-secrets">Fields which interpolate only secrets</h3>
+<p>The entire value may be given as a <code>secret:</code> reference, resolved from the
+installation secrets:</p>
+<ul>
+<li><code>provider_key</code>, in the <code>agent_configs:</code> stanza of the main installation
+  configuration, or in the <code>agent_config:</code> stanza of a completion, room,
+  or skill configuration.</li>
+<li><code>client_secret</code>, in an OIDC provider configuration (see
+  <a href="../oidc_providers/">OIDC providers</a>).</li>
+<li><code>token</code>, in the <code>logfire:</code> configuration (see <a href="../logfire/">Logfire</a>).</li>
+</ul>
+<h3 id="fields-which-interpolate-only-environment-variables">Fields which interpolate only environment variables</h3>
+<p>The value may embed one or more <code>env:</code> markers, resolved from the
+installation environment:</p>
+<ul>
+<li><code>provider_base_url</code>, in the <code>agent_configs:</code> stanza of the main
+  installation configuration, or in the <code>agent_config:</code> stanza of a
+  completion, room, or skill configuration.</li>
+</ul>
+<h3 id="fields-which-interpolate-both-secrets-and-environment-variables">Fields which interpolate both secrets and environment variables</h3>
+<p>The value may embed one or more <code>secret:</code> and/or <code>env:</code> markers; the two
+marker styles may be mixed within a single value.</p>
 <p>In the main installation configuration:</p>
 <ul>
 <li><code>thread_persistence_dburi_sync</code></li>
@@ -3520,11 +3614,12 @@ interpolation:</p>
 <li><code>authorization_dburi_sync</code></li>
 <li><code>authorization_dburi_async</code></li>
 </ul>
-<p>In the <code>agent_configs:</code> stanza of the main installation configuration,
-or in the <code>agent_config:</code> stanza of a completion, room, or skill
-configuration:</p>
+<p>In the <code>mcp_client_toolsets:</code> stanza of a room or completion configuration,
+for each configured MCP client toolset:</p>
 <ul>
-<li><code>provider_base_url</code></li>
+<li><code>kind: "stdio"</code>: <code>command</code>, each entry in <code>args</code>, and each value in <code>env</code></li>
+<li><code>kind: "http"</code> or <code>kind: "sse"</code>: <code>url</code>, each value in <code>headers</code>, and each
+  value in <code>query_params</code></li>
 </ul>
 <h2 id="haikurag-configuration-file"><code>haiku.rag</code> Configuration File</h2>
 <p>The <code>haiku_rag_config_file</code> entry points to a YAML file containing

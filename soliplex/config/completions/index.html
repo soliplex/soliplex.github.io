@@ -1037,24 +1037,63 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#completions-endpoint-configuration-file-schema" class="md-nav__link">
+  <a href="#completions-configuration-file-schema" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Completions Endpoint Configuration File Schema
+        Completions Configuration File Schema
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Completions Configuration File Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-completion-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Required completion elements
       </span>
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#required-endpoint-elements" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#optional-completion-elements" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Required endpoint elements
+        Optional completion elements
       </span>
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tool Configurations
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-client-toolsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        MCP Client Toolsets
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2912,24 +2951,63 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#completions-endpoint-configuration-file-schema" class="md-nav__link">
+  <a href="#completions-configuration-file-schema" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Completions Endpoint Configuration File Schema
+        Completions Configuration File Schema
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Completions Configuration File Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-completion-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Required completion elements
       </span>
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#required-endpoint-elements" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#optional-completion-elements" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Required endpoint elements
+        Optional completion elements
       </span>
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tool Configurations
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-client-toolsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        MCP Client Toolsets
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3102,7 +3180,7 @@
 </li>
 <li>
 <p><code>prompt.txt</code> (if present) holds the system prompt for conversations
-  which are initiated from the room.</p>
+  which are initiated from the completion.</p>
 </li>
 </ul>
 <p>Example layout without external prompt:</p>
@@ -3114,19 +3192,19 @@
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">prompt.txt</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">completion_config.yaml</span>
 </span></code></pre></div>
-<h2 id="completions-endpoint-configuration-file-schema">Completions Endpoint Configuration File Schema</h2>
-<h2 id="required-endpoint-elements">Required endpoint elements</h2>
+<h2 id="completions-configuration-file-schema">Completions Configuration File Schema</h2>
+<h3 id="required-completion-elements">Required completion elements</h3>
 <p>The <code>completion_config.yaml</code>  file should be a mapping, with at least
 the following required elements:</p>
 <ul>
 <li>
-<p><code>id</code> (a string) should match the name of the endpoint's directory.</p>
+<p><code>id</code> (a string) should match the name of the completion's directory.</p>
 </li>
 <li>
 <p><code>agent</code> (a mapping)</p>
 </li>
 </ul>
-<p>A minimal completion endpoint configuration must include the above
+<p>A minimal completion  configuration must include the above
 elements, e.g.:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;chat&quot;</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">agent</span><span class="p">:</span>
@@ -3135,6 +3213,53 @@ elements, e.g.:</p>
 </span></code></pre></div>
 <p>Please see <a href="../agents/">this page</a> which documents the <code>agent</code> element
 schema.</p>
+<h3 id="optional-completion-elements">Optional completion elements</h3>
+<ul>
+<li><code>name</code> (a string, defaults to the value of <code>id</code>) is a display name for
+  the completion, surfaced via the completions API.</li>
+</ul>
+<h3 id="tool-configurations">Tool Configurations</h3>
+<ul>
+<li><code>tools</code> should be a list of mappings, with at least the key
+  <code>tool_name</code>, whose value is a dotted name identifying a Python function
+   (or callable) which can serve as a "tool" for the LLM.  E.g.:</li>
+</ul>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">tools</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tool_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.tools.get_current_datetime&quot;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tool_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.tools.get_current_user&quot;</span>
+</span></code></pre></div>
+<p>Each tool mapping can contain additional elements, which are used to
+  configure the tool's behavior.</p>
+<h3 id="mcp-client-toolsets">MCP Client Toolsets</h3>
+<ul>
+<li>
+<p><code>mcp_client_toolsets</code> should be a mapping of toolset name to a toolset
+  configuration.  Each configuration selects a transport via its <code>kind</code>:</p>
+</li>
+<li>
+<p><code>"stdio"</code> runs an MCP server as a subprocess, configured with
+    <code>command</code>, <code>args</code>, and <code>env</code>.</p>
+</li>
+<li>
+<p><code>"http"</code> or <code>"sse"</code> connect to a remote MCP server, configured with
+    <code>url</code>, <code>headers</code>, and <code>query_params</code>.</p>
+</li>
+</ul>
+<p>Any configuration may also set <code>allowed_tools</code> (a list of strings) to
+  restrict which of the server's tools are exposed.  E.g.:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">mcp_client_toolsets</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">google_maps</span><span class="p">:</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;stdio&quot;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;npx&quot;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">args</span><span class="p">:</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-y&quot;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;@modelcontextprotocol/server-google-maps&quot;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">      </span><span class="nt">GOOGLE_MAPS_API_KEY</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;secret:GOOGLE_MAPS_API_KEY&quot;</span>
+</span></code></pre></div>
+<p>String values in these fields can interpolate installation secrets and
+  environment variables; see <a href="../installation/#installation-secret-environment-interpolation">Installation Secret / Environment
+  Interpolation</a>.</p>
 
 
 
