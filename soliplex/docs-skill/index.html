@@ -3186,12 +3186,13 @@ the library; set <code>GITHUB_TOKEN</code> / <code>GH_TOKEN</code> for higher AP
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># first, marking the installed copy and the current &#39;latest&#39; pointer.</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/skill_versions.py<span class="w"> </span>list
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Show what changed upstream since this copy was built (Markdown only).</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/skill_versions.py<span class="w"> </span>diff<span class="w"> </span>latest
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># Just the changed-file names, or a diff between two published versions.</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/skill_versions.py<span class="w"> </span>diff<span class="w"> </span>latest<span class="w"> </span>--name-only
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/skill_versions.py<span class="w"> </span>diff<span class="w"> </span>docs-2026.05.20-abc1234<span class="w"> </span>docs-2026.05.29-def5678
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Show what changed upstream since this copy was built (the whole skill</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># tree, including the documentation map; the build stamp is ignored).</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/skill_versions.py<span class="w"> </span>diff<span class="w"> </span>latest
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># Just the changed-file names, or a diff between two published versions.</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/skill_versions.py<span class="w"> </span>diff<span class="w"> </span>latest<span class="w"> </span>--name-only
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>uv<span class="w"> </span>run<span class="w"> </span>scripts/skill_versions.py<span class="w"> </span>diff<span class="w"> </span>docs-2026.05.20-abc1234<span class="w"> </span>docs-2026.05.29-def5678
 </span></code></pre></div>
 <p><code>diff</code> exits non-zero when there are differences, so it composes in scripts.</p>
 <p>To refresh, let the helper upgrade the installed copy in place. It downloads
