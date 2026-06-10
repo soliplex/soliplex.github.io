@@ -1,0 +1,4239 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://soliplex.github.io/frontend/adr/ADR-001-reactive-state-management-scoped-statebus/">
+      
+      
+        <link rel="prev" href="../../send-cancel-lifecycle/">
+      
+      
+        <link rel="next" href="../../plans/0001-app-shell/proposal/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.43">
+    
+    
+      
+        <title>ADR-001: Reactive State Management via Scoped StateBus and Ownership-Based Discovery - Soliplex</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.fba56155.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adr-001-reactive-state-management-via-scoped-statebus-and-ownership-based-discovery" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Soliplex" class="md-header__button md-logo" aria-label="Soliplex" data-md-component="logo">
+      
+  <img src="../../../img/logo.png" alt="Soliplex">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Soliplex
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ADR-001: Reactive State Management via Scoped StateBus and Ownership-Based Discovery
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2C5.13 2 2 5.13 2 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7M6 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H6zm13-8h-2l-3.2 9h1.9l.7-2h3.2l.7 2h1.9zm-2.15 5.65L18 15l1.15 3.65z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="gray" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="amber"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/soliplex/soliplex" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+  </div>
+  <div class="md-source__repository">
+    soliplex/soliplex
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../soliplex/" class="md-tabs__link">
+          
+  
+  Core Platform
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ingester/API/" class="md-tabs__link">
+          
+  
+  Ingester
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../chatbot/readme/" class="md-tabs__link">
+          
+  
+  User Interfaces
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ingester-agents/" class="md-tabs__link">
+          
+  
+  Supporting Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Soliplex" class="md-nav__button md-logo" aria-label="Soliplex" data-md-component="logo">
+      
+  <img src="../../../img/logo.png" alt="Soliplex">
+
+    </a>
+    Soliplex
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/soliplex/soliplex" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+  </div>
+  <div class="md-source__repository">
+    soliplex/soliplex
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Home
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../soliplex/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Core Platform
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Core Platform
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Client
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Docker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/docs-skill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Docs Skill
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/log-ingestion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Log Ingestion
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Platform Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Prerequisites
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quickstart
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  RAG
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/tui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  TUI
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usage
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_12" id="__nav_2_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Configuration
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Configuration
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/agui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  AG-UI
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Agents
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/completions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Completions
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/filesystem_layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Filesystem Layout
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Installation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/logfire/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Logfire
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Logging
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/meta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Meta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/oidc_providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  OIDC Authentication
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/quizzes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quizzes
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  RAG
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Rooms
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/secrets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Secrets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Skills
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/dburis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SQLAlchemy DBURIs
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_13" id="__nav_2_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Examples
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Examples
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_13_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../soliplex/examples/room-thread-analysis/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Room Thread Analysis
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_13_1" id="__nav_2_13_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_13_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_13_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Room Thread Analysis
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/examples/room-thread-analysis/model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Model
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../soliplex/server/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Setup
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_14" id="__nav_2_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Setup
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/server/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CLI
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/server/environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/server/sse_resume/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SSE Resume
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Ingester
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Ingester
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/AUTHENTICATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Authentication
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/CLI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CLI
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/CONFIGURATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Configuration
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/DATABASE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Database
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/DOCKER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Docker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Getting Started
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/PARAMETER_SETS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Parameter Sets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/WORKFLOWS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Workflows
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  User Interfaces
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  User Interfaces
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Chatbot Widget
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Chatbot Widget
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/readme/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usage
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Flutter UI
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Flutter UI
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Developer Setup
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../send-cancel-lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Send Cancel Lifecycle
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-context-and-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. Context and Problem Statement
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Context and Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-surface-proliferation-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The surface proliferation problem
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-reactivity-gap-in-the-existing-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The reactivity gap in the existing pipeline
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-per-thread-bus-slot-and-a-latent-key-collision-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        No per-thread bus slot, and a latent key-collision bug
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lifecycle-management-without-raii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Lifecycle management without RAII
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-proposed-solution-the-reactive-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. Proposed Solution: The Reactive Chain
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Proposed Solution: The Reactive Chain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layer-1-source-_onstatechange-bussetagentstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Layer 1 — Source: <code>_onStateChange</code> → <code>bus.setAgentState</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-2-transport-statebus-owned-by-threadstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Layer 2 — Transport: <code>StateBus</code> owned by <code>ThreadState</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-3-consumption-stateprojections" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Layer 3 — Consumption: <code>StateProjection&lt;S&gt;</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-key-design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. Key Design Decisions
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Key Design Decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-threadkey-over-bare-threadid" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 <code>ThreadKey</code> over bare <code>threadId</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-immutable-threadstate-with-a-mutable-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 <code>@immutable ThreadState</code> with a mutable <code>bus</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-ensurethreadstate-vs-threadstateof" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 <code>ensureThreadState</code> vs <code>threadStateOf</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-no-global-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 No global registry
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-ownership-based-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 Ownership-based discovery
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-runtime-owned-disposal-cascade" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.6 Runtime-owned disposal cascade
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-exhaustive-state-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.7 Exhaustive state mapping
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-consequences-and-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. Consequences and Caveats
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Consequences and Caveats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-lifecycle-is-runtime-owned" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 Lifecycle is runtime-owned
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-agentstate-is-bound-once-bus-resolves-on-every-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 <code>agentState</code> is bound once; <code>bus</code> resolves on every access
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-cross-scope-projection-composition-opt-in-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 Cross-scope projection composition (opt-in risk)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-stale-references-without-raii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 Stale references without RAII
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-alternatives-considered" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. Alternatives Considered
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-global-event-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 Global event bus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-central-bus-registry-statebusall" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 Central bus registry (<code>StateBus.all</code>)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-riverpod-asyncnotifier-futureprovider-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 Riverpod <code>AsyncNotifier</code> / <code>FutureProvider</code> chains
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-changenotifier-valuenotifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.4 <code>ChangeNotifier</code> / <code>ValueNotifier</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6. Summary
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_4" id="__nav_4_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Plans
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Plans
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plans/0001-app-shell/proposal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  0001 App Shell
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_4_2" id="__nav_4_2_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Citations UI
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Citations UI
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plans/citations-ui/data-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Data Flow
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plans/citations-ui/plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Plan
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ingester-agents/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Supporting Tools
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Supporting Tools
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pdf-splitter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  PDF Splitter
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Bubble Sandbox
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-context-and-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. Context and Problem Statement
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Context and Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-surface-proliferation-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The surface proliferation problem
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-reactivity-gap-in-the-existing-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The reactivity gap in the existing pipeline
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-per-thread-bus-slot-and-a-latent-key-collision-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        No per-thread bus slot, and a latent key-collision bug
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lifecycle-management-without-raii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Lifecycle management without RAII
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-proposed-solution-the-reactive-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. Proposed Solution: The Reactive Chain
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Proposed Solution: The Reactive Chain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layer-1-source-_onstatechange-bussetagentstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Layer 1 — Source: <code>_onStateChange</code> → <code>bus.setAgentState</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-2-transport-statebus-owned-by-threadstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Layer 2 — Transport: <code>StateBus</code> owned by <code>ThreadState</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-3-consumption-stateprojections" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Layer 3 — Consumption: <code>StateProjection&lt;S&gt;</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-key-design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. Key Design Decisions
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Key Design Decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-threadkey-over-bare-threadid" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 <code>ThreadKey</code> over bare <code>threadId</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-immutable-threadstate-with-a-mutable-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 <code>@immutable ThreadState</code> with a mutable <code>bus</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-ensurethreadstate-vs-threadstateof" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 <code>ensureThreadState</code> vs <code>threadStateOf</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-no-global-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 No global registry
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-ownership-based-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 Ownership-based discovery
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-runtime-owned-disposal-cascade" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.6 Runtime-owned disposal cascade
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-exhaustive-state-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.7 Exhaustive state mapping
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-consequences-and-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. Consequences and Caveats
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Consequences and Caveats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-lifecycle-is-runtime-owned" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 Lifecycle is runtime-owned
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-agentstate-is-bound-once-bus-resolves-on-every-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 <code>agentState</code> is bound once; <code>bus</code> resolves on every access
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-cross-scope-projection-composition-opt-in-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 Cross-scope projection composition (opt-in risk)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-stale-references-without-raii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 Stale references without RAII
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-alternatives-considered" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. Alternatives Considered
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-global-event-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 Global event bus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-central-bus-registry-statebusall" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 Central bus registry (<code>StateBus.all</code>)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-riverpod-asyncnotifier-futureprovider-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 Riverpod <code>AsyncNotifier</code> / <code>FutureProvider</code> chains
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-changenotifier-valuenotifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.4 <code>ChangeNotifier</code> / <code>ValueNotifier</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6. Summary
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../../../chatbot/readme/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    User Interfaces
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../../developer-setup/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    Flutter UI
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+  
+
+
+<h1 id="adr-001-reactive-state-management-via-scoped-statebus-and-ownership-based-discovery">ADR-001: Reactive State Management via Scoped StateBus and Ownership-Based Discovery</h1>
+<ul>
+<li><strong>Status:</strong> Accepted</li>
+<li><strong>Date:</strong> 2026-04-28</li>
+<li><strong>Authors:</strong> Alan Runyan, William Karol Di Cioccio</li>
+<li><strong>Supersedes:</strong> —</li>
+<li><strong>Superseded by:</strong> —</li>
+</ul>
+<hr />
+<h2 id="1-context-and-problem-statement">1. Context and Problem Statement</h2>
+<h3 id="the-surface-proliferation-problem">The surface proliferation problem</h3>
+<p>Soliplex streams structured agent state to the client as a live JSON document.
+As GenUI surfaces multiply — maps, narration panels, HUDs, interactive
+widgets — each surface needs a reactive, typed slice of that document. Without
+a shared contract, each view independently subscribes to the raw AG-UI event
+stream, re-parses the state, and manages its own lifecycle. The resulting
+duplication is not merely redundant: it distributes the risk of subscription
+leaks and mismatched parse logic across every surface implementor.</p>
+<h3 id="the-reactivity-gap-in-the-existing-pipeline">The reactivity gap in the existing pipeline</h3>
+<p><code>processEvent()</code> in <code>soliplex_client</code> already applies <code>StateSnapshotEvent</code>
+(full replacement) and <code>StateDeltaEvent</code> (RFC 6902 JSON Patch) into
+<code>Conversation.aguiState</code>. However, <code>Conversation.aguiState</code> was a plain
+<code>Map&lt;String, dynamic&gt;</code> field — a value, not an observable. View layers had
+no standard mechanism to watch it for changes. The only production read of
+the field happened at run quiescence (citation extraction), which is a
+pull-at-boundary pattern, not a reactive one.</p>
+<p>Any surface that wanted live updates had to subscribe to <code>_runStateSignal</code>
+directly, pattern-match the sealed <code>RunState</code> hierarchy, and extract
+<code>aguiState</code> manually — per-variant boilerplate that each implementor wrote
+differently.</p>
+<h3 id="no-per-thread-bus-slot-and-a-latent-key-collision-bug">No per-thread bus slot, and a latent key-collision bug</h3>
+<p>Beyond the reactivity gap, the prior <code>_threadHistories: Map&lt;String, ThreadHistory&gt;</code>
+cache in <code>AgentRuntime</code> had two problems:</p>
+<ol>
+<li><strong>Wrong key type:</strong> The cache was keyed by bare <code>threadId</code> (a <code>String</code>). In
+   a multi-room runtime, two rooms could issue the same <code>threadId</code> and the
+   entries would collide silently. Today <code>AgentRuntime</code> is per-server so the
+   bug is masked, but the typing provided no enforcement.</li>
+<li><strong>No slot for a per-thread bus:</strong> The <code>StateBus</code> design requires a bus that
+   survives session boundaries within a thread's lifetime. A plain
+   <code>ThreadHistory</code> value had no field for it.</li>
+</ol>
+<h3 id="lifecycle-management-without-raii">Lifecycle management without RAII</h3>
+<p>Dart is a garbage-collected language with no deterministic destructors. There
+is no language-level analogue to C++'s RAII or Swift's <code>deinit</code> that fires
+the moment a scope exits. This creates a structural risk for reactive
+systems: subscriptions and derived signals outlive their intended scope unless
+explicitly torn down.</p>
+<p>In a multi-surface, multi-thread application where buses are created and
+destroyed as threads open and close, the two failure modes are symmetric:</p>
+<ul>
+<li><strong>Too early:</strong> A surface reads a bus that has been disposed; it observes
+  stale or empty state, or receives an exception on signal access.</li>
+<li><strong>Too late:</strong> A bus that should have been disposed is retained by a
+  lingering projection or subscriber; listeners continue to fire, and heap
+  pressure accumulates silently.</li>
+</ul>
+<p>Because the language provides no mechanistic guarantee, the design must
+establish a contractual one.</p>
+<hr />
+<h2 id="2-proposed-solution-the-reactive-chain">2. Proposed Solution: The Reactive Chain</h2>
+<p>The solution is a three-layer reactive chain with clear ownership at each
+level. Together the layers carry agent state from the server event stream
+to a typed Flutter widget rebuild.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph AGUI["AG-UI events (server → client) — peer event types"]
+        Snap[StateSnapshotEvent]
+        Delta[StateDeltaEvent]
+        Act[ActivitySnapshot]
+    end
+
+    subgraph BUS["StateBus (per-thread, owned by AgentRuntime)"]
+        AgentState[("agentState&lt;br/&gt;Signal of Map")]
+    end
+
+    subgraph EXISTING["Existing paths (unchanged)"]
+        Conv["Conversation.activities&lt;br/&gt;+ ExecutionTracker"]
+    end
+
+    subgraph PROJ["Projections (typed views)"]
+        P1[MarkersProjection]
+        P2[NarrationProjection]
+        P3[CustomProjection]
+    end
+
+    subgraph TGT["Surfaces (Surface of S impls)"]
+        T1["MapExtension&lt;br/&gt;Surface of MapState"]
+        T2["NarrationController&lt;br/&gt;Surface of List of Narration"]
+        T3["Custom controller&lt;br/&gt;Surface of S"]
+    end
+
+    subgraph WID["Widgets (watch Surface.state)"]
+        W1[MapView]
+        W2[NarrationPanel]
+        W3[Custom widget]
+    end
+
+    Runtime[AgentRuntime]
+
+    Snap -- "setAgentState(...)" --&gt; AgentState
+    Delta -- "update(applyJsonPatch)" --&gt; AgentState
+    Act -- "consumed today" --&gt; Conv
+
+    AgentState -- "project(...)" --&gt; P1
+    AgentState -- "project(...)" --&gt; P2
+    AgentState -- "project(...)" --&gt; P3
+
+    P1 -- "forwards into Surface.state" --&gt; T1
+    P2 -- "forwards into Surface.state" --&gt; T2
+    P3 -- "forwards into Surface.state" --&gt; T3
+
+    T1 -- "watch Surface.state" --&gt; W1
+    T2 -- "watch Surface.state" --&gt; W2
+    T3 -- "watch Surface.state" --&gt; W3
+
+    W3 -. "Surface.emit(SurfaceEvent)" .-&gt; AgentState
+    AgentState -. "events stream" .-&gt; Runtime
+    Runtime -. "forward to agent" .-&gt; Snap</code></pre>
+<h3 id="layer-1-source-_onstatechange-bussetagentstate">Layer 1 — Source: <code>_onStateChange</code> → <code>bus.setAgentState</code></h3>
+<p><code>AgentSession._onStateChange</code> is called on every <code>RunState</code> transition. It
+extracts the <code>aguiState</code> map via an exhaustive switch over the sealed
+<code>RunState</code> hierarchy and writes it into the per-thread bus:</p>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="n">_onStateChange</span><span class="p">(</span><span class="n">RunState</span><span class="w"> </span><span class="n">runState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_disposed</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="n">_runStateSignal</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runState</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_aguiStateOf</span><span class="p">(</span><span class="n">runState</span><span class="p">);</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">bus</span><span class="p">.</span><span class="n">setAgentState</span><span class="p">(</span><span class="n">next</span><span class="p">);</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="c1">// ... session-state bookkeeping</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">}</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kd">static</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">dynamic</span><span class="o">&gt;?</span><span class="w"> </span><span class="n">_aguiStateOf</span><span class="p">(</span><span class="n">RunState</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">      </span><span class="n">IdleState</span><span class="p">()</span><span class="w">                             </span><span class="o">=&gt;</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="n">RunningState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">      </span><span class="n">ToolYieldingState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">      </span><span class="n">CompletedState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">      </span><span class="n">FailedState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">        </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="o">?</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">      </span><span class="n">CancelledState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="o">?</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="p">};</span>
+</span></code></pre></div>
+<p>The switch is exhaustive over the sealed <code>RunState</code> hierarchy. Adding a new
+variant forces a compile error here, so the bus-write path stays correct as
+the state machine evolves — correctness is structural, not documentary.</p>
+<p><code>AgentSession.agentState</code> is a direct alias for <code>bus.agentState</code>:</p>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">late</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ReadonlySignal</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">dynamic</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">agentState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bus</span><span class="p">.</span><span class="n">agentState</span><span class="p">;</span>
+</span></code></pre></div>
+<p>This gives widgets a stable per-session signal handle while ensuring they
+see the exact same data as any <code>bus.project(...)</code> consumer.</p>
+<pre class="mermaid"><code>flowchart LR
+    Snap["StateSnapshotEvent / StateDeltaEvent"]
+    Proc["processEvent()"]
+    Conv["Conversation.aguiState"]
+    Run["_runStateSignal"]
+    OnChange["_onStateChange"]
+    Bus[("bus.agentState&lt;br/&gt;signal of Map")]
+    AgentState[".agentState getter&lt;br/&gt;= bus.agentState"]
+    Watch["widget.watch(...)"]
+    Project["bus.project(...)"]
+
+    Snap --&gt; Proc --&gt; Conv --&gt; Run --&gt; OnChange
+    OnChange -- "bus.setAgentState(next)" --&gt; Bus
+    Bus --&gt; AgentState
+    AgentState --&gt; Watch
+    Bus --&gt; Project</code></pre>
+<h3 id="layer-2-transport-statebus-owned-by-threadstate">Layer 2 — Transport: <code>StateBus</code> owned by <code>ThreadState</code></h3>
+<p><code>StateBus</code> is a scope-agnostic reactive document with four operations:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setAgentState(map)</code></td>
+<td>Full snapshot replacement</td>
+</tr>
+<tr>
+<td><code>update(fn)</code></td>
+<td>Delta application (JSON Patch)</td>
+</tr>
+<tr>
+<td><code>project&lt;S&gt;(projection)</code></td>
+<td>Derive a typed <code>ReadonlySignal&lt;S&gt;</code></td>
+</tr>
+<tr>
+<td><code>emit(event)</code></td>
+<td>Write-back path (surface → agent)</td>
+</tr>
+</tbody>
+</table>
+<p>Two invariants are enforced internally:</p>
+<ul>
+<li><strong>Snapshot semantics on read:</strong> <code>agentState</code>'s value is always
+  <code>Map.unmodifiable(...)</code>. Callers cannot mutate what they read, preventing
+  aliasing bugs across projections.</li>
+<li><strong>Identity change on every replacement:</strong> Even structurally equal maps
+  produce a new wrapping identity, so <code>Signal</code> listeners always fire.
+  Equality optimisation is explicitly out of scope; correctness is preferred
+  over efficiency until profiling proves otherwise.</li>
+</ul>
+<p>Each bus lives inside a <code>ThreadState</code>, which is owned by <code>AgentRuntime</code>:</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph CALLERS["External callers"]
+        UI["UI 'new thread' button"]
+        History["Thread history fetch"]
+        Session["spawn() / _captureThreadHistory()"]
+    end
+
+    subgraph RUNTIME["AgentRuntime"]
+        States[("_threadStates&lt;br/&gt;Map of ThreadKey to ThreadState")]
+        Seed["seedThreadState(key, ...)&lt;br/&gt;seedThreadHistory(key, ...)"]
+    end
+
+    subgraph TS["ThreadState (per thread)"]
+        Bus["StateBus bus&lt;br/&gt;(survives session boundary)"]
+        Hist["ThreadHistory? history&lt;br/&gt;(messages + aguiState)"]
+    end
+
+    UI -- "seedThreadState(key, agui)" --&gt; Seed
+    History -- "seedThreadHistory(key, hist)" --&gt; Seed
+    Session -- "_threadStates[key]?.history" --&gt; States
+    Session -. "captureThreadHistory" .-&gt; States
+
+    Seed --&gt; States
+    States --&gt; Bus
+    States --&gt; Hist</code></pre>
+<p><code>AgentSession</code> accesses its thread's bus through a plain (non-cached) getter:</p>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">StateBus</span><span class="w"> </span><span class="kd">get</span><span class="w"> </span><span class="n">bus</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_runtime</span><span class="p">.</span><span class="n">ensureThreadState</span><span class="p">(</span><span class="n">threadKey</span><span class="p">).</span><span class="n">bus</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Late-evaluated — a session that never reads <code>bus</code> never causes a <code>StateBus</code>
+to be allocated.</p>
+<h3 id="layer-3-consumption-stateprojections">Layer 3 — Consumption: <code>StateProjection&lt;S&gt;</code></h3>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">StateProjection</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="n">S</span><span class="w"> </span><span class="n">project</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">dynamic</span><span class="o">&gt;</span><span class="w"> </span><span class="n">agentState</span><span class="p">);</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>A pure, idempotent transform. Projections must be tolerant: malformed or
+partial state (common during streaming) must produce a sensible empty or null
+value, never throw. The bus owns derived signals returned by <code>project&lt;S&gt;</code>;
+callers must not dispose them manually.</p>
+<hr />
+<h2 id="3-key-design-decisions">3. Key Design Decisions</h2>
+<h3 id="31-threadkey-over-bare-threadid">3.1 <code>ThreadKey</code> over bare <code>threadId</code></h3>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// Before — bare String key</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">final</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadHistory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_threadHistories</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">// After — full record key</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kd">final</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">ThreadKey</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_threadStates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+</span></code></pre></div>
+<p><code>ThreadKey</code> is the existing typedef record
+<code>(String serverId, String roomId, String threadId)</code>. Dart's record
+value-equality makes it a valid <code>Map</code> key out of the box. This closes the
+latent multi-room collision bug (two rooms issuing the same <code>threadId</code> no
+longer collide) and provides a future-safe foundation for multi-server and
+multi-room runtimes.</p>
+<h3 id="32-immutable-threadstate-with-a-mutable-bus">3.2 <code>@immutable ThreadState</code> with a mutable <code>bus</code></h3>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nd">@immutable</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kd">class</span><span class="w"> </span><span class="nc">ThreadState</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="n">ThreadState</span><span class="p">({</span><span class="n">StateBus</span><span class="o">?</span><span class="w"> </span><span class="n">bus</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">history</span><span class="p">})</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">bus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bus</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="n">StateBus</span><span class="p">();</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">StateBus</span><span class="w"> </span><span class="n">bus</span><span class="p">;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">ThreadHistory</span><span class="o">?</span><span class="w"> </span><span class="n">history</span><span class="p">;</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="n">ThreadState</span><span class="w"> </span><span class="n">withHistory</span><span class="p">(</span><span class="n">ThreadHistory</span><span class="o">?</span><span class="w"> </span><span class="n">next</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="n">ThreadState</span><span class="p">(</span><span class="nl">bus:</span><span class="w"> </span><span class="n">bus</span><span class="p">,</span><span class="w"> </span><span class="nl">history:</span><span class="w"> </span><span class="n">next</span><span class="p">);</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">dispose</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">bus</span><span class="p">.</span><span class="n">dispose</span><span class="p">();</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The container is value-typed; the bus inside it is mutable. <code>withHistory</code>
+returns a new container with updated history while <strong>preserving the same
+<code>bus</code> instance</strong>. This is a load-bearing invariant: any code path that
+constructed a fresh <code>ThreadState</code> for an existing key would silently destroy
+all live signal subscriptions. The <code>@immutable</code> annotation and
+<code>withHistory</code> pattern make the safe update path the only obvious one.</p>
+<h3 id="33-ensurethreadstate-vs-threadstateof">3.3 <code>ensureThreadState</code> vs <code>threadStateOf</code></h3>
+<p>Two public accessors with deliberately separated semantics:</p>
+<table>
+<thead>
+<tr>
+<th>Accessor</th>
+<th>Semantics</th>
+<th>Caller</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ensureThreadState(key)</code></td>
+<td>Create-on-demand; never returns null</td>
+<td><code>AgentSession.bus</code></td>
+</tr>
+<tr>
+<td><code>threadStateOf(key)</code></td>
+<td>Read-only; returns null if unregistered</td>
+<td>External consumers</td>
+</tr>
+</tbody>
+</table>
+<p><code>threadStateOf</code> returning null is the liveness check — it means the thread
+has not been registered or has been disposed. Callers must treat that as a
+terminal condition.</p>
+<h3 id="34-no-global-registry">3.4 No global registry</h3>
+<p><code>StateBus</code> has no <code>all</code> static list, no <code>BusRegistry</code>, and no app-wide
+observable of active buses. This was a deliberate rejection, not an
+oversight.</p>
+<p>A global registry introduces two failure modes that are difficult to reason
+about in a GC language:</p>
+<ul>
+<li><strong>Lifetime coupling:</strong> A registry must either retain disposed buses (memory
+  leak) or require each bus to deregister on disposal (cross-ownership cleanup
+  that races against the owning scope's teardown).</li>
+<li><strong>Implicit dependency surface:</strong> A <code>BusRegistry.all</code> observable invites
+  consumers to subscribe to "every bus, any change" — a dependency that is
+  invisible in the type system and impossible to trace statically.</li>
+</ul>
+<p>Debug introspection — the only legitimate use case for a flat list — is a
+separate concern. A diagnostic tool that walks ownership at a point in time is
+the correct solution; it should not be a runtime cost paid by every bus in
+production.</p>
+<h3 id="35-ownership-based-discovery">3.5 Ownership-based discovery</h3>
+<p>Discovery follows ownership. The rule is:</p>
+<blockquote>
+<p>To find a bus, walk to its owner. To find a thread's bus, call
+<code>runtime.threadStateOf(key)?.bus</code>. Do not search; navigate.</p>
+</blockquote>
+<p>This policy is the contractual substitute for RAII. Because Dart cannot
+enforce "the bus dies when its owner dies" at the language level, the design
+makes ownership explicit and observable:</p>
+<table>
+<thead>
+<tr>
+<th>Bus scope</th>
+<th>Owner</th>
+<th>Discovery path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App</td>
+<td>Shell</td>
+<td><code>shell.appBus</code></td>
+</tr>
+<tr>
+<td>Server</td>
+<td><code>AgentRuntime</code></td>
+<td><code>runtime.serverBus[serverId]</code></td>
+</tr>
+<tr>
+<td>Room</td>
+<td>Per-room view state</td>
+<td><code>runtime.roomStateOf(key)?.bus</code></td>
+</tr>
+<tr>
+<td>Thread</td>
+<td><code>AgentRuntime</code> via <code>ThreadState</code></td>
+<td><code>runtime.threadStateOf(key)?.bus</code></td>
+</tr>
+</tbody>
+</table>
+<p>Code that holds a <code>StateBus</code> reference obtained via a direct constructor call
+— rather than via ownership navigation — is in violation of this policy and
+should be treated as a defect in review.</p>
+<h3 id="36-runtime-owned-disposal-cascade">3.6 Runtime-owned disposal cascade</h3>
+<p><code>AgentRuntime.dispose()</code> is the single trigger for the full cleanup cascade:</p>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">_threadStates</span><span class="p">.</span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="n">state</span><span class="p">.</span><span class="n">dispose</span><span class="p">();</span><span class="w"> </span><span class="c1">// → bus.dispose()</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="p">}</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">_threadStates</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+</span></code></pre></div>
+<p><code>bus.dispose()</code> is idempotent. No surface, projection, or widget should call
+it directly. The invariant: <strong>the entity that constructed the bus is the
+entity that disposes it</strong> — and that entity is always <code>AgentRuntime</code>.</p>
+<h3 id="37-exhaustive-state-mapping">3.7 Exhaustive state mapping</h3>
+<p>The <code>_aguiStateOf</code> switch in <code>AgentSession._onStateChange</code> is over a sealed
+class. Adding a new <code>RunState</code> variant forces a compile error here, ensuring
+the bus-write path handles every variant. Correctness is enforced
+structurally, not by convention.</p>
+<hr />
+<h2 id="4-consequences-and-caveats">4. Consequences and Caveats</h2>
+<h3 id="41-lifecycle-is-runtime-owned">4.1 Lifecycle is runtime-owned</h3>
+<p>The bus lifecycle is not managed by an abstract "host" — it is fully owned
+by <code>AgentRuntime</code> through the <code>ThreadState</code> container. No caller outside
+the runtime is responsible for bus disposal.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Runtime as AgentRuntime
+    participant TS as ThreadState
+    participant Bus as StateBus
+    participant Session as AgentSession
+    participant Surf as Surface / Widget
+
+    Runtime-&gt;&gt;TS: new ThreadState() [via seedThreadState or ensureThreadState]
+    TS-&gt;&gt;Bus: new StateBus()
+
+    Note over Runtime,Bus: thread becomes active
+    Runtime-&gt;&gt;Session: spawn(key, ...)
+    Session-&gt;&gt;Bus: bus.setAgentState(next) [via _onStateChange]
+    Bus--&gt;&gt;Surf: signal updates, widget rebuilds
+
+    Note over Surf: user interacts
+    Surf-&gt;&gt;Bus: emit(SurfaceEvent)
+    Bus--&gt;&gt;Runtime: events stream
+    Runtime-&gt;&gt;Runtime: forward to agent
+
+    Note over Runtime,Bus: runtime tears down
+    Runtime-&gt;&gt;TS: state.dispose()
+    TS-&gt;&gt;Bus: bus.dispose()
+    Bus--&gt;&gt;Surf: derived signals stop firing</code></pre>
+<p>The contract reduces to: <strong>do not call <code>bus.dispose()</code> from session,
+surface, projection, or widget code.</strong></p>
+<h3 id="42-agentstate-is-bound-once-bus-resolves-on-every-access">4.2 <code>agentState</code> is bound once; <code>bus</code> resolves on every access</h3>
+<p><code>agentState</code> is <code>late final</code> — bound to <code>bus.agentState</code> on first access
+and never re-evaluated. <code>bus</code> is a plain getter — it resolves through
+<code>_runtime.ensureThreadState(threadKey).bus</code> on every call.</p>
+<p>In production this is safe because <code>ThreadState.withHistory</code> always preserves
+the same <code>bus</code> instance — the runtime never replaces a <code>ThreadState</code> with a
+fresh one for an existing key. But the safety is contractual, not mechanical.
+A future code path that constructed a new <code>ThreadState</code> for an existing key
+would silently strand <code>agentState</code> on a disposed bus while <code>_onStateChange</code>
+writes into the new one, with no compile-time or runtime error at the point
+of the mistake.</p>
+<h3 id="43-cross-scope-projection-composition-opt-in-risk">4.3 Cross-scope projection composition (opt-in risk)</h3>
+<p>The architecture explicitly supports projections that compose state from
+multiple buses at different scopes (e.g., a summary widget that reads the
+server-bus thread list and the active thread-bus's last message). This
+capability is opt-in and carries a non-trivial risk:</p>
+<ul>
+<li>Each composed bus has an independent owner and lifetime. A projection that
+  holds references to two buses may observe one disposed and one active.</li>
+<li>Projections must defensively handle the case where a composed bus has been
+  disposed. The <code>null</code>-returning pattern for missing state is the correct
+  model.</li>
+</ul>
+<p>Cross-scope composition bypasses the standard isolation boundary. Treat it as
+an advanced capability requiring explicit justification in code review.</p>
+<h3 id="44-stale-references-without-raii">4.4 Stale references without RAII</h3>
+<p>Because Dart provides no deterministic destruction, there is no language
+guarantee that a <code>StateBus</code> reference becomes unreachable the moment its owner
+is torn down. Code that obtains a bus reference through a mechanism other than
+ownership navigation (e.g., captured in a closure, stored in a widget's
+<code>State</code>) must verify liveness before use:</p>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// Prefer: navigate ownership each time</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kd">final</span><span class="w"> </span><span class="n">bus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runtime</span><span class="p">.</span><span class="n">threadStateOf</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="n">bus</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bus</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="c1">// owner gone</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">// Avoid: long-lived capture of a bus reference</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="kd">final</span><span class="w"> </span><span class="n">_bus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">widget</span><span class="p">.</span><span class="n">bus</span><span class="p">;</span><span class="w"> </span><span class="c1">// may be disposed when widget rebuilds</span>
+</span></code></pre></div>
+<p>The <code>?.bus</code> navigation pattern is not merely ergonomic — it is the liveness
+check. A null return from ownership navigation means the thread has been
+torn down; callers must treat that as a terminal condition, not a transient
+error.</p>
+<hr />
+<h2 id="5-alternatives-considered">5. Alternatives Considered</h2>
+<h3 id="51-global-event-bus">5.1 Global event bus</h3>
+<p>A single app-wide <code>StreamController&lt;AgentStateEvent&gt;</code> that all surfaces
+subscribe to. Rejected because:</p>
+<ul>
+<li>Lifetime is unbounded — subscribers from a closed thread continue to
+  receive events from all other threads until manually unsubscribed.</li>
+<li>The event stream carries no scope identity by default, requiring every
+  subscriber to filter by thread key — a filtering step each implementor
+  would write differently.</li>
+<li>Disposal becomes a coordination problem: who closes the stream, and when?</li>
+</ul>
+<h3 id="52-central-bus-registry-statebusall">5.2 Central bus registry (<code>StateBus.all</code>)</h3>
+<p>A static <code>Map&lt;ScopeKey, StateBus&gt;</code> maintained by the framework. Rejected
+for the reasons in §3.4: lifetime coupling and implicit dependency surface.
+The registry either leaks disposed buses or requires cross-ownership cleanup
+that races. Neither failure mode is acceptable in a multi-thread UI.</p>
+<h3 id="53-riverpod-asyncnotifier-futureprovider-chains">5.3 Riverpod <code>AsyncNotifier</code> / <code>FutureProvider</code> chains</h3>
+<p>Riverpod is used in this codebase as a DI/service locator only — no
+<code>AsyncNotifier</code> or <code>FutureProvider</code> chains. Extending Riverpod to own reactive
+state would blur the architectural boundary between DI and reactivity, and
+would couple the state layer to Riverpod's invalidation semantics, which are
+designed for async data fetching rather than streaming patch application.
+<code>signals</code> is the chosen reactivity primitive; <code>StateBus</code> is its
+domain-specific wrapper.</p>
+<h3 id="54-changenotifier-valuenotifier">5.4 <code>ChangeNotifier</code> / <code>ValueNotifier</code></h3>
+<p>Flutter's built-in notifiers are listener-list based and have no notion of
+derived signals or projection composition. They also leak if <code>removeListener</code>
+is not called, which replicates the exact problem the ownership policy is
+designed to prevent. Rejected in favour of the <code>signals</code> package, whose
+computed-signal model supports projection composition natively.</p>
+<hr />
+<h2 id="6-summary">6. Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reactivity primitive</td>
+<td><code>signals</code> computed signal</td>
+</tr>
+<tr>
+<td>State write path</td>
+<td><code>AgentSession._onStateChange</code> → <code>_aguiStateOf</code> → <code>bus.setAgentState</code></td>
+</tr>
+<tr>
+<td>Per-session read path</td>
+<td><code>session.agentState</code> = <code>bus.agentState</code> (direct alias, <code>late final</code>)</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td><code>StateBus</code> (per-thread, owned by <code>ThreadState</code>)</td>
+</tr>
+<tr>
+<td>Container</td>
+<td><code>@immutable ThreadState</code> — value-typed wrapper, mutable bus inside</td>
+</tr>
+<tr>
+<td>Bus owner</td>
+<td><code>AgentRuntime</code> via <code>_threadStates: Map&lt;ThreadKey, ThreadState&gt;</code></td>
+</tr>
+<tr>
+<td>Map key</td>
+<td><code>ThreadKey</code> record <code>(serverId, roomId, threadId)</code> — value-equality safe</td>
+</tr>
+<tr>
+<td>Projection</td>
+<td><code>StateProjection&lt;S&gt;</code> (pure, tolerant, idempotent)</td>
+</tr>
+<tr>
+<td>Discovery policy</td>
+<td>Ownership navigation; <code>runtime.threadStateOf(key)?.bus</code></td>
+</tr>
+<tr>
+<td>Disposal contract</td>
+<td><code>AgentRuntime.dispose()</code> cascades → <code>ThreadState.dispose()</code> → <code>bus.dispose()</code></td>
+</tr>
+<tr>
+<td>State correctness guarantee</td>
+<td>Exhaustive sealed-class switch in <code>_aguiStateOf</code> feeds bus on every transition</td>
+</tr>
+<tr>
+<td>Cross-scope composition</td>
+<td>Opt-in; caller accepts dual-lifetime risk</td>
+</tr>
+<tr>
+<td>RAII substitute</td>
+<td>Ownership-based discovery + <code>@immutable ThreadState.withHistory</code> invariant</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../send-cancel-lifecycle/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Send Cancel Lifecycle">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Send Cancel Lifecycle
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../plans/0001-app-shell/proposal/" class="md-footer__link md-footer__link--next" aria-label="Next: 0001 App Shell">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                0001 App Shell
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.instant.progress","navigation.path","navigation.tabs","navigation.tabs.sticky","navigation.top","navigation.tracking","search.highlight","search.share","search.suggest","toc.follow"],"search":"../../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6e5f0216.min.js"></script>
+      
+    
+  </body>
+</html>

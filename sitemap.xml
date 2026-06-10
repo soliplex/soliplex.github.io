@@ -139,25 +139,13 @@
         <loc>https://soliplex.github.io/chatbot/usage/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/frontend/agent-runtime-thread-state/</loc>
-      </url>
-      <url>
-        <loc>https://soliplex.github.io/frontend/agent-session-agent-state/</loc>
-      </url>
-      <url>
-        <loc>https://soliplex.github.io/frontend/agent-session-bus-route/</loc>
-      </url>
-      <url>
-        <loc>https://soliplex.github.io/frontend/agent-state-as-bus-view/</loc>
-      </url>
-      <url>
         <loc>https://soliplex.github.io/frontend/developer-setup/</loc>
       </url>
       <url>
         <loc>https://soliplex.github.io/frontend/send-cancel-lifecycle/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/frontend/state-bus/</loc>
+        <loc>https://soliplex.github.io/frontend/adr/ADR-001-reactive-state-management-scoped-statebus/</loc>
       </url>
       <url>
         <loc>https://soliplex.github.io/frontend/plans/0001-app-shell/proposal/</loc>
