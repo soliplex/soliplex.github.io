@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://soliplex.github.io/frontend/adr/ADR-001-reactive-state-management-scoped-statebus/">
+        <link rel="canonical" href="https://soliplex.github.io/frontend/adr/ADR-002-customizable-brand-theme/">
       
       
-        <link rel="prev" href="../../send-cancel-lifecycle/">
+        <link rel="prev" href="../ADR-001-reactive-state-management-scoped-statebus/">
       
       
-        <link rel="next" href="../ADR-002-customizable-brand-theme/">
+        <link rel="next" href="../../plans/0001-app-shell/proposal/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>ADR-001: Reactive State Management via Scoped StateBus and Ownership-Based Discovery - Soliplex</title>
+        <title>ADR-002: Customizable BrandTheme via a Façade and a Lowering Buffer - Soliplex</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#adr-001-reactive-state-management-via-scoped-statebus-and-ownership-based-discovery" class="md-skip">
+        <a href="#adr-002-customizable-brandtheme-via-a-facade-and-a-lowering-buffer" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADR-001: Reactive State Management via Scoped StateBus and Ownership-Based Discovery
+              ADR-002: Customizable BrandTheme via a Façade and a Lowering Buffer
             
           </span>
         </div>
@@ -2373,6 +2373,33 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../ADR-001-reactive-state-management-scoped-statebus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr 001 Reactive State Management Scoped Statebus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2392,7 +2419,7 @@
   <span class="md-ellipsis">
     
   
-  Adr 001 Reactive State Management Scoped Statebus
+  Adr 002 Customizable Brand Theme
 
     
   </span>
@@ -2409,7 +2436,7 @@
   <span class="md-ellipsis">
     
   
-  Adr 001 Reactive State Management Scoped Statebus
+  Adr 002 Customizable Brand Theme
 
     
   </span>
@@ -2435,6 +2462,78 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#design-brief-what-a-brand-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Design Brief — what a brand controls
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design Brief — what a brand controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-brand-can-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What a brand can control
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-stays-fixed-and-why" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What stays fixed (and why)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessibility-is-built-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Accessibility is built in
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#illustration-a-single-brand-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Illustration: a single brand color
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-need-from-a-brand-handoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What we need from a brand handoff
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-context-and-problem-statement" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2443,14 +2542,36 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. Context and Problem Statement">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. Decision
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-decisions-by-axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. The Decisions, by Axis
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The Decisions, by Axis">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#the-surface-proliferation-problem" class="md-nav__link">
+  <a href="#31-identity-is-split-from-theme" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        The surface proliferation problem
+        3.1 Identity is split from theme
       </span>
     </span>
   </a>
@@ -2458,10 +2579,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#the-reactivity-gap-in-the-existing-pipeline" class="md-nav__link">
+  <a href="#32-a-constructor-ladder-cheapest-first" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        The reactivity gap in the existing pipeline
+        3.2 A constructor ladder, cheapest-first
       </span>
     </span>
   </a>
@@ -2469,10 +2590,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#no-per-thread-bus-slot-and-a-latent-key-collision-bug" class="md-nav__link">
+  <a href="#33-color-a-semantic-role-set-not-the-flat-palette" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        No per-thread bus slot, and a latent key-collision bug
+        3.3 Color: a semantic role set, not the flat palette
       </span>
     </span>
   </a>
@@ -2480,10 +2601,98 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#lifecycle-management-without-raii" class="md-nav__link">
+  <a href="#34-status-color-moves-to-a-token-backed-buildcontext-extension" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Lifecycle management without RAII
+        3.4 Status color moves to a token-backed <code>BuildContext</code> extension
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-radii-route-through-the-active-theme" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 Radii route through the active theme
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-typography-three-families-primitive-deltas-no-per-role-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.6 Typography: three families, primitive deltas, no per-role family
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-fonts-resolve-through-an-injected-seam" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.7 Fonts resolve through an injected seam
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#38-the-default-is-frozen-against-token-refactors" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.8 The default is frozen against token refactors
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#39-accessibility-is-checked-at-the-boundary" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.9 Accessibility is checked at the boundary
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#310-the-color-from-tokens-premise-is-enforced-in-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.10 The "color from tokens" premise is enforced in CI
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#311-status-intent-colors-are-sourced-per-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.11 Status-intent colors are sourced per component
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-non-goals-deliberately-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.12 Non-goals (deliberately fixed)
       </span>
     </span>
   </a>
@@ -2496,276 +2705,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-proposed-solution-the-reactive-chain" class="md-nav__link">
+  <a href="#4-lowering-semantics-and-edge-cases" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        2. Proposed Solution: The Reactive Chain
+        4. Lowering Semantics and Edge Cases
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="2. Proposed Solution: The Reactive Chain">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#layer-1-source-_onstatechange-bussetagentstate" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Layer 1 — Source: <code>_onStateChange</code> → <code>bus.setAgentState</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#layer-2-transport-statebus-owned-by-threadstate" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Layer 2 — Transport: <code>StateBus</code> owned by <code>ThreadState</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#layer-3-consumption-stateprojections" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Layer 3 — Consumption: <code>StateProjection&lt;S&gt;</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-key-design-decisions" class="md-nav__link">
+  <a href="#5-known-limitations" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        3. Key Design Decisions
+        5. Known Limitations
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="3. Key Design Decisions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-threadkey-over-bare-threadid" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.1 <code>ThreadKey</code> over bare <code>threadId</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32-immutable-threadstate-with-a-mutable-bus" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.2 <code>@immutable ThreadState</code> with a mutable <code>bus</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-ensurethreadstate-vs-threadstateof" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.3 <code>ensureThreadState</code> vs <code>threadStateOf</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34-no-global-registry" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.4 No global registry
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#35-ownership-based-discovery" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.5 Ownership-based discovery
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#36-runtime-owned-disposal-cascade" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.6 Runtime-owned disposal cascade
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#37-exhaustive-state-mapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.7 Exhaustive state mapping
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-consequences-and-caveats" class="md-nav__link">
+  <a href="#6-consequences" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        4. Consequences and Caveats
+        6. Consequences
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="4. Consequences and Caveats">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#41-lifecycle-is-runtime-owned" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        4.1 Lifecycle is runtime-owned
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#42-agentstate-is-bound-once-bus-resolves-on-every-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        4.2 <code>agentState</code> is bound once; <code>bus</code> resolves on every access
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#43-cross-scope-projection-composition-opt-in-risk" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        4.3 Cross-scope projection composition (opt-in risk)
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#44-stale-references-without-raii" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        4.4 Stale references without RAII
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-alternatives-considered" class="md-nav__link">
+  <a href="#7-migration-breaking" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        5. Alternatives Considered
+        7. Migration (BREAKING)
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="5. Alternatives Considered">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#51-global-event-bus" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        5.1 Global event bus
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#52-central-bus-registry-statebusall" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        5.2 Central bus registry (<code>StateBus.all</code>)
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#53-riverpod-asyncnotifier-futureprovider-chains" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        5.3 Riverpod <code>AsyncNotifier</code> / <code>FutureProvider</code> chains
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#54-changenotifier-valuenotifier" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        5.4 <code>ChangeNotifier</code> / <code>ValueNotifier</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-summary" class="md-nav__link">
+  <a href="#8-alternatives-considered" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        6. Summary
+        8. Alternatives Considered
       </span>
     </span>
   </a>
@@ -2776,33 +2763,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ADR-002-customizable-brand-theme/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Adr 002 Customizable Brand Theme
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3205,6 +3165,78 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#design-brief-what-a-brand-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Design Brief — what a brand controls
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design Brief — what a brand controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-brand-can-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What a brand can control
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-stays-fixed-and-why" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What stays fixed (and why)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessibility-is-built-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Accessibility is built in
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#illustration-a-single-brand-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Illustration: a single brand color
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-need-from-a-brand-handoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What we need from a brand handoff
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-context-and-problem-statement" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3213,14 +3245,36 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. Context and Problem Statement">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. Decision
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-decisions-by-axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. The Decisions, by Axis
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The Decisions, by Axis">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#the-surface-proliferation-problem" class="md-nav__link">
+  <a href="#31-identity-is-split-from-theme" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        The surface proliferation problem
+        3.1 Identity is split from theme
       </span>
     </span>
   </a>
@@ -3228,10 +3282,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#the-reactivity-gap-in-the-existing-pipeline" class="md-nav__link">
+  <a href="#32-a-constructor-ladder-cheapest-first" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        The reactivity gap in the existing pipeline
+        3.2 A constructor ladder, cheapest-first
       </span>
     </span>
   </a>
@@ -3239,10 +3293,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#no-per-thread-bus-slot-and-a-latent-key-collision-bug" class="md-nav__link">
+  <a href="#33-color-a-semantic-role-set-not-the-flat-palette" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        No per-thread bus slot, and a latent key-collision bug
+        3.3 Color: a semantic role set, not the flat palette
       </span>
     </span>
   </a>
@@ -3250,10 +3304,98 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#lifecycle-management-without-raii" class="md-nav__link">
+  <a href="#34-status-color-moves-to-a-token-backed-buildcontext-extension" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Lifecycle management without RAII
+        3.4 Status color moves to a token-backed <code>BuildContext</code> extension
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-radii-route-through-the-active-theme" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 Radii route through the active theme
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-typography-three-families-primitive-deltas-no-per-role-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.6 Typography: three families, primitive deltas, no per-role family
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-fonts-resolve-through-an-injected-seam" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.7 Fonts resolve through an injected seam
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#38-the-default-is-frozen-against-token-refactors" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.8 The default is frozen against token refactors
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#39-accessibility-is-checked-at-the-boundary" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.9 Accessibility is checked at the boundary
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#310-the-color-from-tokens-premise-is-enforced-in-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.10 The "color from tokens" premise is enforced in CI
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#311-status-intent-colors-are-sourced-per-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.11 Status-intent colors are sourced per component
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-non-goals-deliberately-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.12 Non-goals (deliberately fixed)
       </span>
     </span>
   </a>
@@ -3266,276 +3408,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-proposed-solution-the-reactive-chain" class="md-nav__link">
+  <a href="#4-lowering-semantics-and-edge-cases" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        2. Proposed Solution: The Reactive Chain
+        4. Lowering Semantics and Edge Cases
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="2. Proposed Solution: The Reactive Chain">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#layer-1-source-_onstatechange-bussetagentstate" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Layer 1 — Source: <code>_onStateChange</code> → <code>bus.setAgentState</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#layer-2-transport-statebus-owned-by-threadstate" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Layer 2 — Transport: <code>StateBus</code> owned by <code>ThreadState</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#layer-3-consumption-stateprojections" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Layer 3 — Consumption: <code>StateProjection&lt;S&gt;</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-key-design-decisions" class="md-nav__link">
+  <a href="#5-known-limitations" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        3. Key Design Decisions
+        5. Known Limitations
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="3. Key Design Decisions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-threadkey-over-bare-threadid" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.1 <code>ThreadKey</code> over bare <code>threadId</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32-immutable-threadstate-with-a-mutable-bus" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.2 <code>@immutable ThreadState</code> with a mutable <code>bus</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-ensurethreadstate-vs-threadstateof" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.3 <code>ensureThreadState</code> vs <code>threadStateOf</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34-no-global-registry" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.4 No global registry
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#35-ownership-based-discovery" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.5 Ownership-based discovery
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#36-runtime-owned-disposal-cascade" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.6 Runtime-owned disposal cascade
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#37-exhaustive-state-mapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        3.7 Exhaustive state mapping
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-consequences-and-caveats" class="md-nav__link">
+  <a href="#6-consequences" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        4. Consequences and Caveats
+        6. Consequences
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="4. Consequences and Caveats">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#41-lifecycle-is-runtime-owned" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        4.1 Lifecycle is runtime-owned
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#42-agentstate-is-bound-once-bus-resolves-on-every-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        4.2 <code>agentState</code> is bound once; <code>bus</code> resolves on every access
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#43-cross-scope-projection-composition-opt-in-risk" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        4.3 Cross-scope projection composition (opt-in risk)
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#44-stale-references-without-raii" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        4.4 Stale references without RAII
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-alternatives-considered" class="md-nav__link">
+  <a href="#7-migration-breaking" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        5. Alternatives Considered
+        7. Migration (BREAKING)
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="5. Alternatives Considered">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#51-global-event-bus" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        5.1 Global event bus
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#52-central-bus-registry-statebusall" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        5.2 Central bus registry (<code>StateBus.all</code>)
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#53-riverpod-asyncnotifier-futureprovider-chains" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        5.3 Riverpod <code>AsyncNotifier</code> / <code>FutureProvider</code> chains
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#54-changenotifier-valuenotifier" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        5.4 <code>ChangeNotifier</code> / <code>ValueNotifier</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-summary" class="md-nav__link">
+  <a href="#8-alternatives-considered" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        6. Summary
+        8. Alternatives Considered
       </span>
     </span>
   </a>
@@ -3672,7 +3592,7 @@
     
     
       <li class="md-path__item">
-        <a href="././" class="md-path__link">
+        <a href="../ADR-001-reactive-state-management-scoped-statebus/" class="md-path__link">
           
   
   <span class="md-ellipsis">
@@ -3696,554 +3616,596 @@
   
 
 
-<h1 id="adr-001-reactive-state-management-via-scoped-statebus-and-ownership-based-discovery">ADR-001: Reactive State Management via Scoped StateBus and Ownership-Based Discovery</h1>
+<h1 id="adr-002-customizable-brandtheme-via-a-facade-and-a-lowering-buffer">ADR-002: Customizable BrandTheme via a Façade and a Lowering Buffer</h1>
 <ul>
 <li><strong>Status:</strong> Accepted</li>
-<li><strong>Date:</strong> 2026-04-28</li>
-<li><strong>Authors:</strong> Alan Runyan, William Karol Di Cioccio</li>
+<li><strong>Date:</strong> 2026-06-24</li>
+<li><strong>Authors:</strong> Jaemin Jo</li>
 <li><strong>Supersedes:</strong> —</li>
 <li><strong>Superseded by:</strong> —</li>
 </ul>
 <hr />
+<h2 id="design-brief-what-a-brand-controls">Design Brief — what a brand controls</h2>
+<p><em>A plain-language companion to the engineering sections below: when we
+whitelabel this app for a brand, what can the design actually control, and what
+stays fixed?</em></p>
+<p>A brand defines a small, safe set of choices — colors, fonts, corner roundness,
+logo, and name — and the app builds a complete, accessible light <strong>and</strong> dark
+theme from them. You don't hand-paint every screen; you set the brand's "DNA"
+and the system grows the rest. The fastest path is a <strong>single brand color</strong>:
+hand the system one accent and it produces both light and dark themes. From
+there you specify as much as you want, up to fully hand-picked palettes.</p>
+<h3 id="what-a-brand-can-control">What a brand can control</h3>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>What you set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Identity</strong></td>
+<td>App name, and the logo (a light-mode logo, optionally a separate dark-mode one).</td>
+</tr>
+<tr>
+<td><strong>Color</strong></td>
+<td>A core palette: the main brand color, a secondary, page background, text, a muted/subtle surface and its (muted) text, and borders. You set these <strong>separately for light and dark mode</strong>.</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>The four status <em>signal</em> colors (danger / success / warning / info), the error / destructive red (delete buttons, error borders), and all four soft banner surfaces (error / success / warning / info).</td>
+</tr>
+<tr>
+<td><strong>Links</strong></td>
+<td>The hyperlink color.</td>
+</tr>
+<tr>
+<td><strong>Type</strong></td>
+<td>Up to three typefaces: one for body text, one for headings/display, one for code. Plus fine adjustments (size, weight, spacing) on individual text styles.</td>
+</tr>
+<tr>
+<td><strong>Shape</strong></td>
+<td>How rounded corners are — from fully rounded down to fully square — across four size steps.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-stays-fixed-and-why">What stays fixed (and why)</h3>
+<table>
+<thead>
+<tr>
+<th>Fixed thing</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Spacing &amp; layout rhythm</strong></td>
+<td>The gaps, padding, and breakpoints are a structural grid, not brand expression. Letting them drift would break layouts at different screen sizes.</td>
+</tr>
+<tr>
+<td><strong>Neutral surface shades</strong> (cards, panels, input backgrounds, selected-row tints)</td>
+<td>These neutral surfaces <em>host</em> your colored content. If we tinted them with the brand color too, your content would stop reading cleanly against them. They stay neutral on purpose. (The status <em>banner</em> surfaces — error / success / warning / info — are an exception: those carry meaning, so you can brand them.)</td>
+</tr>
+<tr>
+<td><strong>Per-element fonts and per-element colors</strong></td>
+<td>You pick <em>body / heading / code</em> typefaces — the body font also covers labels and buttons, so they can't take a face different from body. (You <em>can</em> still make labels/buttons larger, heavier, or more spaced per style.) That's a deliberate simplification, not a platform limit. Text color always comes from the palette, never baked into a text style — otherwise text wouldn't flip correctly between light and dark mode.</td>
+</tr>
+</tbody>
+</table>
+<p>Rule of thumb: <strong>you control the brand's voice (color, type, shape, logo); the
+system owns the spatial structure and the neutral scaffolding that keeps your
+content legible.</strong></p>
+<h3 id="accessibility-is-built-in">Accessibility is built in</h3>
+<ul>
+<li>Whenever the brand doesn't specify a text-on-color (e.g. the label color on a
+  button), the system fills in a <strong>soft near-black or near-white</strong> (whichever is
+  more readable, easier on the eyes than pure black/white), clearing the standard
+  <strong>4.5:1</strong> ratio by construction. A brand can optionally tint these toward its
+  own hue (§3.9).</li>
+<li>Light and dark are first-class. You design both; neither is an
+  afterthought-inversion of the other.</li>
+</ul>
+<p>When you leave a text-on-color unset, the system fills a soft near-black or
+near-white (clearing 4.5:1) for these surfaces:</p>
+<table>
+<thead>
+<tr>
+<th>Surface you set</th>
+<th>Text color it fills in</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>primary</td>
+<td>onPrimary</td>
+<td>the label on a filled button</td>
+</tr>
+<tr>
+<td>secondary</td>
+<td>onSecondary</td>
+<td>text on a secondary surface</td>
+</tr>
+<tr>
+<td>tertiary</td>
+<td>onTertiary</td>
+<td>text / icon on a tertiary chip</td>
+</tr>
+<tr>
+<td>error</td>
+<td>onError</td>
+<td>the label on a destructive button</td>
+</tr>
+<tr>
+<td>errorContainer</td>
+<td>onErrorContainer</td>
+<td>text in an error banner</td>
+</tr>
+<tr>
+<td>successContainer</td>
+<td>onSuccessContainer</td>
+<td>text in a success banner</td>
+</tr>
+<tr>
+<td>warningContainer</td>
+<td>onWarningContainer</td>
+<td>text in a warning banner</td>
+</tr>
+<tr>
+<td>infoContainer</td>
+<td>onInfoContainer</td>
+<td>text in an info banner</td>
+</tr>
+</tbody>
+</table>
+<p>(Set any of these text colors yourself and your choice is used as-is instead.)
+For the colors you set <strong>by hand</strong>, a pair below 4.5:1 (or below 3:1 for muted,
+de-emphasized text) is <strong>logged as a warning, not blocked</strong> — your color is
+still used, so you own the final call. The warning does not cover the status
+<em>signal</em> colors (danger / success / warning / info); see §5.2 for why.</p>
+<h3 id="illustration-a-single-brand-color">Illustration: a single brand color</h3>
+<p><em>(A brand supplying </em><em>one</em><em> custom color — not the Soliplex default, which
+reproduces the full Soliplex look with nothing to set.)</em></p>
+<p>A new brand gives the system a single deep-blue color, and nothing else.</p>
+<p><strong>What you get automatically:</strong> deep-blue buttons with readable (white) labels,
+in both light and dark mode; a full type scale in the default font; rounded
+corners; your logo placed correctly, with a soft glow behind a light logo when
+it lands on a dark background.</p>
+<p><strong>What you'd still see as Soliplex defaults:</strong> card and panel shades, the link
+color, and the destructive-action red — because this brand set <em>only</em> one color.
+The difference: the card/panel shades <strong>can't</strong> be rebranded (they're neutral by
+design), whereas the link and the destructive red <strong>can</strong> — this brand just
+didn't set them.</p>
+<h3 id="what-we-need-from-a-brand-handoff">What we need from a brand handoff</h3>
+<ul>
+<li>App name + logo (light, and ideally a dark variant).</li>
+<li>Light-mode and dark-mode values for: primary, secondary, background, text,
+  muted surface + its text, border. Optionally: the four status colors, a third
+  accent, the link color, the error/destructive red, and the four status banner
+  shades.</li>
+<li>Body / heading / code typefaces (and the font files, if not system fonts).</li>
+<li>Desired corner style (rounded → square).</li>
+</ul>
+<p>Everything else, the system fills in. The trade-offs to know before adopting are
+in §5 (Known Limitations); the deep decision record follows below.</p>
+<hr />
 <h2 id="1-context-and-problem-statement">1. Context and Problem Statement</h2>
-<h3 id="the-surface-proliferation-problem">The surface proliferation problem</h3>
-<p>Soliplex streams structured agent state to the client as a live JSON document.
-As GenUI surfaces multiply — maps, narration panels, HUDs, interactive
-widgets — each surface needs a reactive, typed slice of that document. Without
-a shared contract, each view independently subscribes to the raw AG-UI event
-stream, re-parses the state, and manages its own lifecycle. The resulting
-duplication is not merely redundant: it distributes the risk of subscription
-leaks and mismatched parse logic across every surface implementor.</p>
-<h3 id="the-reactivity-gap-in-the-existing-pipeline">The reactivity gap in the existing pipeline</h3>
-<p><code>processEvent()</code> in <code>soliplex_client</code> already applies <code>StateSnapshotEvent</code>
-(full replacement) and <code>StateDeltaEvent</code> (RFC 6902 JSON Patch) into
-<code>Conversation.aguiState</code>. However, <code>Conversation.aguiState</code> was a plain
-<code>Map&lt;String, dynamic&gt;</code> field — a value, not an observable. View layers had
-no standard mechanism to watch it for changes. The only production read of
-the field happened at run quiescence (citation extraction), which is a
-pull-at-boundary pattern, not a reactive one.</p>
-<p>Any surface that wanted live updates had to subscribe to <code>_runStateSignal</code>
-directly, pattern-match the sealed <code>RunState</code> hierarchy, and extract
-<code>aguiState</code> manually — per-variant boilerplate that each implementor wrote
-differently.</p>
-<h3 id="no-per-thread-bus-slot-and-a-latent-key-collision-bug">No per-thread bus slot, and a latent key-collision bug</h3>
-<p>Beyond the reactivity gap, the prior <code>_threadHistories: Map&lt;String, ThreadHistory&gt;</code>
-cache in <code>AgentRuntime</code> had two problems:</p>
+<p><code>soliplex_frontend</code> is both a runnable app and a library that whitelabel forks
+import. Forks need to restyle the app — colors, fonts, corner radii, logo, app
+name — without forking the design system itself.</p>
+<p>Before this change there was no customization contract. A fork's only lever was
+<code>SoliplexBranding(accentLight, accentDark, …)</code>, which conflated two unrelated
+concerns (who the app <em>is</em> vs. how it <em>looks</em>) and exposed a single accent. Three
+structural problems blocked anything richer:</p>
 <ol>
-<li><strong>Wrong key type:</strong> The cache was keyed by bare <code>threadId</code> (a <code>String</code>). In
-   a multi-room runtime, two rooms could issue the same <code>threadId</code> and the
-   entries would collide silently. Today <code>AgentRuntime</code> is per-server so the
-   bug is masked, but the typing provided no enforcement.</li>
-<li><strong>No slot for a per-thread bus:</strong> The <code>StateBus</code> design requires a bus that
-   survives session boundaries within a thread's lifetime. A plain
-   <code>ThreadHistory</code> value had no field for it.</li>
+<li><strong>No stable customization surface.</strong> The only styling primitives were the
+   internal <code>SoliplexColors</code> (a flat 41-slot palette) and the <code>ThemeData</code>
+   factories. Exposing those directly would weld every fork to internal token
+   names, so the design system could never refactor them.</li>
+<li><strong>Status color was hardcoded.</strong> <code>SymbolicColors</code> returned
+   <code>Colors.red/green/orange/blue</code> from an extension on <code>ColorScheme</code>, which has
+   no path back to the token system — so a brand could not recolor status.</li>
+<li><strong>Some style escaped the theme.</strong> App widgets read the global <code>soliplexRadii</code>
+   constant and a platform monospace string directly, so a brand override would
+   silently miss those call sites.</li>
 </ol>
-<h3 id="lifecycle-management-without-raii">Lifecycle management without RAII</h3>
-<p>Dart is a garbage-collected language with no deterministic destructors. There
-is no language-level analogue to C++'s RAII or Swift's <code>deinit</code> that fires
-the moment a scope exits. This creates a structural risk for reactive
-systems: subscriptions and derived signals outlive their intended scope unless
-explicitly torn down.</p>
-<p>In a multi-surface, multi-thread application where buses are created and
-destroyed as threads open and close, the two failure modes are symmetric:</p>
-<ul>
-<li><strong>Too early:</strong> A surface reads a bus that has been disposed; it observes
-  stale or empty state, or receives an exception on signal access.</li>
-<li><strong>Too late:</strong> A bus that should have been disposed is retained by a
-  lingering projection or subscriber; listeners continue to fire, and heap
-  pressure accumulates silently.</li>
-</ul>
-<p>Because the language provides no mechanistic guarantee, the design must
-establish a contractual one.</p>
+<p><strong>The core question:</strong> how does a fork express a brand without (a) touching
+internal tokens, (b) reformatting JSON, or (c) silently shipping an inaccessible
+or off-brand result?</p>
 <hr />
-<h2 id="2-proposed-solution-the-reactive-chain">2. Proposed Solution: The Reactive Chain</h2>
-<p>The solution is a three-layer reactive chain with clear ownership at each
-level. Together the layers carry agent state from the server event stream
-to a typed Flutter widget rebuild.</p>
-<pre class="mermaid"><code>flowchart LR
-    subgraph AGUI["AG-UI events (server → client) — peer event types"]
-        Snap[StateSnapshotEvent]
-        Delta[StateDeltaEvent]
-        Act[ActivitySnapshot]
-    end
-
-    subgraph BUS["StateBus (per-thread, owned by AgentRuntime)"]
-        AgentState[("agentState&lt;br/&gt;Signal of Map")]
-    end
-
-    subgraph EXISTING["Existing paths (unchanged)"]
-        Conv["Conversation.activities&lt;br/&gt;+ ExecutionTracker"]
-    end
-
-    subgraph PROJ["Projections (typed views)"]
-        P1[MarkersProjection]
-        P2[NarrationProjection]
-        P3[CustomProjection]
-    end
-
-    subgraph TGT["Surfaces (Surface of S impls)"]
-        T1["MapExtension&lt;br/&gt;Surface of MapState"]
-        T2["NarrationController&lt;br/&gt;Surface of List of Narration"]
-        T3["Custom controller&lt;br/&gt;Surface of S"]
-    end
-
-    subgraph WID["Widgets (watch Surface.state)"]
-        W1[MapView]
-        W2[NarrationPanel]
-        W3[Custom widget]
-    end
-
-    Runtime[AgentRuntime]
-
-    Snap -- "setAgentState(...)" --&gt; AgentState
-    Delta -- "update(applyJsonPatch)" --&gt; AgentState
-    Act -- "consumed today" --&gt; Conv
-
-    AgentState -- "project(...)" --&gt; P1
-    AgentState -- "project(...)" --&gt; P2
-    AgentState -- "project(...)" --&gt; P3
-
-    P1 -- "forwards into Surface.state" --&gt; T1
-    P2 -- "forwards into Surface.state" --&gt; T2
-    P3 -- "forwards into Surface.state" --&gt; T3
-
-    T1 -- "watch Surface.state" --&gt; W1
-    T2 -- "watch Surface.state" --&gt; W2
-    T3 -- "watch Surface.state" --&gt; W3
-
-    W3 -. "Surface.emit(SurfaceEvent)" .-&gt; AgentState
-    AgentState -. "events stream" .-&gt; Runtime
-    Runtime -. "forward to agent" .-&gt; Snap</code></pre>
-<h3 id="layer-1-source-_onstatechange-bussetagentstate">Layer 1 — Source: <code>_onStateChange</code> → <code>bus.setAgentState</code></h3>
-<p><code>AgentSession._onStateChange</code> is called on every <code>RunState</code> transition. It
-extracts the <code>aguiState</code> map via an exhaustive switch over the sealed
-<code>RunState</code> hierarchy and writes it into the per-thread bus:</p>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="n">_onStateChange</span><span class="p">(</span><span class="n">RunState</span><span class="w"> </span><span class="n">runState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_disposed</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="n">_runStateSignal</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runState</span><span class="p">;</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_aguiStateOf</span><span class="p">(</span><span class="n">runState</span><span class="p">);</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">bus</span><span class="p">.</span><span class="n">setAgentState</span><span class="p">(</span><span class="n">next</span><span class="p">);</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="c1">// ... session-state bookkeeping</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">}</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kd">static</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">dynamic</span><span class="o">&gt;?</span><span class="w"> </span><span class="n">_aguiStateOf</span><span class="p">(</span><span class="n">RunState</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">      </span><span class="n">IdleState</span><span class="p">()</span><span class="w">                             </span><span class="o">=&gt;</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="n">RunningState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">      </span><span class="n">ToolYieldingState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">      </span><span class="n">CompletedState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">      </span><span class="n">FailedState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">        </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="o">?</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">      </span><span class="n">CancelledState</span><span class="p">(</span><span class="o">:</span><span class="kd">final</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">conversation</span><span class="o">?</span><span class="p">.</span><span class="n">aguiState</span><span class="p">,</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="p">};</span>
+<h2 id="2-decision">2. Decision</h2>
+<p>Introduce a <strong>public, frozen façade</strong> (<code>BrandTheme</code>) made of plain Flutter types,
+and map it onto the internal token system through a single private <strong>lowering
+buffer</strong> (<code>lowerBrandTheme</code>). The façade is the only thing forks depend on; the
+41-slot palette stays private and free to evolve behind the buffer.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  Fork code
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>     │  BrandTheme (+ AppIdentity, FontResolver)   ← public, frozen contract
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>     ▼
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  lowerBrandTheme(theme, brightness)               ← the buffer (private mapping)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>     │  SoliplexColors (41 slots) + TextTheme + SoliplexRadii
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>     ▼
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  ThemeData + SoliplexTheme extension              ← internal, free to evolve
 </span></code></pre></div>
-<p>The switch is exhaustive over the sealed <code>RunState</code> hierarchy. Adding a new
-variant forces a compile error here, so the bus-write path stays correct as
-the state machine evolves — correctness is structural, not documentary.</p>
-<p><code>AgentSession.agentState</code> is a direct alias for <code>bus.agentState</code>:</p>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">late</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ReadonlySignal</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">dynamic</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">agentState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bus</span><span class="p">.</span><span class="n">agentState</span><span class="p">;</span>
-</span></code></pre></div>
-<p>This gives widgets a stable per-session signal handle while ensuring they
-see the exact same data as any <code>bus.project(...)</code> consumer.</p>
-<pre class="mermaid"><code>flowchart LR
-    Snap["StateSnapshotEvent / StateDeltaEvent"]
-    Proc["processEvent()"]
-    Conv["Conversation.aguiState"]
-    Run["_runStateSignal"]
-    OnChange["_onStateChange"]
-    Bus[("bus.agentState&lt;br/&gt;signal of Map")]
-    AgentState[".agentState getter&lt;br/&gt;= bus.agentState"]
-    Watch["widget.watch(...)"]
-    Project["bus.project(...)"]
-
-    Snap --&gt; Proc --&gt; Conv --&gt; Run --&gt; OnChange
-    OnChange -- "bus.setAgentState(next)" --&gt; Bus
-    Bus --&gt; AgentState
-    AgentState --&gt; Watch
-    Bus --&gt; Project</code></pre>
-<h3 id="layer-2-transport-statebus-owned-by-threadstate">Layer 2 — Transport: <code>StateBus</code> owned by <code>ThreadState</code></h3>
-<p><code>StateBus</code> is a scope-agnostic reactive document with four operations:</p>
+<p>The guiding invariant: <strong>the shipped Soliplex look does not change.</strong>
+<code>BrandTheme.soliplex()</code> lowers to today's palette byte-for-byte, enforced by a
+41-slot equality test (<code>brand_lowering_test.dart</code>).</p>
+<p>The privacy boundary is the <strong><code>soliplex_frontend</code> barrel</strong>: it re-exports only
+the façade types and <code>lowerBrandTheme</code>. <code>soliplex_design</code> is an internal package
+whose own barrel still exports <code>SoliplexColors</code>, so "the palette is private"
+holds for forks that depend on <code>soliplex_frontend</code> (the expected dependency) —
+not for code that reaches past it into <code>soliplex_design</code> directly.</p>
+<hr />
+<h2 id="3-the-decisions-by-axis">3. The Decisions, by Axis</h2>
+<p>Each axis records the decision, its rationale, and — where one remains — the
+residual risk it leaves (collected in §5).</p>
+<h3 id="31-identity-is-split-from-theme">3.1 Identity is split from theme</h3>
+<p><code>SoliplexBranding</code> is replaced by <strong>two orthogonal configs</strong> so they can vary
+independently:</p>
 <table>
 <thead>
 <tr>
-<th>Operation</th>
-<th>Purpose</th>
+<th>Config</th>
+<th>Owns</th>
+<th>Type location</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>setAgentState(map)</code></td>
-<td>Full snapshot replacement</td>
+<td><code>AppIdentity</code></td>
+<td>App name + logo widgets (light/dark)</td>
+<td><code>lib/src/core/app_identity.dart</code></td>
 </tr>
 <tr>
-<td><code>update(fn)</code></td>
-<td>Delta application (JSON Patch)</td>
-</tr>
-<tr>
-<td><code>project&lt;S&gt;(projection)</code></td>
-<td>Derive a typed <code>ReadonlySignal&lt;S&gt;</code></td>
-</tr>
-<tr>
-<td><code>emit(event)</code></td>
-<td>Write-back path (surface → agent)</td>
+<td><code>BrandTheme</code></td>
+<td>Color, typography, shape</td>
+<td><code>packages/soliplex_design/</code></td>
 </tr>
 </tbody>
 </table>
-<p>Two invariants are enforced internally:</p>
-<ul>
-<li><strong>Snapshot semantics on read:</strong> <code>agentState</code>'s value is always
-  <code>Map.unmodifiable(...)</code>. Callers cannot mutate what they read, preventing
-  aliasing bugs across projections.</li>
-<li><strong>Identity change on every replacement:</strong> Even structurally equal maps
-  produce a new wrapping identity, so <code>Signal</code> listeners always fire.
-  Equality optimisation is explicitly out of scope; correctness is preferred
-  over efficiency until profiling proves otherwise.</li>
-</ul>
-<p>Each bus lives inside a <code>ThreadState</code>, which is owned by <code>AgentRuntime</code>:</p>
-<pre class="mermaid"><code>flowchart LR
-    subgraph CALLERS["External callers"]
-        UI["UI 'new thread' button"]
-        History["Thread history fetch"]
-        Session["spawn() / _captureThreadHistory()"]
-    end
-
-    subgraph RUNTIME["AgentRuntime"]
-        States[("_threadStates&lt;br/&gt;Map of ThreadKey to ThreadState")]
-        Seed["seedThreadState(key, ...)&lt;br/&gt;seedThreadHistory(key, ...)"]
-    end
-
-    subgraph TS["ThreadState (per thread)"]
-        Bus["StateBus bus&lt;br/&gt;(survives session boundary)"]
-        Hist["ThreadHistory? history&lt;br/&gt;(messages + aguiState)"]
-    end
-
-    UI -- "seedThreadState(key, agui)" --&gt; Seed
-    History -- "seedThreadHistory(key, hist)" --&gt; Seed
-    Session -- "_threadStates[key]?.history" --&gt; States
-    Session -. "captureThreadHistory" .-&gt; States
-
-    Seed --&gt; States
-    States --&gt; Bus
-    States --&gt; Hist</code></pre>
-<p><code>AgentSession</code> accesses its thread's bus through a plain (non-cached) getter:</p>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">StateBus</span><span class="w"> </span><span class="kd">get</span><span class="w"> </span><span class="n">bus</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_runtime</span><span class="p">.</span><span class="n">ensureThreadState</span><span class="p">(</span><span class="n">threadKey</span><span class="p">).</span><span class="n">bus</span><span class="p">;</span>
-</span></code></pre></div>
-<p>Late-evaluated — a session that never reads <code>bus</code> never causes a <code>StateBus</code>
-to be allocated.</p>
-<h3 id="layer-3-consumption-stateprojections">Layer 3 — Consumption: <code>StateProjection&lt;S&gt;</code></h3>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">StateProjection</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="n">S</span><span class="w"> </span><span class="n">project</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">dynamic</span><span class="o">&gt;</span><span class="w"> </span><span class="n">agentState</span><span class="p">);</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>A pure, idempotent transform. Projections must be tolerant: malformed or
-partial state (common during streaming) must produce a sensible empty or null
-value, never throw. The bus owns derived signals returned by <code>project&lt;S&gt;</code>;
-callers must not dispose them manually.</p>
-<hr />
-<h2 id="3-key-design-decisions">3. Key Design Decisions</h2>
-<h3 id="31-threadkey-over-bare-threadid">3.1 <code>ThreadKey</code> over bare <code>threadId</code></h3>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// Before — bare String key</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">final</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadHistory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_threadHistories</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">// After — full record key</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kd">final</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">ThreadKey</span><span class="p">,</span><span class="w"> </span><span class="n">ThreadState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_threadStates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
-</span></code></pre></div>
-<p><code>ThreadKey</code> is the existing typedef record
-<code>(String serverId, String roomId, String threadId)</code>. Dart's record
-value-equality makes it a valid <code>Map</code> key out of the box. This closes the
-latent multi-room collision bug (two rooms issuing the same <code>threadId</code> no
-longer collide) and provides a future-safe foundation for multi-server and
-multi-room runtimes.</p>
-<h3 id="32-immutable-threadstate-with-a-mutable-bus">3.2 <code>@immutable ThreadState</code> with a mutable <code>bus</code></h3>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nd">@immutable</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kd">class</span><span class="w"> </span><span class="nc">ThreadState</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="n">ThreadState</span><span class="p">({</span><span class="n">StateBus</span><span class="o">?</span><span class="w"> </span><span class="n">bus</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">history</span><span class="p">})</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">bus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bus</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="n">StateBus</span><span class="p">();</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">StateBus</span><span class="w"> </span><span class="n">bus</span><span class="p">;</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">ThreadHistory</span><span class="o">?</span><span class="w"> </span><span class="n">history</span><span class="p">;</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="n">ThreadState</span><span class="w"> </span><span class="n">withHistory</span><span class="p">(</span><span class="n">ThreadHistory</span><span class="o">?</span><span class="w"> </span><span class="n">next</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="n">ThreadState</span><span class="p">(</span><span class="nl">bus:</span><span class="w"> </span><span class="n">bus</span><span class="p">,</span><span class="w"> </span><span class="nl">history:</span><span class="w"> </span><span class="n">next</span><span class="p">);</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">dispose</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">bus</span><span class="p">.</span><span class="n">dispose</span><span class="p">();</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>The container is value-typed; the bus inside it is mutable. <code>withHistory</code>
-returns a new container with updated history while <strong>preserving the same
-<code>bus</code> instance</strong>. This is a load-bearing invariant: any code path that
-constructed a fresh <code>ThreadState</code> for an existing key would silently destroy
-all live signal subscriptions. The <code>@immutable</code> annotation and
-<code>withHistory</code> pattern make the safe update path the only obvious one.</p>
-<h3 id="33-ensurethreadstate-vs-threadstateof">3.3 <code>ensureThreadState</code> vs <code>threadStateOf</code></h3>
-<p>Two public accessors with deliberately separated semantics:</p>
+<p><code>standard()</code> takes <code>{AppIdentity? identity, BrandTheme theme, FontResolver
+fontResolver, …}</code>. <code>identity</code> defaults to <code>AppIdentity.soliplex</code> and <code>theme</code>
+defaults to <code>const BrandTheme.soliplex()</code>, so the runnable app is unchanged.</p>
+<p><code>AppIdentity</code> carries <code>appName</code> and the brand's logo widgets (<code>logoLight</code>,
+optional <code>logoDark</code>, optional <code>logoGlow</code>) — the same logo handling the former
+<code>SoliplexBranding</code> provided, now separated from the theme. The one thing this
+split adds is an <code>assert</code> that <code>logoGlow</code> and <code>logoDark</code> aren't set together
+(<code>logoGlow</code> only tints the dark-mode fallback shown when <code>logoDark</code> is absent) —
+the feature's only enforced cross-field invariant.</p>
+<h3 id="32-a-constructor-ladder-cheapest-first">3.2 A constructor ladder, cheapest-first</h3>
+<p><code>BrandTheme</code> offers four entry points, in increasing effort:</p>
 <table>
 <thead>
 <tr>
-<th>Accessor</th>
-<th>Semantics</th>
-<th>Caller</th>
+<th>Constructor</th>
+<th>Use when</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>ensureThreadState(key)</code></td>
-<td>Create-on-demand; never returns null</td>
-<td><code>AgentSession.bus</code></td>
+<td><code>BrandTheme.soliplex()</code></td>
+<td>Default; the shipped look (a <code>const</code>).</td>
 </tr>
 <tr>
-<td><code>threadStateOf(key)</code></td>
-<td>Read-only; returns null if unregistered</td>
-<td>External consumers</td>
+<td><code>BrandTheme.fromSeed(c)</code></td>
+<td>One accent drives both brightnesses.</td>
+</tr>
+<tr>
+<td><code>BrandTheme.fromAccents(…)</code></td>
+<td>A distinct accent per brightness.</td>
+</tr>
+<tr>
+<td><code>BrandTheme(light:, dark:)</code></td>
+<td>Fully specified palettes.</td>
 </tr>
 </tbody>
 </table>
-<p><code>threadStateOf</code> returning null is the liveness check — it means the thread
-has not been registered or has been disposed. Callers must treat that as a
-terminal condition.</p>
-<h3 id="34-no-global-registry">3.4 No global registry</h3>
-<p><code>StateBus</code> has no <code>all</code> static list, no <code>BusRegistry</code>, and no app-wide
-observable of active buses. This was a deliberate rejection, not an
-oversight.</p>
-<p>A global registry introduces two failure modes that are difficult to reason
-about in a GC language:</p>
+<p>All four also accept the shared <code>typography</code>, <code>shape</code>, and <code>tint</code> axes (the last,
+a <code>BrandTint</code>, governs on-color tinting — §3.9).</p>
+<h3 id="33-color-a-semantic-role-set-not-the-flat-palette">3.3 Color: a semantic role set, not the flat palette</h3>
+<p><code>BrandColorScheme</code> exposes <strong>7 required roles</strong> (<code>primary</code>, <code>secondary</code>,
+<code>background</code>, <code>foreground</code>, <code>muted</code>, <code>mutedForeground</code>, <code>border</code>) plus <strong>19
+optional</strong> roles:</p>
 <ul>
-<li><strong>Lifetime coupling:</strong> A registry must either retain disposed buses (memory
-  leak) or require each bus to deregister on disposal (cross-ownership cleanup
-  that races against the owning scope's teardown).</li>
-<li><strong>Implicit dependency surface:</strong> A <code>BusRegistry.all</code> observable invites
-  consumers to subscribe to "every bus, any change" — a dependency that is
-  invisible in the type system and impossible to trace statically.</li>
+<li><code>tertiary</code> and the <code>on*</code> colors (<code>onPrimary</code>, <code>onSecondary</code>, <code>onTertiary</code>);</li>
+<li>the four status <em>signal</em> colors (<code>danger</code>, <code>success</code>, <code>warning</code>, <code>info</code>);</li>
+<li>the error / destructive role (<code>error</code>, <code>onError</code>);</li>
+<li>the four soft status <em>surfaces</em>, each with its on-color
+  (<code>errorContainer</code>/<code>successContainer</code>/<code>warningContainer</code>/<code>infoContainer</code>);</li>
+<li><code>link</code>.</li>
 </ul>
-<p>Debug introspection — the only legitimate use case for a flat list — is a
-separate concern. A diagnostic tool that walks ownership at a point in time is
-the correct solution; it should not be a runtime cost paid by every bus in
-production.</p>
-<h3 id="35-ownership-based-discovery">3.5 Ownership-based discovery</h3>
-<p>Discovery follows ownership. The rule is:</p>
-<blockquote>
-<p>To find a bus, walk to its owner. To find a thread's bus, call
-<code>runtime.threadStateOf(key)?.bus</code>. Do not search; navigate.</p>
-</blockquote>
-<p>This policy is the contractual substitute for RAII. Because Dart cannot
-enforce "the bus dies when its owner dies" at the language level, the design
-makes ownership explicit and observable:</p>
+<p>Colors flip per <code>Brightness</code>; typography, shape, and the on-color tint
+(<code>BrandTint</code>, §3.9) are shared across both. Light and dark are authored as
+<strong>peers</strong> — each brightness carries its own required
+palette, and dark is never derived by inverting light, since a color readable on
+white can vanish on a dark surface. New customization arrives as <strong>additive
+optional fields</strong> — never new required ones — so widening the contract never
+breaks an existing fork.</p>
+<p><strong>Signal vs. role — the one naming pitfall.</strong> Two reds coexist on purpose and
+must not be confused:</p>
 <table>
 <thead>
 <tr>
-<th>Bus scope</th>
-<th>Owner</th>
-<th>Discovery path</th>
+<th>Role</th>
+<th>What it tints</th>
+<th>On-color</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>App</td>
-<td>Shell</td>
-<td><code>shell.appBus</code></td>
+<td><code>danger</code></td>
+<td>Inline status <em>signals</em> — status text, dots, "risky" icons on neutral surfaces. Read via <code>context.danger</code>.</td>
+<td>none (it's foreground)</td>
 </tr>
 <tr>
-<td>Server</td>
-<td><code>AgentRuntime</code></td>
-<td><code>runtime.serverBus[serverId]</code></td>
-</tr>
-<tr>
-<td>Room</td>
-<td>Per-room view state</td>
-<td><code>runtime.roomStateOf(key)?.bus</code></td>
-</tr>
-<tr>
-<td>Thread</td>
-<td><code>AgentRuntime</code> via <code>ThreadState</code></td>
-<td><code>runtime.threadStateOf(key)?.bus</code></td>
+<td><code>error</code></td>
+<td>The <em>error / destructive</em> role — solid destructive buttons, input error borders; lowers onto Material <code>colorScheme.error</code>.</td>
+<td><code>onError</code></td>
 </tr>
 </tbody>
 </table>
-<p>Code that holds a <code>StateBus</code> reference obtained via a direct constructor call
-— rather than via ownership navigation — is in violation of this policy and
-should be treated as a defect in review.</p>
-<h3 id="36-runtime-owned-disposal-cascade">3.6 Runtime-owned disposal cascade</h3>
-<p><code>AgentRuntime.dispose()</code> is the single trigger for the full cleanup cascade:</p>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">_threadStates</span><span class="p">.</span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="n">state</span><span class="p">.</span><span class="n">dispose</span><span class="p">();</span><span class="w"> </span><span class="c1">// → bus.dispose()</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="p">}</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">_threadStates</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
-</span></code></pre></div>
-<p><code>bus.dispose()</code> is idempotent. No surface, projection, or widget should call
-it directly. The invariant: <strong>the entity that constructed the bus is the
-entity that disposes it</strong> — and that entity is always <code>AgentRuntime</code>.</p>
-<h3 id="37-exhaustive-state-mapping">3.7 Exhaustive state mapping</h3>
-<p>The <code>_aguiStateOf</code> switch in <code>AgentSession._onStateChange</code> is over a sealed
-class. Adding a new <code>RunState</code> variant forces a compile error here, ensuring
-the bus-write path handles every variant. Correctness is enforced
-structurally, not by convention.</p>
-<hr />
-<h2 id="4-consequences-and-caveats">4. Consequences and Caveats</h2>
-<h3 id="41-lifecycle-is-runtime-owned">4.1 Lifecycle is runtime-owned</h3>
-<p>The bus lifecycle is not managed by an abstract "host" — it is fully owned
-by <code>AgentRuntime</code> through the <code>ThreadState</code> container. No caller outside
-the runtime is responsible for bus disposal.</p>
-<pre class="mermaid"><code>sequenceDiagram
-    participant Runtime as AgentRuntime
-    participant TS as ThreadState
-    participant Bus as StateBus
-    participant Session as AgentSession
-    participant Surf as Surface / Widget
-
-    Runtime-&gt;&gt;TS: new ThreadState() [via seedThreadState or ensureThreadState]
-    TS-&gt;&gt;Bus: new StateBus()
-
-    Note over Runtime,Bus: thread becomes active
-    Runtime-&gt;&gt;Session: spawn(key, ...)
-    Session-&gt;&gt;Bus: bus.setAgentState(next) [via _onStateChange]
-    Bus--&gt;&gt;Surf: signal updates, widget rebuilds
-
-    Note over Surf: user interacts
-    Surf-&gt;&gt;Bus: emit(SurfaceEvent)
-    Bus--&gt;&gt;Runtime: events stream
-    Runtime-&gt;&gt;Runtime: forward to agent
-
-    Note over Runtime,Bus: runtime tears down
-    Runtime-&gt;&gt;TS: state.dispose()
-    TS-&gt;&gt;Bus: bus.dispose()
-    Bus--&gt;&gt;Surf: derived signals stop firing</code></pre>
-<p>The contract reduces to: <strong>do not call <code>bus.dispose()</code> from session,
-surface, projection, or widget code.</strong></p>
-<h3 id="42-agentstate-is-bound-once-bus-resolves-on-every-access">4.2 <code>agentState</code> is bound once; <code>bus</code> resolves on every access</h3>
-<p><code>agentState</code> is <code>late final</code> — bound to <code>bus.agentState</code> on first access
-and never re-evaluated. <code>bus</code> is a plain getter — it resolves through
-<code>_runtime.ensureThreadState(threadKey).bus</code> on every call.</p>
-<p>In production this is safe because <code>ThreadState.withHistory</code> always preserves
-the same <code>bus</code> instance — the runtime never replaces a <code>ThreadState</code> with a
-fresh one for an existing key. But the safety is contractual, not mechanical.
-A future code path that constructed a new <code>ThreadState</code> for an existing key
-would silently strand <code>agentState</code> on a disposed bus while <code>_onStateChange</code>
-writes into the new one, with no compile-time or runtime error at the point
-of the mistake.</p>
-<h3 id="43-cross-scope-projection-composition-opt-in-risk">4.3 Cross-scope projection composition (opt-in risk)</h3>
-<p>The architecture explicitly supports projections that compose state from
-multiple buses at different scopes (e.g., a summary widget that reads the
-server-bus thread list and the active thread-bus's last message). This
-capability is opt-in and carries a non-trivial risk:</p>
+<p>The field names follow <strong>Material <code>ColorScheme</code> convention</strong> (<code>error</code>/<code>onError</code>,
+<code>errorContainer</code>/<code>onErrorContainer</code>, <code>successContainer</code>/<code>onSuccessContainer</code>) so
+a Flutter developer can see exactly which scheme slot each one drives;
+<code>destructive</code> (an Apple HIG term) was rejected for that reason. The cost — that
+<code>error</code> reads as a near-synonym of <code>danger</code> — is carried by field docs that
+state the signal-vs-role split explicitly. <code>link</code> follows the de-facto community
+name (Material has no link slot).</p>
+<h3 id="34-status-color-moves-to-a-token-backed-buildcontext-extension">3.4 Status color moves to a token-backed <code>BuildContext</code> extension</h3>
+<p><code>SymbolicColors</code> moves from an extension on <code>ColorScheme</code> to one on
+<code>BuildContext</code>. <code>context.{danger,success,warning,info}</code> now read the active
+<code>SoliplexTheme.colors</code>, falling back to the default palette for the current
+brightness when unthemed. The status values became real token slots
+(<code>danger/success/warning/info</code>), pinned to the previously-hardcoded Material
+colors. Filled status pills don't read these signals — they use the container
+surfaces instead (§3.11).</p>
+<h3 id="35-radii-route-through-the-active-theme">3.5 Radii route through the active theme</h3>
+<p>A <code>context.radii</code> accessor resolves the active <code>SoliplexTheme</code> radii (falling
+back to the default scale when unthemed). Every <code>BorderRadius.circular(soliplexRadii.x)</code>
+call site moved onto it. <code>BrandShape</code> carries the four steps (<code>sm/md/lg/xl</code>)
+with <code>.rounded()</code> (6/12/16/24), <code>.square()</code> (all 0), and <code>.custom()</code> (which
+<code>assert</code>s its radii are non-negative).</p>
+<h3 id="36-typography-three-families-primitive-deltas-no-per-role-family">3.6 Typography: three families, primitive deltas, no per-role family</h3>
+<p><code>BrandTypography</code> exposes <strong>three font families</strong> — <code>bodyFamily</code>,
+<code>displayFamily</code>, <code>codeFamily</code> — plus a <code>fallbacks</code> chain and per-role
+<code>TypeScaleOverride</code> deltas (size/weight/height/letterSpacing). Per-role <em>color</em>
+is <strong>absent</strong> because color comes from the palette — baking a color into a text
+style would not flip with brightness (a dark-mode footgun). Per-role <em>family</em> is
+<strong>absent</strong> for simplicity (family is one of the three roles); the body family
+covers body, labels, and buttons. A per-role family is feasible but deliberately
+omitted — not a platform limit. <code>codeFamily</code> lowers to the monospace token;
+<code>context.monospace</code> reads it, falling back to the platform family when unthemed.</p>
+<p>The shipped type scale was tuned against the default font's metrics, so the
+per-role deltas double as the lever a fork uses to <strong>re-tune the scale after
+swapping in a face with different proportions</strong> (see §5.4).</p>
+<h3 id="37-fonts-resolve-through-an-injected-seam">3.7 Fonts resolve through an injected seam</h3>
+<p><code>FontResolver</code> keeps <code>soliplex_design</code> dependency-free. The default
+<code>BundledFontResolver</code> performs no lookup — families declared in the consumer's
+<code>pubspec.yaml</code> resolve through Flutter's native asset machinery (works offline /
+airgapped). A fork wanting arbitrary fonts (e.g. <code>google_fonts</code>) injects its own
+resolver at theme-build time. A family that is not bundled (or is misspelled)
+falls back to the platform default with no load-time signal — Flutter resolves
+font assets lazily, so the buffer cannot verify a family exists (see §5.4).</p>
+<h3 id="38-the-default-is-frozen-against-token-refactors">3.8 The default is frozen against token refactors</h3>
+<p><code>BrandTheme.soliplex()</code> is a <code>const</code> constructor whose palette literals are
+<strong>inlined</strong> (<code>_defaultLightColors</code> / <code>_defaultDarkColors</code>) rather than read from
+<code>lightSoliplexColors</code> / <code>darkSoliplexColors</code>. This makes the public default both
+const-constructible and immune to internal token renames — the contract a fork
+sees is stable even if the internal palette is refactored.</p>
+<h3 id="39-accessibility-is-checked-at-the-boundary">3.9 Accessibility is checked at the boundary</h3>
+<p><code>lowerBrandTheme</code> fills any unspecified <code>on*</code> color with <code>readableOn(...)</code>, then
+<strong>logs a warning</strong> for any pair below its floor: <strong>4.5:1</strong> (AA) for the <code>on*</code>
+pairs and body <code>foreground</code>/<code>background</code>, <strong>3:1</strong> for de-emphasized
+<code>mutedForeground</code>/<code>muted</code>. <code>link</code> (no on-color) is checked against <code>background</code>,
+and only when the brand sets it — so overriding <code>background</code> alone can't fault an
+untouched link. The warning fires in <strong>all build modes</strong> but the color is used
+as-is — a diagnostic, not a gate. So it fires only for hand-built pairs; the
+exact checked set, and what is deliberately <em>not</em> checked, is in §5.2.</p>
+<p><strong><code>readableOn</code> is a softest-first cascade.</strong> Instead of pure black/white it
+prefers a soft <strong>near-black <code>#212427</code></strong> (or <strong>near-white <code>#FAFAFA</code></strong>), stepping
+down to <code>#0A0A0A</code> and finally pure <code>#000000</code> only when a mid-tone surface would
+drop the near-tone below AA. The pure tone is the guaranteed last rung, never
+below ≈4.58:1 (its minimum, at the black/white crossover), so the loop can
+always find a tone clearing AA — it never falls through to a sub-AA result. The
+returned tone itself is only guaranteed ≥4.5:1: a near-tone is taken as soon as
+it clears that floor, so a derived pair can sit right at 4.5. The cascade is
+AA-safe by construction while reading softer on the eyes — pure black surfaces
+only on an unusual mid-gray. <code>fromSeed</code> / <code>fromAccents</code> leave <code>onPrimary</code> unset
+so the buffer derives it through this cascade.</p>
+<p><strong>Optional brand tint (<code>BrandTint</code>).</strong> A brand may tint those derived on-colors
+toward a hue — <code>TintSource.surface</code> (tonal, the surface the on-color sits on) or
+<code>TintSource.primary</code> (the brand primary) — at a <code>strength</code> saturation. The tint
+is the cascade's top rung: if it would fall below AA it is dropped for the neutral
+tone, so contrast stays guaranteed. Tinting is <strong>opt-in</strong> — the default <code>source</code>
+is <code>TintSource.none</code>, so Soliplex and any brand that doesn't ask stay neutral —
+and
+is visible only on dark on-colors over light surfaces (near-white is too light to
+carry a hue). An explicitly-set on-color is never tinted. When a brand does
+enable tinting, <code>surface</code> at <code>strength</code> 0.08 is the recommended default;
+<code>primary</code> gives a consistent house tint. (This was the one call originally left
+for design review; it is resolved, and the defaults are plain constants, easy to
+revisit.)</p>
+<p>On-color derivation has <strong>one rule</strong>: <code>BrandColorScheme.fromAccent</code>, the
+token-layer <code>SoliplexColors.fromAccent</code>, and the buffer all derive through
+<code>readableOn</code>. The brightness-estimate helper <code>contrastingForeground</code> (tone
+<code>#0A0A0A</code>) is reserved for decorative runtime tints — e.g. a hashed avatar
+background — and never derives an on-color.</p>
+<h3 id="310-the-color-from-tokens-premise-is-enforced-in-ci">3.10 The "color from tokens" premise is enforced in CI</h3>
+<p><code>test/design_system_hygiene_test.dart</code> fails the build on raw hex color literals
+(<code>Color(0x…)</code>, <code>Color.fromARGB/RGBO</code>) or hardcoded Material status colors
+(<code>Colors.red|green|orange|blue|yellow</code>) anywhere in <code>lib/</code>. If app code bakes in
+color, a brand theme can't recolor it — so the test guards the whole premise.</p>
+<h3 id="311-status-intent-colors-are-sourced-per-component">3.11 Status-intent colors are sourced per component</h3>
+<p><code>SoliplexBadge</code> / <code>SoliplexChip</code> resolve an <code>intent</code> to a
+<code>(background, foreground)</code> pair from <strong>two sources</strong>, because the token system
+models status <em>signals</em> and status <em>surfaces</em> separately (§3.3):</p>
 <ul>
-<li>Each composed bus has an independent owner and lifetime. A projection that
-  holds references to two buses may observe one disposed and one active.</li>
-<li>Projections must defensively handle the case where a composed bus has been
-  disposed. The <code>null</code>-returning pattern for missing state is the correct
-  model.</li>
+<li><strong><code>neutral</code></strong> — the brand's neutral badge/chip theme.</li>
+<li><strong><code>danger</code> / <code>success</code> / <code>warning</code> / <code>info</code></strong> — the brand's <code>errorContainer</code> /
+  <code>successContainer</code> / <code>warningContainer</code> / <code>infoContainer</code> token pairs. Each is
+  a soft status surface with its own readable on-color, so all four status pills
+  are filled the same way and are independently brandable.</li>
 </ul>
-<p>Cross-scope composition bypasses the standard isolation boundary. Treat it as
-an advanced capability requiring explicit justification in code review.</p>
-<h3 id="44-stale-references-without-raii">4.4 Stale references without RAII</h3>
-<p>Because Dart provides no deterministic destruction, there is no language
-guarantee that a <code>StateBus</code> reference becomes unreachable the moment its owner
-is torn down. Code that obtains a bus reference through a mechanism other than
-ownership navigation (e.g., captured in a closure, stored in a widget's
-<code>State</code>) must verify liveness before use:</p>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// Prefer: navigate ownership each time</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kd">final</span><span class="w"> </span><span class="n">bus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runtime</span><span class="p">.</span><span class="n">threadStateOf</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="n">bus</span><span class="p">;</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bus</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="c1">// owner gone</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">// Avoid: long-lived capture of a bus reference</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="kd">final</span><span class="w"> </span><span class="n">_bus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">widget</span><span class="p">.</span><span class="n">bus</span><span class="p">;</span><span class="w"> </span><span class="c1">// may be disposed when widget rebuilds</span>
-</span></code></pre></div>
-<p>The <code>?.bus</code> navigation pattern is not merely ergonomic — it is the liveness
-check. A null return from ownership navigation means the thread has been
-torn down; callers must treat that as a terminal condition, not a transient
-error.</p>
+<p>Consequence: a <code>danger</code> badge reads <code>errorContainer</code>, <strong>not</strong> <code>context.danger</code> —
+a filled pill is a surface, and <code>danger</code> (a signal) has no on-color. Rebranding
+the <code>danger</code> signal does not restyle a danger badge; rebrand <code>errorContainer</code> for
+that. The same split holds for the other three status families.</p>
+<h3 id="312-non-goals-deliberately-fixed">3.12 Non-goals (deliberately fixed)</h3>
+<p>Spacing (<code>SoliplexSpacing</code>) and breakpoints (<code>SoliplexBreakpoints</code>) are <strong>not</strong>
+customizable. They are layout invariants, not brand expression.</p>
 <hr />
-<h2 id="5-alternatives-considered">5. Alternatives Considered</h2>
-<h3 id="51-global-event-bus">5.1 Global event bus</h3>
-<p>A single app-wide <code>StreamController&lt;AgentStateEvent&gt;</code> that all surfaces
-subscribe to. Rejected because:</p>
-<ul>
-<li>Lifetime is unbounded — subscribers from a closed thread continue to
-  receive events from all other threads until manually unsubscribed.</li>
-<li>The event stream carries no scope identity by default, requiring every
-  subscriber to filter by thread key — a filtering step each implementor
-  would write differently.</li>
-<li>Disposal becomes a coordination problem: who closes the stream, and when?</li>
-</ul>
-<h3 id="52-central-bus-registry-statebusall">5.2 Central bus registry (<code>StateBus.all</code>)</h3>
-<p>A static <code>Map&lt;ScopeKey, StateBus&gt;</code> maintained by the framework. Rejected
-for the reasons in §3.4: lifetime coupling and implicit dependency surface.
-The registry either leaks disposed buses or requires cross-ownership cleanup
-that races. Neither failure mode is acceptable in a multi-thread UI.</p>
-<h3 id="53-riverpod-asyncnotifier-futureprovider-chains">5.3 Riverpod <code>AsyncNotifier</code> / <code>FutureProvider</code> chains</h3>
-<p>Riverpod is used in this codebase as a DI/service locator only — no
-<code>AsyncNotifier</code> or <code>FutureProvider</code> chains. Extending Riverpod to own reactive
-state would blur the architectural boundary between DI and reactivity, and
-would couple the state layer to Riverpod's invalidation semantics, which are
-designed for async data fetching rather than streaming patch application.
-<code>signals</code> is the chosen reactivity primitive; <code>StateBus</code> is its
-domain-specific wrapper.</p>
-<h3 id="54-changenotifier-valuenotifier">5.4 <code>ChangeNotifier</code> / <code>ValueNotifier</code></h3>
-<p>Flutter's built-in notifiers are listener-list based and have no notion of
-derived signals or projection composition. They also leak if <code>removeListener</code>
-is not called, which replicates the exact problem the ownership policy is
-designed to prevent. Rejected in favour of the <code>signals</code> package, whose
-computed-signal model supports projection composition natively.</p>
-<hr />
-<h2 id="6-summary">6. Summary</h2>
+<h2 id="4-lowering-semantics-and-edge-cases">4. Lowering Semantics and Edge Cases</h2>
+<p>How <code>lowerBrandTheme</code> maps each input, including the corners:</p>
 <table>
 <thead>
 <tr>
-<th>Property</th>
-<th>Decision</th>
+<th>Input</th>
+<th>Behavior</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Reactivity primitive</td>
-<td><code>signals</code> computed signal</td>
+<td>A specified role</td>
+<td>Overrides the per-brightness neutral base slot.</td>
 </tr>
 <tr>
-<td>State write path</td>
-<td><code>AgentSession._onStateChange</code> → <code>_aguiStateOf</code> → <code>bus.setAgentState</code></td>
+<td>An unspecified optional role</td>
+<td>Falls back to the base palette slot — so the untouched palette stays byte-identical.</td>
 </tr>
 <tr>
-<td>Per-session read path</td>
-<td><code>session.agentState</code> = <code>bus.agentState</code> (direct alias, <code>late final</code>)</td>
+<td>An unspecified <code>on*</code> color, sibling role <strong>set</strong></td>
+<td>Derived via the <code>readableOn</code> cascade (soft near-tone → pure), tinted per <code>BrandTint</code> — always ≥ 4.5:1.</td>
 </tr>
 <tr>
-<td>Transport</td>
-<td><code>StateBus</code> (per-thread, owned by <code>ThreadState</code>)</td>
+<td>An unspecified <code>on*</code> color, sibling role <strong>unset</strong></td>
+<td>Keeps the base on-color, so the untouched role stays byte-identical.</td>
 </tr>
 <tr>
-<td>Container</td>
-<td><code>@immutable ThreadState</code> — value-typed wrapper, mutable bus inside</td>
+<td><code>codeFamily == null</code></td>
+<td>Monospace token is <code>null</code>; <code>context.monospace</code> falls back to platform.</td>
 </tr>
 <tr>
-<td>Bus owner</td>
-<td><code>AgentRuntime</code> via <code>_threadStates: Map&lt;ThreadKey, ThreadState&gt;</code></td>
+<td><code>BrandShape.square()</code></td>
+<td><strong>All</strong> radii become 0 — including checkboxes and small hit-target wells.</td>
 </tr>
 <tr>
-<td>Map key</td>
-<td><code>ThreadKey</code> record <code>(serverId, roomId, threadId)</code> — value-equality safe</td>
+<td><code>BrandTint.source == none</code> (default)</td>
+<td>Derived on-colors stay neutral near-black / near-white.</td>
 </tr>
 <tr>
-<td>Projection</td>
-<td><code>StateProjection&lt;S&gt;</code> (pure, tolerant, idempotent)</td>
+<td><code>fromSeed</code> / <code>fromAccents</code></td>
+<td>Brand <code>primary</code>; <code>onPrimary</code> derived (and tintable) at lowering; every other role stays neutral.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-known-limitations">5. Known Limitations</h2>
+<p>These are real and intentional, but a fork author must know them. Listed worst-first.</p>
+<ol>
+<li>
+<p><strong>The façade exposes 26 of the 41 internal slots; 15 neutral-scaffolding
+   slots stay fixed.</strong> A fork <strong>cannot</strong> set <code>primaryContainer</code>/<code>onPrimaryContainer</code>,
+   <code>tertiaryContainer</code>/<code>onTertiaryContainer</code>, <code>accent</code>/<code>onAccent</code>,
+   <code>outline</code>/<code>outlineVariant</code>, <code>inputBackground</code>, <code>hintText</code>, the four
+   <code>surfaceContainer*</code>, or <code>inversePrimary</code>. These neutral surfaces stay pinned
+   to the Soliplex defaults regardless of brand — by design: tinting a surface
+   that hosts colored content distorts how that content reads. Consequence: even
+   a fully-specified brand still inherits Soliplex-grey cards and inputs.
+   (<code>link</code>, the <code>error</code>/destructive role, and all four status container surfaces
+   <strong>are</strong> exposed — see §3.3.) Promoting a neutral slot would be an additive
+   optional role (§3.3), but inherits the legibility risk above.</p>
+</li>
+<li>
+<p><strong>The contrast warning is a diagnostic, not a gate, and deliberately
+   partial.</strong> It validates the <code>primary</code>/<code>secondary</code>/<code>tertiary</code> pairs, the
+   <code>error</code> pair, the four status-container pairs, body <code>foreground</code>/<code>background</code>,
+   and <code>mutedForeground</code>/<code>muted</code> (at the 3:1 floor), plus <code>link</code> against
+   <code>background</code> (only when the brand sets <code>link</code>). It is logged in <strong>all build
+   modes</strong>, but the supplied color is always used as-is — it never blocks a build.
+   By design it does <strong>not</strong> check the <code>danger</code>/<code>success</code>/<code>warning</code>/<code>info</code>
+   <em>signal</em> colors: they tint iconography on whatever surface a call site picks,
+   so there is no single background to validate against, and checking against
+   <code>background</code> would mostly raise false positives. The filled status pills go
+   through the checked container pairs instead, so the high-traffic path is
+   covered; a hand-picked signal illegible on a given surface is the fork's call.
+   A development smoke alarm, not a release gate.</p>
+</li>
+<li>
+<p><strong>The frozen default is hand-synced duplication.</strong> <code>_defaultL*Colors</code> in
+   <code>brand_theme.dart</code> duplicate values from the token constants. The byte-for-byte
+   test is the tripwire that forces re-sync if they drift. Additionally,
+   <code>fromAccent</code> bases its non-primary roles off the <em>inlined snapshot</em> while the
+   buffer bases off the <em>live tokens</em> — identical today, but a latent split if
+   the two ever diverge.</p>
+</li>
+<li>
+<p><strong>Swapping a font silently re-tunes the type scale.</strong> The shipped scale was
+   tuned to the default font's metrics. A replacement face with a different
+   x-height or default line height shifts vertical rhythm and visual hierarchy
+   even though no size value changed. The per-role deltas (§3.6) are the lever to
+   correct it, but nothing flags that correction is needed — a fork must review
+   headings and body text after any font change. (Separately, an unbundled font
+   family falls back to the platform default with no signal — §3.7.)</p>
+</li>
+<li>
+<p><strong>Theme color transitions snap.</strong> <code>SoliplexTheme.lerp</code> interpolates radii but
+   not colors, so animating between two brand palettes is instantaneous. Not a
+   concern for the brightness toggle (Flutter cross-fades the two <code>ThemeData</code>s),
+   but live brand-swapping would not tween.</p>
+</li>
+</ol>
+<hr />
+<h2 id="6-consequences">6. Consequences</h2>
+<p><strong>Positive</strong></p>
+<ul>
+<li>Forks depend only on <code>BrandTheme</code> / <code>AppIdentity</code> / <code>FontResolver</code>, all
+  re-exported from the frontend barrel. The 41-slot palette can be refactored
+  freely behind the buffer.</li>
+<li>The shipped look is provably unchanged (byte-for-byte test) and accessible
+  on-colors are automatic.</li>
+<li>Identity and visual theme vary independently; status, radii, and monospace all
+  flow from one source of truth.</li>
+</ul>
+<p><strong>Negative / cost</strong></p>
+<ul>
+<li>A breaking migration for existing forks (see §7).</li>
+<li>The §5 limitations — chiefly the 15 fixed neutral slots — mean even a "full"
+  brand keeps the Soliplex surface ramp (cards, inputs, selected-row tints).</li>
+</ul>
+<hr />
+<h2 id="7-migration-breaking">7. Migration (BREAKING)</h2>
+<p>Done in the same release; forks update:</p>
+<ul>
+<li><code>SoliplexBranding(accentLight, accentDark, …)</code> → <code>AppIdentity(…)</code> +
+  <code>BrandTheme.fromAccents(light:, dark:)</code>.</li>
+<li><code>colorScheme.danger</code> → <code>context.danger</code> (<code>SymbolicColors</code> moved from
+  <code>ColorScheme</code> to <code>BuildContext</code>).</li>
+</ul>
+<hr />
+<h2 id="8-alternatives-considered">8. Alternatives Considered</h2>
+<table>
+<thead>
+<tr>
+<th>Alternative</th>
+<th>Why rejected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expose <code>SoliplexColors</code> directly to forks</td>
+<td>Welds forks to internal slot names; no room to refactor tokens.</td>
 </tr>
 <tr>
-<td>Discovery policy</td>
-<td>Ownership navigation; <code>runtime.threadStateOf(key)?.bus</code></td>
+<td>JSON / design-token file as the contract</td>
+<td>Stringly-typed, no compile-time safety, parsing/asset overhead; plain Dart types give IDE support and <code>const</code>.</td>
 </tr>
 <tr>
-<td>Disposal contract</td>
-<td><code>AgentRuntime.dispose()</code> cascades → <code>ThreadState.dispose()</code> → <code>bus.dispose()</code></td>
+<td>Keep the single-accent <code>SoliplexBranding</code></td>
+<td>Cannot express per-brightness palettes, type, or shape; conflates identity.</td>
 </tr>
 <tr>
-<td>State correctness guarantee</td>
-<td>Exhaustive sealed-class switch in <code>_aguiStateOf</code> feeds bus on every transition</td>
-</tr>
-<tr>
-<td>Cross-scope composition</td>
-<td>Opt-in; caller accepts dual-lifetime risk</td>
-</tr>
-<tr>
-<td>RAII substitute</td>
-<td>Ownership-based discovery + <code>@immutable ThreadState.withHistory</code> invariant</td>
+<td>Make spacing/breakpoints customizable too</td>
+<td>Layout invariants, not brand; YAGNI and a stability risk.</td>
 </tr>
 </tbody>
 </table>
@@ -4286,7 +4248,7 @@ computed-signal model supports projection composition natively.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../send-cancel-lifecycle/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Send Cancel Lifecycle">
+          <a href="../ADR-001-reactive-state-management-scoped-statebus/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Adr 001 Reactive State Management Scoped Statebus">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -4296,20 +4258,20 @@ computed-signal model supports projection composition natively.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Send Cancel Lifecycle
+                Adr 001 Reactive State Management Scoped Statebus
               </div>
             </div>
           </a>
         
         
           
-          <a href="../ADR-002-customizable-brand-theme/" class="md-footer__link md-footer__link--next" aria-label="Next: Adr 002 Customizable Brand Theme">
+          <a href="../../plans/0001-app-shell/proposal/" class="md-footer__link md-footer__link--next" aria-label="Next: 0001 App Shell">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Adr 002 Customizable Brand Theme
+                0001 App Shell
               </div>
             </div>
             <div class="md-footer__button md-icon">
