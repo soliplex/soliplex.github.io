@@ -1183,6 +1183,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#cli-audit-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        CLI Audit Logging
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configure-logging-extra-values-from-request-headers" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2907,6 +2918,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#cli-audit-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        CLI Audit Logging
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configure-logging-extra-values-from-request-headers" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3142,6 +3164,49 @@ value of the <code>--log-config</code> argument, e.g.:</p>
 </span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="m">2026</span>-02-09T18:16:40<span class="p">|</span>INFO<span class="p">|</span>uvicorn.error<span class="p">|</span>Application<span class="w"> </span>startup<span class="w"> </span>complete.
 </span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="m">2026</span>-02-09T18:16:40<span class="p">|</span>INFO<span class="p">|</span>uvicorn.error<span class="p">|</span>Uvicorn<span class="w"> </span>running<span class="w"> </span>on<span class="w"> </span>http://127.0.0.1:8000<span class="w"> </span><span class="o">(</span>Press<span class="w"> </span>CTRL+C<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span>
 </span></code></pre></div>
+<h2 id="cli-audit-logging">CLI Audit Logging</h2>
+<p>Privileged <code>soliplex-cli</code> operations (the <code>admin-users</code> and <code>room-authz</code>
+mutations and security-object reads) emit audit records to the dedicated
+<code>soliplex-audit</code> logger, the same way the REST API does. By default the CLI
+<strong>suppresses</strong> these records so they do not intermingle with normal command
+output during interactive use — the installation's own <code>logging_config_file</code>
+(which typically targets <code>sys.stdout</code>, for the <em>server</em>) is deliberately
+<strong>not</strong> applied to the CLI.</p>
+<p>To capture the CLI audit trail, pass a dedicated
+Python logging-config YAML — one that routes the <code>soliplex-audit</code>
+logger to the appropriate sink — via the <code>--cli-log-config</code> option
+(or set the <code>SOLIPLEX_CLI_LOG_CONFIG</code> environment variable).</p>
+<p>The option is a <strong>group-level</strong> option on the <code>admin-users</code>, <code>room-authz</code>,
+and <code>audit</code> command groups, so it must appear <strong>before</strong> the subcommand name:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># via the option (before the subcommand):</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>--cli-log-config<span class="w"> </span>cli-audit-logging.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>make-private<span class="w"> </span>example/minimal.yaml<span class="w"> </span>faux
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># or via the environment variable:</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nv">SOLIPLEX_CLI_LOG_CONFIG</span><span class="o">=</span>cli-audit-logging.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span>soliplex-cli<span class="w"> </span>admin-users<span class="w"> </span>add<span class="w"> </span>example/minimal.yaml<span class="w"> </span>alice@example.com
+</span></code></pre></div>
+<p>Example audit log config:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># cli-audit-logging.yaml</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">disable_existing_loggers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nt">formatters</span><span class="p">:</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">audit</span><span class="p">:</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%(asctime)s|%(levelname)s|%(outcome)s|%(message)s&quot;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nt">handlers</span><span class="p">:</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nt">audit_file</span><span class="p">:</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;logging.FileHandler&quot;</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/log/soliplex/audit.log&quot;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="nt">formatter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;audit&quot;</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="nt">loggers</span><span class="p">:</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">  </span><span class="nt">soliplex-audit</span><span class="p">:</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;INFO&quot;</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="nt">handlers</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;audit_file&quot;</span><span class="p p-Indicator">]</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="nt">propagate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span></code></pre></div>
+<p>Each record carries an <code>outcome</code> field (<code>success</code>, <code>denied</code>, or <code>error</code>)
+and an <code>audit-scope</code> field, so failed and denied operations are audited
+alongside successful ones.</p>
 <h2 id="configure-logging-extra-values-from-request-headers">Configure Logging <code>extra</code> Values from Request Headers</h2>
 <p>Request header values may be useful in logging:  for instance, if a proxy
 running in front of the Soliplex server injects a header, <code>X-Request-ID</code>,
@@ -3149,8 +3214,8 @@ into each request, we might want to display that output in a formatted log
 record.</p>
 <p>To capture one or more header values, add a <code>logging_headers_map</code>
 entry to your installation configuration:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">logging_headers_map</span><span class="p">:</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">request_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;X-Request-ID&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">logging_headers_map</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">request_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;X-Request-ID&quot;</span>
 </span></code></pre></div>
 <h2 id="configure-logging-extra-values-from-oidc-claims">Configure Logging <code>extra</code> Values from OIDC Claims</h2>
 <p>OIDC claims values may be useful in logging:  for instance,
@@ -3158,8 +3223,8 @@ we might want to display that <code>email</code> claim of the authenticated user
 in a formatted log record.</p>
 <p>To capture one or more claims values, add a <code>logging_claims_map</code>
 entry to your installation configuration:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">logging_claims_map</span><span class="p">:</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">user_email</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;email&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">logging_claims_map</span><span class="p">:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">user_email</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;email&quot;</span>
 </span></code></pre></div>
 
 

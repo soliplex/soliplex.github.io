@@ -7436,6 +7436,15 @@ example/minimal.yaml</code>.</p>
   run, the errors are emitted as a single JSON document on stdout
   (suitable for piping into <code>jq</code> or a CI log parser); each subcommand
   documents its own JSON shape under "Exit Status".</li>
+<li><code>--cli-log-config PATH</code> — apply the named Python logging-config YAML
+  for CLI audit logging (also read from the <code>SOLIPLEX_CLI_LOG_CONFIG</code>
+  environment variable); without it, audit records are suppressed. The
+  <code>audit</code> subcommands do not mutate state, but
+  <a href="#audit-admin-users"><code>audit admin-users</code></a> and
+  <a href="#audit-room-authz"><code>audit room-authz</code></a> read security objects through
+  the authorization policies and so emit security-object-read audit
+  records, which this option captures. See
+  <a href="../../config/logging/#cli-audit-logging">CLI Audit Logging</a>.</li>
 </ul>
 <h3 id="default-subcommand">Default Subcommand</h3>
 <p>If the first positional argument to <code>soliplex-cli audit</code> does not name
@@ -8324,14 +8333,24 @@ touching the database. There is no override.</p>
 </span><span id="__span-78-4"><a id="__codelineno-78-4" name="__codelineno-78-4" href="#__codelineno-78-4"></a>  2. bob@example.com
 </span></code></pre></div>
 <ul>
-<li>Exit status is <code>0</code> on success, or <code>1</code> when the RAM-DB guard fires
+<li>
+<p>The group-level <code>--cli-log-config PATH</code> option (also read from the
+  <code>SOLIPLEX_CLI_LOG_CONFIG</code> environment variable) enables CLI audit
+  logging by applying the named Python logging-config YAML; without it,
+  the audit records these commands emit are suppressed so they don't
+  intermingle with the JSON / human output. See
+  <a href="../../config/logging/#cli-audit-logging">CLI Audit Logging</a>.</p>
+</li>
+<li>
+<p>Exit status is <code>0</code> on success, or <code>1</code> when the RAM-DB guard fires
   or any per-command precondition fails: for
   <a href="#admin-users-add"><code>admin-users add</code></a>, when the discriminator
   selection is invalid or the resolved entry is already an admin; for
   <a href="#admin-users-delete"><code>admin-users delete</code></a>, when the discriminator
   selection is invalid or no admin matches the resolved query; for
   <a href="#admin-users-from-yaml"><code>admin-users from-yaml</code></a>, when an entry
-  fails its discriminator check.</li>
+  fails its discriminator check.</p>
+</li>
 </ul>
 <h3 id="admin-users-list"><code>admin-users list</code></h3>
 <p>Dump the current set of admin users from the installation's
@@ -8659,9 +8678,19 @@ rows.</p>
 </span><span id="__span-99-5"><a id="__codelineno-99-5" name="__codelineno-99-5" href="#__codelineno-99-5"></a>  2. DENY   everyone
 </span></code></pre></div>
 <ul>
-<li>Exit status is <code>0</code> on success (including when no policy row exists
+<li>
+<p>The group-level <code>--cli-log-config PATH</code> option (also read from the
+  <code>SOLIPLEX_CLI_LOG_CONFIG</code> environment variable) enables CLI audit
+  logging by applying the named Python logging-config YAML; without it,
+  the audit records these commands emit are suppressed so they don't
+  intermingle with the JSON / human output. See
+  <a href="../../config/logging/#cli-audit-logging">CLI Audit Logging</a>.</p>
+</li>
+<li>
+<p>Exit status is <code>0</code> on success (including when no policy row exists
   for the room), or <code>1</code> when the RAM-DB guard fires or <code>ROOM_ID</code>
-  doesn't match a configured room.</li>
+  doesn't match a configured room.</p>
+</li>
 </ul>
 <h3 id="room-authz-show"><code>room-authz show</code></h3>
 <p>Dump the current <code>RoomPolicy</code> for a single room without changing it.
