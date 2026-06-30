@@ -1336,6 +1336,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Sandbox Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uploaded-files-in-the-sandbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Uploaded files in the sandbox
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3335,6 +3352,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Sandbox Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uploaded-files-in-the-sandbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Uploaded files in the sandbox
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3777,6 +3811,21 @@ evaluated relative to the installation directory.</p>
   unset, transcripts are not saved.</p>
 </li>
 </ul>
+<h3 id="uploaded-files-in-the-sandbox">Uploaded files in the sandbox</h3>
+<p>When the top-level <code>rooms_upload_path</code> / <code>threads_upload_path</code> options are
+configured (these are installation-level options, not part of <code>sandbox_config</code>),
+the skill mounts the corresponding uploaded files into the sandbox
+<strong>read-only</strong>, as the <code>room</code> and <code>thread</code> volumes, and exposes their names
+through the <code>list_volume_files</code> tool. By design these are
+<strong>non-protected, availability-intended</strong> material: <strong>room uploads</strong> are
+admin-provided reference / context meant to be available to every room member
+(by download or via the sandbox), and <strong>thread uploads</strong> are provided by the
+thread's own user. Reads of them are therefore not separately audited.</p>
+<p>Nothing technically prevents an administrator from uploading information that
+<em>should</em> be protected. An installation that wants to remove that risk
+entirely can <strong>disable room uploads</strong> by leaving <code>rooms_upload_path</code> unset: the
+room-upload endpoint then returns <code>404</code> and no <code>room</code> volume is mounted into
+the sandbox.</p>
 <h2 id="room-configuration-paths">Room Configuration Paths</h2>
 <p>The <code>room_paths</code> element specify one or more filesystem paths to
 search for room configs.</p>
