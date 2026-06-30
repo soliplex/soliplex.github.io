@@ -3438,16 +3438,10 @@ for configuring an agent.</p>
 </span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
 </span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skill.rag&quot;</span>
 </span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">        </span><span class="nt">tool_names</span><span class="p">:</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;search&quot;</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;ask&quot;</span>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;get_document&quot;</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;list_documents&quot;</span>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;research&quot;</span>
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;analysis&quot;</span>
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skill.rag&quot;</span>
-</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;analysis&quot;</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skill.rag&quot;</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
 </span></code></pre></div>
 <h4 id="default-skill-configuration-kinds">Default Skill Configuration Kinds</h4>
 <p>Soliplex provides two such skill configuration classes by default:
@@ -3476,60 +3470,32 @@ configuring the RAG database and RAG client:</p>
   <code>haiku_rag_config</code>.</p>
 </li>
 </ul>
-<p>Skill configurations with the <code>kind</code> of <code>"haiku.rag.skill.rag"</code> have these
-additional options:</p>
-<ul>
-<li><code>tool_names</code> (a list of strings, from among this list:  <code>"search"</code>,
-  <code>"ask"</code>, <code>"list_documents"</code>, <code>"get_document"</code>, and <code>"research"</code>.
-  Defaults to <code>["search", "ask", "list_documents", "get_document"]</code>.</li>
-</ul>
-<p>Available tools:</p>
+<p>Skill configurations with the <code>kind</code> of <code>"haiku.rag.skill.rag"</code> give the
+agent the following RAG tools:</p>
 <ul>
 <li>
 <p><code>"search"</code> — semantic document search with multi-query expansion.
-    Gives the agent a <code>search</code> tool that returns ranked passages with
-    citations.</p>
+  Gives the agent a <code>search</code> tool that returns ranked passages with
+  citations.</p>
 </li>
 <li>
 <p><code>"list_documents"</code> — list the documents in the RAG database.</p>
 </li>
 <li>
 <p><code>"get_document"</code> — return the content of a single document in the
-    RAG database.</p>
+  RAG database.</p>
 </li>
 <li>
 <p><code>"ask"</code> — question-answering via a research graph.  Gives the agent
-    an <code>ask</code> tool that searches, synthesizes an answer with citations,
-    and caches results for similar follow-up questions.</p>
+  an <code>ask</code> tool that searches, synthesizes an answer with citations,
+  and caches results for similar follow-up questions.</p>
 </li>
 <li>
 <p><code>"research"</code> — deep research via a research graph. Gives the agent
-    a <code>research</code> tool that performs a more elaborate search, analysis,
-    and synthesis. Slower than the <code>ask</code> tool, and more expensive in
-    terms of token budget, but potentially produces a higher-quality
-    result.</p>
-</li>
-<li>
-<p><code>rag_features</code> (a list of strings) controls which haiku.rag toolsets
-  are enabled.  A deprecated alternative to <code>tool_names</code>:  each "features"
-  maps to one or more of the tools enumerated above.</p>
-</li>
-</ul>
-<p>Available features:</p>
-<ul>
-<li>
-<p><code>"search"</code> — equivalent to the <code>search</code> tool above.</p>
-</li>
-<li>
-<p><code>"documents"</code> — equivalent to the <code>list_documents</code> and <code>get_document</code>
-    tools above.</p>
-</li>
-<li>
-<p><code>"qa"</code> — equivalent to the <code>ask</code> tool above.</p>
-</li>
-<li>
-<p><code>"analysis"</code> — formerly equivalent to the <code>haiku.rag.skills.rml</code>
-    skill below.  This feature is no longer supported.</p>
+  a <code>research</code> tool that performs a more elaborate search, analysis,
+  and synthesis. Slower than the <code>ask</code> tool, and more expensive in
+  terms of token budget, but potentially produces a higher-quality
+  result.</p>
 </li>
 </ul>
 <p>The <code>haiku.rag.skills.analysis</code> skill gives the agent an <code>analyze</code> tool that
