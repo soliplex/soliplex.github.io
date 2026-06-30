@@ -1328,6 +1328,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sandbox-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Sandbox Configuration
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#room-configuration-paths" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3316,6 +3327,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sandbox-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Sandbox Configuration
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#room-configuration-paths" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3721,6 +3743,40 @@ skills found earlier in the list "win" over later ones with the same name.</p>
 </span></code></pre></div>
 <p>Discovered skills which are not mentioned in this stanza cannot be
 referenced by other parts of the configuration, e.g. rooms.</p>
+<h2 id="sandbox-configuration">Sandbox Configuration</h2>
+<p>The <code>sandbox_config</code> stanza configures the bubblewrap sandbox that backs the
+<code>bubble-sandbox</code> skill (shell / Python execution). Non-absolute paths are
+evaluated relative to the installation directory.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">sandbox_config</span><span class="p">:</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="nt">environments_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/environments</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">workdirs_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/workdirs</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="nt">transcripts_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/transcripts</span>
+</span></code></pre></div>
+<ul>
+<li>
+<p><code>environments_path</code> (required) -- directory whose subdirectories are
+  selectable sandbox environments. To qualify, a subdirectory must contain
+  both a <code>pyproject.toml</code> and a <code>.venv</code> initialized from it.</p>
+</li>
+<li>
+<p><code>workdirs_path</code> (optional) -- root for each run's working directory, named
+  <code>&lt;room_id&gt;/&lt;thread_id&gt;/&lt;run_id&gt;</code>. This directory is mounted <strong>read-write</strong>
+  into the sandbox as the execution working directory. If unset, a temporary
+  directory is used and discarded after the run.</p>
+</li>
+<li>
+<p><code>transcripts_path</code> (optional) -- root under which each <code>run</code> / <code>run_python</code>
+  execution's command line or Python script is saved (under the same
+  <code>&lt;room_id&gt;/&lt;thread_id&gt;/&lt;run_id&gt;</code> layout, with a UUID-based filename), so that
+  a reviewer can recover exactly what was executed. Unlike <code>workdirs_path</code>,
+  this directory is <strong>never mounted into the sandbox</strong>, so executed code can
+  neither read nor tamper with the saved transcripts. The saved files hold the
+  raw (possibly sensitive) command / script content, so treat them as audit
+  artifacts: protect them at least as strongly as uploaded files, and retain
+  or prune them per your audit policy -- separately from <code>workdirs_path</code>. If
+  unset, transcripts are not saved.</p>
+</li>
+</ul>
 <h2 id="room-configuration-paths">Room Configuration Paths</h2>
 <p>The <code>room_paths</code> element specify one or more filesystem paths to
 search for room configs.</p>
@@ -3743,12 +3799,12 @@ is used for any conflict on room ID:  rooms found earlier in the list
 "win" over later ones with the same ID.</p>
 <p>By default, Soliplex loads room configurations found under the path './rooms',
 just as though we had configured:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">room_paths</span><span class="p">:</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./rooms&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">room_paths</span><span class="p">:</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./rooms&quot;</span>
 </span></code></pre></div>
 <p>To disable all rooms, list a single, "null" path, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">room_paths</span><span class="p">:</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">   </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">room_paths</span><span class="p">:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">   </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 <h2 id="completion-configuration-paths">Completion Configuration Paths</h2>
 <p>The <code>completion_paths</code> stanza specifies one or more filesystem paths to
@@ -3772,12 +3828,12 @@ configuration is used for any conflict on completion ID:  completions
 found earlier in the list "win" over later ones with the same ID.</p>
 <p>By default, Soliplex loads completion configurations found under the path
 './completions', just as though we had configured:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./completions&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./completions&quot;</span>
 </span></code></pre></div>
 <p>To disable all completions, list a single, "null" path, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 <h2 id="logfire-configuration">Logfire Configuration</h2>
 <p>See the <a href="../logfire/">Soliplex logfire configuration</a> page.</p>
