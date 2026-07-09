@@ -876,6 +876,8 @@
       
         
       
+        
+      
     
     
     
@@ -1388,6 +1390,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#asgi-middleware-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ASGI Middleware Stack
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1466,6 +1479,33 @@
     
   
   Meta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../middleware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Middleware
 
     
   </span>
@@ -3404,6 +3444,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#asgi-middleware-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ASGI Middleware Stack
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3501,6 +3552,8 @@
   
     
     
+      
+        
       
         
       
@@ -3886,6 +3939,13 @@ found earlier in the list "win" over later ones with the same ID.</p>
 </span></code></pre></div>
 <h2 id="logfire-configuration">Logfire Configuration</h2>
 <p>See the <a href="../logfire/">Soliplex logfire configuration</a> page.</p>
+<h2 id="asgi-middleware-stack">ASGI Middleware Stack</h2>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">middleware_stack</span><span class="p">:</span>
+</span></code></pre></div>
+<p>The optional <code>middleware_stack</code> section declares the ASGI middleware wrapping
+the application (outermost first). Omit it to use the built-in default stack
+(session + CORS).</p>
+<p>See the <a href="../middleware/">Soliplex middleware configuration</a> page.</p>
 
 
 

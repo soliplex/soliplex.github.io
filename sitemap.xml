@@ -64,6 +64,9 @@
         <loc>https://soliplex.github.io/soliplex/config/meta/</loc>
       </url>
       <url>
+        <loc>https://soliplex.github.io/soliplex/config/middleware/</loc>
+      </url>
+      <url>
         <loc>https://soliplex.github.io/soliplex/config/oidc_providers/</loc>
       </url>
       <url>

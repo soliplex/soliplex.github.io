@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://soliplex.github.io/soliplex/config/rooms/">
+        <link rel="canonical" href="https://soliplex.github.io/soliplex/config/middleware/">
       
       
-        <link rel="prev" href="../rag/">
+        <link rel="prev" href="../meta/">
       
       
-        <link rel="next" href="../secrets/">
+        <link rel="next" href="../oidc_providers/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Room Configuration Filesystem Layout - Soliplex</title>
+        <title>ASGI Middleware Stack - Soliplex</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#room-configuration-filesystem-layout" class="md-skip">
+        <a href="#asgi-middleware-stack" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Room Configuration Filesystem Layout
+              ASGI Middleware Stack
             
           </span>
         </div>
@@ -1166,10 +1166,36 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../middleware/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Middleware
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1184,6 +1210,60 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#middleware-factories" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Middleware factories
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Configuration
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Default stack
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1274,36 +1354,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Rooms
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../rooms/" class="md-nav__link">
         
   
   
@@ -1318,149 +1372,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#room-configuration-file-schema" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Room Configuration File Schema
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Room Configuration File Schema">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#required-room-elements" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Required room elements
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#optional-room-elements-ui-related" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Optional room elements (UI-related)
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#agent-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Agent configuration
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tool-configurations" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Tool Configurations
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mcp-client-toolsets" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        MCP Client Toolsets
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#skill-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Skill Configuration
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Skill Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#default-skill-configuration-kinds" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Default Skill Configuration Kinds
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#quiz-related-elements" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Quiz-related elements
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#location-of-rag-database-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Location of RAG database files
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3014,121 +2925,32 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#room-configuration-file-schema" class="md-nav__link">
+  <a href="#middleware-factories" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Room Configuration File Schema
+        Middleware factories
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Room Configuration File Schema">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#required-room-elements" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Required room elements
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#optional-room-elements-ui-related" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Optional room elements (UI-related)
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#agent-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Agent configuration
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tool-configurations" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Tool Configurations
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mcp-client-toolsets" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        MCP Client Toolsets
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#skill-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Skill Configuration
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Skill Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#default-skill-configuration-kinds" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Default Skill Configuration Kinds
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#quiz-related-elements" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Quiz-related elements
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#location-of-rag-database-files" class="md-nav__link">
+  <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Location of RAG database files
+        Configuration
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Default stack
       </span>
     </span>
   </a>
@@ -3296,264 +3118,78 @@
   
 
 
-<h1 id="room-configuration-filesystem-layout">Room Configuration Filesystem Layout</h1>
-<p>A room is configured via a directory, whose name is the room ID.</p>
-<p><strong>NOTE:</strong> directories whose names start with '.' are ignored.</p>
-<p>Within that directory should be one or two files:</p>
+<h1 id="asgi-middleware-stack">ASGI Middleware Stack</h1>
+<p>The <code>middleware_stack</code> section of an installation configuration declares the
+ASGI middleware that wraps the Soliplex application. It is an ordered list:
+the <strong>first entry is the outermost layer</strong> (it sees a request first and a
+response last), and the last entry sits closest to the application.</p>
+<p>If you omit <code>middleware_stack</code> entirely, Soliplex installs a built-in
+<a href="#default-stack">default stack</a>. Providing your own list <strong>replaces</strong> that
+default outright, so include session / CORS middleware yourself if you still
+want them.</p>
+<h2 id="middleware-factories">Middleware factories</h2>
+<p>Each entry names an <code>app_factory</code>: a Python "dotted name" which is imported
+and called to wrap the application. A factory receives the application (an
+ASGI app, or the middleware wrapping it) as its first positional argument and
+returns the wrapped result:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">app_factory</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_params</span><span class="p">):</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">...</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">return</span> <span class="n">app</span>
+</span></code></pre></div>
+<p>If a factory declares a keyword-only <code>installation_config</code> parameter, it is
+passed the resolved <a href="../installation/"><code>InstallationConfig</code></a> — for example to
+look up <a href="../secrets/">secrets</a> or <a href="../environment/">environment</a> values:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">app_factory</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">installation_config</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_params</span><span class="p">):</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="o">...</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">return</span> <span class="n">app</span>
+</span></code></pre></div>
+<p>Whether the installation config is injected is detected automatically from
+the factory's signature, so <code>installation_config</code> must be a real keyword-only
+parameter (not absorbed by <code>**kwargs</code>).</p>
+<h2 id="configuration">Configuration</h2>
+<p>Each list entry accepts:</p>
 <ul>
 <li>
-<p><code>room_config.yaml</code> holds metadata about the room (see below)</p>
+<p><code>name</code>, a string labelling the middleware (for diagnostics).</p>
 </li>
 <li>
-<p><code>prompt.txt</code> (if present) holds the system prompt for conversations
-  which are initiated from the room.</p>
+<p><code>app_factory</code>, the dotted name of the factory described above.</p>
+</li>
+<li>
+<p><code>extra_params</code> (optional), a mapping forwarded to the factory as keyword
+  arguments.</p>
 </li>
 </ul>
-<p>Example layout without external prompt file:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="l l-Scalar l-Scalar-Plain">simple/</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">room_config.yaml</span>
+<p>Example:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">middleware_stack</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;session&quot;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">app_factory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.main.app_with_session&quot;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cors&quot;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">app_factory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.main.app_with_cors&quot;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">extra_params</span><span class="p">:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">allow_origins</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;*&quot;</span><span class="p p-Indicator">]</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="nt">allow_credentials</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="nt">allow_methods</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;*&quot;</span><span class="p p-Indicator">]</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="nt">allow_headers</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;*&quot;</span><span class="p p-Indicator">]</span>
 </span></code></pre></div>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="l l-Scalar l-Scalar-Plain">chat/</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">prompt.txt</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">room_config.yaml</span>
-</span></code></pre></div>
-<h2 id="room-configuration-file-schema">Room Configuration File Schema</h2>
-<h3 id="required-room-elements">Required room elements</h3>
-<p>The <code>room_config.yaml</code>  file should be a mapping, with at least
-the following required elements:</p>
+<h2 id="default-stack">Default stack</h2>
+<p>When <code>middleware_stack</code> is omitted, Soliplex uses
+<code>soliplex.main.default_middleware_stack()</code>, which is equivalent to the example
+above:</p>
 <ul>
 <li>
-<p><code>id</code> (a string) should match the name of the room's directory.</p>
+<p><code>soliplex.main.app_with_session</code> (outermost) — adds Starlette's
+  <code>SessionMiddleware</code>. It reads the <code>SESSION_MIDDLEWARE_TOKEN</code> secret from the
+  installation config for the cookie's signing key, and marks the cookie
+  <code>Secure</code> unless the server was started with <code>--insecure-session-cookie</code>.</p>
 </li>
 <li>
-<p><code>name</code> (a string) is the "title" of the room, as would be shown in a list.</p>
-</li>
-<li>
-<p><code>description</code> (a string) tells the purpose of the room:  it might show up
-  as the "lede" graph (below the <code>name</code>) in a list of rooms.</p>
-</li>
-<li>
-<p><code>agent</code> (a mapping, see next section)</p>
+<p><code>soliplex.main.app_with_cors</code> — adds FastAPI's <code>CORSMiddleware</code> with a
+  permissive configuration drawn from its <code>extra_params</code>.</p>
 </li>
 </ul>
-<p>A minimal room configuration must include the above elements, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;chat&quot;</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Chatting</span><span class="nv"> </span><span class="s">Darkly&quot;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Scanning</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">conversations&quot;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nt">agent</span><span class="p">:</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nt">system_prompt</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="no">You are an..... #</span>
-</span></code></pre></div>
-<h3 id="optional-room-elements-ui-related">Optional room elements (UI-related)</h3>
-<ul>
-<li><code>welcome_message</code> (a string), for the UI to display when the user
-  enters a room.  E.g.:</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">welcome_message</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="no">Welcome to the room.  We hope you find it useful</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="no">Please review the suggestions below for ideas on the kinds</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="no">of questions for which this room is intended.</span>
-</span></code></pre></div>
-<ul>
-<li><code>suggestions</code> (a list of strings) contains possible "starter questions"
-  for the room, which the UI might display as shortcuts when the user
-  enters the room.  E.g.:</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">suggestions</span><span class="p">:</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;How</span><span class="nv"> </span><span class="s">high</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">up?&quot;</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Why</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">sky</span><span class="nv"> </span><span class="s">blue?&quot;</span>
-</span></code></pre></div>
-<ul>
-<li><code>enable_attachments</code> (a boolean, default <code>False</code>), which, if true,
-  tells the UI to allow the user to attach files to a prompt. E.g.:</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">enable_attachments</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span></code></pre></div>
-<ul>
-<li>
-<p><code>agui_feature_names</code> (list of strings); if set these values are added
-  to the feature names defined on the room's agent, tools, and skills
-  to create an aggregate set for the room.  Each name must resolve to a
-  registered AG-UI feature; see <a href="../agui/">AG-UI Features</a>.</p>
-</li>
-<li>
-<p><code>logo_image</code> (a string, default unset) is a path to an image file that
-  the UI can display as the room's logo.  Relative paths are resolved
-  against the room's configuration directory.  The image is served via
-  the <code>/v1/rooms/{room_id}/image</code> endpoint.  E.g.:</p>
-</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">logo_image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./logo.png&quot;</span>
-</span></code></pre></div>
-<ul>
-<li><code>_order</code> (a string, default unset) overrides the sort key used when
-  listing rooms.  When unset, rooms are sorted by their <code>id</code>.  This is
-  an advanced escape hatch -- note the leading underscore in the YAML
-  key, which is deliberate to mark it as an internal override rather
-  than a normal user-facing option.  E.g., to make a room appear first
-  in a list regardless of its <code>id</code>:</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">_order</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;000-welcome&quot;</span>
-</span></code></pre></div>
-<h3 id="agent-configuration">Agent configuration</h3>
-<p>The <code>agent</code> mapping is used to configure the Pydantic AI agent used to
-make the room's calls to the LLM.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">agent</span><span class="p">:</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="nt">model_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-oss:latest&quot;</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">system_prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./prompt.txt&quot;</span>
-</span></code></pre></div>
-<p>Please see <a href="../agents/">this page</a> for a full description of the options
-for configuring an agent.</p>
-<h3 id="tool-configurations">Tool Configurations</h3>
-<ul>
-<li><code>tools</code> should be a list of mappings, with at least the key
-  <code>tool_name</code>, whose value is a dotted name identifying a Python function
-   (or callable) which can serve as a "tool" for the LLM.  E.g.:</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">tools</span><span class="p">:</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tool_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.tools.get_current_datetime&quot;</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tool_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.tools.get_current_user&quot;</span>
-</span></code></pre></div>
-<p>Each tool mapping can contain additional elements, which are used to
-  configure the tool's behavior.</p>
-<h3 id="mcp-client-toolsets">MCP Client Toolsets</h3>
-<ul>
-<li>
-<p><code>mcp_client_toolsets</code> should be a mapping of toolset name to a toolset
-  configuration.  Each configuration selects a transport via its <code>kind</code>:</p>
-</li>
-<li>
-<p><code>"stdio"</code> runs an MCP server as a subprocess, configured with
-    <code>command</code>, <code>args</code>, and <code>env</code>.</p>
-</li>
-<li>
-<p><code>"http"</code> or <code>"sse"</code> connect to a remote MCP server, configured with
-    <code>url</code>, <code>headers</code>, and <code>query_params</code>.</p>
-</li>
-</ul>
-<p>Any configuration may also set <code>allowed_tools</code> (a list of strings) to
-  restrict which of the server's tools are exposed.  E.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">mcp_client_toolsets</span><span class="p">:</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">google_maps</span><span class="p">:</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;stdio&quot;</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;npx&quot;</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="nt">args</span><span class="p">:</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-y&quot;</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;@modelcontextprotocol/server-google-maps&quot;</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">      </span><span class="nt">GOOGLE_MAPS_API_KEY</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;secret:GOOGLE_MAPS_API_KEY&quot;</span>
-</span></code></pre></div>
-<p>String values in these fields can interpolate installation secrets and
-  environment variables; see <a href="../installation/#installation-secret-environment-interpolation">Installation Secret / Environment
-  Interpolation</a>.</p>
-<h3 id="skill-configuration">Skill Configuration</h3>
-<ul>
-<li>
-<p><code>installation_skill_names</code> (a list of strings, default empty);  if set,
-  names the installation skills which are enabled for the room.</p>
-</li>
-<li>
-<p><code>skill_configs</code> (a list of mappings, default empty); if set, configue
-  skills locally to the room.</p>
-</li>
-</ul>
-<p>E.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">skills</span><span class="p">:</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">installation_skill_names</span><span class="p">:</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;bare-bones&quot;</span><span class="w">           </span><span class="c1"># a filesytem skill</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;image-generation&quot;</span><span class="w">     </span><span class="c1"># an entrypoint skill</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="nt">skill_configs</span><span class="p">:</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skill.rag&quot;</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;analysis&quot;</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skill.rag&quot;</span>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
-</span></code></pre></div>
-<h4 id="default-skill-configuration-kinds">Default Skill Configuration Kinds</h4>
-<p>Soliplex provides two such skill configuration classes by default:
-one of kind <code>haiku.rag.skill.rag</code> and one of kind
-<code>haiku.rag.skill.analysis</code>.  Both of these configurations have options for
-configuring the RAG database and RAG client:</p>
-<ul>
-<li>
-<p>One of the following (exactly one must be provided):</p>
-</li>
-<li>
-<p><code>rag_lancedb_stem</code>: a string, the "base name" (without path or
-    <code>.lancedb</code> suffix) of the LanceDB file containing the RAG document
-    data.  This file must exist in the standard location (typically
-    under the <code>db/rag/</code> directory; see <a href="../rooms/">rooms</a> for details).</p>
-</li>
-<li>
-<p><code>rag_lancedb_override_path</code>: a string, a fully-qualified pathname,
-    including the suffix, of the LanceDB directory.</p>
-</li>
-<li>
-<p><code>haiku_rag_config</code>: a path to the <code>haiku.rag.yaml</code> file used to configure
-  the RAG client.  If not absolute, this path is resolved relative to
-  the directory containing the room configuration file.  If passed,
-  values from this file are overlaid on the the installation configuration's
-  <code>haiku_rag_config</code>.</p>
-</li>
-</ul>
-<p>Skill configurations with the <code>kind</code> of <code>"haiku.rag.skill.rag"</code> give the
-agent the following RAG tools:</p>
-<ul>
-<li>
-<p><code>"search"</code> — semantic document search with multi-query expansion.
-  Gives the agent a <code>search</code> tool that returns ranked passages with
-  citations.</p>
-</li>
-<li>
-<p><code>"list_documents"</code> — list the documents in the RAG database.</p>
-</li>
-<li>
-<p><code>"get_document"</code> — return the content of a single document in the
-  RAG database.</p>
-</li>
-<li>
-<p><code>"ask"</code> — question-answering via a research graph.  Gives the agent
-  an <code>ask</code> tool that searches, synthesizes an answer with citations,
-  and caches results for similar follow-up questions.</p>
-</li>
-<li>
-<p><code>"research"</code> — deep research via a research graph. Gives the agent
-  a <code>research</code> tool that performs a more elaborate search, analysis,
-  and synthesis. Slower than the <code>ask</code> tool, and more expensive in
-  terms of token budget, but potentially produces a higher-quality
-  result.</p>
-</li>
-</ul>
-<p>The <code>haiku.rag.skills.analysis</code> skill gives the agent an <code>analyze</code> tool that
-iteratively writes and executes Python code in a Docker sandbox with
-access to <code>haiku.rag</code> functions (<code>search</code>, <code>list_documents</code>, <code>get_document</code>,
-<code>llm</code>, etc.).  Suited for aggregation, multi-document comparison, and
-structured data extraction.  Requires Docker.  This skill does not offer
-any additional options.</p>
-<h3 id="quiz-related-elements">Quiz-related elements</h3>
-<ul>
-<li><code>quizzes</code> is a list of mappings (default <code>()</code>):  each mapping defines a
-  quiz which can be run in the room (see <a href="../quizzes/">this page</a> for
-  details of the quiz dataset).</li>
-</ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">quizzes</span><span class="p">:</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test_quiz&quot;</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test</span><span class="nv"> </span><span class="s">Quiz&quot;</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">question_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/questions.json&quot;</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">randomize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nt">max_questions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-</span></code></pre></div>
-<h2 id="location-of-rag-database-files">Location of RAG database files</h2>
-<p>Rooms using the <code>haiku_chat</code> agent kind need to be able to find the
-LanceDB database containing the chunks and embeddings extracted by
-Haiku-RAG.  At present, there should be a single database per room,
-named by convention <code>&lt;stem&gt;.lancedb</code>, and stored in the <code>db/rag/</code>
-subdirectory of the project root.</p>
+<p>These two factories double as worked examples of the with- and
+without-<code>installation_config</code> factory shapes.</p>
 
 
 
@@ -3593,7 +3229,7 @@ subdirectory of the project root.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../rag/" class="md-footer__link md-footer__link--prev" aria-label="Previous: RAG">
+          <a href="../meta/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Meta">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3603,20 +3239,20 @@ subdirectory of the project root.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                RAG
+                Meta
               </div>
             </div>
           </a>
         
         
           
-          <a href="../secrets/" class="md-footer__link md-footer__link--next" aria-label="Next: Secrets">
+          <a href="../oidc_providers/" class="md-footer__link md-footer__link--next" aria-label="Next: OIDC Authentication">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Secrets
+                OIDC Authentication
               </div>
             </div>
             <div class="md-footer__button md-icon">
