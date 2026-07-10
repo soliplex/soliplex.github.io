@@ -15,7 +15,7 @@ nav = [
   { "Core Platform" = "@auto:soliplex" },
   { "Ingester" = "@auto:ingester" },
   { "User Interfaces" = [
-    { "Chatbot Widget" = "@auto:chatbot" },
+    { "Chatbot Widget" = "@auto:chatbot-widget" },
     { "Flutter UI" = "@auto:frontend" },
   ]},
   { "Supporting Tools" = [

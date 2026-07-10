@@ -111,13 +111,13 @@ Cross-platform mobile and desktop client application for Soliplex.
 - [Developer Setup Guide](frontend/developer-setup.md)
 - [State Bus Overview](frontend/state-bus.md)
 
-### [Chatbot Widget](chatbot/readme.md)
+### [Chatbot Widget](chatbot-widget/readme.md)
 
 Embeddable Next.js chat widget for integrating Soliplex into web applications.
 
 **Quick Links:**
-- [Documentation](chatbot/readme.md)
-- [Usage Guide](chatbot/usage.md)
+- [Documentation](chatbot-widget/readme.md)
+- [Usage Guide](chatbot-widget/usage.md)
 
 ## Supporting Tools
 
