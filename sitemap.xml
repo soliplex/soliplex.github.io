@@ -136,13 +136,13 @@
         <loc>https://soliplex.github.io/ingester/WORKFLOWS/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/chatbot/readme/</loc>
+        <loc>https://soliplex.github.io/chatbot-widget/readme/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/chatbot/plone-integration/</loc>
+        <loc>https://soliplex.github.io/chatbot-widget/plone-integration/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/chatbot/usage/</loc>
+        <loc>https://soliplex.github.io/chatbot-widget/usage/</loc>
       </url>
       <url>
         <loc>https://soliplex.github.io/frontend/developer-setup/</loc>
