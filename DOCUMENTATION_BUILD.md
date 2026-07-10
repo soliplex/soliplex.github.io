@@ -17,7 +17,7 @@ soliplex.github.io/
 │   ├── img/                       # Shared images (tracked)
 │   ├── soliplex/                  # Copied from projects/soliplex/docs/
 │   ├── ingester/                  # Copied from projects/ingester/docs/
-│   ├── chatbot/                   # Copied from projects/chatbot/docs/
+│   ├── chatbot-widget/           # Copied from projects/chatbot-widget/docs/
 │   ├── frontend/                  # Copied from projects/frontend/docs/
 │   ├── ingester-agents/           # Created from projects/ingester-agents/README.md
 │   ├── pdf-splitter/              # Created from projects/pdf-splitter/README.md

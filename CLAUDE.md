@@ -61,7 +61,7 @@ Location: `projects/` directory
 Each submodule is a separate git repository:
 - `projects/soliplex/` - Core platform docs
 - `projects/ingester/` - Document ingestion system
-- `projects/chatbot/` - Chat widget
+- `projects/chatbot-widget/` - Chat widget (repo: soliplex/chatbot; served at /chatbot-widget/ to avoid the repo's own /chatbot/ Pages site)
 - `projects/frontend/` - Flutter client
 - `projects/ingester-agents/` - Ingestion agents (README only)
 - `projects/pdf-splitter/` - PDF utilities (README only)
@@ -202,7 +202,7 @@ nav = [
   { "Home" = "index.md" },                  # literal local page
   { "Core Platform" = "@auto:soliplex" },   # auto-expanded from docs/soliplex/
   { "User Interfaces" = [
-    { "Chatbot Widget" = "@auto:chatbot" },
+    { "Chatbot Widget" = "@auto:chatbot-widget" },
     { "Flutter UI" = "@auto:frontend" },
   ]},
 ]
@@ -337,7 +337,7 @@ Or use the build script which does this automatically (unless `--no-update` is s
 |---------|------|---------------|--------|
 | soliplex | Full docs | `projects/soliplex/docs/` | ✅ |
 | ingester | Full docs | `projects/ingester/docs/` | ✅ |
-| chatbot | Full docs | `projects/chatbot/docs/` | ✅ |
+| chatbot | Full docs | `projects/chatbot-widget/docs/` | ✅ |
 | frontend | Full docs | `projects/frontend/docs/` | ✅ |
 | ingester-agents | README only | `projects/ingester-agents/README.md` | ✅ |
 | pdf-splitter | README only | `projects/pdf-splitter/README.md` | ✅ |
