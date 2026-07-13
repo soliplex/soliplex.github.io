@@ -4380,7 +4380,28 @@ saved as Markdown (<code>.md</code>) documents.</p>
 </span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MANIFEST_DIR</span><span class="o">=</span>/path/to/manifests
 </span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>si-agent<span class="w"> </span>serve
 </span></code></pre></div>
-<p>The server loads all manifests from the directory at startup, validates that all manifest IDs are unique, and registers cron jobs for manifests that have a <code>schedule</code> defined.</p>
+<p>The server loads all manifests from the directory at startup, validates that all manifest IDs are unique, and then:</p>
+<ul>
+<li><strong>Manifests with a <code>schedule</code></strong> are registered as cron jobs.</li>
+<li><strong>Manifests without a <code>schedule</code></strong> are run once at startup (a
+  fire-and-forget task), then never again unless triggered via the API.</li>
+</ul>
+<p><strong>Execution behavior:</strong></p>
+<ul>
+<li><strong>At most one manifest runs at a time.</strong> A process-global lock serializes
+  all manifest execution (scheduled runs, startup runs, and API-triggered
+  runs), so different manifests never run concurrently. This bounds resource
+  use, since a single manifest can already fan out across its components.</li>
+<li><strong>Overlapping schedules are dropped, not queued.</strong> If a cron fires while
+  any manifest is still running, that fire is skipped (logged) instead of
+  being queued behind the in-progress run. This prevents pile-ups from
+  frequent schedules or long-running loads. Startup runs and explicit API
+  calls instead wait for the lock rather than being skipped.</li>
+<li><strong>Single process only.</strong> Because the cron state and locks are held in
+  memory, scheduling relies on the server running as a single worker (see
+  <a href="#starting-the-server">Starting the Server</a>). If you run multiple server
+  instances, enable <code>SCHEDULER_ENABLED</code> on only one of them.</li>
+</ul>
 <h4 id="haiku-rag-loading">haiku-rag Loading</h4>
 <p>When <code>HAIKU_LOAD_ENABLED=true</code>, a haiku-rag load is queued after <strong>each</strong>
 manifest run (scheduled, startup, or CLI). The load indexes the documents
@@ -4545,10 +4566,15 @@ invocation with <code>si-agent manifest run &lt;path&gt; --load</code> / <code>-
 </span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>
 </span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a><span class="c1"># Development mode with auto-reload</span>
 </span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--reload
-</span><span id="__span-47-9"><a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a>
-</span><span id="__span-47-10"><a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a><span class="c1"># Production with multiple workers</span>
-</span><span id="__span-47-11"><a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--workers<span class="w"> </span><span class="m">4</span>
 </span></code></pre></div>
+<p><strong>The server always runs as a single worker process.</strong> The manifest
+scheduler keeps its cron state and execution locks in memory, so running
+multiple workers would make each worker register every cron and run every
+manifest independently, with no cross-process coordination. Multi-worker
+mode is therefore intentionally not exposed, and any <code>WEB_CONCURRENCY</code>
+environment variable is ignored. Scale out with multiple single-worker
+instances behind a load balancer instead (note that scheduling should only
+be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 <h3 id="authentication">Authentication</h3>
 <p>The server supports multiple authentication methods:</p>
 <h4 id="1-no-authentication-default">1. No Authentication (Default)</h4>
