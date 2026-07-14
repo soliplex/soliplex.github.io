@@ -4010,18 +4010,19 @@ against the downloaded files.</p>
 </span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
 </span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="c1"># Manifest scheduling (requires SCHEDULER_ENABLED=true)</span>
 </span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="nv">MANIFEST_DIR</span><span class="o">=</span>/path/to/manifests
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
-</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="c1"># haiku-rag loading (runs `haiku-ingester run-batch` after each manifest run)</span>
-</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="nv">HAIKU_LOAD_ENABLED</span><span class="o">=</span><span class="nb">false</span>
-</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>/var/lib/lancedb<span class="w">          </span><span class="c1"># holds &lt;source&gt;.lancedb per source</span>
-</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="nv">HAIKU_PATH</span><span class="o">=</span>/etc/haiku<span class="w">                  </span><span class="c1"># base dir for haiku-rag config files</span>
-</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="c1"># HAIKU_DEFAULT_CONFIG=haiku.rag.default.yaml   # config filename under HAIKU_PATH</span>
-</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="c1"># HAIKU_LOAD_COMMAND=haiku-ingester --config={haiku_cfg} run-batch --db={db}</span>
-</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="c1"># HAIKU_LOAD_TIMEOUT=1800</span>
-</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="c1"># HAIKU_LOAD_CWD=/var/lib/ingester     # subprocess working dir (default: inherit)</span>
-</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>
-</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="c1"># S3-compatible storage (for urls_file references using s3:// URLs)</span>
-</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="nv">S3_ENDPOINT_URL</span><span class="o">=</span>https://minio.example.com:9000
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="c1"># SCHEDULER_RECONCILE_CRON=&quot;*/1 * * * *&quot;   # how often the dir is rescanned</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="c1"># haiku-rag loading (runs `haiku-ingester run-batch` after each manifest run)</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="nv">HAIKU_LOAD_ENABLED</span><span class="o">=</span><span class="nb">false</span>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>/var/lib/lancedb<span class="w">          </span><span class="c1"># holds &lt;source&gt;.lancedb per source</span>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="nv">HAIKU_PATH</span><span class="o">=</span>/etc/haiku<span class="w">                  </span><span class="c1"># base dir for haiku-rag config files</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="c1"># HAIKU_DEFAULT_CONFIG=haiku.rag.default.yaml   # config filename under HAIKU_PATH</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="c1"># HAIKU_LOAD_COMMAND=haiku-ingester --config={haiku_cfg} run-batch --db={db}</span>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="c1"># HAIKU_LOAD_TIMEOUT=1800</span>
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="c1"># HAIKU_LOAD_CWD=/var/lib/ingester     # subprocess working dir (default: inherit)</span>
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="c1"># S3-compatible storage (for urls_file references using s3:// URLs)</span>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="nv">S3_ENDPOINT_URL</span><span class="o">=</span>https://minio.example.com:9000
 </span></code></pre></div>
 <p>See <a href="#haiku-rag-loading">haiku-rag Loading</a> for what these settings do.</p>
 <h3 id="git-cli-mode">Git CLI Mode</h3>
@@ -4382,10 +4383,27 @@ saved as Markdown (<code>.md</code>) documents.</p>
 </span></code></pre></div>
 <p>The server loads all manifests from the directory at startup, validates that all manifest IDs are unique, and then:</p>
 <ul>
-<li><strong>Manifests with a <code>schedule</code></strong> are registered as cron jobs.</li>
-<li><strong>Manifests without a <code>schedule</code></strong> are run once at startup (a
+<li><strong>Manifests with a <code>schedule</code></strong> are registered and run when their cron
+  expression is due.</li>
+<li><strong>Manifests without a <code>schedule</code></strong> are run once when first seen (a
   fire-and-forget task), then never again unless triggered via the API.</li>
 </ul>
+<p><strong>Hot-reloading schedules:</strong></p>
+<p>The manifest directory is rescanned on a fixed interval (every minute by
+default; configurable via <code>SCHEDULER_RECONCILE_CRON</code>), so changes take
+effect <strong>without restarting the server</strong>:</p>
+<ul>
+<li><strong>Added files</strong> are picked up on the next scan — new schedules register,
+  and new unscheduled manifests run once.</li>
+<li><strong>Removed files</strong> are unregistered and stop firing.</li>
+<li><strong>Edited <code>schedule</code> blocks</strong> are re-read; the manifest is rescheduled to
+  its new cron expression (the next fire is computed from the change time,
+  not backfilled). Adding a <code>schedule</code> to a previously unscheduled manifest
+  starts scheduling it; removing the <code>schedule</code> stops it.</li>
+</ul>
+<p>A manifest that is invalid or introduces a duplicate id mid-edit is skipped
+for that scan (logged) and retried on the next one, so a bad save never
+takes down the scheduler.</p>
 <p><strong>Execution behavior:</strong></p>
 <ul>
 <li><strong>At most one manifest runs at a time.</strong> A process-global lock serializes
