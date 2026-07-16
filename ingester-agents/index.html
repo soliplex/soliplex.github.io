@@ -3313,30 +3313,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#file-filtering" class="md-nav__link">
+  <a href="#file-typing-and-filtering" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        File Filtering
+        File Typing and Filtering
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="File Filtering">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#scm-agent_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        SCM Agent
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -3862,11 +3845,12 @@
 <h1 id="soliplex-agents">Soliplex Agents</h1>
 <p><a href="https://github.com/soliplex/ingester-agents/actions/workflows/soliplex.yaml"><img alt="CI" src="https://github.com/soliplex/ingester-agents/actions/workflows/soliplex.yaml/badge.svg" /></a></p>
 <p>Agents for collecting documents from multiple sources — local filesystems, WebDAV servers, web pages, and source code management platforms (GitHub, Gitea) — and writing them to a local download directory for downstream processing. Each document is written with a <code>.meta.json</code> sidecar capturing its MIME type and other metadata, and synchronization state is tracked locally so subsequent runs only fetch what changed.</p>
+<p>MIME types are detected from file <strong>content</strong> (via <a href="https://pypi.org/project/puremagic/">puremagic</a>) rather than trusting the filename extension, and the stored file is given the extension implied by its detected type. This means files with no extension (or the wrong one) are classified correctly and filtered consistently across every source. See <a href="#file-typing-and-filtering">File Typing and Filtering</a>.</p>
 <h2 id="features">Features</h2>
 <ul>
 <li><strong>Filesystem Agent (<code>fs</code>)</strong>: Ingest documents from local directories</li>
 <li>Recursive directory scanning</li>
-<li>MIME type detection</li>
+<li>Content-based MIME type detection (extension-less files supported)</li>
 <li>Configuration validation</li>
 <li>
 <p>Status checking to avoid re-ingesting unchanged files</p>
@@ -3876,7 +3860,7 @@
 </li>
 <li>Support for any WebDAV-compliant server (Nextcloud, ownCloud, SharePoint, etc.)</li>
 <li>Recursive directory scanning</li>
-<li>MIME type detection</li>
+<li>MIME type from the server <code>Content-Type</code> header, falling back to content sniffing</li>
 <li>Authentication support (username/password)</li>
 <li>Status checking to avoid re-ingesting unchanged files</li>
 <li>URL export for reviewing discovered files before ingestion</li>
@@ -3895,7 +3879,7 @@
 <p><strong>SCM Agent (<code>scm</code>)</strong>: Ingest files and issues from Git repositories</p>
 </li>
 <li>Support for GitHub and Gitea platforms</li>
-<li>Automatic file type filtering</li>
+<li>Content-based file type filtering (extension-less files supported)</li>
 <li>Issue ingestion with comments (rendered as Markdown)</li>
 <li>
 <p>Status checking to avoid re-ingesting unchanged files</p>
@@ -4349,13 +4333,19 @@ saved as Markdown (<code>.md</code>) documents.</p>
 <p>When <code>delete_stale: true</code> is set in a manifest's <code>config</code> block, the runner removes locally-stored documents that no longer appear in any of the manifest's components. This keeps the download directory in sync with the actual source data.</p>
 <p><strong>How it works:</strong></p>
 <ol>
-<li>All components execute sequentially, collecting every discovered URI and its hash</li>
-<li>After <strong>all</strong> components complete successfully, the consolidated URI set is compared against the local sync state for the source (all components in a manifest share one source, hence one download folder and state DB)</li>
-<li>Any document in local state whose URI is <strong>not</strong> in the consolidated set has its file, <code>.meta.json</code> sidecar, and state entry deleted.</li>
+<li>All components execute sequentially, collecting every discovered URI and its hash.</li>
+<li>After <strong>all</strong> components complete, the consolidated URI set is <em>reconciled against the actual download folder</em> for the source (all components in a manifest share one source, hence one download folder and state DB). Reconciliation is two-pass:</li>
+<li><strong>State pass:</strong> any document tracked in local state whose URI is <strong>not</strong> in the consolidated set has its file, <code>.meta.json</code> sidecar, and state entry deleted.</li>
+<li><strong>Disk sweep:</strong> the source download folder is then walked, and any file (plus its sidecar) that doesn't back a surviving URI is deleted — catching <em>orphans that were never tracked in state</em> (e.g. files left behind by an earlier run), not just files with a state row.</li>
 </ol>
+<p><strong>WebDAV 404 handling:</strong></p>
+<ul>
+<li>A WebDAV file that returns <strong>404 (Not Found)</strong> during download is treated as a definitive removal, not a transient error. When <code>delete_stale</code> is on, its local copy is deleted (via the reconcile above) even if it still appears in a stale listing. A 404 does <strong>not</strong> block the reconcile.</li>
+<li>This is distinct from <em>transient</em> errors (timeouts, 5xx) — see Safety below.</li>
+</ul>
 <p><strong>Safety:</strong></p>
 <ul>
-<li>If <strong>any</strong> component produces an error (exception or unknown type), <code>delete_stale</code> is <strong>skipped entirely</strong> for that manifest run. This prevents accidental deletions when the URI set is incomplete due to a failed component.</li>
+<li>If <strong>any</strong> component raises, hits an unknown type, or reports a <strong>transient per-file error</strong> (timeout / 5xx), <code>delete_stale</code> is <strong>skipped entirely</strong> for that manifest run. This prevents accidental deletions when the URI set may be incomplete. (A 404 is a removal signal, not a transient error, so it does not trigger this skip.)</li>
 <li>Components that succeed still have their documents ingested normally — only the stale deletion step is skipped.</li>
 </ul>
 <p><strong>Example:</strong></p>
@@ -4373,7 +4363,7 @@ saved as Markdown (<code>.md</code>) documents.</p>
 </span><span id="__span-37-12"><a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://webdav.example.com</span>
 </span><span id="__span-37-13"><a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/shared/docs</span>
 </span></code></pre></div>
-<p>If a file is removed from <code>/data/docs</code> or from the WebDAV server, the next manifest run will detect that its URI is no longer present and delete it from the download directory.</p>
+<p>If a file is removed from <code>/data/docs</code> or from the WebDAV server (dropped from the listing, or returning 404 on fetch), the next manifest run detects that its URI is no longer present and deletes it — and its sidecar — from the download directory.</p>
 <p><strong>Note:</strong> SCM components using <code>incremental: true</code> only return files changed since the last sync, not the full file listing. When <code>delete_stale</code> is enabled with incremental SCM components, the stale detection may not have complete URI coverage for those components. Consider using full inventory mode (<code>incremental: false</code>) when <code>delete_stale</code> is needed with SCM sources.</p>
 <h4 id="scheduling">Scheduling</h4>
 <p>When the REST API server is started with <code>SCHEDULER_ENABLED=true</code> and <code>MANIFEST_DIR</code> is set, manifests with a <code>schedule</code> block are automatically registered as cron jobs:</p>
@@ -4473,9 +4463,9 @@ invocation with <code>si-agent manifest run &lt;path&gt; --load</code> / <code>-
 <li>Filesystem/WebDAV/Web sources: SHA256 hash</li>
 <li>SCM sources: SHA3-256 hash for files, SHA256 for issues</li>
 <li><strong>Status Check</strong>: The system checks which files are new or changed against the local sync state, so only new or changed files are processed</li>
-<li><strong>Write</strong>: Each file is written to <code>&lt;DOWNLOAD_DIR&gt;/&lt;source&gt;/&lt;source-relative-path&gt;</code>, with a <code>&lt;filename&gt;.meta.json</code> sidecar containing its MIME type and other metadata</li>
+<li><strong>Write</strong>: Each file is written to <code>&lt;DOWNLOAD_DIR&gt;/&lt;source&gt;/&lt;source-relative-path&gt;</code>, with a <code>&lt;filename&gt;.meta.json</code> sidecar containing its MIME type and other metadata. The stored filename is given the extension implied by its detected MIME type (added when missing, replaced when it mismatches, left alone when already correct) — see <a href="#file-typing-and-filtering">File Typing and Filtering</a></li>
 <li><strong>State Update</strong>: Content hashes (and, for SCM, the latest commit SHA) are recorded in local state</li>
-<li><strong>Stale Removal</strong> (optional): When <code>delete_stale</code> is enabled, documents no longer present in the source are deleted from the download directory</li>
+<li><strong>Stale Removal</strong> (optional): When <code>delete_stale</code> is enabled, the download folder is reconciled against the source — documents no longer present (dropped from the listing, or 404 on fetch) are deleted, along with untracked orphan files (see <a href="#stale-document-removal">Stale Document Removal</a>)</li>
 <li><strong>haiku-rag Load</strong> (optional): When <code>HAIKU_LOAD_ENABLED</code> is set, the downloaded documents are indexed into a per-source LanceDB database via <code>haiku-ingester</code> (see <a href="#haiku-rag-loading">haiku-rag Loading</a>)</li>
 </ol>
 <h3 id="incremental-sync-scm-agent">Incremental Sync (SCM Agent)</h3>
@@ -4489,18 +4479,50 @@ invocation with <code>si-agent manifest run &lt;path&gt; --load</code> / <code>-
 <li><strong>State Update</strong>: Stores the latest commit SHA locally for subsequent syncs</li>
 </ol>
 <p>This approach reduces API calls and bandwidth by 80-95% compared to full repository scans. On first run (or after reset), a full sync is performed to establish the baseline.</p>
-<h3 id="file-filtering">File Filtering</h3>
-<p>Both agents filter files by the <code>EXTENSIONS</code> configuration. The default extensions are: <code>md</code>, <code>pdf</code>, <code>doc</code>, <code>docx</code>.</p>
-<p>To add more types:</p>
+<h3 id="file-typing-and-filtering">File Typing and Filtering</h3>
+<p>MIME types are determined from file <strong>content</strong>, not the filename. Detection
+resolves in this order:</p>
+<ol>
+<li><strong>Explicit <code>Content-Type</code> header</strong> (WebDAV only — the GET response header,
+   or the PROPFIND <code>getcontenttype</code> property), unless it is generic
+   (<code>application/octet-stream</code>).</li>
+<li><strong>Content sniffing</strong> via <a href="https://pypi.org/project/puremagic/">puremagic</a>,
+   which recognises binary formats (PDF, PNG, Office documents, …) by their
+   magic bytes.</li>
+<li><strong>Filename extension</strong> via the standard library, plus overrides for Office
+   and text formats.</li>
+<li><strong>Plain-text default</strong> (filesystem and git only): an extension-less file
+   whose bytes look like UTF-8 text is treated as <code>text/plain</code>. WebDAV does
+   <strong>not</strong> apply this default — it relies on the server-provided type.</li>
+<li>Otherwise <code>application/octet-stream</code>.</li>
+</ol>
+<p>Once typed, the document is written with the extension implied by its MIME
+type (e.g. an extension-less PDF is stored as <code>&lt;name&gt;.pdf</code>; an extension-less
+text file on the fs/git agents is stored as <code>&lt;name&gt;.txt</code>).</p>
+<p><strong>Detect-then-filter.</strong> Files are filtered by the <code>EXTENSIONS</code> configuration
+against their <strong>detected</strong> type, not their original filename. The default
+extensions are <code>md</code>, <code>pdf</code>, <code>doc</code>, <code>docx</code>. Extension-less files are no longer
+skipped up front — they are read/downloaded, classified by content, and only
+then filtered. A file survives when the extension implied by its detected MIME
+type is in <code>EXTENSIONS</code>.</p>
+<p>To add more types (for example, to keep extension-less text files, whose
+detected type is <code>text/plain</code> → <code>txt</code>):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">EXTENSIONS</span><span class="o">=</span>md,pdf,doc,docx,txt,rst
 </span></code></pre></div>
-<p>It also validates that files have supported content types and rejects:
-- ZIP archives
-- RAR archives
-- 7z archives
-- Generic binary files without proper MIME types</p>
-<h4 id="scm-agent_1">SCM Agent</h4>
-<p>The SCM agent only includes files with extensions specified in the <code>EXTENSIONS</code> configuration (default: <code>md</code>, <code>pdf</code>, <code>doc</code>, <code>docx</code>).</p>
+<blockquote>
+<p><strong>Note:</strong> puremagic identifies binary formats by signature but cannot
+recognise plain text or Markdown (which have no magic bytes); those still
+resolve via their extension or, on the fs/git agents, the <code>text/plain</code>
+default above.</p>
+</blockquote>
+<p>The <code>validate-config</code> / <code>check-status</code> commands additionally reject files
+whose recorded content type is an archive or opaque binary:</p>
+<ul>
+<li>ZIP archives</li>
+<li>RAR archives</li>
+<li>7z archives</li>
+<li>Generic binary files without proper MIME types</li>
+</ul>
 <h3 id="issues-as-documents">Issues as Documents</h3>
 <p>For SCM sources, issues (including their comments) are rendered as Markdown documents and ingested alongside repository files. This enables full-text search and analysis of issue discussions.</p>
 <h2 id="examples">Examples</h2>
@@ -5001,35 +5023,36 @@ required credentials (<code>scm_auth_token</code>, <code>WEBDAV_URL</code>/<code
 </span><span id="__span-64-17"><a id="__codelineno-64-17" name="__codelineno-64-17" href="#__codelineno-64-17"></a>│   ├── common/              # Shared utilities
 </span><span id="__span-64-18"><a id="__codelineno-64-18" name="__codelineno-64-18" href="#__codelineno-64-18"></a>│   │   ├── urls_file.py     # URL list reader (local, S3, WebDAV)
 </span><span id="__span-64-19"><a id="__codelineno-64-19" name="__codelineno-64-19" href="#__codelineno-64-19"></a>│   │   ├── s3.py            # S3 object reader
-</span><span id="__span-64-20"><a id="__codelineno-64-20" name="__codelineno-64-20" href="#__codelineno-64-20"></a>│   │   └── config.py        # MIME type detection, config helpers
-</span><span id="__span-64-21"><a id="__codelineno-64-21" name="__codelineno-64-21" href="#__codelineno-64-21"></a>│   ├── fs/                 # Filesystem agent
-</span><span id="__span-64-22"><a id="__codelineno-64-22" name="__codelineno-64-22" href="#__codelineno-64-22"></a>│   │   ├── app.py          # Core filesystem logic
-</span><span id="__span-64-23"><a id="__codelineno-64-23" name="__codelineno-64-23" href="#__codelineno-64-23"></a>│   │   └── cli.py          # Filesystem CLI commands
-</span><span id="__span-64-24"><a id="__codelineno-64-24" name="__codelineno-64-24" href="#__codelineno-64-24"></a>│   ├── web/                # Web agent
-</span><span id="__span-64-25"><a id="__codelineno-64-25" name="__codelineno-64-25" href="#__codelineno-64-25"></a>│   │   └── app.py          # Core web fetching logic
-</span><span id="__span-64-26"><a id="__codelineno-64-26" name="__codelineno-64-26" href="#__codelineno-64-26"></a>│   ├── webdav/             # WebDAV agent
-</span><span id="__span-64-27"><a id="__codelineno-64-27" name="__codelineno-64-27" href="#__codelineno-64-27"></a>│   │   ├── app.py          # Core WebDAV logic
-</span><span id="__span-64-28"><a id="__codelineno-64-28" name="__codelineno-64-28" href="#__codelineno-64-28"></a>│   │   └── cli.py          # WebDAV CLI commands
-</span><span id="__span-64-29"><a id="__codelineno-64-29" name="__codelineno-64-29" href="#__codelineno-64-29"></a>│   ├── manifest/           # Manifest runner
-</span><span id="__span-64-30"><a id="__codelineno-64-30" name="__codelineno-64-30" href="#__codelineno-64-30"></a>│   │   ├── runner.py       # YAML loading, validation, dispatch
-</span><span id="__span-64-31"><a id="__codelineno-64-31" name="__codelineno-64-31" href="#__codelineno-64-31"></a>│   │   └── cli.py          # Manifest CLI commands
-</span><span id="__span-64-32"><a id="__codelineno-64-32" name="__codelineno-64-32" href="#__codelineno-64-32"></a>│   └── scm/                # SCM agent
-</span><span id="__span-64-33"><a id="__codelineno-64-33" name="__codelineno-64-33" href="#__codelineno-64-33"></a>│       ├── app.py          # Core SCM logic
-</span><span id="__span-64-34"><a id="__codelineno-64-34" name="__codelineno-64-34" href="#__codelineno-64-34"></a>│       ├── cli.py          # SCM CLI commands
-</span><span id="__span-64-35"><a id="__codelineno-64-35" name="__codelineno-64-35" href="#__codelineno-64-35"></a>│       ├── base.py         # Base SCM provider interface
-</span><span id="__span-64-36"><a id="__codelineno-64-36" name="__codelineno-64-36" href="#__codelineno-64-36"></a>│       ├── github/         # GitHub implementation
-</span><span id="__span-64-37"><a id="__codelineno-64-37" name="__codelineno-64-37" href="#__codelineno-64-37"></a>│       ├── gitea/          # Gitea implementation
-</span><span id="__span-64-38"><a id="__codelineno-64-38" name="__codelineno-64-38" href="#__codelineno-64-38"></a>│       └── lib/
-</span><span id="__span-64-39"><a id="__codelineno-64-39" name="__codelineno-64-39" href="#__codelineno-64-39"></a>│           ├── templates/  # Issue rendering templates
-</span><span id="__span-64-40"><a id="__codelineno-64-40" name="__codelineno-64-40" href="#__codelineno-64-40"></a>│           └── utils.py    # Utility functions
-</span><span id="__span-64-41"><a id="__codelineno-64-41" name="__codelineno-64-41" href="#__codelineno-64-41"></a>├── example-manifests/      # Example manifests (fs, scm, web, webdav, composite, delete-stale)
-</span><span id="__span-64-42"><a id="__codelineno-64-42" name="__codelineno-64-42" href="#__codelineno-64-42"></a>├── tests/                  # Test suite
-</span><span id="__span-64-43"><a id="__codelineno-64-43" name="__codelineno-64-43" href="#__codelineno-64-43"></a>│   └── unit/
-</span><span id="__span-64-44"><a id="__codelineno-64-44" name="__codelineno-64-44" href="#__codelineno-64-44"></a>│       ├── test_server_*.py  # Server API tests
-</span><span id="__span-64-45"><a id="__codelineno-64-45" name="__codelineno-64-45" href="#__codelineno-64-45"></a>│       └── ...
-</span><span id="__span-64-46"><a id="__codelineno-64-46" name="__codelineno-64-46" href="#__codelineno-64-46"></a>├── Dockerfile              # Production container
-</span><span id="__span-64-47"><a id="__codelineno-64-47" name="__codelineno-64-47" href="#__codelineno-64-47"></a>├── .dockerignore           # Build context exclusions
-</span><span id="__span-64-48"><a id="__codelineno-64-48" name="__codelineno-64-48" href="#__codelineno-64-48"></a>└── DOCKERFILE_CHANGES.md   # Docker implementation documentation
+</span><span id="__span-64-20"><a id="__codelineno-64-20" name="__codelineno-64-20" href="#__codelineno-64-20"></a>│   │   ├── mime.py          # Content-based MIME detection + extension logic
+</span><span id="__span-64-21"><a id="__codelineno-64-21" name="__codelineno-64-21" href="#__codelineno-64-21"></a>│   │   └── config.py        # Inventory read/validate helpers
+</span><span id="__span-64-22"><a id="__codelineno-64-22" name="__codelineno-64-22" href="#__codelineno-64-22"></a>│   ├── fs/                 # Filesystem agent
+</span><span id="__span-64-23"><a id="__codelineno-64-23" name="__codelineno-64-23" href="#__codelineno-64-23"></a>│   │   ├── app.py          # Core filesystem logic
+</span><span id="__span-64-24"><a id="__codelineno-64-24" name="__codelineno-64-24" href="#__codelineno-64-24"></a>│   │   └── cli.py          # Filesystem CLI commands
+</span><span id="__span-64-25"><a id="__codelineno-64-25" name="__codelineno-64-25" href="#__codelineno-64-25"></a>│   ├── web/                # Web agent
+</span><span id="__span-64-26"><a id="__codelineno-64-26" name="__codelineno-64-26" href="#__codelineno-64-26"></a>│   │   └── app.py          # Core web fetching logic
+</span><span id="__span-64-27"><a id="__codelineno-64-27" name="__codelineno-64-27" href="#__codelineno-64-27"></a>│   ├── webdav/             # WebDAV agent
+</span><span id="__span-64-28"><a id="__codelineno-64-28" name="__codelineno-64-28" href="#__codelineno-64-28"></a>│   │   ├── app.py          # Core WebDAV logic
+</span><span id="__span-64-29"><a id="__codelineno-64-29" name="__codelineno-64-29" href="#__codelineno-64-29"></a>│   │   └── cli.py          # WebDAV CLI commands
+</span><span id="__span-64-30"><a id="__codelineno-64-30" name="__codelineno-64-30" href="#__codelineno-64-30"></a>│   ├── manifest/           # Manifest runner
+</span><span id="__span-64-31"><a id="__codelineno-64-31" name="__codelineno-64-31" href="#__codelineno-64-31"></a>│   │   ├── runner.py       # YAML loading, validation, dispatch
+</span><span id="__span-64-32"><a id="__codelineno-64-32" name="__codelineno-64-32" href="#__codelineno-64-32"></a>│   │   └── cli.py          # Manifest CLI commands
+</span><span id="__span-64-33"><a id="__codelineno-64-33" name="__codelineno-64-33" href="#__codelineno-64-33"></a>│   └── scm/                # SCM agent
+</span><span id="__span-64-34"><a id="__codelineno-64-34" name="__codelineno-64-34" href="#__codelineno-64-34"></a>│       ├── app.py          # Core SCM logic
+</span><span id="__span-64-35"><a id="__codelineno-64-35" name="__codelineno-64-35" href="#__codelineno-64-35"></a>│       ├── cli.py          # SCM CLI commands
+</span><span id="__span-64-36"><a id="__codelineno-64-36" name="__codelineno-64-36" href="#__codelineno-64-36"></a>│       ├── base.py         # Base SCM provider interface
+</span><span id="__span-64-37"><a id="__codelineno-64-37" name="__codelineno-64-37" href="#__codelineno-64-37"></a>│       ├── github/         # GitHub implementation
+</span><span id="__span-64-38"><a id="__codelineno-64-38" name="__codelineno-64-38" href="#__codelineno-64-38"></a>│       ├── gitea/          # Gitea implementation
+</span><span id="__span-64-39"><a id="__codelineno-64-39" name="__codelineno-64-39" href="#__codelineno-64-39"></a>│       └── lib/
+</span><span id="__span-64-40"><a id="__codelineno-64-40" name="__codelineno-64-40" href="#__codelineno-64-40"></a>│           ├── templates/  # Issue rendering templates
+</span><span id="__span-64-41"><a id="__codelineno-64-41" name="__codelineno-64-41" href="#__codelineno-64-41"></a>│           └── utils.py    # Utility functions
+</span><span id="__span-64-42"><a id="__codelineno-64-42" name="__codelineno-64-42" href="#__codelineno-64-42"></a>├── example-manifests/      # Example manifests (fs, scm, web, webdav, composite, delete-stale)
+</span><span id="__span-64-43"><a id="__codelineno-64-43" name="__codelineno-64-43" href="#__codelineno-64-43"></a>├── tests/                  # Test suite
+</span><span id="__span-64-44"><a id="__codelineno-64-44" name="__codelineno-64-44" href="#__codelineno-64-44"></a>│   └── unit/
+</span><span id="__span-64-45"><a id="__codelineno-64-45" name="__codelineno-64-45" href="#__codelineno-64-45"></a>│       ├── test_server_*.py  # Server API tests
+</span><span id="__span-64-46"><a id="__codelineno-64-46" name="__codelineno-64-46" href="#__codelineno-64-46"></a>│       └── ...
+</span><span id="__span-64-47"><a id="__codelineno-64-47" name="__codelineno-64-47" href="#__codelineno-64-47"></a>├── Dockerfile              # Production container
+</span><span id="__span-64-48"><a id="__codelineno-64-48" name="__codelineno-64-48" href="#__codelineno-64-48"></a>├── .dockerignore           # Build context exclusions
+</span><span id="__span-64-49"><a id="__codelineno-64-49" name="__codelineno-64-49" href="#__codelineno-64-49"></a>└── DOCKERFILE_CHANGES.md   # Docker implementation documentation
 </span></code></pre></div>
 <h3 id="key-components">Key Components</h3>
 <p><strong>CLI Layer:</strong>
