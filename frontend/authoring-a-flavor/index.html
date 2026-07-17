@@ -8,36 +8,36 @@
       
       
       
-        <link rel="canonical" href="https://soliplex.github.io/soliplex/server/environment/">
+        <link rel="canonical" href="https://soliplex.github.io/frontend/authoring-a-flavor/">
       
       
-        <link rel="prev" href="../cli/">
+        <link rel="prev" href="../../chatbot-widget/usage/">
       
       
-        <link rel="next" href="../sse_resume/">
+        <link rel="next" href="../developer-setup/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="zensical-0.0.43">
     
     
       
-        <title>Environment Variables - Soliplex</title>
+        <title>Authoring your own flavor - Soliplex</title>
       
     
     
       
         
       
-      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.fba56155.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.fba56155.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.dfe2e883.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.dfe2e883.min.css">
       
       
 
@@ -56,7 +56,7 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#environment-variables" class="md-skip">
+        <a href="#authoring-your-own-flavor" class="md-skip">
           Skip to content
         </a>
       
@@ -97,9 +97,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Soliplex" class="md-header__button md-logo" aria-label="Soliplex" data-md-component="logo">
+    <a href="../.." title="Soliplex" class="md-header__button md-logo" aria-label="Soliplex" data-md-component="logo">
       
-  <img src="../../../img/logo.png" alt="Soliplex">
+  <img src="../../img/logo.png" alt="Soliplex">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Environment Variables
+              Authoring your own flavor
             
           </span>
         </div>
@@ -204,7 +204,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   Home
@@ -217,8 +217,6 @@
         
   
   
-  
-    
   
   
     
@@ -258,8 +256,8 @@
     
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../soliplex/" class="md-tabs__link">
           
   
   Core Platform
@@ -303,7 +301,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../ingester/API/" class="md-tabs__link">
+        <a href="../../ingester/API/" class="md-tabs__link">
           
   
   Ingester
@@ -318,21 +316,7 @@
   
   
   
-  
     
-      
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-  
-  
   
   
     
@@ -342,14 +326,32 @@
       
         
       
+    
+    
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
         
       
     
     
     
     
-      <li class="md-tabs__item">
-        <a href="../../../chatbot-widget/readme/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chatbot-widget/readme/" class="md-tabs__link">
           
   
   User Interfaces
@@ -384,7 +386,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../ingester-agents/" class="md-tabs__link">
+        <a href="../../ingester-agents/" class="md-tabs__link">
           
   
   Supporting Tools
@@ -423,9 +425,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Soliplex" class="md-nav__button md-logo" aria-label="Soliplex" data-md-component="logo">
+    <a href="../.." title="Soliplex" class="md-nav__button md-logo" aria-label="Soliplex" data-md-component="logo">
       
-  <img src="../../../img/logo.png" alt="Soliplex">
+  <img src="../../img/logo.png" alt="Soliplex">
 
     </a>
     Soliplex
@@ -452,7 +454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -475,8 +477,6 @@
       
   
   
-    
-  
   
   
     
@@ -516,21 +516,18 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../soliplex/" class="md-nav__link ">
               
   
   
@@ -547,13 +544,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -572,7 +569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../client/" class="md-nav__link">
+      <a href="../../soliplex/client/" class="md-nav__link">
         
   
   
@@ -599,7 +596,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../docker/" class="md-nav__link">
+      <a href="../../soliplex/docker/" class="md-nav__link">
         
   
   
@@ -626,7 +623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../docs-skill/" class="md-nav__link">
+      <a href="../../soliplex/docs-skill/" class="md-nav__link">
         
   
   
@@ -653,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../log-ingestion/" class="md-nav__link">
+      <a href="../../soliplex/log-ingestion/" class="md-nav__link">
         
   
   
@@ -680,7 +677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../overview/" class="md-nav__link">
+      <a href="../../soliplex/overview/" class="md-nav__link">
         
   
   
@@ -707,7 +704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../prerequisites/" class="md-nav__link">
+      <a href="../../soliplex/prerequisites/" class="md-nav__link">
         
   
   
@@ -734,7 +731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quickstart/" class="md-nav__link">
+      <a href="../../soliplex/quickstart/" class="md-nav__link">
         
   
   
@@ -761,7 +758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rag/" class="md-nav__link">
+      <a href="../../soliplex/rag/" class="md-nav__link">
         
   
   
@@ -788,7 +785,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tui/" class="md-nav__link">
+      <a href="../../soliplex/tui/" class="md-nav__link">
         
   
   
@@ -815,7 +812,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/" class="md-nav__link">
+      <a href="../../soliplex/usage/" class="md-nav__link">
         
   
   
@@ -926,7 +923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/agui/" class="md-nav__link">
+      <a href="../../soliplex/config/agui/" class="md-nav__link">
         
   
   
@@ -953,7 +950,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/agents/" class="md-nav__link">
+      <a href="../../soliplex/config/agents/" class="md-nav__link">
         
   
   
@@ -980,7 +977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/completions/" class="md-nav__link">
+      <a href="../../soliplex/config/completions/" class="md-nav__link">
         
   
   
@@ -1007,7 +1004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/environment/" class="md-nav__link">
+      <a href="../../soliplex/config/environment/" class="md-nav__link">
         
   
   
@@ -1034,7 +1031,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/filesystem_layout/" class="md-nav__link">
+      <a href="../../soliplex/config/filesystem_layout/" class="md-nav__link">
         
   
   
@@ -1061,7 +1058,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/installation/" class="md-nav__link">
+      <a href="../../soliplex/config/installation/" class="md-nav__link">
         
   
   
@@ -1088,7 +1085,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/logfire/" class="md-nav__link">
+      <a href="../../soliplex/config/logfire/" class="md-nav__link">
         
   
   
@@ -1115,7 +1112,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/logging/" class="md-nav__link">
+      <a href="../../soliplex/config/logging/" class="md-nav__link">
         
   
   
@@ -1142,7 +1139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/meta/" class="md-nav__link">
+      <a href="../../soliplex/config/meta/" class="md-nav__link">
         
   
   
@@ -1169,7 +1166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/middleware/" class="md-nav__link">
+      <a href="../../soliplex/config/middleware/" class="md-nav__link">
         
   
   
@@ -1196,7 +1193,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/oidc_providers/" class="md-nav__link">
+      <a href="../../soliplex/config/oidc_providers/" class="md-nav__link">
         
   
   
@@ -1223,7 +1220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/quizzes/" class="md-nav__link">
+      <a href="../../soliplex/config/quizzes/" class="md-nav__link">
         
   
   
@@ -1250,7 +1247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/rag/" class="md-nav__link">
+      <a href="../../soliplex/config/rag/" class="md-nav__link">
         
   
   
@@ -1277,7 +1274,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/rooms/" class="md-nav__link">
+      <a href="../../soliplex/config/rooms/" class="md-nav__link">
         
   
   
@@ -1304,7 +1301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/secrets/" class="md-nav__link">
+      <a href="../../soliplex/config/secrets/" class="md-nav__link">
         
   
   
@@ -1331,7 +1328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/skills/" class="md-nav__link">
+      <a href="../../soliplex/config/skills/" class="md-nav__link">
         
   
   
@@ -1358,7 +1355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/dburis/" class="md-nav__link">
+      <a href="../../soliplex/config/dburis/" class="md-nav__link">
         
   
   
@@ -1468,7 +1465,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../examples/room-thread-analysis/" class="md-nav__link ">
+            <a href="../../soliplex/examples/room-thread-analysis/" class="md-nav__link ">
               
   
   
@@ -1510,7 +1507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/room-thread-analysis/model/" class="md-nav__link">
+      <a href="../../soliplex/examples/room-thread-analysis/model/" class="md-nav__link">
         
   
   
@@ -1550,8 +1547,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1574,15 +1569,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../soliplex/server/" class="md-nav__link ">
               
   
   
@@ -1605,7 +1600,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_14">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1624,7 +1619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../../soliplex/server/cli/" class="md-nav__link">
         
   
   
@@ -1648,19 +1643,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../soliplex/server/environment/" class="md-nav__link">
         
   
   
@@ -1675,7 +1661,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1688,7 +1673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sse_resume/" class="md-nav__link">
+      <a href="../../soliplex/server/sse_resume/" class="md-nav__link">
         
   
   
@@ -1800,7 +1785,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/API/" class="md-nav__link">
+      <a href="../../ingester/API/" class="md-nav__link">
         
   
   
@@ -1827,7 +1812,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/ARCHITECTURE/" class="md-nav__link">
+      <a href="../../ingester/ARCHITECTURE/" class="md-nav__link">
         
   
   
@@ -1854,7 +1839,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/AUTHENTICATION/" class="md-nav__link">
+      <a href="../../ingester/AUTHENTICATION/" class="md-nav__link">
         
   
   
@@ -1881,7 +1866,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/CLI/" class="md-nav__link">
+      <a href="../../ingester/CLI/" class="md-nav__link">
         
   
   
@@ -1908,7 +1893,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/CONFIGURATION/" class="md-nav__link">
+      <a href="../../ingester/CONFIGURATION/" class="md-nav__link">
         
   
   
@@ -1935,7 +1920,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/DATABASE/" class="md-nav__link">
+      <a href="../../ingester/DATABASE/" class="md-nav__link">
         
   
   
@@ -1962,7 +1947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/DOCKER/" class="md-nav__link">
+      <a href="../../ingester/DOCKER/" class="md-nav__link">
         
   
   
@@ -1989,7 +1974,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/GETTING_STARTED/" class="md-nav__link">
+      <a href="../../ingester/GETTING_STARTED/" class="md-nav__link">
         
   
   
@@ -2016,7 +2001,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/PARAMETER_SETS/" class="md-nav__link">
+      <a href="../../ingester/PARAMETER_SETS/" class="md-nav__link">
         
   
   
@@ -2043,7 +2028,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ingester/WORKFLOWS/" class="md-nav__link">
+      <a href="../../ingester/WORKFLOWS/" class="md-nav__link">
         
   
   
@@ -2074,8 +2059,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -2087,17 +2074,20 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -2114,7 +2104,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2187,7 +2177,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../chatbot-widget/readme/" class="md-nav__link">
+      <a href="../../chatbot-widget/readme/" class="md-nav__link">
         
   
   
@@ -2214,7 +2204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../chatbot-widget/plone-integration/" class="md-nav__link">
+      <a href="../../chatbot-widget/plone-integration/" class="md-nav__link">
         
   
   
@@ -2241,7 +2231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../chatbot-widget/usage/" class="md-nav__link">
+      <a href="../../chatbot-widget/usage/" class="md-nav__link">
         
   
   
@@ -2273,8 +2263,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -2295,11 +2287,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
         
           
           <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
@@ -2319,7 +2311,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2333,10 +2325,36 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../frontend/authoring-a-flavor/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Authoring A Flavor
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2351,6 +2369,71 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#theme-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Theme paths
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Example
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diverging-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Diverging further
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Rules
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2363,7 +2446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/developer-setup/" class="md-nav__link">
+      <a href="../developer-setup/" class="md-nav__link">
         
   
   
@@ -2390,7 +2473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/send-cancel-lifecycle/" class="md-nav__link">
+      <a href="../send-cancel-lifecycle/" class="md-nav__link">
         
   
   
@@ -2473,7 +2556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/adr/ADR-001-reactive-state-management-scoped-statebus/" class="md-nav__link">
+      <a href="../adr/ADR-001-reactive-state-management-scoped-statebus/" class="md-nav__link">
         
   
   
@@ -2500,7 +2583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/adr/ADR-002-customizable-brand-theme/" class="md-nav__link">
+      <a href="../adr/ADR-002-customizable-brand-theme/" class="md-nav__link">
         
   
   
@@ -2527,7 +2610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/adr/ADR-003-flavor-object/" class="md-nav__link">
+      <a href="../adr/ADR-003-flavor-object/" class="md-nav__link">
         
   
   
@@ -2616,7 +2699,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/plans/0001-app-shell/proposal/" class="md-nav__link">
+      <a href="../plans/0001-app-shell/proposal/" class="md-nav__link">
         
   
   
@@ -2697,7 +2780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/plans/citations-ui/data-flow/" class="md-nav__link">
+      <a href="../plans/citations-ui/data-flow/" class="md-nav__link">
         
   
   
@@ -2724,7 +2807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/plans/citations-ui/plan/" class="md-nav__link">
+      <a href="../plans/citations-ui/plan/" class="md-nav__link">
         
   
   
@@ -2807,7 +2890,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../ingester-agents/" class="md-nav__link ">
+            <a href="../../ingester-agents/" class="md-nav__link ">
               
   
   
@@ -2849,7 +2932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pdf-splitter/" class="md-nav__link">
+      <a href="../../pdf-splitter/" class="md-nav__link">
         
   
   
@@ -2876,7 +2959,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../bubble-sandbox/" class="md-nav__link">
+      <a href="../../bubble-sandbox/" class="md-nav__link">
         
   
   
@@ -2920,6 +3003,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -2931,6 +3019,58 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#theme-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Theme paths
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Example
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diverging-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Diverging further
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Rules
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -2955,7 +3095,7 @@
   
   
     <li class="md-path__item">
-      <a href="../../.." class="md-path__link">
+      <a href="../.." class="md-path__link">
         
   
   <span class="md-ellipsis">
@@ -2975,28 +3115,18 @@
     
       
         
-          
-        
       
         
       
-        
+    
+    
+    
+    
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
+  
+  
+    
+    
       
         
       
@@ -3009,11 +3139,11 @@
     
     
       <li class="md-path__item">
-        <a href="../../" class="md-path__link">
+        <a href="../../chatbot-widget/readme/" class="md-path__link">
           
   
   <span class="md-ellipsis">
-    Core Platform
+    User Interfaces
   </span>
 
         </a>
@@ -3021,6 +3151,9 @@
     
   
 
+    
+  
+
       
         
   
@@ -3029,7 +3162,7 @@
     
       
         
-          
+      
         
       
         
@@ -3043,11 +3176,11 @@
     
     
       <li class="md-path__item">
-        <a href="../" class="md-path__link">
+        <a href="././" class="md-path__link">
           
   
   <span class="md-ellipsis">
-    Setup
+    Flutter UI
   </span>
 
         </a>
@@ -3067,25 +3200,90 @@
   
 
 
-<h1 id="environment-variables">Environment Variables</h1>
-<p>Non-secret environment variables can and mostly should be configured
-directly in the <code>installation.yaml</code> file (e.g. <code>example/installation.yaml</code>,
-<code>example/minimal.yaml</code>, etc.).</p>
-<p>Those files are checked into the Soliplex repository, and cannot know
-the URL of your Ollama server (if you use Ollama), They therefore declare
-the <code>OLLAMA_BASE_URL</code> variable without a value, meaning that the configuration
-expects the value to be present in the environments (see:
-<a href="https://soliplex.github.io/soliplex/config/environment/">https://soliplex.github.io/soliplex/config/environment/</a>).</p>
-<p>Those files also must not contain secrets (API keys, etc.):  instead,
-they configure secret values to be found from the environment (see
-<a href="https://soliplex.github.io/soliplex/config/secrets/">https://soliplex.github.io/soliplex/config/secrets/</a>).</p>
-<p>If your installation configures such values to be found from the OS
-environment, you can create a <code>.env</code> file which defines them, and arrange
-for the file to be sourced into your environment before startin the Soliplex
-application.</p>
-<p>Copy <code>.env.example</code> to <code>.env</code> and edit it to configure your values:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+<h1 id="authoring-your-own-flavor">Authoring your own flavor</h1>
+<p><code>standard()</code> is the opinionated default. To customize beyond the curated
+<code>BrandTheme</code> — full color control, extra modules — compose your own <code>Flavor</code>
+with <code>standardFlavor()</code>. You need only a <code>soliplex_frontend</code> dependency and a
+single import (the main barrel carries the whole flavor-authoring surface).
+The design record is <code>docs/adr/ADR-003-flavor-object.md</code>.</p>
+<p>A <code>Flavor</code> is the complete declaration of an app variant — identity, theme,
+modules, boot knobs — as a single-use assembly declaration, built once.
+<code>Flavor.build()</code> lowers it to the boot-ready <code>ShellConfig</code>, owning the assembly
+(identity threading, brand lowering, kit-field forwarding) so your flavor never
+transcribes it.</p>
+<h2 id="theme-paths">Theme paths</h2>
+<p><code>FlavorTheme</code> is the theme half of a flavor, one slot wrapping both public
+theming paths (and it carries <code>mode</code>, the <code>ThemeMode</code>):</p>
+<ul>
+<li><code>FlavorTheme.brand(BrandTheme, ...)</code> — the curated contract. Lowered via
+  <code>lowerBrandTheme</code> when the flavor builds; unset on-colors are derived to
+  clear WCAG AA by construction.</li>
+<li><code>FlavorTheme.themeData(light:, dark:)</code> — full token control. Build each
+  <code>ThemeData</code> with <code>buildSoliplexThemeData</code> from a full <code>SoliplexColors</code>
+  (typically <code>lightSoliplexColors</code> / <code>darkSoliplexColors</code> with slots
+  overridden), passing <code>classifications</code> and fonts there too — the <code>.themeData</code>
+  slot itself carries only <code>mode</code>. This path has no on-color auto-derivation, so
+  you own legibility: a warning fires for every low-contrast role pair (<code>link</code>
+  included), but the colors ship as-is regardless, so verify them yourself.</li>
+</ul>
+<p>Both paths end at <code>buildSoliplexThemeData</code>, which attaches the <code>SoliplexTheme</code>
+extension and runs the contrast check.</p>
+<h2 id="example">Example</h2>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:soliplex_frontend/soliplex_frontend.dart&#39;</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">Future</span><span class="o">&lt;</span><span class="n">Flavor</span><span class="o">&gt;</span><span class="w"> </span><span class="n">myFlavor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buildSoliplexThemeData</span><span class="p">(</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nl">colors:</span><span class="w"> </span><span class="n">lightSoliplexColors</span><span class="p">.</span><span class="n">copyWith</span><span class="p">(</span><span class="nl">primary:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="mh">0xFF0A7AFF</span><span class="p">)),</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">      </span><span class="nl">brightness:</span><span class="w"> </span><span class="n">Brightness</span><span class="p">.</span><span class="n">light</span><span class="p">);</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">dark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buildSoliplexThemeData</span><span class="p">(</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">      </span><span class="nl">colors:</span><span class="w"> </span><span class="n">darkSoliplexColors</span><span class="p">.</span><span class="n">copyWith</span><span class="p">(</span><span class="nl">primary:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="mh">0xFF0A7AFF</span><span class="p">)),</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">      </span><span class="nl">brightness:</span><span class="w"> </span><span class="n">Brightness</span><span class="p">.</span><span class="n">dark</span><span class="p">);</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">standardFlavor</span><span class="p">(</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="nl">identity:</span><span class="w"> </span><span class="n">AppIdentity</span><span class="p">(</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="nl">appName:</span><span class="w"> </span><span class="s1">&#39;MyBrand&#39;</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">      </span><span class="nl">logoLight:</span><span class="w"> </span><span class="n">Image</span><span class="p">.</span><span class="n">asset</span><span class="p">(</span><span class="s1">&#39;assets/my_logo.png&#39;</span><span class="p">),</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="p">),</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="nl">defaultBackendUrl:</span><span class="w"> </span><span class="s1">&#39;https://api.mybrand.com&#39;</span><span class="p">,</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="nl">theme:</span><span class="w"> </span><span class="n">FlavorTheme</span><span class="p">.</span><span class="n">themeData</span><span class="p">(</span><span class="nl">light:</span><span class="w"> </span><span class="n">light</span><span class="p">,</span><span class="w"> </span><span class="nl">dark:</span><span class="w"> </span><span class="n">dark</span><span class="p">),</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="c1">// Custom modules receive the composition kit, so they can share the</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="c1">// standard flavor&#39;s session state:</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="c1">// extraModules: (kit) =&gt; [MyCustomModule(kit.serverManager)],</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="p">}</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="n">Future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="kd">async</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">  </span><span class="n">WidgetsFlutterBinding</span><span class="p">.</span><span class="n">ensureInitialized</span><span class="p">();</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">flavor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">myFlavor</span><span class="p">();</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">());</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Customize through <code>standardFlavor</code>'s parameters — identity, theme,
+<code>extraModules</code> — not by mutating a built flavor. It performs real provisioning
+(storage migration, server restoration) and holds live module instances, so
+<code>build()</code> runs once: a second call throws.</p>
+<h2 id="diverging-further">Diverging further</h2>
+<p>For compositions that diverge further than <code>standardFlavor</code> allows, drop one
+level: call <code>buildStandardKit</code> yourself and construct a <code>Flavor</code> from its
+kit (see ADR-003 §3.3). Every kit field is then yours to forward — forget
+<code>refreshListenable</code> and auth-driven redirects silently stop re-evaluating.
+Prefer <code>standardFlavor</code> unless you genuinely need a different module graph.</p>
+<h2 id="rules">Rules</h2>
+<ul>
+<li>Build the theme with <code>buildSoliplexThemeData</code> (never a bare <code>ThemeData</code>) — the
+  <code>SoliplexTheme</code> extension is required and <code>Flavor.build()</code> (via
+  <code>ShellConfig.fromModules</code>) throws without it.</li>
+<li>Composition is append-only: add your own modules via <code>extraModules</code>; do not
+  drop standard ones (Room depends on Lobby, and modules share session state).</li>
+<li>Contrast checks only warn, never block. The warnings go through <code>LogManager</code>,
+  so attach a log sink in your app's <code>main()</code> to see them — with no sink
+  attached they drop silently.</li>
+<li>Disposal is yours: the <code>ShellConfig</code> returned by <code>Flavor.build()</code> carries a
+  <code>dispose</code> callback that the shell widget never invokes. Standalone apps can
+  rely on OS reclamation; embedders that unmount the shell must retain the
+  config and <code>await config.dispose()</code> themselves.</li>
+</ul>
 
 
 
@@ -3125,7 +3323,7 @@ application.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../cli/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CLI">
+          <a href="../../chatbot-widget/usage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Usage">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3135,20 +3333,20 @@ application.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                CLI
+                Usage
               </div>
             </div>
           </a>
         
         
           
-          <a href="../sse_resume/" class="md-footer__link md-footer__link--next" aria-label="Next: SSE Resume">
+          <a href="../developer-setup/" class="md-footer__link md-footer__link--next" aria-label="Next: Developer Setup">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                SSE Resume
+                Developer Setup
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3187,10 +3385,10 @@ application.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.instant.progress","navigation.path","navigation.tabs","navigation.tabs.sticky","navigation.top","navigation.tracking","search.highlight","search.share","search.suggest","toc.follow"],"search":"../../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.instant.progress","navigation.path","navigation.tabs","navigation.tabs.sticky","navigation.top","navigation.tracking","search.highlight","search.share","search.suggest","toc.follow"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6e5f0216.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
     
   </body>

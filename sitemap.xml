@@ -145,6 +145,9 @@
         <loc>https://soliplex.github.io/chatbot-widget/usage/</loc>
       </url>
       <url>
+        <loc>https://soliplex.github.io/frontend/authoring-a-flavor/</loc>
+      </url>
+      <url>
         <loc>https://soliplex.github.io/frontend/developer-setup/</loc>
       </url>
       <url>
@@ -155,6 +158,9 @@
       </url>
       <url>
         <loc>https://soliplex.github.io/frontend/adr/ADR-002-customizable-brand-theme/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/frontend/adr/ADR-003-flavor-object/</loc>
       </url>
       <url>
         <loc>https://soliplex.github.io/frontend/plans/0001-app-shell/proposal/</loc>

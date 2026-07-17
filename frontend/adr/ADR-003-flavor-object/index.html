@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://soliplex.github.io/soliplex/server/environment/">
+        <link rel="canonical" href="https://soliplex.github.io/frontend/adr/ADR-003-flavor-object/">
       
       
-        <link rel="prev" href="../cli/">
+        <link rel="prev" href="../ADR-002-customizable-brand-theme/">
       
       
-        <link rel="next" href="../sse_resume/">
+        <link rel="next" href="../../plans/0001-app-shell/proposal/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Environment Variables - Soliplex</title>
+        <title>ADR-003: Reify the Flavor — a Declaration Object Between Composition and Boot - Soliplex</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#environment-variables" class="md-skip">
+        <a href="#adr-003-reify-the-flavor-a-declaration-object-between-composition-and-boot" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Environment Variables
+              ADR-003: Reify the Flavor — a Declaration Object Between Composition and Boot
             
           </span>
         </div>
@@ -218,8 +218,6 @@
   
   
   
-    
-  
   
     
       
@@ -258,8 +256,8 @@
     
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../soliplex/" class="md-tabs__link">
           
   
   Core Platform
@@ -318,21 +316,7 @@
   
   
   
-  
     
-      
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-  
-  
   
   
     
@@ -342,13 +326,31 @@
       
         
       
+    
+    
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
         
       
     
     
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../../../chatbot-widget/readme/" class="md-tabs__link">
           
   
@@ -475,8 +477,6 @@
       
   
   
-    
-  
   
   
     
@@ -516,21 +516,18 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../../soliplex/" class="md-nav__link ">
               
   
   
@@ -547,13 +544,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -572,7 +569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../client/" class="md-nav__link">
+      <a href="../../../soliplex/client/" class="md-nav__link">
         
   
   
@@ -599,7 +596,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../docker/" class="md-nav__link">
+      <a href="../../../soliplex/docker/" class="md-nav__link">
         
   
   
@@ -626,7 +623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../docs-skill/" class="md-nav__link">
+      <a href="../../../soliplex/docs-skill/" class="md-nav__link">
         
   
   
@@ -653,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../log-ingestion/" class="md-nav__link">
+      <a href="../../../soliplex/log-ingestion/" class="md-nav__link">
         
   
   
@@ -680,7 +677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../overview/" class="md-nav__link">
+      <a href="../../../soliplex/overview/" class="md-nav__link">
         
   
   
@@ -707,7 +704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../prerequisites/" class="md-nav__link">
+      <a href="../../../soliplex/prerequisites/" class="md-nav__link">
         
   
   
@@ -734,7 +731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quickstart/" class="md-nav__link">
+      <a href="../../../soliplex/quickstart/" class="md-nav__link">
         
   
   
@@ -761,7 +758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rag/" class="md-nav__link">
+      <a href="../../../soliplex/rag/" class="md-nav__link">
         
   
   
@@ -788,7 +785,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tui/" class="md-nav__link">
+      <a href="../../../soliplex/tui/" class="md-nav__link">
         
   
   
@@ -815,7 +812,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/" class="md-nav__link">
+      <a href="../../../soliplex/usage/" class="md-nav__link">
         
   
   
@@ -926,7 +923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/agui/" class="md-nav__link">
+      <a href="../../../soliplex/config/agui/" class="md-nav__link">
         
   
   
@@ -953,7 +950,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/agents/" class="md-nav__link">
+      <a href="../../../soliplex/config/agents/" class="md-nav__link">
         
   
   
@@ -980,7 +977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/completions/" class="md-nav__link">
+      <a href="../../../soliplex/config/completions/" class="md-nav__link">
         
   
   
@@ -1007,7 +1004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/environment/" class="md-nav__link">
+      <a href="../../../soliplex/config/environment/" class="md-nav__link">
         
   
   
@@ -1034,7 +1031,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/filesystem_layout/" class="md-nav__link">
+      <a href="../../../soliplex/config/filesystem_layout/" class="md-nav__link">
         
   
   
@@ -1061,7 +1058,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/installation/" class="md-nav__link">
+      <a href="../../../soliplex/config/installation/" class="md-nav__link">
         
   
   
@@ -1088,7 +1085,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/logfire/" class="md-nav__link">
+      <a href="../../../soliplex/config/logfire/" class="md-nav__link">
         
   
   
@@ -1115,7 +1112,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/logging/" class="md-nav__link">
+      <a href="../../../soliplex/config/logging/" class="md-nav__link">
         
   
   
@@ -1142,7 +1139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/meta/" class="md-nav__link">
+      <a href="../../../soliplex/config/meta/" class="md-nav__link">
         
   
   
@@ -1169,7 +1166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/middleware/" class="md-nav__link">
+      <a href="../../../soliplex/config/middleware/" class="md-nav__link">
         
   
   
@@ -1196,7 +1193,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/oidc_providers/" class="md-nav__link">
+      <a href="../../../soliplex/config/oidc_providers/" class="md-nav__link">
         
   
   
@@ -1223,7 +1220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/quizzes/" class="md-nav__link">
+      <a href="../../../soliplex/config/quizzes/" class="md-nav__link">
         
   
   
@@ -1250,7 +1247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/rag/" class="md-nav__link">
+      <a href="../../../soliplex/config/rag/" class="md-nav__link">
         
   
   
@@ -1277,7 +1274,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/rooms/" class="md-nav__link">
+      <a href="../../../soliplex/config/rooms/" class="md-nav__link">
         
   
   
@@ -1304,7 +1301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/secrets/" class="md-nav__link">
+      <a href="../../../soliplex/config/secrets/" class="md-nav__link">
         
   
   
@@ -1331,7 +1328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/skills/" class="md-nav__link">
+      <a href="../../../soliplex/config/skills/" class="md-nav__link">
         
   
   
@@ -1358,7 +1355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../config/dburis/" class="md-nav__link">
+      <a href="../../../soliplex/config/dburis/" class="md-nav__link">
         
   
   
@@ -1468,7 +1465,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../examples/room-thread-analysis/" class="md-nav__link ">
+            <a href="../../../soliplex/examples/room-thread-analysis/" class="md-nav__link ">
               
   
   
@@ -1510,7 +1507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/room-thread-analysis/model/" class="md-nav__link">
+      <a href="../../../soliplex/examples/room-thread-analysis/model/" class="md-nav__link">
         
   
   
@@ -1550,8 +1547,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1574,15 +1569,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../../soliplex/server/" class="md-nav__link ">
               
   
   
@@ -1605,7 +1600,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_14">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1624,7 +1619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../../../soliplex/server/cli/" class="md-nav__link">
         
   
   
@@ -1648,19 +1643,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../soliplex/server/environment/" class="md-nav__link">
         
   
   
@@ -1675,7 +1661,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1688,7 +1673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sse_resume/" class="md-nav__link">
+      <a href="../../../soliplex/server/sse_resume/" class="md-nav__link">
         
   
   
@@ -2074,8 +2059,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -2087,17 +2074,20 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -2114,7 +2104,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2273,8 +2263,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -2295,11 +2287,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
         
           
           <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
@@ -2319,7 +2311,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2336,7 +2328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/authoring-a-flavor/" class="md-nav__link">
+      <a href="../../authoring-a-flavor/" class="md-nav__link">
         
   
   
@@ -2363,7 +2355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/developer-setup/" class="md-nav__link">
+      <a href="../../developer-setup/" class="md-nav__link">
         
   
   
@@ -2390,7 +2382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/send-cancel-lifecycle/" class="md-nav__link">
+      <a href="../../send-cancel-lifecycle/" class="md-nav__link">
         
   
   
@@ -2414,8 +2406,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -2432,11 +2426,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4_2_4" id="__nav_4_2_4_label" tabindex="0">
@@ -2456,7 +2450,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2473,7 +2467,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/adr/ADR-001-reactive-state-management-scoped-statebus/" class="md-nav__link">
+      <a href="../ADR-001-reactive-state-management-scoped-statebus/" class="md-nav__link">
         
   
   
@@ -2500,7 +2494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/adr/ADR-002-customizable-brand-theme/" class="md-nav__link">
+      <a href="../ADR-002-customizable-brand-theme/" class="md-nav__link">
         
   
   
@@ -2524,10 +2518,36 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../frontend/adr/ADR-003-flavor-object/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr 003 Flavor Object
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2542,6 +2562,226 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-context-and-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. Context and Problem Statement
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Context and Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-the-hierarchy-as-shipped-post-426" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1.1 The hierarchy as shipped (post-#426)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-the-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1.2 The problems
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-amendment-to-adr-002-recorded" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1.3 Amendment to ADR-002, recorded
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. Decision
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-decisions-by-axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. The Decisions, by Axis
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The Decisions, by Axis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-flavor-is-a-single-use-assembly-declaration-built-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 <code>Flavor</code> is a single-use assembly declaration, built once
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-flavortheme-holds-the-theme-source-lowered-at-build-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 <code>FlavorTheme</code> holds the theme <em>source</em>, lowered at build time
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-standardflavor-and-the-extramodules-seam" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 <code>standardFlavor()</code> and the <code>extraModules</code> seam
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-standard-is-compatibility-frozen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 <code>standard()</code> is compatibility-frozen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-shellconfig-narrows-but-stays-public-for-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 <code>ShellConfig</code> narrows but stays public, for now
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-the-theme-guards-eventual-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.6 The theme guard's eventual home
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-does-not-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. What Does Not Change
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-known-limitations-and-open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. Known Limitations and Open Questions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6. Consequences
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7. Migration
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-alternatives-considered" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8. Alternatives Considered
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2616,7 +2856,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/plans/0001-app-shell/proposal/" class="md-nav__link">
+      <a href="../../plans/0001-app-shell/proposal/" class="md-nav__link">
         
   
   
@@ -2697,7 +2937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/plans/citations-ui/data-flow/" class="md-nav__link">
+      <a href="../../plans/citations-ui/data-flow/" class="md-nav__link">
         
   
   
@@ -2724,7 +2964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../frontend/plans/citations-ui/plan/" class="md-nav__link">
+      <a href="../../plans/citations-ui/plan/" class="md-nav__link">
         
   
   
@@ -2920,6 +3160,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -2931,6 +3176,213 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-context-and-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. Context and Problem Statement
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Context and Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-the-hierarchy-as-shipped-post-426" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1.1 The hierarchy as shipped (post-#426)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-the-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1.2 The problems
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-amendment-to-adr-002-recorded" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1.3 Amendment to ADR-002, recorded
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. Decision
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-decisions-by-axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. The Decisions, by Axis
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The Decisions, by Axis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-flavor-is-a-single-use-assembly-declaration-built-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 <code>Flavor</code> is a single-use assembly declaration, built once
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-flavortheme-holds-the-theme-source-lowered-at-build-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 <code>FlavorTheme</code> holds the theme <em>source</em>, lowered at build time
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-standardflavor-and-the-extramodules-seam" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 <code>standardFlavor()</code> and the <code>extraModules</code> seam
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-standard-is-compatibility-frozen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 <code>standard()</code> is compatibility-frozen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-shellconfig-narrows-but-stays-public-for-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 <code>ShellConfig</code> narrows but stays public, for now
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-the-theme-guards-eventual-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.6 The theme guard's eventual home
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-does-not-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. What Does Not Change
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-known-limitations-and-open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. Known Limitations and Open Questions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6. Consequences
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7. Migration
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-alternatives-considered" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8. Alternatives Considered
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -2975,24 +3427,51 @@
     
       
         
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../../../chatbot-widget/readme/" class="md-path__link">
           
-        
+  
+  <span class="md-ellipsis">
+    User Interfaces
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
       
         
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
+  
+  
+    
+    
       
         
       
@@ -3009,11 +3488,11 @@
     
     
       <li class="md-path__item">
-        <a href="../../" class="md-path__link">
+        <a href="../../authoring-a-flavor/" class="md-path__link">
           
   
   <span class="md-ellipsis">
-    Core Platform
+    Flutter UI
   </span>
 
         </a>
@@ -3029,10 +3508,6 @@
     
       
         
-          
-        
-      
-        
       
         
       
@@ -3043,11 +3518,11 @@
     
     
       <li class="md-path__item">
-        <a href="../" class="md-path__link">
+        <a href="../ADR-001-reactive-state-management-scoped-statebus/" class="md-path__link">
           
   
   <span class="md-ellipsis">
-    Setup
+    Adr
   </span>
 
         </a>
@@ -3067,25 +3542,295 @@
   
 
 
-<h1 id="environment-variables">Environment Variables</h1>
-<p>Non-secret environment variables can and mostly should be configured
-directly in the <code>installation.yaml</code> file (e.g. <code>example/installation.yaml</code>,
-<code>example/minimal.yaml</code>, etc.).</p>
-<p>Those files are checked into the Soliplex repository, and cannot know
-the URL of your Ollama server (if you use Ollama), They therefore declare
-the <code>OLLAMA_BASE_URL</code> variable without a value, meaning that the configuration
-expects the value to be present in the environments (see:
-<a href="https://soliplex.github.io/soliplex/config/environment/">https://soliplex.github.io/soliplex/config/environment/</a>).</p>
-<p>Those files also must not contain secrets (API keys, etc.):  instead,
-they configure secret values to be found from the environment (see
-<a href="https://soliplex.github.io/soliplex/config/secrets/">https://soliplex.github.io/soliplex/config/secrets/</a>).</p>
-<p>If your installation configures such values to be found from the OS
-environment, you can create a <code>.env</code> file which defines them, and arrange
-for the file to be sourced into your environment before startin the Soliplex
-application.</p>
-<p>Copy <code>.env.example</code> to <code>.env</code> and edit it to configure your values:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+<h1 id="adr-003-reify-the-flavor-a-declaration-object-between-composition-and-boot">ADR-003: Reify the Flavor — a Declaration Object Between Composition and Boot</h1>
+<ul>
+<li><strong>Status:</strong> Proposed</li>
+<li><strong>Date:</strong> 2026-07-16</li>
+<li><strong>Authors:</strong> William Karol Di Cioccio</li>
+<li><strong>Supersedes:</strong> —</li>
+<li><strong>Amends:</strong> ADR-002 §2 (barrel-boundary change shipped in #426) and §3.9/§5.2
+  (link contrast policy)</li>
+<li><strong>Superseded by:</strong> —</li>
+</ul>
+<hr />
+<h2 id="1-context-and-problem-statement">1. Context and Problem Statement</h2>
+<p>Issue #418 and its follow-up #421 pushed us to open the theming system to
+forks that need full token control. PR #426 delivered the agreed mechanism —
+<code>buildStandardKit</code> (the composition kit), the direct
+<code>buildSoliplexThemeData</code> path re-exported through the frontend barrel, and a
+boot-time guard for the <code>SoliplexTheme</code> extension. Each piece is sound. But
+stacking them exposed that the layer they all lean on was never designed —
+it accreted. This ADR records the current shape, names its problems, and
+proposes the missing concept before #426's surface becomes API that forks
+depend on.</p>
+<h3 id="11-the-hierarchy-as-shipped-post-426">1.1 The hierarchy as shipped (post-#426)</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>TOKENS       SoliplexColors (41 slots) · SoliplexRadii · typography
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                  │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>THEME        buildSoliplexThemeData(colors, brightness) ─► ThemeData
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                  ▲                                        + SoliplexTheme ext
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                  │
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>BRAND        BrandTheme ── lowerBrandTheme() ──┘   (curated path, ADR-002)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>IDENTITY     AppIdentity (appName, logos, glow)
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>FEATURES     AppModule ── build() ─► ModuleRoutes (routes, overrides, redirect)
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>COMPOSITION  buildStandardModules(identity, backend knobs)    ← new in #426
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>             ─► StandardModules record:
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                (modules, refreshListenable, initialRoute,
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                 inactivity, serverManager)
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>&quot;FLAVOR&quot;     standard() — a bare Future&lt;ShellConfig&gt; function
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>BOOT         ShellConfig.fromModules(…) — flattens routes/overrides/redirects,
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>             guards the theme extension, owns dispose
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>                  │
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>SHELL        runSoliplexShell(config) ─► ProviderScope + MaterialApp.router
 </span></code></pre></div>
+<p>The theme column is clean: two public entry points (curated <code>BrandTheme</code>,
+direct <code>SoliplexColors</code>) converging on one funnel that attaches the extension
+and runs the contrast check. The problems are all in the two rows between
+COMPOSITION and BOOT.</p>
+<h3 id="12-the-problems">1.2 The problems</h3>
+<ol>
+<li>
+<p><strong>"Flavor" is a calling convention, not a thing.</strong> A flavor is whatever a
+   <code>Future&lt;ShellConfig&gt;</code> function happens to do. The assembly ritual — pick an
+   identity, lower the brand twice, thread <code>identity.appName</code> into a string
+   slot, forward four kit fields into <code>ShellConfig.fromModules</code> — is
+   copy-pasted into every author's function. <code>docs/authoring-a-flavor.md</code>
+   documents the ritual honestly, and that is the tell: five lines of pure
+   plumbing that every fork must transcribe, each line failable. Forget
+   <code>refreshListenable</code> and auth-driven redirects silently stop re-evaluating;
+   forget <code>initialRoute</code> and the OAuth callback breaks.</p>
+</li>
+<li>
+<p><strong><code>StandardModules</code> is the missing concept's torso, anonymized.</strong> A
+   five-field typedef record with no behavior: "a flavor minus identity minus
+   theme," as loose values. <code>serverManager</code> — an escape hatch for custom
+   modules — sits at the same level as boot-critical fields.</p>
+</li>
+<li>
+<p><strong><code>ShellConfig</code> is two things wearing one name.</strong> Simultaneously the
+   <em>declaration</em> of an app (name, themes, mode, modules in) and the <em>lowered
+   boot artifact</em> (routes/overrides/redirects flattened, dispose closure out).
+   <code>fromModules</code> is not a constructor; it is a compiler. Because the
+   declaration has no home of its own, every upstream layer pours parameters
+   into it.</p>
+</li>
+<li>
+<p><strong>Field duplication across layers, resolved by hand.</strong> <code>appName</code> lives on
+   <code>AppIdentity</code> <em>and</em> <code>ShellConfig</code>, threaded via <code>identity.appName</code> at every
+   call site. <code>InactivityConfig</code> is built inside <code>buildStandardKit</code> from
+   two <code>Duration</code> knobs yet is also a <code>ShellConfig</code> field with its own
+   default. <code>themeMode</code> rides on <code>ShellConfig</code> next to already-lowered
+   <code>ThemeData</code>.</p>
+</li>
+<li>
+<p><strong>#426's theme guard landed at the wrong layer — because the right layer
+   does not exist.</strong> <code>ShellConfig.fromModules</code> (core, module composition) now
+   imports <code>soliplex_design</code> to check for the <code>SoliplexTheme</code> extension.
+   Failing at boot instead of in the first branded widget is correct; but
+   "is this theme valid" is a theme-boundary rule that ended up in the module
+   coordinator because that is the only chokepoint the current shape offers.</p>
+</li>
+<li>
+<p><strong>Even the directory names disagree.</strong> <code>src/composition/</code> and
+   <code>src/flavors/</code> are two names for the same missing idea — composition <em>is</em>
+   flavor-making — and the <code>flavors.dart</code> barrel exports a function plus
+   a kit, a grab-bag shape.</p>
+</li>
+</ol>
+<h3 id="13-amendment-to-adr-002-recorded">1.3 Amendment to ADR-002, recorded</h3>
+<p>ADR-002 §2 fixed the <code>soliplex_frontend</code> barrel as the privacy boundary
+("re-exports only the façade types"), and §8 rejected <em>"Expose
+<code>SoliplexColors</code> directly to forks"</em> outright. The #418/#421 discussion
+deliberately revised that call — a fork whose brand needs slots the façade
+does not carry has no other path, and the curated contract remains the
+default — and #426 implemented it by re-exporting <code>SoliplexColors</code>,
+<code>buildSoliplexThemeData</code>, and the default palettes from the barrel. This ADR
+records that amendment so ADR-002 does not read as silently violated:
+<strong>the barrel now carries two tiers — the curated façade (unchanged, still
+recommended) and the full-control tier (explicitly opt-in, welded to token
+names by choice).</strong> The §8 rejection stands for the <em>default</em> path only.</p>
+<p>This PR makes a second, smaller amendment to ADR-002, recorded here for the
+same reason: the <code>link</code> contrast check now runs on the resolved link for every
+theme (both tiers), so it warns on a default link over a fork-overridden
+<code>background</code> — reversing ADR-002 §3.9/§5.2's "checked only when the brand sets
+<code>link</code>" policy. The rationale and the amended wording live at ADR-002 §3.9.</p>
+<hr />
+<h2 id="2-decision">2. Decision</h2>
+<p>Introduce a <strong><code>Flavor</code> declaration</strong> — the complete declaration of an app
+variant: who it is (<code>AppIdentity</code>), how it looks (<code>FlavorTheme</code>), what it does
+(<code>List&lt;AppModule&gt;</code>), and how it boots (route, refresh, inactivity) — with a
+single <code>build()</code> that owns the lowering ritual once:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>AppIdentity + FlavorTheme + modules + boot knobs
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>        └───────────────── Flavor ─────────────────┘
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                      │ build()      ← owns: appName threading, brand lowering,
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                      ▼                kit-field forwarding
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                 ShellConfig         ← narrows toward a pure boot artifact
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                      ▼
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>               runSoliplexShell
+</span></code></pre></div>
+<p><code>FlavorTheme</code> is the theme half: one slot wrapping the two public theming
+paths (<code>FlavorTheme.brand(BrandTheme, …)</code>, lowered at build; or
+<code>FlavorTheme.themeData(light:, dark:)</code> for full token control), and it owns
+<code>themeMode</code> — brightness policy travels with the themes it selects between.</p>
+<p><code>standard()</code> keeps its exact signature and becomes a thin wrapper:
+<code>standardFlavor(...)</code> builds the standard <code>Flavor</code>; <code>standard()</code> is
+<code>(await standardFlavor(…)).build()</code>. A fork customizes through
+<strong><code>standardFlavor</code>'s parameters</strong>, not by re-implementing assembly:</p>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Full color control + an extra module — no hand-carried kit fields.</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">final</span><span class="w"> </span><span class="n">flavor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">standardFlavor</span><span class="p">(</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nl">identity:</span><span class="w"> </span><span class="n">myIdentity</span><span class="p">,</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nl">theme:</span><span class="w"> </span><span class="n">FlavorTheme</span><span class="p">.</span><span class="n">themeData</span><span class="p">(</span><span class="nl">light:</span><span class="w"> </span><span class="n">myLight</span><span class="p">,</span><span class="w"> </span><span class="nl">dark:</span><span class="w"> </span><span class="n">myDark</span><span class="p">),</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nl">extraModules:</span><span class="w"> </span><span class="p">(</span><span class="n">kit</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">MyModule</span><span class="p">(</span><span class="n">kit</span><span class="p">.</span><span class="n">serverManager</span><span class="p">)],</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">);</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">());</span>
+</span></code></pre></div>
+<hr />
+<h2 id="3-the-decisions-by-axis">3. The Decisions, by Axis</h2>
+<h3 id="31-flavor-is-a-single-use-assembly-declaration-built-once">3.1 <code>Flavor</code> is a single-use assembly declaration, built once</h3>
+<p>Flavors are configuration: cheap to construct, inert until <code>build()</code>. A builder
+or subclass-per-flavor invites state and ordering concerns the domain does not
+have. A flavor holds live, build-once module instances, so it is not a value to
+copy and rebuild — it is a declaration you assemble once via <code>build()</code>.
+Customization is a parameter of <code>standardFlavor</code> (identity, theme,
+<code>extraModules</code>), not a mutation of a built flavor. Deep forks that want a named
+flavor still just write a function — one that <em>returns a <code>Flavor</code></em>, so the
+assembly ritual stays owned by <code>build()</code>.</p>
+<h3 id="32-flavortheme-holds-the-theme-source-lowered-at-build-time">3.2 <code>FlavorTheme</code> holds the theme <em>source</em>, lowered at build time</h3>
+<p>Holding <code>BrandTheme</code> (not pre-lowered <code>ThemeData</code>) keeps the theme slot
+synchronous to construct and <code>const</code>-able, defers the lowering cost until it
+is needed exactly once, and gives <code>build()</code> a single place to guarantee both
+brightnesses are lowered with the same resolver and classifications — a pair
+of calls every flavor function currently duplicates. The <code>themeData</code> variant
+exists because the full-control tier (§1.3) hands us <code>ThemeData</code> directly.</p>
+<h3 id="33-standardflavor-and-the-extramodules-seam">3.3 <code>standardFlavor()</code> and the <code>extraModules</code> seam</h3>
+<p><code>standardFlavor</code> converts the composition kit into a <code>Flavor</code>, absorbing the
+kit-field forwarding that <code>docs/authoring-a-flavor.md</code> currently asks authors
+to transcribe. Custom modules usually need shared state (<code>serverManager</code>), so
+the seam is a callback receiving the kit —
+<code>List&lt;AppModule&gt; Function(StandardKit kit)</code> — rather than a plain list.
+<code>buildStandardKit</code> stays public for compositions that diverge further.</p>
+<h3 id="34-standard-is-compatibility-frozen">3.4 <code>standard()</code> is compatibility-frozen</h3>
+<p>Signature unchanged; implementation delegates. Existing callers (including
+<code>main.dart</code>) compile and behave identically. This is also the correctness
+proof: the entire shipped app boots through the new path.</p>
+<h3 id="35-shellconfig-narrows-but-stays-public-for-now">3.5 <code>ShellConfig</code> narrows but stays public, for now</h3>
+<p>With <code>Flavor.build()</code> as the blessed assembly point, <code>ShellConfig</code> should
+tend toward an internal boot artifact. It stays public in this change —
+<code>runSoliplexShell</code> takes it, deep embedders construct it, and #426's doc
+teaches it — but new capability should land on <code>Flavor</code>, not on
+<code>ShellConfig.fromModules</code>'s parameter list.</p>
+<h3 id="36-the-theme-guards-eventual-home">3.6 The theme guard's eventual home</h3>
+<p>The <code>SoliplexTheme</code>-extension guard stays in <code>ShellConfig.fromModules</code> in
+this change (moving it would alter #426's semantics for direct callers). Its
+natural home is the theme boundary — <code>FlavorTheme.themeData</code> can validate at
+construction, failing even earlier with the same message. Deferred until the
+<code>Flavor</code> shape is accepted.</p>
+<hr />
+<h2 id="4-what-does-not-change">4. What Does Not Change</h2>
+<ul>
+<li>The two theming tiers and their semantics (curated <code>BrandTheme</code> path,
+  direct <code>SoliplexColors</code> path), including #426's contrast check and guard.</li>
+<li>The composition kit's role — it remains the module-graph layer; <code>Flavor</code>
+  sits on top of it, not instead of it. (This change renames #426's
+  <code>StandardModules</code> / <code>buildStandardModules</code> to <code>StandardKit</code> /
+  <code>buildStandardKit</code> and relocates it beside <code>standard.dart</code>; §6.)</li>
+<li><code>runSoliplexShell(ShellConfig)</code> and the shell widget tree.</li>
+<li>The shipped Soliplex app's behavior, byte for byte.</li>
+</ul>
+<hr />
+<h2 id="5-known-limitations-and-open-questions">5. Known Limitations and Open Questions</h2>
+<ol>
+<li><strong>Naming — resolved.</strong> <code>Flavor</code> collides with the informal use of "flavor"
+   for the functions themselves, and the alternatives (<code>FlavorSpec</code>,
+   <code>AppVariant</code>, <code>SoliplexApp</code>; <code>FlavorTheme</code> → <code>ThemeSource</code>) were weighed and
+   declined. This change ships <code>Flavor</code> / <code>FlavorTheme</code> as the names — they now
+   appear in the CHANGELOG, <code>CLAUDE.md</code>, and the authoring guide as public API,
+   so the question is settled by adoption, not left open for a rename after the
+   names are in a release. The kit half is likewise settled: this change renames
+   #426's <code>StandardModules</code> / <code>buildStandardModules</code> record and builder to
+   <code>StandardKit</code> / <code>buildStandardKit</code>, aligning the type names with the "kit"
+   vocabulary.</li>
+<li><strong><code>appName</code> duplication survives</strong> (§1.2 #4): <code>Flavor.build()</code> threads
+   <code>identity.appName</code> into <code>ShellConfig.appName</code>, hiding the duplication
+   rather than removing it. Removing it means <code>ShellConfig</code> taking
+   <code>AppIdentity</code> — a breaking change deferred with §3.5.</li>
+<li><strong>The kit's <code>serverManager</code> escape hatch</strong> is still a concrete type on a
+   record; if custom modules need more shared state, the record grows. A
+   future <code>FlavorContext</code> interface may age better; not needed yet.</li>
+<li><strong>The catalog rides the main barrel while there is one flavor.</strong> A second
+   flavor with a distinct module graph is the trigger to split — but into
+   per-flavor entrypoints (<code>lib/standard.dart</code>, <code>lib/&lt;fork&gt;.dart</code>) layered over
+   the framework barrel, so a fork imports only the flavor it extends. That is
+   not a return to the <code>flavors.dart</code> grab-bag §1.2 #6 rejected. Not needed yet.</li>
+</ol>
+<hr />
+<h2 id="6-consequences">6. Consequences</h2>
+<p><strong>Positive</strong></p>
+<ul>
+<li>Flavor authoring drops from a transcribed ritual to a composed value; the
+  failure modes in §1.2 #1 become unrepresentable.</li>
+<li>The public API gains the concept users already talk about ("the standard
+  flavor", "your fork's flavor") as a type the IDE can show them.</li>
+<li><code>ShellConfig</code> stops accreting parameters; the guard and lowering logic get
+  a single owner; <code>themeMode</code> rejoins the theme.</li>
+<li>ADR-002's amended boundary is written down (§1.3) instead of implicit in a
+  PR diff.</li>
+<li>The <code>src/composition/</code> / <code>src/flavors/</code> split (§1.2 #6) collapses:
+  <code>buildStandardKit</code> moves beside <code>standard.dart</code> as the standard flavor's
+  two files — the module-graph kit and its assembly, kept separate by the same
+  altitude argument that rejects folding them (§8). The main barrel now carries
+  the whole flavor-authoring surface (the other half of §1.2 #6), so one import
+  authors a flavor, with no separate <code>flavors.dart</code> barrel.</li>
+</ul>
+<p><strong>Negative / cost</strong></p>
+<ul>
+<li>One more public type to document and keep stable.</li>
+<li>Two blessed ways to reach <code>ShellConfig</code> during the transition (direct
+  <code>fromModules</code>, and <code>Flavor.build()</code>); mitigated by §3.5's "new capability
+  lands on <code>Flavor</code>" rule.</li>
+<li><code>docs/authoring-a-flavor.md</code> and the CHANGELOG are rewritten around the new
+  API in this change and must be kept in sync with it.</li>
+</ul>
+<hr />
+<h2 id="7-migration">7. Migration</h2>
+<p>None breaking. <code>standard()</code> callers are untouched. #426's
+<code>buildStandardKit</code> consumers may adopt <code>standardFlavor</code> incrementally.</p>
+<hr />
+<h2 id="8-alternatives-considered">8. Alternatives Considered</h2>
+<table>
+<thead>
+<tr>
+<th>Alternative</th>
+<th>Why rejected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keep the function convention (status quo)</td>
+<td>The assembly ritual stays copy-pasted and failable in every fork; the concept keeps living in a doc instead of the type system.</td>
+</tr>
+<tr>
+<td>Fatten <code>ShellConfig</code> (add identity, brand, kit fields)</td>
+<td>Deepens the declaration/artifact conflation (§1.2 #3); every new axis lands as another <code>fromModules</code> parameter.</td>
+</tr>
+<tr>
+<td>A builder (<code>FlavorBuilder…build()</code>)</td>
+<td>Mutable staging for what is plain configuration; <code>standardFlavor</code>'s parameters express derivation ("standard, but…") more directly, and a flavor holds live modules it builds once anyway.</td>
+</tr>
+<tr>
+<td>Sealed class hierarchy for the theme source</td>
+<td>Two variants do not justify pattern-matching ergonomics over two named constructors; revisit if a third source appears.</td>
+</tr>
+<tr>
+<td>Fold the kit into <code>Flavor</code> (kill <code>StandardKit</code>)</td>
+<td>The kit is genuinely a lower layer — module graph wiring — and #426 just extracted it cleanly; re-fusing it would undo that separation.</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -3125,7 +3870,7 @@ application.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../cli/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CLI">
+          <a href="../ADR-002-customizable-brand-theme/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Adr 002 Customizable Brand Theme">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3135,20 +3880,20 @@ application.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                CLI
+                Adr 002 Customizable Brand Theme
               </div>
             </div>
           </a>
         
         
           
-          <a href="../sse_resume/" class="md-footer__link md-footer__link--next" aria-label="Next: SSE Resume">
+          <a href="../../plans/0001-app-shell/proposal/" class="md-footer__link md-footer__link--next" aria-label="Next: 0001 App Shell">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                SSE Resume
+                0001 App Shell
               </div>
             </div>
             <div class="md-footer__button md-icon">
