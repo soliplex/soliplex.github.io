@@ -4536,11 +4536,11 @@ per-source LanceDB database. The default command is:</p>
 invocation with <code>si-agent manifest run &lt;path&gt; --load</code> / <code>--no-load</code>.</p>
 <h4 id="post-process-callbacks">Post-process callbacks</h4>
 <p>A manifest's <code>config.post_process</code> is an ordered list of callbacks invoked
-<strong>after</strong> the haiku-rag load for that source completes successfully (and after
-its summary has been streamed). Each entry names a <code>method</code> (a dotted import
-path) and optional <code>kwargs</code>; the callback is invoked as
-<code>method(source, **kwargs)</code> — <code>source</code> is the manifest's source and <code>kwargs</code>
-are the configured extra args.</p>
+<strong>after</strong> the haiku-rag load for that source finishes (and after its summary
+has been streamed) — <strong>whether the load succeeded, failed, or timed out</strong>. Each
+entry names a <code>method</code> (a dotted import path) and optional <code>kwargs</code>; the
+callback is invoked as <code>method(source, **kwargs)</code> — <code>source</code> is the manifest's
+source and <code>kwargs</code> are the configured extra args.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nt">config</span><span class="p">:</span>
 </span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="nt">haiku_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">haiku.rag.custom.yaml</span>
 </span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">  </span><span class="nt">post_process</span><span class="p">:</span>
@@ -4556,12 +4556,21 @@ are the configured extra args.</p>
 <li><strong>Config auto-inject:</strong> when a step omits <code>config</code> and the callable accepts
   one (an explicit <code>config</code> parameter or <code>**kwargs</code>), the manifest's resolved
   haiku config path is passed so the callback opens the store with the same
-  config the load used.</li>
-<li><strong>Failure isolation:</strong> a step that raises is logged and recorded; the
-  remaining steps still run. The per-step outcomes are returned under the load
-  result's <code>post_process</code> key.</li>
-<li><strong>Only after a successful load:</strong> post-process does not run when the load
-  fails, times out, or is skipped (<code>--no-load</code>).</li>
+  config the load used. While the callbacks run, <code>SOURCE</code> and <code>DOWNLOAD_DIR</code> are
+  set in the environment (as they are for the load subprocess), so a config that
+  interpolates <code>${SOURCE}</code> / <code>${DOWNLOAD_DIR}</code> loads in-process too. Other
+  <code>${VAR}</code> references must be present in the inherited environment.</li>
+<li><strong>Load outcome (<code>ingester_exit_code</code>):</strong> callbacks fire regardless of the
+  load result. The load's exit code (<code>0</code> on success, non-zero on failure,
+  <code>None</code> on timeout) is auto-injected as an <code>ingester_exit_code</code> kwarg for
+  callables that accept one, so a step can decide what to do on failure.</li>
+<li><strong>Terminate on error:</strong> a step that raises is logged and the exception
+  propagates — the remaining steps do <strong>not</strong> run. The per-step outcomes are
+  returned under the load result's <code>post_process</code> key only when every step
+  succeeds. In a batch/directory run the failure is isolated to that manifest
+  (recorded as <code>haiku_load_error</code> on its result); the other manifests still run.</li>
+<li><strong>Requires a load:</strong> post-process only runs when a load runs — it is skipped
+  with <code>--no-load</code>.</li>
 </ul>
 <p>Built-in callback: <code>soliplex.agents.manifest.post_processors:vacuum</code> runs
 LanceDB maintenance (optimize + clean up table history) on the per-source
