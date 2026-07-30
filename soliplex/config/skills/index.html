@@ -1403,21 +1403,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuring-entrypoint-skills" class="md-nav__link">
+  <a href="#selecting-available-skills" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Configuring Entrypoint Skills
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#enabling-available-skills" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Enabling Available Skills
+        Selecting Available Skills
       </span>
     </span>
   </a>
@@ -3036,21 +3025,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuring-entrypoint-skills" class="md-nav__link">
+  <a href="#selecting-available-skills" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Configuring Entrypoint Skills
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#enabling-available-skills" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Enabling Available Skills
+        Selecting Available Skills
       </span>
     </span>
   </a>
@@ -3230,46 +3208,30 @@
 
 
 <h1 id="ai-skills">AI Skills</h1>
-<p>Skills are a newer implementation for defining extension points
-to an LLM system.</p>
+<p>Soliplex loads instruction-only <a href="https://agentskills.io/">Agent Skills</a>
+as native Pydantic AI capabilities.</p>
 <p>See:</p>
 <ul>
-<li><a href="https://agentskills.io/specification">AI Skills specificzation</a></li>
-<li><a href="https://ggozad.github.io/haiku.skills/">Haiku SKills</a></li>
+<li><a href="https://agentskills.io/specification">Agent Skills specification</a></li>
 </ul>
-<p>A Soliplex installation currently supports kinds of skills:</p>
-<ul>
-<li>
 <p>Filesystem-based skills are loaded from directories containing a
-  <code>SKILLS.md</code> spec file.</p>
-</li>
-<li>
-<p>Python entrypoint skills are loaded using Python's package entrypoint
-  mechanism.</p>
-</li>
-</ul>
+<code>SKILL.md</code> specification file.</p>
 <h2 id="configuring-filesystem-skill-search-paths">Configuring Filesystem Skill Search Paths</h2>
 <p>At the installation level, define the directories to be searched for
-<code>SKILLS.md</code> spec files using the
+<code>SKILL.md</code> spec files using the
 <a href="../installation/#filesystem-skill-paths"><code>filesystem_skills_paths</code> entry</a>
 in the installation configuration file.</p>
 <p>Discovered filesystem skills can be queried using the
 <code>InstallationConfig.available_filesystem_skill_configs</code> attribute.</p>
-<h2 id="configuring-entrypoint-skills">Configuring Entrypoint Skills</h2>
-<p>Entrypoint skills are loaded automatically.  There is currently no
-option to configure or suppress this feature.</p>
-<p>Discovered entrypoint skills can be queried using the
-<code>InstallationConfig.available_entrypoint_skill_configs</code> attribute.</p>
-<h2 id="enabling-available-skills">Enabling Available Skills</h2>
-<p>Skills discovered using either of these mechanisms are "available",
-but not enabled by default.  To enable one or more skills, use the
-<a href="../installation/#enabling-skill-configurations"><code>skill_configs</code> stanza</a>
+<h2 id="selecting-available-skills">Selecting Available Skills</h2>
+<p>All discovered skills are enabled by default. To restrict an installation
+to selected skills, use the
+<a href="../installation/#selecting-skill-configurations"><code>skill_configs</code> stanza</a>
 in the installation configuration file.</p>
 <h2 id="configuring-room-specific-skills">Configuring Room-Specific Skills</h2>
-<p>Soliplex provides two custom skill configuration types, based on the
-skills defined in <code>haiku.rag.skills.rag</code> and <code>haiku.rag.skills.analysis</code>.
-Because these skills require additional parameters available in
-a room configuration, they are defined using the
+<p>Soliplex also provides native capability configuration types for RAG,
+analysis, and sandbox execution. Because these capabilities require
+room-specific parameters, they are defined using the
 <a href="../rooms/#skill-configuration"><code>skill_configs</code> stanza</a>
 of the room configuration's <code>skills</code> entry.</p>
 

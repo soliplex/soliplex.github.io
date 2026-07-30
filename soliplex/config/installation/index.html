@@ -1321,10 +1321,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#enabling-skill-configurations" class="md-nav__link">
+  <a href="#selecting-skill-configurations" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Enabling Skill Configurations
+        Selecting Skill Configurations
       </span>
     </span>
   </a>
@@ -3462,10 +3462,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#enabling-skill-configurations" class="md-nav__link">
+  <a href="#selecting-skill-configurations" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Enabling Skill Configurations
+        Selecting Skill Configurations
       </span>
     </span>
   </a>
@@ -3887,12 +3887,12 @@ search for AI Skill configurations.</p>
 <p>Each path can be either:</p>
 <ul>
 <li>
-<p>a directory containing its own <code>SKILLS.md</code> file:  this
+<p>a directory containing its own <code>SKILL.md</code> file: this
   directory will be mapped as a single skill.</p>
 </li>
 <li>
 <p>a directory whose immediate subdirectories will be treated as skills
-  IFF they contain a <code>SKILLS.md</code> file.</p>
+  if they contain a <code>SKILL.md</code> file.</p>
 </li>
 </ul>
 <p>Non-absolute paths will be evaluated relative to the installation directory.</p>
@@ -3908,17 +3908,15 @@ skills found earlier in the list "win" over later ones with the same name.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">filesystem_skills_paths</span><span class="p">:</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
-<h2 id="enabling-skill-configurations">Enabling Skill Configurations</h2>
-<p>To enable discovered filesystem or entrypoint skills, add them to the
-<code>skill_configs</code> stanza of the installation configuration.  E.g.:</p>
+<h2 id="selecting-skill-configurations">Selecting Skill Configurations</h2>
+<p>All discovered filesystem skills are enabled by default. If <code>skill_configs</code>
+contains any entries, it acts as a whitelist. For example:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">skill_configs</span><span class="p">:</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bare-bones&quot;</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;filesystem&quot;</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;image-generation&quot;</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;entrypoint&quot;</span>
 </span></code></pre></div>
-<p>Discovered skills which are not mentioned in this stanza cannot be
-referenced by other parts of the configuration, e.g. rooms.</p>
+<p>With this configuration, discovered skills other than <code>bare-bones</code> cannot
+be referenced by other parts of the configuration, such as rooms.</p>
 <h2 id="sandbox-configuration">Sandbox Configuration</h2>
 <p>The <code>sandbox_config</code> stanza configures the bubblewrap sandbox that backs the
 <code>bubble-sandbox</code> skill (shell / Python execution). Non-absolute paths are

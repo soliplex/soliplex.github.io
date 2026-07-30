@@ -4545,7 +4545,7 @@ source and <code>kwargs</code> are the configured extra args.</p>
 </span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="nt">haiku_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">haiku.rag.custom.yaml</span>
 </span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">  </span><span class="nt">post_process</span><span class="p">:</span>
 </span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex.agents.manifest.post_processors:vacuum</span>
-</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> vacuum_retention_seconds</span><span class="p">:</span><span class="w"> </span><span class="nv">0</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> timeout</span><span class="p">:</span><span class="w"> </span><span class="nv">1800</span><span class="w"> </span><span class="p p-Indicator">}</span>
 </span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your_project.postprocess:identify_and_apply</span>
 </span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> only_missing</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> overrides</span><span class="p">:</span><span class="w"> </span><span class="nv">/etc/agent/overrides.json</span><span class="w"> </span><span class="p p-Indicator">}</span>
 </span></code></pre></div>
@@ -4574,7 +4574,11 @@ source and <code>kwargs</code> are the configured extra args.</p>
 </ul>
 <p>Built-in callback: <code>soliplex.agents.manifest.post_processors:vacuum</code> runs
 LanceDB maintenance (optimize + clean up table history) on the per-source
-database.</p>
+database. It shells out to <code>haiku-rag vacuum</code> as a subprocess (like the load) —
+keeping LanceDB's async runtime out of the agent's event loop and making the
+pass killable via its <code>timeout</code> kwarg (default 1800s), so a stuck compaction
+can't hang the run. Retention comes from the haiku config's
+<code>storage.vacuum_retention_seconds</code>.</p>
 <p><strong>Note:</strong> All commands support WebDAV credentials via environment variables (<code>WEBDAV_URL</code>, <code>WEBDAV_USERNAME</code>, <code>WEBDAV_PASSWORD</code>) or command-line options (<code>--webdav-url</code>, <code>--webdav-username</code>, <code>--webdav-password</code>).</p>
 <p><strong>Git Bash on Windows:</strong> If using Git Bash on Windows, use double slashes for WebDAV paths to prevent path conversion (e.g., <code>//documents</code> instead of <code>/documents</code>).</p>
 <h2 id="how-it-works">How It Works</h2>
