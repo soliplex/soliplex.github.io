@@ -3327,6 +3327,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#database-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Database Maintenance
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#post-process-callbacks" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3981,8 +3992,9 @@
 </li>
 <li>Runs <code>haiku-ingester run-batch</code> after each manifest run</li>
 <li>One per-source <code>.lancedb</code> database, configurable command and config file</li>
+<li>Globally serialized — only one load runs at a time</li>
 <li>
-<p>Globally serialized — only one load runs at a time</p>
+<p><code>manifest migrate</code> / <code>manifest vacuum</code> maintain those databases</p>
 </li>
 <li>
 <p><strong>REST API Server</strong>: Run agents as a web service</p>
@@ -4085,8 +4097,12 @@ against the downloaded files.</p>
 </span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="c1"># HAIKU_LOAD_TIMEOUT=1800</span>
 </span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="c1"># HAIKU_LOAD_CWD=/var/lib/ingester     # subprocess working dir (default: inherit)</span>
 </span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>
-</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="c1"># S3-compatible storage (for urls_file references using s3:// URLs)</span>
-</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="nv">S3_ENDPOINT_URL</span><span class="o">=</span>https://minio.example.com:9000
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="c1"># haiku-rag maintenance (`si-agent manifest migrate` / `manifest vacuum`)</span>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="c1"># HAIKU_MAINTENANCE_COMMAND=haiku-rag --config={haiku_cfg} {verb} --db={db}</span>
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="c1"># HAIKU_MAINTENANCE_TIMEOUT=3600</span>
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="c1"># S3-compatible storage (for urls_file references using s3:// URLs)</span>
+</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="nv">S3_ENDPOINT_URL</span><span class="o">=</span>https://minio.example.com:9000
 </span></code></pre></div>
 <p>See <a href="#haiku-rag-loading">haiku-rag Loading</a> for what these settings do.</p>
 <h3 id="git-cli-mode">Git CLI Mode</h3>
@@ -4304,42 +4320,47 @@ saved as Markdown (<code>.md</code>) documents.</p>
 <p>Output results as JSON:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>run<span class="w"> </span>/path/to/manifest.yml<span class="w"> </span>--json
 </span></code></pre></div>
+<p>Maintain the databases those manifests load into (see
+<a href="#database-maintenance">Database Maintenance</a>):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>migrate<span class="w">           </span><span class="c1"># every manifest in $MANIFEST_DIR</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>vacuum<span class="w"> </span>--dry-run<span class="w">  </span><span class="c1"># print the commands without running them</span>
+</span></code></pre></div>
 <h4 id="manifest-yaml-format">Manifest YAML Format</h4>
 <p>A manifest file defines the ingestion source, optional shared configuration, and one or more components:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-ingestion</span>
-</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Document Ingestion</span>
-</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-source-name</span>
-</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="nt">schedule</span><span class="p">:</span>
-</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="w">  </span><span class="nt">cron</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
-</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a><span class="nt">config</span><span class="p">:</span>
-</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="w">  </span><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-project</span>
-</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="w">  </span><span class="nt">extensions</span><span class="p">:</span>
-</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">md</span>
-</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pdf</span>
-</span><span id="__span-36-12"><a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a><span class="w">  </span><span class="nt">delete_stale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-36-13"><a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a><span class="nt">components</span><span class="p">:</span>
-</span><span id="__span-36-14"><a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local-docs</span>
-</span><span id="__span-36-15"><a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fs</span>
-</span><span id="__span-36-16"><a id="__codelineno-36-16" name="__codelineno-36-16" href="#__codelineno-36-16"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/path/to/documents</span>
-</span><span id="__span-36-17"><a id="__codelineno-36-17" name="__codelineno-36-17" href="#__codelineno-36-17"></a>
-</span><span id="__span-36-18"><a id="__codelineno-36-18" name="__codelineno-36-18" href="#__codelineno-36-18"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web-pages</span>
-</span><span id="__span-36-19"><a id="__codelineno-36-19" name="__codelineno-36-19" href="#__codelineno-36-19"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
-</span><span id="__span-36-20"><a id="__codelineno-36-20" name="__codelineno-36-20" href="#__codelineno-36-20"></a><span class="w">    </span><span class="nt">urls</span><span class="p">:</span>
-</span><span id="__span-36-21"><a id="__codelineno-36-21" name="__codelineno-36-21" href="#__codelineno-36-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://example.com/page1</span>
-</span><span id="__span-36-22"><a id="__codelineno-36-22" name="__codelineno-36-22" href="#__codelineno-36-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://example.com/page2</span>
-</span><span id="__span-36-23"><a id="__codelineno-36-23" name="__codelineno-36-23" href="#__codelineno-36-23"></a>
-</span><span id="__span-36-24"><a id="__codelineno-36-24" name="__codelineno-36-24" href="#__codelineno-36-24"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">repo-docs</span>
-</span><span id="__span-36-25"><a id="__codelineno-36-25" name="__codelineno-36-25" href="#__codelineno-36-25"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scm</span>
-</span><span id="__span-36-26"><a id="__codelineno-36-26" name="__codelineno-36-26" href="#__codelineno-36-26"></a><span class="w">    </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github</span>
-</span><span id="__span-36-27"><a id="__codelineno-36-27" name="__codelineno-36-27" href="#__codelineno-36-27"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myorg</span>
-</span><span id="__span-36-28"><a id="__codelineno-36-28" name="__codelineno-36-28" href="#__codelineno-36-28"></a><span class="w">    </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-repo</span>
-</span><span id="__span-36-29"><a id="__codelineno-36-29" name="__codelineno-36-29" href="#__codelineno-36-29"></a><span class="w">    </span><span class="nt">incremental</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-36-30"><a id="__codelineno-36-30" name="__codelineno-36-30" href="#__codelineno-36-30"></a>
-</span><span id="__span-36-31"><a id="__codelineno-36-31" name="__codelineno-36-31" href="#__codelineno-36-31"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shared-drive</span>
-</span><span id="__span-36-32"><a id="__codelineno-36-32" name="__codelineno-36-32" href="#__codelineno-36-32"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webdav</span>
-</span><span id="__span-36-33"><a id="__codelineno-36-33" name="__codelineno-36-33" href="#__codelineno-36-33"></a><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://webdav.example.com</span>
-</span><span id="__span-36-34"><a id="__codelineno-36-34" name="__codelineno-36-34" href="#__codelineno-36-34"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/documents</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-ingestion</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Document Ingestion</span>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-source-name</span>
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="nt">schedule</span><span class="p">:</span>
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="w">  </span><span class="nt">cron</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="nt">config</span><span class="p">:</span>
+</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="w">  </span><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-37-8"><a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-project</span>
+</span><span id="__span-37-9"><a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a><span class="w">  </span><span class="nt">extensions</span><span class="p">:</span>
+</span><span id="__span-37-10"><a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">md</span>
+</span><span id="__span-37-11"><a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pdf</span>
+</span><span id="__span-37-12"><a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a><span class="w">  </span><span class="nt">delete_stale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-37-13"><a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a><span class="nt">components</span><span class="p">:</span>
+</span><span id="__span-37-14"><a id="__codelineno-37-14" name="__codelineno-37-14" href="#__codelineno-37-14"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local-docs</span>
+</span><span id="__span-37-15"><a id="__codelineno-37-15" name="__codelineno-37-15" href="#__codelineno-37-15"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fs</span>
+</span><span id="__span-37-16"><a id="__codelineno-37-16" name="__codelineno-37-16" href="#__codelineno-37-16"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/path/to/documents</span>
+</span><span id="__span-37-17"><a id="__codelineno-37-17" name="__codelineno-37-17" href="#__codelineno-37-17"></a>
+</span><span id="__span-37-18"><a id="__codelineno-37-18" name="__codelineno-37-18" href="#__codelineno-37-18"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web-pages</span>
+</span><span id="__span-37-19"><a id="__codelineno-37-19" name="__codelineno-37-19" href="#__codelineno-37-19"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
+</span><span id="__span-37-20"><a id="__codelineno-37-20" name="__codelineno-37-20" href="#__codelineno-37-20"></a><span class="w">    </span><span class="nt">urls</span><span class="p">:</span>
+</span><span id="__span-37-21"><a id="__codelineno-37-21" name="__codelineno-37-21" href="#__codelineno-37-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://example.com/page1</span>
+</span><span id="__span-37-22"><a id="__codelineno-37-22" name="__codelineno-37-22" href="#__codelineno-37-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://example.com/page2</span>
+</span><span id="__span-37-23"><a id="__codelineno-37-23" name="__codelineno-37-23" href="#__codelineno-37-23"></a>
+</span><span id="__span-37-24"><a id="__codelineno-37-24" name="__codelineno-37-24" href="#__codelineno-37-24"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">repo-docs</span>
+</span><span id="__span-37-25"><a id="__codelineno-37-25" name="__codelineno-37-25" href="#__codelineno-37-25"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scm</span>
+</span><span id="__span-37-26"><a id="__codelineno-37-26" name="__codelineno-37-26" href="#__codelineno-37-26"></a><span class="w">    </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github</span>
+</span><span id="__span-37-27"><a id="__codelineno-37-27" name="__codelineno-37-27" href="#__codelineno-37-27"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myorg</span>
+</span><span id="__span-37-28"><a id="__codelineno-37-28" name="__codelineno-37-28" href="#__codelineno-37-28"></a><span class="w">    </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-repo</span>
+</span><span id="__span-37-29"><a id="__codelineno-37-29" name="__codelineno-37-29" href="#__codelineno-37-29"></a><span class="w">    </span><span class="nt">incremental</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-37-30"><a id="__codelineno-37-30" name="__codelineno-37-30" href="#__codelineno-37-30"></a>
+</span><span id="__span-37-31"><a id="__codelineno-37-31" name="__codelineno-37-31" href="#__codelineno-37-31"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shared-drive</span>
+</span><span id="__span-37-32"><a id="__codelineno-37-32" name="__codelineno-37-32" href="#__codelineno-37-32"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webdav</span>
+</span><span id="__span-37-33"><a id="__codelineno-37-33" name="__codelineno-37-33" href="#__codelineno-37-33"></a><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://webdav.example.com</span>
+</span><span id="__span-37-34"><a id="__codelineno-37-34" name="__codelineno-37-34" href="#__codelineno-37-34"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/documents</span>
 </span></code></pre></div>
 <h4 id="manifest-fields">Manifest Fields</h4>
 <p>Top-level fields:</p>
@@ -4430,27 +4451,27 @@ saved as Markdown (<code>.md</code>) documents.</p>
 <li>Components that succeed still have their documents ingested normally — only the stale deletion step is skipped.</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">synced-docs</span>
-</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Synced Documentation</span>
-</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docs-source</span>
-</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="nt">config</span><span class="p">:</span>
-</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="w">  </span><span class="nt">delete_stale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="nt">components</span><span class="p">:</span>
-</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local-docs</span>
-</span><span id="__span-37-8"><a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fs</span>
-</span><span id="__span-37-9"><a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/docs</span>
-</span><span id="__span-37-10"><a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shared-drive</span>
-</span><span id="__span-37-11"><a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webdav</span>
-</span><span id="__span-37-12"><a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://webdav.example.com</span>
-</span><span id="__span-37-13"><a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/shared/docs</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">synced-docs</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Synced Documentation</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docs-source</span>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="nt">config</span><span class="p">:</span>
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="w">  </span><span class="nt">delete_stale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="nt">components</span><span class="p">:</span>
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local-docs</span>
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fs</span>
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/docs</span>
+</span><span id="__span-38-10"><a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shared-drive</span>
+</span><span id="__span-38-11"><a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webdav</span>
+</span><span id="__span-38-12"><a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://webdav.example.com</span>
+</span><span id="__span-38-13"><a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/shared/docs</span>
 </span></code></pre></div>
 <p>If a file is removed from <code>/data/docs</code> or from the WebDAV server (dropped from the listing, or returning 404 on fetch), the next manifest run detects that its URI is no longer present and deletes it — and its sidecar — from the download directory.</p>
 <p><strong>Note:</strong> SCM components using <code>incremental: true</code> only return files changed since the last sync, not the full file listing. When <code>delete_stale</code> is enabled with incremental SCM components, the stale detection may not have complete URI coverage for those components. Consider using full inventory mode (<code>incremental: false</code>) when <code>delete_stale</code> is needed with SCM sources.</p>
 <h4 id="scheduling">Scheduling</h4>
 <p>When the REST API server is started with <code>SCHEDULER_ENABLED=true</code> and <code>MANIFEST_DIR</code> is set, manifests with a <code>schedule</code> block are automatically registered as cron jobs:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SCHEDULER_ENABLED</span><span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MANIFEST_DIR</span><span class="o">=</span>/path/to/manifests
-</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>si-agent<span class="w"> </span>serve
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SCHEDULER_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MANIFEST_DIR</span><span class="o">=</span>/path/to/manifests
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>si-agent<span class="w"> </span>serve
 </span></code></pre></div>
 <p>The server loads all manifests from the directory at startup, validates that all manifest IDs are unique, and then:</p>
 <ul>
@@ -4496,7 +4517,7 @@ takes down the scheduler.</p>
 manifest run (scheduled, startup, or CLI). The load indexes the documents
 that the manifest just wrote to <code>${DOWNLOAD_DIR}/&lt;source&gt;/</code> into a
 per-source LanceDB database. The default command is:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>haiku-ingester<span class="w"> </span>--config<span class="o">=</span><span class="si">${</span><span class="nv">HAIKU_CFG</span><span class="si">}</span><span class="w"> </span>run-batch<span class="w"> </span>--db<span class="o">=</span><span class="si">${</span><span class="nv">LANCEDB_DIR</span><span class="si">}</span>/&lt;source&gt;.lancedb
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>haiku-ingester<span class="w"> </span>--config<span class="o">=</span><span class="si">${</span><span class="nv">HAIKU_CFG</span><span class="si">}</span><span class="w"> </span>run-batch<span class="w"> </span>--db<span class="o">=</span><span class="si">${</span><span class="nv">LANCEDB_DIR</span><span class="si">}</span>/&lt;source&gt;.lancedb
 </span></code></pre></div>
 <ul>
 <li><strong>One load at a time.</strong> Inside the server, loads are drained from a
@@ -4525,15 +4546,88 @@ per-source LanceDB database. The default command is:</p>
 <p>Any other <code>${VAR}</code> interpolated by the haiku-rag config (e.g.
   <code>OLLAMA_BASE_URL</code>, <code>DOCLING1_BASE_URL</code>, <code>DOCLING2_BASE_URL</code>,
   <code>EMBEDDINGS_BASE_URL</code>) must be present in the server's environment.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HAIKU_LOAD_ENABLED</span><span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LANCEDB_DIR</span><span class="o">=</span>/var/lib/lancedb
-</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HAIKU_PATH</span><span class="o">=</span>/etc/haiku
-</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SCHEDULER_ENABLED</span><span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MANIFEST_DIR</span><span class="o">=</span>/path/to/manifests
-</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>si-agent<span class="w"> </span>serve
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HAIKU_LOAD_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LANCEDB_DIR</span><span class="o">=</span>/var/lib/lancedb
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HAIKU_PATH</span><span class="o">=</span>/etc/haiku
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SCHEDULER_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MANIFEST_DIR</span><span class="o">=</span>/path/to/manifests
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>si-agent<span class="w"> </span>serve
 </span></code></pre></div>
 <p>The CLI honors the same <code>HAIKU_LOAD_ENABLED</code> default; override per
 invocation with <code>si-agent manifest run &lt;path&gt; --load</code> / <code>--no-load</code>.</p>
+<h4 id="database-maintenance">Database Maintenance</h4>
+<p>Two verbs operate on the per-source LanceDB databases rather than on the
+downloaded documents:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>migrate<span class="w"> </span><span class="o">[</span>PATH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--json<span class="o">]</span><span class="w"> </span><span class="o">[</span>--timeout<span class="w"> </span>N<span class="o">]</span><span class="w"> </span><span class="o">[</span>--dry-run<span class="o">]</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>vacuum<span class="w">  </span><span class="o">[</span>PATH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--json<span class="o">]</span><span class="w"> </span><span class="o">[</span>--timeout<span class="w"> </span>N<span class="o">]</span><span class="w"> </span><span class="o">[</span>--dry-run<span class="o">]</span>
+</span></code></pre></div>
+<ul>
+<li><code>migrate</code> runs pending haiku-rag schema migrations; <code>vacuum</code> optimizes and
+  compacts the tables to reclaim disk space.</li>
+<li><code>PATH</code> is optional and defaults to <code>all</code>:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><code>PATH</code></th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>all</code> (default)</td>
+<td>Every <code>*.yml</code> / <code>*.yaml</code> in <code>$MANIFEST_DIR</code></td>
+</tr>
+<tr>
+<td>a manifest YAML file</td>
+<td>That manifest only</td>
+</tr>
+<tr>
+<td>a directory</td>
+<td>Every manifest in that directory</td>
+</tr>
+</tbody>
+</table>
+<p><code>all</code> is a reserved word, so a file or directory literally named <code>all</code>
+  cannot be addressed by name.
+- <strong>Command</strong> is configurable via <code>HAIKU_MAINTENANCE_COMMAND</code> (default
+  <code>haiku-rag --config={haiku_cfg} {verb} --db={db}</code>). Placeholders:
+  <code>{verb}</code>, <code>{haiku_cfg}</code>, <code>{db}</code>, <code>{source}</code>, <code>{lancedb_dir}</code>,
+  <code>{haiku_path}</code>. As with the load command, the template is tokenized before
+  substitution, so values containing spaces cannot inject extra arguments.
+- <strong>Config file, database path, and environment</strong> resolve exactly as they do
+  for a load: <code>config.haiku_config</code> (or <code>${HAIKU_PATH}/${HAIKU_DEFAULT_CONFIG}</code>),
+  <code>${LANCEDB_DIR}/&lt;slug&gt;.lancedb</code>, and the parent environment plus injected
+  <code>SOURCE</code> / <code>DOWNLOAD_DIR</code> so the haiku-rag config's <code>${VAR}</code> references
+  resolve. Output is streamed to the log line by line.
+- <strong>One at a time.</strong> Operations run strictly sequentially, the same capacity
+  constraint that applies to loads.
+- <strong>Deduplicated.</strong> Manifests that share a source resolve to the same
+  database; it is processed once and the rest are reported as skipped.
+- <strong>Timeout</strong> defaults to <code>HAIKU_MAINTENANCE_TIMEOUT</code> (3600s — higher than
+  the load timeout because a compaction can outlast a batch load) and can be
+  overridden per invocation with <code>--timeout</code>.
+- <strong>Exit code</strong> is 1 if any operation failed or timed out, so the verbs can
+  be used directly in cron or a deploy script. A skipped duplicate is not a
+  failure.</p>
+<p><code>--dry-run</code> resolves every target and prints the command lines that <em>would</em>
+run, one per line, in execution order — nothing is spawned. Skips and
+resolution failures appear as <code>#</code>-prefixed comments so the block stays
+paste-safe:</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="gp">$ </span>si-agent<span class="w"> </span>manifest<span class="w"> </span>vacuum<span class="w"> </span>--dry-run
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="go">haiku-rag --config=/etc/haiku/haiku.rag.default.yaml vacuum --db=/var/lib/lancedb/synced-docs.lancedb</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="go">haiku-rag --config=/etc/haiku/haiku.rag.default.yaml vacuum --db=/var/lib/lancedb/web-source.lancedb</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="gp"># </span>composite<span class="w"> </span>source:<span class="w"> </span>skipped<span class="w"> </span><span class="o">(</span>duplicate<span class="w"> </span>db<span class="o">)</span>
+</span></code></pre></div>
+<p>Under <code>--dry-run</code> the exit code reflects resolution only, so a dry run
+doubles as a config check. Add <code>--json</code> for the full per-target detail
+(argv, resolved paths, return codes).</p>
+<blockquote>
+<p><strong>Note:</strong> nothing coordinates a CLI maintenance run with a load already
+running inside the server — the FIFO queue in <code>server/haiku_queue.py</code> only
+serializes loads within that process. Run maintenance during a quiet
+window, or with the scheduler stopped.</p>
+</blockquote>
 <h4 id="post-process-callbacks">Post-process callbacks</h4>
 <p>A manifest's <code>config.post_process</code> is an ordered list of callbacks invoked
 <strong>after</strong> the haiku-rag load for that source finishes (and after its summary
@@ -4541,13 +4635,13 @@ has been streamed) — <strong>whether the load succeeded, failed, or timed out<
 entry names a <code>method</code> (a dotted import path) and optional <code>kwargs</code>; the
 callback is invoked as <code>method(source, **kwargs)</code> — <code>source</code> is the manifest's
 source and <code>kwargs</code> are the configured extra args.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nt">config</span><span class="p">:</span>
-</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="nt">haiku_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">haiku.rag.custom.yaml</span>
-</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">  </span><span class="nt">post_process</span><span class="p">:</span>
-</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex.agents.manifest.post_processors:vacuum</span>
-</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> timeout</span><span class="p">:</span><span class="w"> </span><span class="nv">1800</span><span class="w"> </span><span class="p p-Indicator">}</span>
-</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your_project.postprocess:identify_and_apply</span>
-</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> only_missing</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> overrides</span><span class="p">:</span><span class="w"> </span><span class="nv">/etc/agent/overrides.json</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="nt">config</span><span class="p">:</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">  </span><span class="nt">haiku_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">haiku.rag.custom.yaml</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="w">  </span><span class="nt">post_process</span><span class="p">:</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex.agents.manifest.post_processors:vacuum</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> timeout</span><span class="p">:</span><span class="w"> </span><span class="nv">1800</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your_project.postprocess:identify_and_apply</span>
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> only_missing</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> overrides</span><span class="p">:</span><span class="w"> </span><span class="nv">/etc/agent/overrides.json</span><span class="w"> </span><span class="p p-Indicator">}</span>
 </span></code></pre></div>
 <ul>
 <li><strong>Dotted path:</strong> <code>pkg.mod:func</code> or <code>pkg.mod.func</code>. The module must be
@@ -4640,16 +4734,16 @@ written next to it. The sidecar records:</p>
 </tbody>
 </table>
 <p>Example sidecar for a WebDAV download:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="p">{</span>
-</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="w">  </span><span class="nt">&quot;mime_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text/markdown&quot;</span><span class="p">,</span>
-</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;webdav:docs&quot;</span><span class="p">,</span>
-</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="w">  </span><span class="nt">&quot;source_uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;handbook/readme.md&quot;</span><span class="p">,</span>
-</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="w">  </span><span class="nt">&quot;ingestion_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;webdav&quot;</span><span class="p">,</span>
-</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="w">  </span><span class="nt">&quot;sha256&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;…&quot;</span><span class="p">,</span>
-</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="w">  </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span>
-</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a><span class="w">  </span><span class="nt">&quot;source_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://dav.example.com/docs/handbook/readme.md&quot;</span>
-</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="p">{</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">  </span><span class="nt">&quot;mime_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text/markdown&quot;</span><span class="p">,</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;webdav:docs&quot;</span><span class="p">,</span>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="w">  </span><span class="nt">&quot;source_uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;handbook/readme.md&quot;</span><span class="p">,</span>
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a><span class="w">  </span><span class="nt">&quot;ingestion_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;webdav&quot;</span><span class="p">,</span>
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a><span class="w">  </span><span class="nt">&quot;sha256&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;…&quot;</span><span class="p">,</span>
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a><span class="w">  </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span>
+</span><span id="__span-45-8"><a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a><span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+</span><span id="__span-45-9"><a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a><span class="w">  </span><span class="nt">&quot;source_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://dav.example.com/docs/handbook/readme.md&quot;</span>
+</span><span id="__span-45-10"><a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="incremental-sync-scm-agent">Incremental Sync (SCM Agent)</h3>
 <p>The <code>run-incremental</code> command uses commit-based tracking for efficient synchronization:</p>
@@ -4690,7 +4784,7 @@ then filtered. A file survives when the extension implied by its detected MIME
 type is in <code>EXTENSIONS</code>.</p>
 <p>To add more types (for example, to keep extension-less text files, whose
 detected type is <code>text/plain</code> → <code>txt</code>):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">EXTENSIONS</span><span class="o">=</span>md,pdf,doc,docx,txt,rst
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">EXTENSIONS</span><span class="o">=</span>md,pdf,doc,docx,txt,rst
 </span></code></pre></div>
 <blockquote>
 <p><strong>Note:</strong> puremagic identifies binary formats by signature but cannot
@@ -4712,83 +4806,83 @@ whose recorded content type is an archive or opaque binary:</p>
 <p>As an example, the soliplex <a href="https://github.com/soliplex/soliplex/tree/main/docs">documentation</a>) can be loaded using both the filesystem and via git.</p>
 <h3 id="example-1-ingest-local-documents">Example 1: Ingest Local Documents</h3>
 <p><strong>Quick version (NEW - no inventory.json needed):</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/soliplex/soliplex.git
-</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>
-</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="c1"># Set up environment</span>
-</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
-</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>
-</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a><span class="c1"># Write directly from directory!</span>
-</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>uv<span class="w"> </span>run<span class="w"> </span>si-agent<span class="w"> </span>fs<span class="w"> </span>run-inventory<span class="w"> </span>&lt;path-to-checkout&gt;/soliplex/docs<span class="w"> </span>soliplex-docs
-</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>
-</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a><span class="c1"># Files land under ./downloads/soliplex-docs/, each with a .meta.json sidecar</span>
-</span><span id="__span-44-10"><a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a>ls<span class="w"> </span>./downloads/soliplex-docs
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/soliplex/soliplex.git
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="c1"># Set up environment</span>
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a><span class="c1"># Write directly from directory!</span>
+</span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>uv<span class="w"> </span>run<span class="w"> </span>si-agent<span class="w"> </span>fs<span class="w"> </span>run-inventory<span class="w"> </span>&lt;path-to-checkout&gt;/soliplex/docs<span class="w"> </span>soliplex-docs
+</span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>
+</span><span id="__span-47-9"><a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a><span class="c1"># Files land under ./downloads/soliplex-docs/, each with a .meta.json sidecar</span>
+</span><span id="__span-47-10"><a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a>ls<span class="w"> </span>./downloads/soliplex-docs
 </span></code></pre></div>
 <p><strong>Traditional version (with inventory.json):</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/soliplex/soliplex.git
-</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>
-</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="c1"># Set up environment</span>
-</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
-</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>
-</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a><span class="c1"># Create inventory (optional - only if you want to review/modify it)</span>
-</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>uv<span class="w"> </span>run<span class="w"> </span>si-agent<span class="w"> </span>fs<span class="w"> </span>build-config<span class="w"> </span>&lt;path-to-checkout&gt;/soliplex/docs
-</span><span id="__span-45-8"><a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a><span class="c1"># You may see messages about ignored files</span>
-</span><span id="__span-45-9"><a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>
-</span><span id="__span-45-10"><a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a><span class="c1"># If you want to update the inventory.json file, do it here</span>
-</span><span id="__span-45-11"><a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>
-</span><span id="__span-45-12"><a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a><span class="c1"># Validate configuration</span>
-</span><span id="__span-45-13"><a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a>uv<span class="w"> </span>run<span class="w"> </span>si-agent<span class="w"> </span>fs<span class="w"> </span>validate-config<span class="w"> </span>&lt;path-to-checkout&gt;/soliplex/docs/inventory.json
-</span><span id="__span-45-14"><a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a><span class="c1"># If there are errors, fix them now</span>
-</span><span id="__span-45-15"><a id="__codelineno-45-15" name="__codelineno-45-15" href="#__codelineno-45-15"></a>
-</span><span id="__span-45-16"><a id="__codelineno-45-16" name="__codelineno-45-16" href="#__codelineno-45-16"></a><span class="c1"># Write</span>
-</span><span id="__span-45-17"><a id="__codelineno-45-17" name="__codelineno-45-17" href="#__codelineno-45-17"></a>uv<span class="w"> </span>run<span class="w"> </span>si-agent<span class="w"> </span>fs<span class="w"> </span>run-inventory<span class="w"> </span>&lt;path-to-checkout&gt;/soliplex/docs/inventory.json<span class="w"> </span>soliplex-docs
-</span><span id="__span-45-18"><a id="__codelineno-45-18" name="__codelineno-45-18" href="#__codelineno-45-18"></a>
-</span><span id="__span-45-19"><a id="__codelineno-45-19" name="__codelineno-45-19" href="#__codelineno-45-19"></a>ls<span class="w"> </span>./downloads/soliplex-docs
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/soliplex/soliplex.git
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="c1"># Set up environment</span>
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
+</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>
+</span><span id="__span-48-6"><a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a><span class="c1"># Create inventory (optional - only if you want to review/modify it)</span>
+</span><span id="__span-48-7"><a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>uv<span class="w"> </span>run<span class="w"> </span>si-agent<span class="w"> </span>fs<span class="w"> </span>build-config<span class="w"> </span>&lt;path-to-checkout&gt;/soliplex/docs
+</span><span id="__span-48-8"><a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a><span class="c1"># You may see messages about ignored files</span>
+</span><span id="__span-48-9"><a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a>
+</span><span id="__span-48-10"><a id="__codelineno-48-10" name="__codelineno-48-10" href="#__codelineno-48-10"></a><span class="c1"># If you want to update the inventory.json file, do it here</span>
+</span><span id="__span-48-11"><a id="__codelineno-48-11" name="__codelineno-48-11" href="#__codelineno-48-11"></a>
+</span><span id="__span-48-12"><a id="__codelineno-48-12" name="__codelineno-48-12" href="#__codelineno-48-12"></a><span class="c1"># Validate configuration</span>
+</span><span id="__span-48-13"><a id="__codelineno-48-13" name="__codelineno-48-13" href="#__codelineno-48-13"></a>uv<span class="w"> </span>run<span class="w"> </span>si-agent<span class="w"> </span>fs<span class="w"> </span>validate-config<span class="w"> </span>&lt;path-to-checkout&gt;/soliplex/docs/inventory.json
+</span><span id="__span-48-14"><a id="__codelineno-48-14" name="__codelineno-48-14" href="#__codelineno-48-14"></a><span class="c1"># If there are errors, fix them now</span>
+</span><span id="__span-48-15"><a id="__codelineno-48-15" name="__codelineno-48-15" href="#__codelineno-48-15"></a>
+</span><span id="__span-48-16"><a id="__codelineno-48-16" name="__codelineno-48-16" href="#__codelineno-48-16"></a><span class="c1"># Write</span>
+</span><span id="__span-48-17"><a id="__codelineno-48-17" name="__codelineno-48-17" href="#__codelineno-48-17"></a>uv<span class="w"> </span>run<span class="w"> </span>si-agent<span class="w"> </span>fs<span class="w"> </span>run-inventory<span class="w"> </span>&lt;path-to-checkout&gt;/soliplex/docs/inventory.json<span class="w"> </span>soliplex-docs
+</span><span id="__span-48-18"><a id="__codelineno-48-18" name="__codelineno-48-18" href="#__codelineno-48-18"></a>
+</span><span id="__span-48-19"><a id="__codelineno-48-19" name="__codelineno-48-19" href="#__codelineno-48-19"></a>ls<span class="w"> </span>./downloads/soliplex-docs
 </span></code></pre></div>
 <h3 id="example-2-ingest-github-repository">Example 2: Ingest GitHub Repository</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="c1"># Set up environment</span>
-</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
-</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">scm_auth_token</span><span class="o">=</span>ghp_your_token_here
-</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>
-</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a><span class="c1"># Write repository contents</span>
-</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>si-agent<span class="w"> </span>scm<span class="w"> </span>run-inventory<span class="w"> </span>github<span class="w"> </span>mycompany/soliplex
-</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>
-</span><span id="__span-46-8"><a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a><span class="c1"># Files land under ./downloads/github_mycompany_soliplex_all/</span>
-</span><span id="__span-46-9"><a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>ls<span class="w"> </span>./downloads
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="c1"># Set up environment</span>
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">scm_auth_token</span><span class="o">=</span>ghp_your_token_here
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a><span class="c1"># Write repository contents</span>
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>si-agent<span class="w"> </span>scm<span class="w"> </span>run-inventory<span class="w"> </span>github<span class="w"> </span>mycompany/soliplex
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>
+</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a><span class="c1"># Files land under ./downloads/github_mycompany_soliplex_all/</span>
+</span><span id="__span-49-9"><a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>ls<span class="w"> </span>./downloads
 </span></code></pre></div>
 <h3 id="example-3-ingest-from-webdav-server">Example 3: Ingest from WebDAV Server</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="c1"># Set up environment</span>
-</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
-</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">WEBDAV_URL</span><span class="o">=</span>https://nextcloud.example.com/remote.php/dav/files/username
-</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">WEBDAV_USERNAME</span><span class="o">=</span>your-username
-</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">WEBDAV_PASSWORD</span><span class="o">=</span>your-password
-</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>
-</span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a><span class="c1"># Write directly from WebDAV directory</span>
-</span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>si-agent<span class="w"> </span>webdav<span class="w"> </span>run-inventory<span class="w"> </span>/Documents/project-docs<span class="w"> </span>webdav-docs
-</span><span id="__span-47-9"><a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a>
-</span><span id="__span-47-10"><a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a><span class="c1"># Files land under ./downloads/webdav-docs/</span>
-</span><span id="__span-47-11"><a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a>ls<span class="w"> </span>./downloads/webdav-docs
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="c1"># Set up environment</span>
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">WEBDAV_URL</span><span class="o">=</span>https://nextcloud.example.com/remote.php/dav/files/username
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">WEBDAV_USERNAME</span><span class="o">=</span>your-username
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">WEBDAV_PASSWORD</span><span class="o">=</span>your-password
+</span><span id="__span-50-6"><a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>
+</span><span id="__span-50-7"><a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a><span class="c1"># Write directly from WebDAV directory</span>
+</span><span id="__span-50-8"><a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a>si-agent<span class="w"> </span>webdav<span class="w"> </span>run-inventory<span class="w"> </span>/Documents/project-docs<span class="w"> </span>webdav-docs
+</span><span id="__span-50-9"><a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a>
+</span><span id="__span-50-10"><a id="__codelineno-50-10" name="__codelineno-50-10" href="#__codelineno-50-10"></a><span class="c1"># Files land under ./downloads/webdav-docs/</span>
+</span><span id="__span-50-11"><a id="__codelineno-50-11" name="__codelineno-50-11" href="#__codelineno-50-11"></a>ls<span class="w"> </span>./downloads/webdav-docs
 </span></code></pre></div>
 <h3 id="example-4-index-ingested-documents-with-haiku-rag">Example 4: Index Ingested Documents with haiku-rag</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="c1"># Set up environment</span>
-</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
-</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LANCEDB_DIR</span><span class="o">=</span>./lancedb
-</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HAIKU_PATH</span><span class="o">=</span>./haiku-config
-</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HAIKU_LOAD_ENABLED</span><span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-48-6"><a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>
-</span><span id="__span-48-7"><a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a><span class="c1"># Run a manifest and load the result into ./lancedb/&lt;source&gt;.lancedb</span>
-</span><span id="__span-48-8"><a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>run<span class="w"> </span>/path/to/manifest.yml<span class="w"> </span>--load
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="c1"># Set up environment</span>
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>./downloads
+</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LANCEDB_DIR</span><span class="o">=</span>./lancedb
+</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HAIKU_PATH</span><span class="o">=</span>./haiku-config
+</span><span id="__span-51-5"><a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HAIKU_LOAD_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-51-6"><a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>
+</span><span id="__span-51-7"><a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a><span class="c1"># Run a manifest and load the result into ./lancedb/&lt;source&gt;.lancedb</span>
+</span><span id="__span-51-8"><a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>run<span class="w"> </span>/path/to/manifest.yml<span class="w"> </span>--load
 </span></code></pre></div>
 <h2 id="server-api">Server API</h2>
 <p>The agents can be run as a REST API server using FastAPI. This exposes all agent operations as HTTP endpoints with support for authentication and interactive documentation.</p>
 <h3 id="starting-the-server">Starting the Server</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="c1"># Basic</span>
-</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>si-agent<span class="w"> </span>serve
-</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>
-</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="c1"># Custom host and port</span>
-</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
-</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>
-</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a><span class="c1"># Development mode with auto-reload</span>
-</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--reload
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="c1"># Basic</span>
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>si-agent<span class="w"> </span>serve
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="c1"># Custom host and port</span>
+</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
+</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a>
+</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="c1"># Development mode with auto-reload</span>
+</span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--reload
 </span></code></pre></div>
 <p><strong>The server always runs as a single worker process.</strong> The manifest
 scheduler keeps its cron state and execution locks in memory, so running
@@ -4801,20 +4895,20 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 <h3 id="authentication">Authentication</h3>
 <p>The server supports multiple authentication methods:</p>
 <h4 id="1-no-authentication-default">1. No Authentication (Default)</h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>si-agent<span class="w"> </span>serve
-</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="c1"># All requests allowed</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>si-agent<span class="w"> </span>serve
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="c1"># All requests allowed</span>
 </span></code></pre></div>
 <h4 id="2-api-key-authentication">2. API Key Authentication</h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">API_KEY</span><span class="o">=</span>your-api-key
-</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>si-agent<span class="w"> </span>serve
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">API_KEY</span><span class="o">=</span>your-api-key
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>si-agent<span class="w"> </span>serve
 </span></code></pre></div>
 <p>Clients must include the API key in the <code>Authorization</code> header:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer your-api-key&quot;</span><span class="w"> </span>http://localhost:8001/api/fs/status
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer your-api-key&quot;</span><span class="w"> </span>http://localhost:8001/api/fs/status
 </span></code></pre></div>
 <h4 id="3-oauth2-proxy-headers">3. OAuth2 Proxy Headers</h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AUTH_TRUST_PROXY_HEADERS</span><span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>si-agent<span class="w"> </span>serve
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AUTH_TRUST_PROXY_HEADERS</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>si-agent<span class="w"> </span>serve
 </span></code></pre></div>
 <p>The server will trust authentication headers from a reverse proxy (e.g., OAuth2 Proxy):
 - <code>X-Auth-Request-User</code>
@@ -4855,22 +4949,22 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 </tbody>
 </table>
 <p><strong>Examples:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="c1"># Build configuration from directory</span>
-</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/build-config<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/docs&quot;</span>
-</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a>
-</span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="c1"># Validate using directory (no inventory.json needed)</span>
-</span><span id="__span-54-6"><a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/validate-config<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-54-7"><a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_file=/path/to/docs&quot;</span>
-</span><span id="__span-54-8"><a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a>
-</span><span id="__span-54-9"><a id="__codelineno-54-9" name="__codelineno-54-9" href="#__codelineno-54-9"></a><span class="c1"># Or validate using existing inventory file</span>
-</span><span id="__span-54-10"><a id="__codelineno-54-10" name="__codelineno-54-10" href="#__codelineno-54-10"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/validate-config<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-54-11"><a id="__codelineno-54-11" name="__codelineno-54-11" href="#__codelineno-54-11"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_file=/path/to/docs/inventory.json&quot;</span>
-</span><span id="__span-54-12"><a id="__codelineno-54-12" name="__codelineno-54-12" href="#__codelineno-54-12"></a>
-</span><span id="__span-54-13"><a id="__codelineno-54-13" name="__codelineno-54-13" href="#__codelineno-54-13"></a><span class="c1"># Ingest directly from directory</span>
-</span><span id="__span-54-14"><a id="__codelineno-54-14" name="__codelineno-54-14" href="#__codelineno-54-14"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/run-inventory<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-54-15"><a id="__codelineno-54-15" name="__codelineno-54-15" href="#__codelineno-54-15"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_file=/path/to/docs&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-54-16"><a id="__codelineno-54-16" name="__codelineno-54-16" href="#__codelineno-54-16"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="c1"># Build configuration from directory</span>
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/build-config<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/docs&quot;</span>
+</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a>
+</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a><span class="c1"># Validate using directory (no inventory.json needed)</span>
+</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/validate-config<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-57-7"><a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_file=/path/to/docs&quot;</span>
+</span><span id="__span-57-8"><a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a>
+</span><span id="__span-57-9"><a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a><span class="c1"># Or validate using existing inventory file</span>
+</span><span id="__span-57-10"><a id="__codelineno-57-10" name="__codelineno-57-10" href="#__codelineno-57-10"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/validate-config<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-57-11"><a id="__codelineno-57-11" name="__codelineno-57-11" href="#__codelineno-57-11"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_file=/path/to/docs/inventory.json&quot;</span>
+</span><span id="__span-57-12"><a id="__codelineno-57-12" name="__codelineno-57-12" href="#__codelineno-57-12"></a>
+</span><span id="__span-57-13"><a id="__codelineno-57-13" name="__codelineno-57-13" href="#__codelineno-57-13"></a><span class="c1"># Ingest directly from directory</span>
+</span><span id="__span-57-14"><a id="__codelineno-57-14" name="__codelineno-57-14" href="#__codelineno-57-14"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/run-inventory<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-57-15"><a id="__codelineno-57-15" name="__codelineno-57-15" href="#__codelineno-57-15"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_file=/path/to/docs&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-57-16"><a id="__codelineno-57-16" name="__codelineno-57-16" href="#__codelineno-57-16"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span>
 </span></code></pre></div>
 <h4 id="scm-routes-apiscm">SCM Routes (<code>/api/scm/</code>)</h4>
 <table>
@@ -4900,13 +4994,13 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 </tbody>
 </table>
 <p><strong>Example:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="c1"># List GitHub issues</span>
-</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>curl<span class="w"> </span>http://localhost:8001/api/scm/github/my-repo/issues?owner<span class="o">=</span>myuser
-</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>
-</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="c1"># Ingest repository</span>
-</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/scm/github/my-repo/ingest<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-55-6"><a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-55-7"><a id="__codelineno-55-7" name="__codelineno-55-7" href="#__codelineno-55-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;owner&quot;: &quot;myuser&quot;, &quot;source&quot;: &quot;my-source&quot;}&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="c1"># List GitHub issues</span>
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>curl<span class="w"> </span>http://localhost:8001/api/scm/github/my-repo/issues?owner<span class="o">=</span>myuser
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="c1"># Ingest repository</span>
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/scm/github/my-repo/ingest<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;owner&quot;: &quot;myuser&quot;, &quot;source&quot;: &quot;my-source&quot;}&#39;</span>
 </span></code></pre></div>
 <h4 id="webdav-routes-apiv1webdav">WebDAV Routes (<code>/api/v1/webdav/</code>)</h4>
 <table>
@@ -4941,27 +5035,27 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 </tbody>
 </table>
 <p><strong>Examples:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="c1"># Validate using WebDAV path</span>
-</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/webdav/validate-config<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_path=/documents&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_url=https://webdav.example.com&quot;</span>
-</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>
-</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a><span class="c1"># Ingest from WebDAV directory</span>
-</span><span id="__span-56-7"><a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/webdav/run-inventory<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_path=/documents&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-9"><a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-10"><a id="__codelineno-56-10" name="__codelineno-56-10" href="#__codelineno-56-10"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_url=https://webdav.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-11"><a id="__codelineno-56-11" name="__codelineno-56-11" href="#__codelineno-56-11"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_username=user&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-12"><a id="__codelineno-56-12" name="__codelineno-56-12" href="#__codelineno-56-12"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_password=pass&quot;</span>
-</span><span id="__span-56-13"><a id="__codelineno-56-13" name="__codelineno-56-13" href="#__codelineno-56-13"></a>
-</span><span id="__span-56-14"><a id="__codelineno-56-14" name="__codelineno-56-14" href="#__codelineno-56-14"></a><span class="c1"># Ingest from uploaded URL list file (with skip hash check)</span>
-</span><span id="__span-56-15"><a id="__codelineno-56-15" name="__codelineno-56-15" href="#__codelineno-56-15"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/webdav/run-from-file<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-16"><a id="__codelineno-56-16" name="__codelineno-56-16" href="#__codelineno-56-16"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;file=@urls.txt&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-17"><a id="__codelineno-56-17" name="__codelineno-56-17" href="#__codelineno-56-17"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-18"><a id="__codelineno-56-18" name="__codelineno-56-18" href="#__codelineno-56-18"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;skip_hash_check=true&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-19"><a id="__codelineno-56-19" name="__codelineno-56-19" href="#__codelineno-56-19"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_url=https://webdav.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-20"><a id="__codelineno-56-20" name="__codelineno-56-20" href="#__codelineno-56-20"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_username=user&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-56-21"><a id="__codelineno-56-21" name="__codelineno-56-21" href="#__codelineno-56-21"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_password=pass&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="c1"># Validate using WebDAV path</span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/webdav/validate-config<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_path=/documents&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_url=https://webdav.example.com&quot;</span>
+</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>
+</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a><span class="c1"># Ingest from WebDAV directory</span>
+</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/webdav/run-inventory<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_path=/documents&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_url=https://webdav.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-11"><a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_username=user&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-12"><a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_password=pass&quot;</span>
+</span><span id="__span-59-13"><a id="__codelineno-59-13" name="__codelineno-59-13" href="#__codelineno-59-13"></a>
+</span><span id="__span-59-14"><a id="__codelineno-59-14" name="__codelineno-59-14" href="#__codelineno-59-14"></a><span class="c1"># Ingest from uploaded URL list file (with skip hash check)</span>
+</span><span id="__span-59-15"><a id="__codelineno-59-15" name="__codelineno-59-15" href="#__codelineno-59-15"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/webdav/run-from-file<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-16"><a id="__codelineno-59-16" name="__codelineno-59-16" href="#__codelineno-59-16"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;file=@urls.txt&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-17"><a id="__codelineno-59-17" name="__codelineno-59-17" href="#__codelineno-59-17"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-18"><a id="__codelineno-59-18" name="__codelineno-59-18" href="#__codelineno-59-18"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;skip_hash_check=true&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-19"><a id="__codelineno-59-19" name="__codelineno-59-19" href="#__codelineno-59-19"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_url=https://webdav.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-20"><a id="__codelineno-59-20" name="__codelineno-59-20" href="#__codelineno-59-20"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_username=user&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-59-21"><a id="__codelineno-59-21" name="__codelineno-59-21" href="#__codelineno-59-21"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_password=pass&quot;</span>
 </span></code></pre></div>
 <h4 id="web-routes-apiv1web">Web Routes (<code>/api/v1/web/</code>)</h4>
 <table>
@@ -4986,21 +5080,21 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 </tbody>
 </table>
 <p><strong>Examples:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="c1"># Ingest web pages from URL list</span>
-</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/web/run-inventory<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;urls=[\&quot;https://example.com/page1\&quot;, \&quot;https://example.com/page2\&quot;]&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span>
-</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>
-</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a><span class="c1"># Ingest web pages with extra metadata</span>
-</span><span id="__span-57-7"><a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/web/run-inventory<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-57-8"><a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;urls=[\&quot;https://example.com/page1\&quot;]&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-57-9"><a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-57-10"><a id="__codelineno-57-10" name="__codelineno-57-10" href="#__codelineno-57-10"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;metadata={\&quot;project\&quot;: \&quot;test\&quot;}&quot;</span>
-</span><span id="__span-57-11"><a id="__codelineno-57-11" name="__codelineno-57-11" href="#__codelineno-57-11"></a>
-</span><span id="__span-57-12"><a id="__codelineno-57-12" name="__codelineno-57-12" href="#__codelineno-57-12"></a><span class="c1"># Ingest web pages from uploaded file</span>
-</span><span id="__span-57-13"><a id="__codelineno-57-13" name="__codelineno-57-13" href="#__codelineno-57-13"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/web/run-from-file<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-57-14"><a id="__codelineno-57-14" name="__codelineno-57-14" href="#__codelineno-57-14"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;file=@urls.txt&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-57-15"><a id="__codelineno-57-15" name="__codelineno-57-15" href="#__codelineno-57-15"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="c1"># Ingest web pages from URL list</span>
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/web/run-inventory<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;urls=[\&quot;https://example.com/page1\&quot;, \&quot;https://example.com/page2\&quot;]&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span>
+</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>
+</span><span id="__span-60-6"><a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a><span class="c1"># Ingest web pages with extra metadata</span>
+</span><span id="__span-60-7"><a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/web/run-inventory<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-8"><a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;urls=[\&quot;https://example.com/page1\&quot;]&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-9"><a id="__codelineno-60-9" name="__codelineno-60-9" href="#__codelineno-60-9"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-10"><a id="__codelineno-60-10" name="__codelineno-60-10" href="#__codelineno-60-10"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;metadata={\&quot;project\&quot;: \&quot;test\&quot;}&quot;</span>
+</span><span id="__span-60-11"><a id="__codelineno-60-11" name="__codelineno-60-11" href="#__codelineno-60-11"></a>
+</span><span id="__span-60-12"><a id="__codelineno-60-12" name="__codelineno-60-12" href="#__codelineno-60-12"></a><span class="c1"># Ingest web pages from uploaded file</span>
+</span><span id="__span-60-13"><a id="__codelineno-60-13" name="__codelineno-60-13" href="#__codelineno-60-13"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/web/run-from-file<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-14"><a id="__codelineno-60-14" name="__codelineno-60-14" href="#__codelineno-60-14"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;file=@urls.txt&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-15"><a id="__codelineno-60-15" name="__codelineno-60-15" href="#__codelineno-60-15"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;source=my-source&quot;</span>
 </span></code></pre></div>
 <h4 id="manifest-routes-apiv1manifest">Manifest Routes (<code>/api/v1/manifest/</code>)</h4>
 <table>
@@ -5030,17 +5124,17 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 </tbody>
 </table>
 <p><strong>Examples:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="c1"># Run all manifests in a directory</span>
-</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/run<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifests&quot;</span>
-</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>
-</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a><span class="c1"># Run a single manifest</span>
-</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/run-single<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifest.yml&quot;</span>
-</span><span id="__span-58-8"><a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a>
-</span><span id="__span-58-9"><a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a><span class="c1"># Validate manifest files</span>
-</span><span id="__span-58-10"><a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/validate<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-58-11"><a id="__codelineno-58-11" name="__codelineno-58-11" href="#__codelineno-58-11"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifests&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="c1"># Run all manifests in a directory</span>
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/run<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifests&quot;</span>
+</span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>
+</span><span id="__span-61-5"><a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a><span class="c1"># Run a single manifest</span>
+</span><span id="__span-61-6"><a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/run-single<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-61-7"><a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifest.yml&quot;</span>
+</span><span id="__span-61-8"><a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>
+</span><span id="__span-61-9"><a id="__codelineno-61-9" name="__codelineno-61-9" href="#__codelineno-61-9"></a><span class="c1"># Validate manifest files</span>
+</span><span id="__span-61-10"><a id="__codelineno-61-10" name="__codelineno-61-10" href="#__codelineno-61-10"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/validate<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-61-11"><a id="__codelineno-61-11" name="__codelineno-61-11" href="#__codelineno-61-11"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifests&quot;</span>
 </span></code></pre></div>
 <h4 id="health-check">Health Check</h4>
 <table>
@@ -5060,8 +5154,8 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 </tbody>
 </table>
 <p><strong>Example:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>curl<span class="w"> </span>http://localhost:8001/health
-</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="c1"># Returns: {&quot;status&quot;: &quot;healthy&quot;}</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>curl<span class="w"> </span>http://localhost:8001/health
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a><span class="c1"># Returns: {&quot;status&quot;: &quot;healthy&quot;}</span>
 </span></code></pre></div>
 <h3 id="api-documentation">API Documentation</h3>
 <p>Interactive API documentation is available at:
@@ -5100,38 +5194,38 @@ overridable via the <code>APP_UID</code>/<code>APP_GID</code> build args), inclu
 CLI mode, expose port <code>8001</code>, and define a <code>/health</code> healthcheck.</p>
 <h4 id="production">Production</h4>
 <p><code>production</code> is the last stage, so it is built when no <code>--target</code> is given:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="c1"># Build the production image (default target)</span>
-</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ingester-agents:latest<span class="w"> </span>.
-</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a>
-</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="c1"># Run with environment variables</span>
-</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-60-6"><a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">8001</span>:8001<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-60-7"><a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>/data/downloads<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-60-8"><a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-60-9"><a id="__codelineno-60-9" name="__codelineno-60-9" href="#__codelineno-60-9"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">API_KEY</span><span class="o">=</span>your-secret-key<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-60-10"><a id="__codelineno-60-10" name="__codelineno-60-10" href="#__codelineno-60-10"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/downloads:/data/downloads&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-60-11"><a id="__codelineno-60-11" name="__codelineno-60-11" href="#__codelineno-60-11"></a><span class="w">  </span>ingester-agents:latest
-</span><span id="__span-60-12"><a id="__codelineno-60-12" name="__codelineno-60-12" href="#__codelineno-60-12"></a>
-</span><span id="__span-60-13"><a id="__codelineno-60-13" name="__codelineno-60-13" href="#__codelineno-60-13"></a><span class="c1"># Check health</span>
-</span><span id="__span-60-14"><a id="__codelineno-60-14" name="__codelineno-60-14" href="#__codelineno-60-14"></a>curl<span class="w"> </span>http://localhost:8001/health
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="c1"># Build the production image (default target)</span>
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ingester-agents:latest<span class="w"> </span>.
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="c1"># Run with environment variables</span>
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">8001</span>:8001<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>/data/downloads<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-63-9"><a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">API_KEY</span><span class="o">=</span>your-secret-key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-63-10"><a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/downloads:/data/downloads&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-63-11"><a id="__codelineno-63-11" name="__codelineno-63-11" href="#__codelineno-63-11"></a><span class="w">  </span>ingester-agents:latest
+</span><span id="__span-63-12"><a id="__codelineno-63-12" name="__codelineno-63-12" href="#__codelineno-63-12"></a>
+</span><span id="__span-63-13"><a id="__codelineno-63-13" name="__codelineno-63-13" href="#__codelineno-63-13"></a><span class="c1"># Check health</span>
+</span><span id="__span-63-14"><a id="__codelineno-63-14" name="__codelineno-63-14" href="#__codelineno-63-14"></a>curl<span class="w"> </span>http://localhost:8001/health
 </span></code></pre></div>
 <h4 id="development">Development</h4>
 <p>The <code>development</code> target includes the full toolchain and starts uvicorn
 with <code>--reload</code>. Bind-mount the source so code changes reload live:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="c1"># Build the development image</span>
-</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>development<span class="w"> </span>-t<span class="w"> </span>ingester-agents:dev<span class="w"> </span>.
-</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>
-</span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a><span class="c1"># Run with the source bind-mounted for live reload</span>
-</span><span id="__span-61-5"><a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-61-6"><a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">8001</span>:8001<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-61-7"><a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">:/app&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-61-8"><a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a><span class="w">  </span>ingester-agents:dev
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="c1"># Build the development image</span>
+</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>development<span class="w"> </span>-t<span class="w"> </span>ingester-agents:dev<span class="w"> </span>.
+</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>
+</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a><span class="c1"># Run with the source bind-mounted for live reload</span>
+</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">8001</span>:8001<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-64-7"><a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">:/app&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-64-8"><a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a><span class="w">  </span>ingester-agents:dev
 </span></code></pre></div>
 <p>To match file ownership on bind mounts to your host user, pass build args:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>development<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a><span class="w">  </span>--build-arg<span class="w"> </span><span class="nv">APP_UID</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a><span class="w">  </span>--build-arg<span class="w"> </span><span class="nv">APP_GID</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a><span class="w">  </span>-t<span class="w"> </span>ingester-agents:dev<span class="w"> </span>.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>development<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a><span class="w">  </span>--build-arg<span class="w"> </span><span class="nv">APP_UID</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a><span class="w">  </span>--build-arg<span class="w"> </span><span class="nv">APP_GID</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a><span class="w">  </span>-t<span class="w"> </span>ingester-agents:dev<span class="w"> </span>.
 </span></code></pre></div>
 <p>The Docker image includes:
 - Non-root user for security
@@ -5151,91 +5245,93 @@ required credentials (<code>scm_auth_token</code>, <code>WEBDAV_URL</code>/<code
 <p>For SCM agents, ensure the repository name and owner are correct. Use the exact repository name, not the URL.</p>
 <h2 id="development_1">Development</h2>
 <h3 id="setup">Setup</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="c1"># Clone repository</span>
-</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;
-</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a><span class="nb">cd</span><span class="w"> </span>ingester-agents
-</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>
-</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a><span class="c1"># Install dependencies with dev tools</span>
-</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>uv<span class="w"> </span>sync
-</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a>
-</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a><span class="c1"># Run tests</span>
-</span><span id="__span-63-9"><a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
-</span><span id="__span-63-10"><a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a>
-</span><span id="__span-63-11"><a id="__codelineno-63-11" name="__codelineno-63-11" href="#__codelineno-63-11"></a><span class="c1"># Run linter</span>
-</span><span id="__span-63-12"><a id="__codelineno-63-12" name="__codelineno-63-12" href="#__codelineno-63-12"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="c1"># Clone repository</span>
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;
+</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a><span class="nb">cd</span><span class="w"> </span>ingester-agents
+</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>
+</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a><span class="c1"># Install dependencies with dev tools</span>
+</span><span id="__span-66-6"><a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a>uv<span class="w"> </span>sync
+</span><span id="__span-66-7"><a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a>
+</span><span id="__span-66-8"><a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a><span class="c1"># Run tests</span>
+</span><span id="__span-66-9"><a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
+</span><span id="__span-66-10"><a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a>
+</span><span id="__span-66-11"><a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a><span class="c1"># Run linter</span>
+</span><span id="__span-66-12"><a id="__codelineno-66-12" name="__codelineno-66-12" href="#__codelineno-66-12"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check
 </span></code></pre></div>
 <h3 id="testing">Testing</h3>
 <p>The project uses pytest with 100% code coverage requirements:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="c1"># Run unit tests with coverage</span>
-</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
-</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>
-</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a><span class="c1"># Run specific tests</span>
-</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>tests/unit/test_client.py
-</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a>
-</span><span id="__span-64-7"><a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a><span class="c1"># Generate coverage report</span>
-</span><span id="__span-64-8"><a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>--cov-report<span class="o">=</span>html
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="c1"># Run unit tests with coverage</span>
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
+</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>
+</span><span id="__span-67-4"><a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a><span class="c1"># Run specific tests</span>
+</span><span id="__span-67-5"><a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>tests/unit/test_client.py
+</span><span id="__span-67-6"><a id="__codelineno-67-6" name="__codelineno-67-6" href="#__codelineno-67-6"></a>
+</span><span id="__span-67-7"><a id="__codelineno-67-7" name="__codelineno-67-7" href="#__codelineno-67-7"></a><span class="c1"># Generate coverage report</span>
+</span><span id="__span-67-8"><a id="__codelineno-67-8" name="__codelineno-67-8" href="#__codelineno-67-8"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>--cov-report<span class="o">=</span>html
 </span></code></pre></div>
 <h3 id="code-quality">Code Quality</h3>
 <p>The project uses Ruff for linting and code formatting:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="c1"># Check code</span>
-</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check
-</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>
-</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a><span class="c1"># Auto-fix issues</span>
-</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>--fix
-</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>
-</span><span id="__span-65-7"><a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a><span class="c1"># Format code</span>
-</span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>format
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a><span class="c1"># Check code</span>
+</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check
+</span><span id="__span-68-3"><a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a>
+</span><span id="__span-68-4"><a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a><span class="c1"># Auto-fix issues</span>
+</span><span id="__span-68-5"><a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>--fix
+</span><span id="__span-68-6"><a id="__codelineno-68-6" name="__codelineno-68-6" href="#__codelineno-68-6"></a>
+</span><span id="__span-68-7"><a id="__codelineno-68-7" name="__codelineno-68-7" href="#__codelineno-68-7"></a><span class="c1"># Format code</span>
+</span><span id="__span-68-8"><a id="__codelineno-68-8" name="__codelineno-68-8" href="#__codelineno-68-8"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>format
 </span></code></pre></div>
 <h2 id="architecture">Architecture</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>soliplex.agents/
-</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>├── src/soliplex/agents/
-</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>│   ├── cli.py              # Main CLI entry point (includes &#39;serve&#39; command)
-</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>│   ├── local_store.py      # Writes downloaded documents + .meta.json sidecars
-</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a>│   ├── local_state.py      # Per-source SQLite sync state (hashes + commit SHA)
-</span><span id="__span-66-6"><a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a>│   ├── config.py           # Configuration, settings, and manifest models
-</span><span id="__span-66-7"><a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a>│   ├── server/             # FastAPI server
-</span><span id="__span-66-8"><a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a>│   │   ├── __init__.py     # FastAPI app initialization, scheduler
-</span><span id="__span-66-9"><a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a>│   │   ├── auth.py         # Authentication (API key &amp; OAuth2 proxy)
-</span><span id="__span-66-10"><a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a>│   │   └── routes/
-</span><span id="__span-66-11"><a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a>│   │       ├── __init__.py
-</span><span id="__span-66-12"><a id="__codelineno-66-12" name="__codelineno-66-12" href="#__codelineno-66-12"></a>│   │       ├── fs.py       # Filesystem API endpoints
-</span><span id="__span-66-13"><a id="__codelineno-66-13" name="__codelineno-66-13" href="#__codelineno-66-13"></a>│   │       ├── scm.py      # SCM API endpoints
-</span><span id="__span-66-14"><a id="__codelineno-66-14" name="__codelineno-66-14" href="#__codelineno-66-14"></a>│   │       ├── webdav.py   # WebDAV API endpoints
-</span><span id="__span-66-15"><a id="__codelineno-66-15" name="__codelineno-66-15" href="#__codelineno-66-15"></a>│   │       ├── web.py      # Web API endpoints
-</span><span id="__span-66-16"><a id="__codelineno-66-16" name="__codelineno-66-16" href="#__codelineno-66-16"></a>│   │       └── manifest.py # Manifest API endpoints
-</span><span id="__span-66-17"><a id="__codelineno-66-17" name="__codelineno-66-17" href="#__codelineno-66-17"></a>│   ├── common/              # Shared utilities
-</span><span id="__span-66-18"><a id="__codelineno-66-18" name="__codelineno-66-18" href="#__codelineno-66-18"></a>│   │   ├── urls_file.py     # URL list reader (local, S3, WebDAV)
-</span><span id="__span-66-19"><a id="__codelineno-66-19" name="__codelineno-66-19" href="#__codelineno-66-19"></a>│   │   ├── s3.py            # S3 object reader
-</span><span id="__span-66-20"><a id="__codelineno-66-20" name="__codelineno-66-20" href="#__codelineno-66-20"></a>│   │   ├── mime.py          # Content-based MIME detection + extension logic
-</span><span id="__span-66-21"><a id="__codelineno-66-21" name="__codelineno-66-21" href="#__codelineno-66-21"></a>│   │   └── config.py        # Inventory read/validate helpers
-</span><span id="__span-66-22"><a id="__codelineno-66-22" name="__codelineno-66-22" href="#__codelineno-66-22"></a>│   ├── fs/                 # Filesystem agent
-</span><span id="__span-66-23"><a id="__codelineno-66-23" name="__codelineno-66-23" href="#__codelineno-66-23"></a>│   │   ├── app.py          # Core filesystem logic
-</span><span id="__span-66-24"><a id="__codelineno-66-24" name="__codelineno-66-24" href="#__codelineno-66-24"></a>│   │   └── cli.py          # Filesystem CLI commands
-</span><span id="__span-66-25"><a id="__codelineno-66-25" name="__codelineno-66-25" href="#__codelineno-66-25"></a>│   ├── web/                # Web agent
-</span><span id="__span-66-26"><a id="__codelineno-66-26" name="__codelineno-66-26" href="#__codelineno-66-26"></a>│   │   └── app.py          # Core web fetching logic
-</span><span id="__span-66-27"><a id="__codelineno-66-27" name="__codelineno-66-27" href="#__codelineno-66-27"></a>│   ├── webdav/             # WebDAV agent
-</span><span id="__span-66-28"><a id="__codelineno-66-28" name="__codelineno-66-28" href="#__codelineno-66-28"></a>│   │   ├── app.py          # Core WebDAV logic
-</span><span id="__span-66-29"><a id="__codelineno-66-29" name="__codelineno-66-29" href="#__codelineno-66-29"></a>│   │   └── cli.py          # WebDAV CLI commands
-</span><span id="__span-66-30"><a id="__codelineno-66-30" name="__codelineno-66-30" href="#__codelineno-66-30"></a>│   ├── manifest/           # Manifest runner
-</span><span id="__span-66-31"><a id="__codelineno-66-31" name="__codelineno-66-31" href="#__codelineno-66-31"></a>│   │   ├── runner.py       # YAML loading, validation, dispatch
-</span><span id="__span-66-32"><a id="__codelineno-66-32" name="__codelineno-66-32" href="#__codelineno-66-32"></a>│   │   └── cli.py          # Manifest CLI commands
-</span><span id="__span-66-33"><a id="__codelineno-66-33" name="__codelineno-66-33" href="#__codelineno-66-33"></a>│   └── scm/                # SCM agent
-</span><span id="__span-66-34"><a id="__codelineno-66-34" name="__codelineno-66-34" href="#__codelineno-66-34"></a>│       ├── app.py          # Core SCM logic
-</span><span id="__span-66-35"><a id="__codelineno-66-35" name="__codelineno-66-35" href="#__codelineno-66-35"></a>│       ├── cli.py          # SCM CLI commands
-</span><span id="__span-66-36"><a id="__codelineno-66-36" name="__codelineno-66-36" href="#__codelineno-66-36"></a>│       ├── base.py         # Base SCM provider interface
-</span><span id="__span-66-37"><a id="__codelineno-66-37" name="__codelineno-66-37" href="#__codelineno-66-37"></a>│       ├── github/         # GitHub implementation
-</span><span id="__span-66-38"><a id="__codelineno-66-38" name="__codelineno-66-38" href="#__codelineno-66-38"></a>│       ├── gitea/          # Gitea implementation
-</span><span id="__span-66-39"><a id="__codelineno-66-39" name="__codelineno-66-39" href="#__codelineno-66-39"></a>│       └── lib/
-</span><span id="__span-66-40"><a id="__codelineno-66-40" name="__codelineno-66-40" href="#__codelineno-66-40"></a>│           ├── templates/  # Issue rendering templates
-</span><span id="__span-66-41"><a id="__codelineno-66-41" name="__codelineno-66-41" href="#__codelineno-66-41"></a>│           └── utils.py    # Utility functions
-</span><span id="__span-66-42"><a id="__codelineno-66-42" name="__codelineno-66-42" href="#__codelineno-66-42"></a>├── example-manifests/      # Example manifests (fs, scm, web, webdav, composite, delete-stale)
-</span><span id="__span-66-43"><a id="__codelineno-66-43" name="__codelineno-66-43" href="#__codelineno-66-43"></a>├── tests/                  # Test suite
-</span><span id="__span-66-44"><a id="__codelineno-66-44" name="__codelineno-66-44" href="#__codelineno-66-44"></a>│   └── unit/
-</span><span id="__span-66-45"><a id="__codelineno-66-45" name="__codelineno-66-45" href="#__codelineno-66-45"></a>│       ├── test_server_*.py  # Server API tests
-</span><span id="__span-66-46"><a id="__codelineno-66-46" name="__codelineno-66-46" href="#__codelineno-66-46"></a>│       └── ...
-</span><span id="__span-66-47"><a id="__codelineno-66-47" name="__codelineno-66-47" href="#__codelineno-66-47"></a>├── Dockerfile              # Production container
-</span><span id="__span-66-48"><a id="__codelineno-66-48" name="__codelineno-66-48" href="#__codelineno-66-48"></a>├── .dockerignore           # Build context exclusions
-</span><span id="__span-66-49"><a id="__codelineno-66-49" name="__codelineno-66-49" href="#__codelineno-66-49"></a>└── DOCKERFILE_CHANGES.md   # Docker implementation documentation
+<div class="language-text highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>soliplex.agents/
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>├── src/soliplex/agents/
+</span><span id="__span-69-3"><a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>│   ├── cli.py              # Main CLI entry point (includes &#39;serve&#39; command)
+</span><span id="__span-69-4"><a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a>│   ├── local_store.py      # Writes downloaded documents + .meta.json sidecars
+</span><span id="__span-69-5"><a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>│   ├── local_state.py      # Per-source SQLite sync state (hashes + commit SHA)
+</span><span id="__span-69-6"><a id="__codelineno-69-6" name="__codelineno-69-6" href="#__codelineno-69-6"></a>│   ├── config.py           # Configuration, settings, and manifest models
+</span><span id="__span-69-7"><a id="__codelineno-69-7" name="__codelineno-69-7" href="#__codelineno-69-7"></a>│   ├── server/             # FastAPI server
+</span><span id="__span-69-8"><a id="__codelineno-69-8" name="__codelineno-69-8" href="#__codelineno-69-8"></a>│   │   ├── __init__.py     # FastAPI app initialization, scheduler
+</span><span id="__span-69-9"><a id="__codelineno-69-9" name="__codelineno-69-9" href="#__codelineno-69-9"></a>│   │   ├── auth.py         # Authentication (API key &amp; OAuth2 proxy)
+</span><span id="__span-69-10"><a id="__codelineno-69-10" name="__codelineno-69-10" href="#__codelineno-69-10"></a>│   │   └── routes/
+</span><span id="__span-69-11"><a id="__codelineno-69-11" name="__codelineno-69-11" href="#__codelineno-69-11"></a>│   │       ├── __init__.py
+</span><span id="__span-69-12"><a id="__codelineno-69-12" name="__codelineno-69-12" href="#__codelineno-69-12"></a>│   │       ├── fs.py       # Filesystem API endpoints
+</span><span id="__span-69-13"><a id="__codelineno-69-13" name="__codelineno-69-13" href="#__codelineno-69-13"></a>│   │       ├── scm.py      # SCM API endpoints
+</span><span id="__span-69-14"><a id="__codelineno-69-14" name="__codelineno-69-14" href="#__codelineno-69-14"></a>│   │       ├── webdav.py   # WebDAV API endpoints
+</span><span id="__span-69-15"><a id="__codelineno-69-15" name="__codelineno-69-15" href="#__codelineno-69-15"></a>│   │       ├── web.py      # Web API endpoints
+</span><span id="__span-69-16"><a id="__codelineno-69-16" name="__codelineno-69-16" href="#__codelineno-69-16"></a>│   │       └── manifest.py # Manifest API endpoints
+</span><span id="__span-69-17"><a id="__codelineno-69-17" name="__codelineno-69-17" href="#__codelineno-69-17"></a>│   ├── common/              # Shared utilities
+</span><span id="__span-69-18"><a id="__codelineno-69-18" name="__codelineno-69-18" href="#__codelineno-69-18"></a>│   │   ├── urls_file.py     # URL list reader (local, S3, WebDAV)
+</span><span id="__span-69-19"><a id="__codelineno-69-19" name="__codelineno-69-19" href="#__codelineno-69-19"></a>│   │   ├── s3.py            # S3 object reader
+</span><span id="__span-69-20"><a id="__codelineno-69-20" name="__codelineno-69-20" href="#__codelineno-69-20"></a>│   │   ├── mime.py          # Content-based MIME detection + extension logic
+</span><span id="__span-69-21"><a id="__codelineno-69-21" name="__codelineno-69-21" href="#__codelineno-69-21"></a>│   │   └── config.py        # Inventory read/validate helpers
+</span><span id="__span-69-22"><a id="__codelineno-69-22" name="__codelineno-69-22" href="#__codelineno-69-22"></a>│   ├── fs/                 # Filesystem agent
+</span><span id="__span-69-23"><a id="__codelineno-69-23" name="__codelineno-69-23" href="#__codelineno-69-23"></a>│   │   ├── app.py          # Core filesystem logic
+</span><span id="__span-69-24"><a id="__codelineno-69-24" name="__codelineno-69-24" href="#__codelineno-69-24"></a>│   │   └── cli.py          # Filesystem CLI commands
+</span><span id="__span-69-25"><a id="__codelineno-69-25" name="__codelineno-69-25" href="#__codelineno-69-25"></a>│   ├── web/                # Web agent
+</span><span id="__span-69-26"><a id="__codelineno-69-26" name="__codelineno-69-26" href="#__codelineno-69-26"></a>│   │   └── app.py          # Core web fetching logic
+</span><span id="__span-69-27"><a id="__codelineno-69-27" name="__codelineno-69-27" href="#__codelineno-69-27"></a>│   ├── webdav/             # WebDAV agent
+</span><span id="__span-69-28"><a id="__codelineno-69-28" name="__codelineno-69-28" href="#__codelineno-69-28"></a>│   │   ├── app.py          # Core WebDAV logic
+</span><span id="__span-69-29"><a id="__codelineno-69-29" name="__codelineno-69-29" href="#__codelineno-69-29"></a>│   │   └── cli.py          # WebDAV CLI commands
+</span><span id="__span-69-30"><a id="__codelineno-69-30" name="__codelineno-69-30" href="#__codelineno-69-30"></a>│   ├── manifest/           # Manifest runner
+</span><span id="__span-69-31"><a id="__codelineno-69-31" name="__codelineno-69-31" href="#__codelineno-69-31"></a>│   │   ├── runner.py       # YAML loading, validation, dispatch
+</span><span id="__span-69-32"><a id="__codelineno-69-32" name="__codelineno-69-32" href="#__codelineno-69-32"></a>│   │   ├── haiku_loader.py # haiku-ingester batch load subprocess
+</span><span id="__span-69-33"><a id="__codelineno-69-33" name="__codelineno-69-33" href="#__codelineno-69-33"></a>│   │   ├── haiku_maint.py  # haiku-rag migrate/vacuum subprocesses
+</span><span id="__span-69-34"><a id="__codelineno-69-34" name="__codelineno-69-34" href="#__codelineno-69-34"></a>│   │   └── cli.py          # Manifest CLI commands
+</span><span id="__span-69-35"><a id="__codelineno-69-35" name="__codelineno-69-35" href="#__codelineno-69-35"></a>│   └── scm/                # SCM agent
+</span><span id="__span-69-36"><a id="__codelineno-69-36" name="__codelineno-69-36" href="#__codelineno-69-36"></a>│       ├── app.py          # Core SCM logic
+</span><span id="__span-69-37"><a id="__codelineno-69-37" name="__codelineno-69-37" href="#__codelineno-69-37"></a>│       ├── cli.py          # SCM CLI commands
+</span><span id="__span-69-38"><a id="__codelineno-69-38" name="__codelineno-69-38" href="#__codelineno-69-38"></a>│       ├── base.py         # Base SCM provider interface
+</span><span id="__span-69-39"><a id="__codelineno-69-39" name="__codelineno-69-39" href="#__codelineno-69-39"></a>│       ├── github/         # GitHub implementation
+</span><span id="__span-69-40"><a id="__codelineno-69-40" name="__codelineno-69-40" href="#__codelineno-69-40"></a>│       ├── gitea/          # Gitea implementation
+</span><span id="__span-69-41"><a id="__codelineno-69-41" name="__codelineno-69-41" href="#__codelineno-69-41"></a>│       └── lib/
+</span><span id="__span-69-42"><a id="__codelineno-69-42" name="__codelineno-69-42" href="#__codelineno-69-42"></a>│           ├── templates/  # Issue rendering templates
+</span><span id="__span-69-43"><a id="__codelineno-69-43" name="__codelineno-69-43" href="#__codelineno-69-43"></a>│           └── utils.py    # Utility functions
+</span><span id="__span-69-44"><a id="__codelineno-69-44" name="__codelineno-69-44" href="#__codelineno-69-44"></a>├── example-manifests/      # Example manifests (fs, scm, web, webdav, composite, delete-stale)
+</span><span id="__span-69-45"><a id="__codelineno-69-45" name="__codelineno-69-45" href="#__codelineno-69-45"></a>├── tests/                  # Test suite
+</span><span id="__span-69-46"><a id="__codelineno-69-46" name="__codelineno-69-46" href="#__codelineno-69-46"></a>│   └── unit/
+</span><span id="__span-69-47"><a id="__codelineno-69-47" name="__codelineno-69-47" href="#__codelineno-69-47"></a>│       ├── test_server_*.py  # Server API tests
+</span><span id="__span-69-48"><a id="__codelineno-69-48" name="__codelineno-69-48" href="#__codelineno-69-48"></a>│       └── ...
+</span><span id="__span-69-49"><a id="__codelineno-69-49" name="__codelineno-69-49" href="#__codelineno-69-49"></a>├── Dockerfile              # Production container
+</span><span id="__span-69-50"><a id="__codelineno-69-50" name="__codelineno-69-50" href="#__codelineno-69-50"></a>├── .dockerignore           # Build context exclusions
+</span><span id="__span-69-51"><a id="__codelineno-69-51" name="__codelineno-69-51" href="#__codelineno-69-51"></a>└── DOCKERFILE_CHANGES.md   # Docker implementation documentation
 </span></code></pre></div>
 <h3 id="key-components">Key Components</h3>
 <p><strong>CLI Layer:</strong>
