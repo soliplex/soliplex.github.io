@@ -3200,10 +3200,9 @@ installation directory (next to the main installation config file).</p>
 <p>See the <a href="https://ggozad.github.io/haiku.rag/configuration/"><code>haiku-rag</code> docs</a>
 for the format and semantics of this file.</p>
 <h2 id="room-level-and-completion-level-configuration">Room-level and Completion-level Configuration</h2>
-<p>Rooms and completions which use the <code>haiku_chat</code> agent kind
-can also define a <code>haiku.rag.yaml</code> file, next to their own
-config files.  Soliplex overlays any configuration defined in such files
-on top of the global configuration.</p>
+<p>Rooms and completions can also define a <code>haiku.rag.yaml</code> file, next to
+their own config files.  Soliplex overlays any configuration defined in
+such files on top of the global configuration.</p>
 <p>E.g., to override only the reranking used by <code>haiku-rag</code> in a given room:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">reranking</span><span class="p">:</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">model</span><span class="p">:</span>

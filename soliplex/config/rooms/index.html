@@ -1417,6 +1417,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#evidence-skill-configuration-kinds" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Evidence Skill Configuration Kinds
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#default-skill-configuration-kinds" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3182,6 +3193,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#evidence-skill-configuration-kinds" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Evidence Skill Configuration Kinds
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#default-skill-configuration-kinds" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3552,8 +3574,44 @@ for configuring an agent.</p>
 </span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skills.analysis&quot;</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;notes&quot;</span>
 </span></code></pre></div>
+<p>Configure at most one of these two kinds per corpus.  Analysis searches
+  and cites as well as running code, so pairing it with the RAG skill over
+  the same database gives the agent two near-identical search tools, splits
+  its citations across the two records, and gives one question two search
+  budgets to spend.  Two kinds over <em>different</em> databases is fine, as
+  above.</p>
+<h4 id="evidence-skill-configuration-kinds">Evidence Skill Configuration Kinds</h4>
+<p>Two further kinds take no configuration:  naming one is the whole switch.
+Both are hook-only, so they add no tools and neither affects whether the
+room's other capabilities load eagerly or on demand.</p>
+<ul>
+<li>
+<p><code>haiku.rag.skills.evidence_compaction</code>:  on each request, replaces
+  earlier questions' evidence with a capsule of the evidence that was
+  cited, re-attaching cited page images;  every other earlier evidence
+  return becomes a short receipt.  Requests only -- stored history is
+  untouched.</p>
+</li>
+<li>
+<p><code>haiku.rag.skills.citation_policy</code>:  requires every answer to register
+  the evidence that grounds it, or to declare that nothing does.  An
+  answer which ends a question without declaring is redirected once to
+  cite, at the cost of an extra model request.  Publishes a
+  <code>citation_policy</code> state namespace, recording as a violation any question
+  which could not be asked to cite.</p>
+</li>
+</ul>
+<p>Their effects are not symmetric.  <strong>Compaction without the citation policy
+loses evidence:</strong>  the capsule is built only from what was cited, so for
+any earlier question the model did not cite for, that question's evidence
+is replaced by receipts and nothing takes its place -- worse than not
+compacting.  Configure the citation policy alongside compaction, or
+configure neither.  The citation policy without compaction is safe:
+citations are required and recorded, and no history is rewritten.</p>
+<p>A room which configures neither resends every earlier turn's full search
+results on every request.</p>
 <h4 id="default-skill-configuration-kinds">Default Skill Configuration Kinds</h4>
 <p>Soliplex provides two such skill configuration classes by default:
 one of kind <code>haiku.rag.skills.rag</code> and one of kind
@@ -3570,8 +3628,8 @@ configuring the RAG database and RAG client:</p>
     under the <code>db/rag/</code> directory; see <a href="../rooms/">rooms</a> for details).</p>
 </li>
 <li>
-<p><code>rag_lancedb_override_path</code>: a string, a fully-qualified pathname,
-    including the suffix, of the LanceDB directory.</p>
+<p><code>rag_lancedb_override_path</code>: a string, a pathname, including the
+    suffix, of the LanceDB directory.</p>
 </li>
 <li>
 <p><code>haiku_rag_config</code>: a path to the <code>haiku.rag.yaml</code> file used to configure

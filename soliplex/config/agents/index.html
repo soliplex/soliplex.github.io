@@ -3500,6 +3500,15 @@ supplied by the template.  Any fields set locally override the template.</p>
   for the YAML form.  The room's effective feature set is the union of
   features declared on the agent, the room, its tools, and its skills.</p>
 </li>
+<li>
+<p><code>capabilities</code> (a list, default empty):  Pydantic AI capabilities for
+  the agent, each named as a string, or as a mapping with <code>name</code> and
+  <code>kwargs</code>.  Names come from the Pydantic AI capability registry and from
+  any registered via the
+  <a href="../meta/"><code>meta.agent_capability_types</code></a> stanza.  Capabilities which
+  need configuration, or which a room should advertise, are configured as
+  <a href="../rooms/#skill-configuration">skills</a> instead.</p>
+</li>
 </ul>
 <h3 id="example-ollama-configuration">Example Ollama Configuration</h3>
 <p><strong>NOTE</strong>: the values below show types, but should not be used without
