@@ -1203,6 +1203,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#clearing-default-registrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Clearing Default Registrations
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#registering-ag-ui-feature-classes" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1236,6 +1247,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#registering-mcp-server-tool-wrapper-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Registering MCP Server Tool Wrapper Types
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#registering-skill-configuration-classes" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1247,10 +1269,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#registering-mcp-server-tool-wrapper-types" class="md-nav__link">
+  <a href="#registering-agent-capability-types" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Registering MCP Server Tool Wrapper Types
+        Registering Agent Capability Types
       </span>
     </span>
   </a>
@@ -3069,6 +3091,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#clearing-default-registrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Clearing Default Registrations
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#registering-ag-ui-feature-classes" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3102,6 +3135,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#registering-mcp-server-tool-wrapper-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Registering MCP Server Tool Wrapper Types
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#registering-skill-configuration-classes" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3113,10 +3157,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#registering-mcp-server-tool-wrapper-types" class="md-nav__link">
+  <a href="#registering-agent-capability-types" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Registering MCP Server Tool Wrapper Types
+        Registering Agent Capability Types
       </span>
     </span>
   </a>
@@ -3325,6 +3369,50 @@ installation.</p>
 <p>E.g., registering a new tool configuration class in the <code>meta.tool_configs</code>
 section allows use of that class when configuring a custom tool in a given
 room.</p>
+<p>Most subsections register into a global registry which Soliplex has
+already populated with its own defaults at import time. Registration is
+additive: a <code>meta</code> entry adds to those defaults, or replaces one of them
+when it reuses the same key. To discard the defaults instead, see
+<a href="#clearing-default-registrations">Clearing Default Registrations</a> below.</p>
+<h2 id="clearing-default-registrations">Clearing Default Registrations</h2>
+<p>Any subsection may include the string <code>"$$CLEAR$$"</code> as one of its
+entries. The registry that subsection feeds is emptied before the
+remaining entries in that same list are registered, so the installation
+ends up with <em>only</em> what it configured explicitly.</p>
+<p>This is useful for locking an installation down: a deployment which must
+resolve every secret through a corporate vault, for example, can discard
+the built-in secret sources rather than merely adding to them.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">secret_sources</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;$$CLEAR$$&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.config.VaultSecretSource&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">registered_func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.secrets.get_vault_secret&quot;</span>
+</span></code></pre></div>
+<p>The marker clears only the registry (or registries) belonging to the
+subsection that contains it, and each subsection is cleared
+independently. Its position within the list does not matter, and
+repeating it has no additional effect: the clear always happens first,
+before any entry in that list is registered.</p>
+<p>Two subsections clear more than one registry, because their registries
+cannot meaningfully be separated:</p>
+<ul>
+<li>
+<p><code>tool_configs</code> also clears <code>mcp_server_tool_wrappers</code>, since a wrapper
+  cannot outlive the tool configuration it wraps.</p>
+</li>
+<li>
+<p><code>secret_sources</code> clears both the source configuration classes and their
+  corresponding getter functions, since a source kind is registered as a
+  pair.</p>
+</li>
+</ul>
+<p>One subsection clears only part of its registry: <code>jsonpath_functions</code>
+removes the functions supplied by configuration but keeps the RFC 9535
+built-ins, which the shared JSONPath environment requires.</p>
+<p>Subsections are applied in the order in which they are listed in this
+document. That matters when one subsection validates against another:
+see <a href="#registering-mcp-server-tool-wrapper-types">Registering MCP Server Tool Wrapper
+Types</a>.</p>
 <h2 id="registering-ag-ui-feature-classes">Registering AG-UI Feature Classes</h2>
 <p>See <a href="../agui/">AG-UI Features</a> for the full registry lifecycle; this
 section covers only the YAML stanza.</p>
@@ -3349,70 +3437,131 @@ to that field.</p>
 </li>
 </ul>
 <p>Example:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">meta</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">agui_features</span><span class="p">:</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_feature&quot;</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">model_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.features.MyFeature&quot;</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;server&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">agui_features</span><span class="p">:</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_feature&quot;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nt">model_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.features.MyFeature&quot;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;server&quot;</span>
+</span></code></pre></div>
+<p>By default, importing Soliplex's skill configurations registers the
+features used by the <code>haiku.rag</code> skills, just as though we configured
+explicitly:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">agui_features</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">model_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.capabilities.rag.RAGState&quot;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;server&quot;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;analysis&quot;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">model_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.capabilities.analysis.AnalysisState&quot;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;server&quot;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;citation_policy&quot;</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="nt">model_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.capabilities.policy.CitationPolicyState&quot;</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;server&quot;</span>
 </span></code></pre></div>
 <h2 id="registering-tool-configuration-classes">Registering Tool Configuration Classes</h2>
 <p>The <code>meta.tool_configs</code> section enumerates tool configuration types so that
 they can be referenced by their <code>tool_name</code>.</p>
 <p>The section contains a list of Python "dotted names", i.e. strings which
-can be used to import the configuration class.</p>
+can be used to import the configuration class. Each entry may instead be
+a mapping with a single <code>config_klass</code> key, whose value is that same
+dotted name.</p>
 <p>Example:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">meta</span><span class="p">:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">tool_configs</span><span class="p">:</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_package.config.MyToolConfig&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">tool_configs</span><span class="p">:</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_package.config.MyToolConfig&quot;</span>
+</span></code></pre></div>
+<p>By default, Soliplex registers its own tool config class, just as though
+we configured explicitly:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">tool_configs</span><span class="p">:</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.tools.SearchDocumentsToolConfig&quot;</span>
 </span></code></pre></div>
 <h2 id="registering-mcp-client-toolset-configuration-classes">Registering MCP Client Toolset Configuration Classes</h2>
 <p>The <code>meta.mcp_toolset_configs</code> section enumerates MCP client toolset
 configuration types so that they can be referenced by their 'kind'.</p>
 <p>The section contains a list of Python "dotted names", i.e. strings which
-can be used to import the configuration class.</p>
-<p>By default, Soliplex registers its own tool config classes, just as though
-we configured explicitly:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">meta</span><span class="p">:</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">mcp_toolset_configs</span><span class="p">:</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.Stdio_MCP_ClientToolsetConfig&quot;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.HTTP_MCP_ClientToolsetConfig&quot;</span>
+can be used to import the configuration class. Each entry may instead be
+a mapping with a single <code>config_klass</code> key, whose value is that same
+dotted name.</p>
+<p>By default, Soliplex registers its own toolset config classes, just as
+though we configured explicitly:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">mcp_toolset_configs</span><span class="p">:</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.tools.Stdio_MCP_ClientToolsetConfig&quot;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.tools.HTTP_MCP_ClientToolsetConfig&quot;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.tools.SSE_MCP_ClientToolsetConfig&quot;</span>
 </span></code></pre></div>
+<h2 id="registering-mcp-server-tool-wrapper-types">Registering MCP Server Tool Wrapper Types</h2>
+<p>The <code>meta.mcp_server_tool_wrappers</code> section maps tool configuration classes
+to the equivalent wrapper class, used when offering the tool to external
+MCP clients.</p>
+<p>The section contains a list of mappings with keys <code>config_klass</code> and
+<code>wrapper_klass</code>.  Values for both keys are Python "dotted names", i.e.
+strings which can be used to import the corresponding class.</p>
+<p>Example:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">mcp_server_tool_wrappers</span><span class="p">:</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.config.MyToolConfig&quot;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">wrapper_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.config.MyMCPWrapper&quot;</span>
+</span></code></pre></div>
+<p>Soliplex registers no wrappers by default: this registry is empty unless
+an installation populates it.</p>
+<p>The class named by <code>config_klass</code> must already be registered as a tool
+configuration, either by Soliplex itself or by the <code>meta.tool_configs</code>
+section of this same installation configuration; <code>tool_configs</code> is
+applied first for exactly that reason. Naming an unregistered class is an
+error, and loading the configuration fails rather than silently skipping
+the wrapper.</p>
 <h2 id="registering-skill-configuration-classes">Registering Skill Configuration Classes</h2>
 <p>The <code>meta.skill_configs</code> section enumerates skill
 configuration types so that they can be referenced by their 'kind'.</p>
 <p>The section contains a list of Python "dotted names", i.e. strings which
-can be used to import the configuration class.</p>
-<p>By default, Soliplex registers its own tool config classes, just as though
-we configured explicitly:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">meta</span><span class="p">:</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">skill_configs</span><span class="p">:</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.HR_RAG_SkillConfig&quot;</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.HR_Analysis_SkillConfig&quot;</span>
+can be used to import the configuration class. Each entry may instead be
+a mapping with a single <code>config_klass</code> key, whose value is that same
+dotted name.</p>
+<p>By default, Soliplex registers its own skill config classes, just as
+though we configured explicitly:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">skill_configs</span><span class="p">:</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.skills.HR_RAG_SkillConfig&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.skills.HR_Analysis_SkillConfig&quot;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.skills.HR_EvidenceCompaction_SkillConfig&quot;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.skills.HR_CitationPolicy_SkillConfig&quot;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.skills.BwrapSandboxSkillConfig&quot;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.skills.EntrypointCapabilityConfig&quot;</span>
 </span></code></pre></div>
-<h2 id="registering-mcp-server-tool-wrapper-types">Registering MCP Server Tool Wrapper Types</h2>
-<p>The <code>meta.mcp_server_tool_wrappers</code> section maps tool configuration classes to
-the equivalent wrapper class, used then offering the tool to external
-MCP clients.</p>
-<p>The section contains a list of mappings with keys <code>config_klass</code> and
-<code>wrapper_klass</code>.  Values for both keys Python "dotted names", i.e. strings
-which can be used to import the corresponding class.</p>
+<h2 id="registering-agent-capability-types">Registering Agent Capability Types</h2>
+<p>The <code>meta.agent_capability_types</code> section enumerates agent capability
+types so that they can be referenced by name in a room's agent
+configuration. The name a capability is registered under is its Python
+class name, not a separate <code>kind</code> string.</p>
+<p>The section contains a list of Python "dotted names", i.e. strings which
+can be used to import the capability class. Each entry may instead be a
+mapping with a single <code>config_klass</code> key, whose value is that same dotted
+name.</p>
 <p>Example:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">meta</span><span class="p">:</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">mcp_server_tool_wrappers</span><span class="p">:</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.config.MyToolConfig&quot;</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">wrapper_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.config.MyMCPWrapper&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">agent_capability_types</span><span class="p">:</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_package.capabilities.MyCapability&quot;</span>
 </span></code></pre></div>
+<p>By default, Soliplex registers the capability types published by
+<code>pydantic_ai.capabilities</code> — <code>NativeTool</code>, <code>Thinking</code>, <code>WebSearch</code> and
+the rest — so the set available without configuration follows the
+installed <code>pydantic-ai</code> version.</p>
 <h2 id="registering-agent-configuration-classes">Registering Agent Configuration Classes</h2>
 <p>The <code>meta.agent_configs</code> section enumerates agent configuration types so that
 they can be referenced by their <code>kind</code>.</p>
 <p>The section contains a list of Python "dotted names", i.e. strings which
-can be used to import the configuration class.</p>
-<p>By default, Soliplex registers its own agent config class, just as though
-we configured explicitly:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">meta</span><span class="p">:</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">agent_configs</span><span class="p">:</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.AgentConfig&quot;</span>
+can be used to import the configuration class. Each entry may instead be
+a mapping with a single <code>config_klass</code> key, whose value is that same
+dotted name.</p>
+<p>By default, Soliplex registers its own agent config classes, just as
+though we configured explicitly:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">agent_configs</span><span class="p">:</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.agents.AgentConfig&quot;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;soliplex.config.agents.FactoryAgentConfig&quot;</span>
 </span></code></pre></div>
 <h2 id="registering-secret-source-configurations">Registering Secret Source Configurations</h2>
 <p>Each <a href="../installation/#secrets">installation secret</a> can be
@@ -3421,18 +3570,36 @@ configuration kind corresponds to a Python function which is used to
 retrieve the secret value.</p>
 <p>The <code>meta.secret_sources</code> section allows configuring new secret source
 configurations and their corresponding functions.</p>
+<p>The section contains a list of mappings, each of which must include:</p>
+<ul>
+<li>
+<p><code>config_klass</code>, a Python "dotted name" which can be used to import the
+  source configuration class. The kind it is registered under is taken
+  from that class, not spelled separately.</p>
+</li>
+<li>
+<p><code>registered_func</code>, a Python "dotted name" which can be used to import
+  the callable which resolves a secret from an instance of
+  <code>config_klass</code>. It is passed the source configuration instance and
+  returns the secret value, raising a <code>soliplex.secrets.SecretError</code>
+  subclass if it cannot.</p>
+</li>
+</ul>
+<p>Unlike the sections above, a bare dotted name is not accepted here: both
+keys are required, because a source kind is only usable when its
+configuration class and its getter are both registered.</p>
 <p>By default, these classes are configured to use the corresponding
-functions in 'soliplex.secrets', just as if we configured here:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">meta</span><span class="p">:</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">secret_sources</span><span class="p">:</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.config.EnvVarSecretSource&quot;</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">registered_func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.secrets.get_env_var_secret&quot;</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.config.FilePathSecretSource&quot;</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="nt">registered_func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.secrets.get_file_path_secret&quot;</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.config.SubprocessSecretSource&quot;</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="nt">registered_func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.secrets.get_subprocess_secret&quot;</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.config.RandomCharsSecretSource&quot;</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="nt">registered_func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.secrets.get_random_chars_secret&quot;</span>
+functions in <code>soliplex.secrets</code>, just as if we configured here:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">secret_sources</span><span class="p">:</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.config.secrets.EnvVarSecretSource&quot;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="nt">registered_func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.secrets.get_env_var_secret&quot;</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.config.secrets.FilePathSecretSource&quot;</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="nt">registered_func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.secrets.get_file_path_secret&quot;</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.config.secrets.SubprocessSecretSource&quot;</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="nt">registered_func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.secrets.get_subprocess_secret&quot;</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">config_klass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.config.secrets.RandomCharsSecretSource&quot;</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="nt">registered_func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex.secrets.get_random_chars_secret&quot;</span>
 </span></code></pre></div>
 <h2 id="registering-jsonpath-filter-functions">Registering JSONPath Filter Functions</h2>
 <p>Room authorization ACL entries can match a user's token using an
@@ -3460,10 +3627,10 @@ that the RFC 9535 built-ins cannot.</p>
 <p>A <code>name</code> that collides with one of the RFC 9535 built-ins (e.g. <code>match</code>,
 <code>search</code>, <code>length</code>, <code>count</code>, <code>value</code>) is rejected.</p>
 <p>Example:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">meta</span><span class="p">:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">jsonpath_functions</span><span class="p">:</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;is_admin&quot;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.jsonpath.is_admin&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">meta</span><span class="p">:</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">jsonpath_functions</span><span class="p">:</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;is_admin&quot;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nt">func</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_package.jsonpath.is_admin&quot;</span>
 </span></code></pre></div>
 <p>Given the registration above, a room ACL entry could allow access with a
 predicate such as <code>$[?is_admin($.roles)]</code>.</p>
