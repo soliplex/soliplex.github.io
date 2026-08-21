@@ -3286,9 +3286,10 @@ extension and runs the contrast check.</p>
 </span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
 </span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="n">Future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="kd">async</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">  </span><span class="n">WidgetsFlutterBinding</span><span class="p">.</span><span class="n">ensureInitialized</span><span class="p">();</span>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">flavor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">myFlavor</span><span class="p">();</span>
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">());</span>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="p">}</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">  </span><span class="n">installLogSinks</span><span class="p">();</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">flavor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">myFlavor</span><span class="p">();</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">  </span><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">());</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Customize through <code>standardFlavor</code>'s parameters — identity, theme,
 <code>extraModules</code> — not by mutating a built flavor. It performs real provisioning
@@ -3307,9 +3308,13 @@ Prefer <code>standardFlavor</code> unless you genuinely need a different module 
   <code>ShellConfig.fromModules</code>) throws without it.</li>
 <li>Composition is append-only: add your own modules via <code>extraModules</code>; do not
   drop standard ones (Room depends on Lobby, and modules share session state).</li>
+<li>Logging is yours to install, and nothing installs it for you: with no sink
+  attached <code>LogManager</code> discards every record. Call <code>installLogSinks()</code> before
+  you build your flavor, as the <code>main()</code> above does — the storage migration,
+  server restoration and the contrast checks below all log while the flavor is
+  being assembled.</li>
 <li>Contrast checks only warn, never block. The warnings go through <code>LogManager</code>,
-  so attach a log sink in your app's <code>main()</code> to see them — with no sink
-  attached they drop silently.</li>
+  so without a sink installed first they drop silently.</li>
 <li>Disposal is yours: the <code>ShellConfig</code> returned by <code>Flavor.build()</code> carries a
   <code>dispose</code> callback that the shell widget never invokes. Standalone apps can
   rely on OS reclamation; embedders that unmount the shell must retain the
