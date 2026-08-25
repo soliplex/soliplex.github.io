@@ -1417,6 +1417,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#deferred-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Deferred Loading
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#evidence-skill-configuration-kinds" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3222,6 +3233,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#deferred-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Deferred Loading
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#evidence-skill-configuration-kinds" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3584,8 +3606,9 @@ for configuring an agent.</p>
 <h3 id="skill-configuration">Skill Configuration</h3>
 <ul>
 <li>
-<p><code>installation_skill_names</code> (a list of strings, default empty);  if set,
-  names the installation skills which are enabled for the room.</p>
+<p><code>installation_skill_names</code> (a list, default empty);  if set, names the
+  installation skills which are enabled for the room.  Each entry is a
+  skill name, or a mapping of <code>name</code> and <code>defer_loading</code>.</p>
 </li>
 <li>
 <p><code>skill_configs</code> (a list of mappings, default empty); if set, configure
@@ -3597,13 +3620,16 @@ for configuring an agent.</p>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">installation_skill_names</span><span class="p">:</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;bare-bones&quot;</span><span class="w">           </span><span class="c1"># a filesystem skill</span>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">skill_configs</span><span class="p">:</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skills.rag&quot;</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;stanzas&quot;</span><span class="w">        </span><span class="c1"># loaded up front, not on demand</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">        </span><span class="nt">defer_loading</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span><span class="nt">skill_configs</span><span class="p">:</span>
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skills.analysis&quot;</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;notes&quot;</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skills.rag&quot;</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skills.analysis&quot;</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;notes&quot;</span>
 </span></code></pre></div>
 <p>Configure at most one of these two kinds per corpus.  Analysis searches
   and cites as well as running code, so pairing it with the RAG skill over
@@ -3611,10 +3637,55 @@ for configuring an agent.</p>
   its citations across the two records, and gives one question two search
   budgets to spend.  Two kinds over <em>different</em> databases is fine, as
   above.</p>
+<h4 id="deferred-loading">Deferred Loading</h4>
+<p>A deferred skill's tools and instructions stay hidden until the model asks
+for them through its <code>load_capability</code> tool, which is offered a catalogue
+of every deferred capability's id and description.  That id is the
+capability's own and need not match the skill name which configured it:
+the <code>haiku.rag.skills.rag</code> skill is named <code>rag</code>, and its capability's id
+is <code>haiku-rag</code>.  An undeferred skill's tools and instructions are in front
+of the model from the first request.</p>
+<p>Each entry sets <code>defer_loading</code> to choose between the two.  The default
+differs by kind:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>haiku.rag.skills.rag</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>haiku.rag.skills.analysis</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>bwrap_sandbox</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>entrypoint</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>filesystem skills, named in <code>installation_skill_names</code></td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
+<p>Defer a skill to keep its instructions out of a room whose agent rarely
+needs them;  the cost is a model request spent loading it when it does.
+Rooms configuring several instruction-heavy skills are what deferral is
+for.</p>
+<p>The evidence kinds below take no <code>defer_loading</code>:  they contribute no
+tools or instructions, so there is nothing to load, and a deferred
+capability's hooks do not fire until it is loaded.</p>
 <h4 id="evidence-skill-configuration-kinds">Evidence Skill Configuration Kinds</h4>
-<p>Two further kinds take no configuration:  naming one is the whole switch.
-Both are hook-only, so they add no tools and neither affects whether the
-room's other capabilities load eagerly or on demand.</p>
+<p>Two further kinds take no configuration:  naming one is the whole switch.</p>
 <ul>
 <li>
 <p><code>haiku.rag.skills.evidence_compaction</code>:  on each request, replaces

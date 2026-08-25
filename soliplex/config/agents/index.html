@@ -3536,7 +3536,13 @@ supplied by the template.  Any fields set locally override the template.</p>
   any registered via the
   <a href="../meta/"><code>meta.agent_capability_types</code></a> stanza.  Capabilities which
   need configuration, or which a room should advertise, are configured as
-  <a href="../rooms/#skill-configuration">skills</a> instead.</p>
+  <a href="../rooms/#skill-configuration">skills</a> instead.  <code>kwargs</code> reach the
+  capability's constructor, so a model-facing capability's
+  <a href="../rooms/#deferred-loading">deferred loading</a> is set there as
+  <code>defer_loading</code>.  A capability offering the model no tools or
+  instructions is always loaded eagerly, whatever its <code>kwargs</code> ask for:
+  there would be nothing to load, and its hooks would not fire until it
+  was.</p>
 </li>
 </ul>
 <h3 id="example-ollama-configuration">Example Ollama Configuration</h3>
