@@ -3454,6 +3454,10 @@ LLM provider directly.</p>
 <li><code>model_name</code>: a string, should be the identifier of an LLM model for the
   agent.</li>
 </ul>
+<p>The value can
+  <a href="../installation/#installation-secret-environment-interpolation">interpolate</a>
+  installation configuration environment variables, e.g.,
+  <code>"env:MY_CHAT_MODEL"</code>.</p>
 <p><strong>NOTE</strong>: this value was previously optional, defaulting to the value
             of the now-removed <code>DEFAULT_AGENT_MODEL</code> key in the
             installation environment.</p>
