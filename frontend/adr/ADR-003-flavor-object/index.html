@@ -3719,6 +3719,11 @@ paths (<code>FlavorTheme.brand(BrandTheme, …)</code>, lowered at build; or
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">);</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">());</span>
 </span></code></pre></div>
+<blockquote>
+<p>Since superseded: <code>runSoliplexShell</code> takes the builder — <code>await
+runSoliplexShell(flavor.build)</code> — so a configuration failure reaches the
+screen rather than stalling the launch. The rest of this record stands.</p>
+</blockquote>
 <hr />
 <h2 id="3-the-decisions-by-axis">3. The Decisions, by Axis</h2>
 <h3 id="31-flavor-is-a-single-use-assembly-declaration-built-once">3.1 <code>Flavor</code> is a single-use assembly declaration, built once</h3>

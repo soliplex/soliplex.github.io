@@ -3288,8 +3288,12 @@ extension and runs the contrast check.</p>
 </span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">  </span><span class="n">WidgetsFlutterBinding</span><span class="p">.</span><span class="n">ensureInitialized</span><span class="p">();</span>
 </span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">  </span><span class="n">installLogSinks</span><span class="p">();</span>
 </span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">flavor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">myFlavor</span><span class="p">();</span>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">  </span><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">());</span>
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="p">}</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">  </span><span class="c1">// Pass the builder, not the built config: `Flavor.build()` throws on an</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">  </span><span class="c1">// invalid configuration, and a throw out here lands before any view exists —</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">  </span><span class="c1">// which on iOS, macOS and Android is not a crash but a launch that never</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span><span class="c1">// finishes. Inside, it becomes a message naming the route at fault.</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">  </span><span class="kd">await</span><span class="w"> </span><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">);</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Customize through <code>standardFlavor</code>'s parameters — identity, theme,
 <code>extraModules</code> — not by mutating a built flavor. It performs real provisioning
@@ -3298,8 +3302,45 @@ extension and runs the contrast check.</p>
 <h2 id="diverging-further">Diverging further</h2>
 <p>For compositions that diverge further than <code>standardFlavor</code> allows, drop one
 level: call <code>buildStandardKit</code> yourself and construct a <code>Flavor</code> from its
-kit (see ADR-003 §3.3). Every kit field is then yours to forward — forget
-<code>refreshListenable</code> and auth-driven redirects silently stop re-evaluating.
+kit (see ADR-003 §3.3). Six of the kit's seven fields are then yours to forward
+— <code>serverManager</code> is not one of them; it is shared state for <code>extraModules</code>,
+not a <code>Flavor</code> field. Omit any of the six and it fails quietly, with one
+partial exception: whether the config guard catches a missing <code>modules</code> or
+<code>initialRoute</code> depends on your own module set, since it can only ask whether
+some module registers the initial route. Three of the six are worth spelling
+out; the other two, <code>inactivity</code> and <code>statusMessage</code>, silently revert to
+defaults, so an auto-logout policy or a status-message endpoint you configured
+on the kit simply does not apply.</p>
+<p>Forget <code>refreshListenable</code> and auth-driven redirects stop re-evaluating.</p>
+<p>Forget <code>initialRoute</code> and it falls back to <code>/</code>, which discards the kit's answer
+— so someone returning mid sign-in lands on the sign-in screen instead of the
+callback that would have consumed their tokens, and the sign-in never
+completes. Pass <code>kit.initialRoute</code> verbatim; a literal of your own has the same
+effect, and it also strands <code>signedOutLandingPath</code>, whose value the kit already
+folded into that answer.</p>
+<p>Forget <code>signedOutLandingPath</code> — it is a kit field of its own, and forwarding
+only <code>kit.initialRoute</code> looks like it worked. The launch lands where you meant,
+because the kit folded the path in; what you lose is the check. <code>Flavor</code>
+validates that path against the routes and the public declarations, and a
+<code>Flavor</code> that never received it validates nothing. So a fork gets the behaviour
+and silently loses the guard against the two mistakes it is most likely to
+make: naming a screen that does not exist, or one no module declared reachable
+without a session. Forward <code>kit.signedOutLandingPath</code> alongside
+<code>kit.initialRoute</code>; they answer different questions and the kit carries both.</p>
+<p>A fourth quiet failure is not a kit field at all: building the <code>GoRouter</code> from
+the module contributions rather than from the built config. A router assembled
+out of <code>ModuleRoutes.routes</code> and <code>ModuleRoutes.redirect</code> never sees the
+public-path step, and the sign-in guard then bounces <code>/auth/callback</code>,
+<code>/diagnostics</code>, <code>/versions</code> and any screen of your own to the server list —
+losing an in-flight sign-in in the first case.</p>
+<p>Assembling from a <code>ShellConfig</code> is safe as long as you install
+<code>ShellConfig.redirect</code>, which is the module redirects already composed behind
+that step. The uncomposed ones remain reachable through
+<code>ShellConfig.moduleRedirects</code>, marked <code>@visibleForTesting</code> — the analyzer warns
+rather than stops you, and installing one of those is the mistake this
+paragraph is about. Simplest is still <code>buildRouter(flavor.build())</code> — it is
+exported for exactly this, and it is what the shell runs, so your tests cannot
+drift from production by reproducing the composition slightly differently.
 Prefer <code>standardFlavor</code> unless you genuinely need a different module graph.</p>
 <h2 id="rules">Rules</h2>
 <ul>
@@ -3318,8 +3359,122 @@ Prefer <code>standardFlavor</code> unless you genuinely need a different module 
 <li>Disposal is yours: the <code>ShellConfig</code> returned by <code>Flavor.build()</code> carries a
   <code>dispose</code> callback that the shell widget never invokes. Standalone apps can
   rely on OS reclamation; embedders that unmount the shell must retain the
-  config and <code>await config.dispose()</code> themselves.</li>
+  config and <code>await config.dispose()</code> themselves. A build that <em>fails</em> is the
+  exception — it tears your modules down on its way out, so <code>onDispose</code> can run
+  on a module whose <code>build()</code> never did. Release what the constructor took;
+  anything <code>build()</code> creates has to tolerate being absent.</li>
+<li>A route of yours is reachable without a session when the module that registers
+  it says so — <code>publicPaths</code> on the <code>ModuleRoutes</code> your <code>AppModule.build()</code>
+  returns, one line beside the route it names:</li>
 </ul>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">ModuleRoutes</span><span class="w"> </span><span class="n">build</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ModuleRoutes</span><span class="p">(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">      </span><span class="nl">routes:</span><span class="w"> </span><span class="p">[</span><span class="n">GoRoute</span><span class="p">(</span><span class="nl">path:</span><span class="w"> </span><span class="s1">&#39;/welcome&#39;</span><span class="p">,</span><span class="w"> </span><span class="nl">builder:</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">__</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">WelcomeScreen</span><span class="p">())],</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">      </span><span class="nl">publicPaths:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="s1">&#39;/welcome&#39;</span><span class="p">},</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="p">);</span>
+</span></code></pre></div>
+<p>There is no flavor-level parameter for this, deliberately: the module that
+  owns the route owns the statement that it needs no session, and the standard
+  modules declare theirs the same way. Requests arrive normalized but your
+  entries are compared literally, so write <code>/welcome</code> — a leading slash, no
+  trailing slash, no query, fragment or <code>:param</code> segment. Those forms could
+  never match a request, and <code>Flavor.build()</code> refuses them outright, in release
+  as well as debug, rather than leaving you a dead entry. It refuses a
+  well-formed path naming no route you registered, too. The request side stays
+  forgiving: <code>/welcome/</code> and <code>/welcome?ref=email</code> both reach a declared
+  <code>/welcome</code>. Matching is exact, never a prefix — declaring <code>/welcome</code> leaves
+  <code>/welcome/admin</code> guarded, and <code>/welcome/:step</code> resolves per visit to a
+  concrete path that matches no entry.
+- <strong><code>publicPaths</code> skips every global redirect, not only the sign-in guard.</strong>
+  Today the sign-in guard is the only one, so the two readings coincide. If you
+  contribute a <code>redirect</code> of your own on <code>ModuleRoutes</code>, it will not run for any
+  declared public path — including <code>/</code>, <code>/auth/callback</code>, <code>/versions</code> and
+  <code>/diagnostics</code>, which the standard modules declare and you cannot un-declare.
+  Give a gate of your own an exemption list of its own rather than expecting
+  <code>publicPaths</code> to describe it.
+- An inactivity logout clears the session but does not navigate; a user is
+  moved off a guarded screen only because the guard re-runs. On a path you
+  declared public the guard does not run, so the screen stays exactly where it
+  is with the session gone. Fine for a welcome page; think twice for anything
+  that keeps rendering what the previous session loaded.
+- Two kinds of redirect, one type. A <code>redirect</code> on <code>ModuleRoutes</code> is <strong>global</strong>:
+  it judges every navigation in the app, not just your module's routes. A
+  <code>redirect:</code> on a <code>GoRoute</code> is per-route, and a public path does not disable
+  it — so declaring a per-server path public removes its sign-in bounce but not
+  its connected-server check, which costs the return trip, since that guard
+  bounces to a bare <code>/lobby</code> rather than to sign-in-and-come-back. Both are
+  <code>GoRouterRedirect</code>, so nothing in the signature tells them apart; check where
+  you are attaching it.
+- <code>signedOutLandingPath</code> lands a signed-out launch on a screen of your own
+  instead of the sign-in page. It sits on <code>standardFlavor</code> and
+  <code>buildStandardKit</code>, and deliberately not on <code>standard()</code>: that function is
+  the opinionated default, and a deployment choosing where a signed-out launch
+  lands has already stepped past it. (A built-in public path would be a legal
+  target, so this is a scope decision rather than a technical one.) <strong>Declare that route
+  public yourself</strong> — this parameter says where to start, not that the
+  destination is reachable, so a landing path no module declared bounces to
+  sign-in the moment it arrives. It replaces only that one branch: an in-flight
+  auth callback still finishes, and an already-connected stored server still
+  opens the lobby. A server that needs no sign-in counts as connected, so such a
+  deployment shows this screen on a fresh install and goes straight to the lobby
+  on every launch after it has stored one. It means <em>every</em> signed-out launch,
+  not only the first — for first-run-only, read your own onboarding flag before
+  the call and pass <code>null</code> once it is set. The shell's <code>soliplex_has_launched</code>
+  will not serve: it is install-freshness for the storage sweep, set on the
+  first boot even if that boot never reached your screen. The path follows the
+  same form rules as a public path, and must name a literal route one of your
+  modules registers, not a concrete instance of a parameterized one like
+  <code>/room/prod/123</code>. Both mistakes — a typo, and forgetting to declare the route
+  public — are refused by <code>Flavor.build()</code> on <strong>every</strong> launch, not only the
+  signed-out ones that would have been first to show them, because neither
+  depends on the current auth state. So a developer whose machine has a
+  connected server still finds out.</p>
+<p><strong>Give that screen its own way out.</strong> The two rules compose into a trap: a
+  landing path has to be declared public, and a public path runs no global
+  redirect at all — so once the user has a session, nothing will move them off
+  it. A welcome screen whose only exit was "the router will redirect me once
+  sign-in completes" strands the user on it with a valid session, on every
+  platform. Navigate explicitly, the way every built-in screen does —
+  <code>context.canPop() ? context.pop() : context.go(&lt;somewhere&gt;)</code>. Each picks its
+  own destination rather than a shared one: <code>/versions</code> falls back to
+  <code>AppRoutes.home</code>, <code>/diagnostics</code> to <code>AppRoutes.lobby</code>. Pick yours for where
+  the screen sits, not by copying either.</p>
+<p>The same breadth is why a landing path must not carry a route-level
+  <code>redirect:</code> of its own. Nothing validates that combination, and the two are
+  contradictory claims: the declaration says "serve this without a session",
+  the redirect says "do not serve this". What you get is your screen accepted
+  at boot and silently skipped at runtime.
+- Declaring a path public leaves your <code>initialRoute</code> untouched, so a cold launch
+  lands where it did unless you also set <code>signedOutLandingPath</code>. On web a URL to
+  a declared path opens it directly, because go_router prefers a non-<code>/</code>
+  platform route over <code>initialLocation</code>; native deep links do not, since no
+  platform in this repo enables Flutter deep linking.
+- A module needs no <code>go_router</code> dependency of its own, in <code>dependencies</code> or in
+  <code>dev_dependencies</code>. The barrel re-exports the routing types module authoring
+  and module <em>testing</em> use — <code>GoRoute</code>, <code>GoRouter</code>, <code>GoRouterHelper</code>,
+  <code>GoRouterRedirect</code>, <code>GoRouterState</code>, <code>NoTransitionPage</code> and <code>RouteBase</code> —
+  plus <code>buildRouter</code>. That list is the types the module-authoring API's own
+  signatures are written in, plus what a widget test needs to drive one. It is
+  a curated surface, not the whole package: <code>ShellRoute</code>, <code>StatefulShellRoute</code>,
+  typed routes and the rest are not there, and reaching for one means adding
+  <code>go_router</code> directly. <code>GoRouterHelper</code> is the entry whose absence is
+  invisible until it bites — Dart's <code>show</code> gates extensions, so without it
+  <code>context.go</code> does not resolve. The others are there so you can <em>name</em> a type;
+  Dart infers most of them without the name in scope, so you may never need
+  some of them. If you already depend on
+  <code>go_router</code> and a file of yours uses only what is listed here, the analyzer
+  will report that import as <code>unnecessary_import</code> — a lint to delete rather
+  than a problem to solve. Riverpod is not symmetrical: <code>ModuleRoutes.overrides</code> is
+  <code>List&lt;Override&gt;</code>, <code>Override</code> comes from <code>flutter_riverpod</code>, and the barrel
+  does not re-export it, so a module contributing overrides does need that
+  dependency.
+- Navigate with <code>context.go</code> / <code>context.push</code> — they take a path string, so
+  every screen in the app is reachable from a module of yours without anything
+  further being exported. Write the destination as a literal: <code>/</code> is the server
+  list, which doubles as the sign-in entry and is what a "get started" button
+  wants; <code>/lobby</code> is the room list once a server is connected. The route
+  constants themselves are not exported, so paths that carry an encoded query —
+  a room, a quiz, an auto-connect link — mean re-deriving both the shape and the
+  escaping. If you need one of those, raise it rather than hand-rolling it.</p>
 
 
 

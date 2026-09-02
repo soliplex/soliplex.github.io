@@ -3283,7 +3283,14 @@ so the open questions are recorded rather than rediscovered.</p>
 <p>HTTP capture is redacted before any observer sees it: <code>HttpRedactor</code> replaces
 the values of <code>Authorization</code>, cookies and token-bearing query parameters, and
 also redacts request bodies, SSE content and error strings
-(<code>ObservableHttpClient</code>). The names remain, the secrets do not.</p>
+(<code>ObservableHttpClient</code>). The names remain, the values it recognises do not —
+recognition is the limit. <code>HttpRedactor</code> matches a fixed set of header and
+query-parameter names plus a short substring list, so bearer material under a
+name it does not know passes through: <code>X-Amz-Signature</code> survives as both a
+header and a query parameter. The two lists are also matched differently, and
+<code>X-Amz-Credential</code> falls in the gap — the header list is substring-matched, so
+it is redacted there, while the query list is exact-match, so it survives in
+the presigned URL that is where it actually travels.</p>
 <p><strong>Nothing redacts log records.</strong> <code>installLogSinks</code> adds a bare <code>MemorySink</code>,
 and <code>formatLogRecord</code> applies no redaction. Two consequences:</p>
 <ul>

@@ -4736,16 +4736,27 @@ for that scan (logged) and retried on the next one, so a bad save never
 takes down the scheduler.</p>
 <p><strong>Execution behavior:</strong></p>
 <ul>
-<li><strong>At most one manifest runs at a time.</strong> A process-global lock serializes
-  all manifest execution (scheduled runs, startup runs, and API-triggered
-  runs), so different manifests never run concurrently. This bounds resource
-  use, since a single manifest can already fan out across its components.</li>
-<li><strong>Overlapping schedules are dropped, not queued.</strong> If a cron fires while
-  any manifest is still running, that fire is skipped (logged) instead of
-  being queued behind the in-progress run. This prevents pile-ups from
-  frequent schedules or long-running loads. Startup runs and explicit API
-  calls instead wait for the lock rather than being skipped.</li>
-<li><strong>Single process only.</strong> Because the cron state and locks are held in
+<li><strong>At most one manifest runs at a time.</strong> Due manifests are handed to a
+  single-worker FIFO queue (<code>server/manifest_queue.py</code>) that drains them one
+  at a time, so different manifests never run concurrently. This bounds
+  resource use, since a single manifest can already fan out across its
+  components. Serialization is structural — the worker does one thing at a
+  time — rather than enforced by a lock each caller has to remember to take,
+  and the scheduler is the only thing that feeds the queue.</li>
+<li><strong>Manifests due at the same time all run, in order.</strong> A cron firing while
+  another manifest is in progress is queued behind it, not skipped, so no
+  scheduled occurrence is silently lost.</li>
+<li><strong>A repeat occurrence of a still-pending manifest coalesces.</strong> If a
+  manifest comes due again while its previous run is still queued or
+  running, the new occurrence folds into the pending one (logged) rather
+  than queueing a redundant second run — the pending run reloads the
+  manifest from disk and so covers the newer occurrence anyway. This bounds
+  the queue at the number of manifests on disk, so a cron faster than its
+  own runs cannot grow a backlog.</li>
+<li><strong>Shutdown cancels the in-flight manifest.</strong> The worker is cancelled and
+  awaited on shutdown rather than left orphaned; queued manifests are
+  dropped and picked up again by the reconciler on the next start.</li>
+<li><strong>Single process only.</strong> Because the cron state and run queue are held in
   memory, scheduling relies on the server running as a single worker (see
   <a href="#starting-the-server">Starting the Server</a>). If you run multiple server
   instances, enable <code>SCHEDULER_ENABLED</code> on only one of them.</li>
@@ -5111,7 +5122,7 @@ whose recorded content type is an archive or opaque binary:</p>
 </span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--reload
 </span></code></pre></div>
 <p><strong>The server always runs as a single worker process.</strong> The manifest
-scheduler keeps its cron state and execution locks in memory, so running
+scheduler keeps its cron state and run queue in memory, so running
 multiple workers would make each worker register every cron and run every
 manifest independently, with no cross-process coordination. Multi-worker
 mode is therefore intentionally not exposed, and any <code>WEB_CONCURRENCY</code>
@@ -5331,33 +5342,21 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 <tbody>
 <tr>
 <td><code>POST</code></td>
-<td><code>/api/v1/manifest/run</code></td>
-<td>Run manifests from a file or directory path</td>
-</tr>
-<tr>
-<td><code>POST</code></td>
-<td><code>/api/v1/manifest/run-single</code></td>
-<td>Run a single manifest file</td>
-</tr>
-<tr>
-<td><code>POST</code></td>
 <td><code>/api/v1/manifest/validate</code></td>
 <td>Validate manifests without executing</td>
 </tr>
 </tbody>
 </table>
+<p>Manifests are executed only by the cron scheduler, which feeds the
+single-worker queue in <code>server/manifest_queue.py</code>. There is deliberately no
+HTTP run endpoint: a second execution entry point would need a lock to
+serialize against the scheduler, and one worker draining one queue removes
+the need for that lock entirely. Use the <code>soliplex-agents</code> CLI for a one-off
+run outside the server.</p>
 <p><strong>Examples:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="c1"># Run all manifests in a directory</span>
-</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/run<span class="w"> </span><span class="se">\</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="c1"># Validate manifest files</span>
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/validate<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifests&quot;</span>
-</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>
-</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a><span class="c1"># Run a single manifest</span>
-</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/run-single<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-65-7"><a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifest.yml&quot;</span>
-</span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a>
-</span><span id="__span-65-9"><a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a><span class="c1"># Validate manifest files</span>
-</span><span id="__span-65-10"><a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/validate<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-65-11"><a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifests&quot;</span>
 </span></code></pre></div>
 <h4 id="health-check">Health Check</h4>
 <table>
