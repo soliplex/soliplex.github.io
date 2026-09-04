@@ -3719,7 +3719,9 @@ one of kind <code>haiku.rag.skills.rag</code> and one of kind
 configuring the RAG database and RAG client:</p>
 <ul>
 <li>
-<p>One of the following (exactly one must be provided):</p>
+<p>At most one of the following.  A configuration providing none of them
+  reads the databases its <code>haiku.rag.yaml</code> places in <code>lancedb.databases</code>,
+  which is how a room reads a database that is not a local directory.</p>
 </li>
 <li>
 <p><code>rag_lancedb_stem</code>: a string, the "base name" (without path or
@@ -3732,12 +3734,51 @@ configuring the RAG database and RAG client:</p>
     suffix, of the LanceDB directory.</p>
 </li>
 <li>
-<p><code>haiku_rag_config</code>: a path to the <code>haiku.rag.yaml</code> file used to configure
+<p><code>rag_databases</code>: a list of mappings, to search several databases at
+    once.  Each entry carries exactly one of <code>rag_lancedb_stem</code> or
+    <code>rag_lancedb_override_path</code>, resolved the same way as above, plus an
+    optional <code>name</code>.  An entry naming none is named for whichever option
+    placed it, so <code>rag_lancedb_stem: "papers"</code> and
+    <code>rag_lancedb_override_path: "../wiki.lancedb"</code> are <code>papers</code> and
+    <code>wiki</code>.  Names must be unique within the list.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">skills</span><span class="p">:</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">skill_configs</span><span class="p">:</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skills.rag&quot;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">      </span><span class="nt">rag_databases</span><span class="p">:</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;papers&quot;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">          </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;papers&quot;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wiki&quot;</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">          </span><span class="nt">rag_lancedb_override_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;../wiki.lancedb&quot;</span>
+</span></code></pre></div>
+<p>The name is how a database identifies itself outside the
+configuration: it is what the agent sees as the collection a result
+came from, what the room's search, document and chunk endpoints
+return as <code>database</code>, and what audit records name.  The location
+stays in the configuration.</p>
+<p><code>rag_lancedb_stem</code> and <code>rag_lancedb_override_path</code> written directly
+on the skill or tool are shorthand for a one-entry <code>rag_databases</code>,
+kept for configurations written before the list existed.  They are
+read into that list as the config loads, so a config written either
+way behaves the same from there on, and is exported as the list.</p>
+<p>All the databases in a list must have been written with the same
+embedding model, since one query is embedded once for all of them.</p>
+</li>
+</ul>
+<p>Naming a database here while the <code>haiku.rag</code> configuration read by the
+  room already places one in <code>lancedb.databases</code> is two placements for
+  one room, and the room fails when it is used.  The configuration may
+  be the room's own <code>haiku.rag.yaml</code> or the installation's, since the
+  room reads the two merged.  Name every database in one place: move the
+  room's own into <code>lancedb.databases</code>, or drop whichever side is the
+  duplicate.  A configuration carrying the older <code>lancedb.uri</code> fails to
+  load instead, with the replacement spelled out.  <code>soliplex-cli audit</code>
+  reports either ahead of time.</p>
+<ul>
+<li><code>haiku_rag_config</code>: a path to the <code>haiku.rag.yaml</code> file used to configure
   the RAG client.  If not absolute, this path is resolved relative to
   the directory containing the room configuration file.  If passed,
   values from this file are overlaid on the the installation configuration's
-  <code>haiku_rag_config</code>.</p>
-</li>
+  <code>haiku_rag_config</code>.</li>
 </ul>
 <p>Skill configurations with the <code>kind</code> of <code>"haiku.rag.skills.rag"</code> give the
 agent the following RAG tools:</p>
@@ -3779,19 +3820,21 @@ any additional options.</p>
   quiz which can be run in the room (see <a href="../quizzes/">this page</a> for
   details of the quiz dataset).</li>
 </ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">quizzes</span><span class="p">:</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test_quiz&quot;</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test</span><span class="nv"> </span><span class="s">Quiz&quot;</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nt">question_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/questions.json&quot;</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="nt">randomize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="nt">max_questions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">quizzes</span><span class="p">:</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test_quiz&quot;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test</span><span class="nv"> </span><span class="s">Quiz&quot;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">question_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/questions.json&quot;</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">randomize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nt">max_questions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </span></code></pre></div>
 <h2 id="location-of-rag-database-files">Location of RAG database files</h2>
-<p>Rooms using the <code>haiku_chat</code> agent kind need to be able to find the
-LanceDB database containing the chunks and embeddings extracted by
-Haiku-RAG.  At present, there should be a single database per room,
-named by convention <code>&lt;stem&gt;.lancedb</code>, and stored in the <code>db/rag/</code>
-subdirectory of the project root.</p>
+<p>Rooms need to be able to find the LanceDB database containing the chunks
+and embeddings extracted by Haiku-RAG.  A database is named by convention
+<code>&lt;stem&gt;.lancedb</code>, and stored in the <code>db/rag/</code> subdirectory of the project
+root.</p>
+<p>A room's RAG skill or tool reads one such database, or several named ones
+through <code>rag_databases</code> (see above), in which case a search covers them
+all and each result reports the database it came from.</p>
 
 
 

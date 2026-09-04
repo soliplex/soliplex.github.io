@@ -1332,6 +1332,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#searching-several-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Searching Several Databases
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3053,6 +3064,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#searching-several-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Searching Several Databases
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3238,6 +3260,36 @@ such files on top of the global configuration.</p>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-oss:20b&quot;</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ollama&quot;</span>
 </span></code></pre></div>
+<h2 id="searching-several-databases">Searching Several Databases</h2>
+<p>A RAG skill or tool which configures <code>rag_databases</code> (see
+<a href="../rooms/">rooms</a>) reads them as one set.  Soliplex resolves the path of
+every database a config names and writes them into the client
+configuration's <code>lancedb.databases</code>, as a mapping of name to location,
+then opens a single client over the set.  A config naming one database
+this way is read as one database, not as a set of one.</p>
+<p>A config written with <code>rag_lancedb_stem</code> or <code>rag_lancedb_override_path</code>
+names one database the same way, taking its name from the file's stem, so
+<code>papers.lancedb</code> is <code>papers</code>.  That name is what the room's endpoints
+report as <code>database</code>.</p>
+<p>A config naming no database of its own reads the ones this file places in
+<code>lancedb.databases</code>, under the names it gives them:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">lancedb</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">databases</span><span class="p">:</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">medic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;s3://bucket/lancedb/medic.lancedb&quot;</span>
+</span></code></pre></div>
+<p>This is the only way to read a database that is not a local directory.
+<code>lancedb.databases</code> is where <code>haiku.rag</code> places every database; a
+configuration carrying the older <code>lancedb.uri</code> fails to load.</p>
+<p>Candidates from the covered databases are combined by the configured
+reranker.  Without one, they are ordered by cosine similarity to the
+query: the databases in a set share an embedding model, so similarity in
+that one space compares across them, where each database's own retrieval
+scores do not.  A full-text search, which has no query vector, orders by
+retrieval score instead.  A result carries the name of the database it
+came from, never its location.</p>
+<p>Chunk IDs are unique within a database but repeat between copies of one,
+so the room's chunk endpoint asks each covered database in turn and the
+first one holding the ID answers.</p>
 
 
 
