@@ -3508,6 +3508,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Metadata Sidecars">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        <code>source_url</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downloaded_time" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        <code>downloaded_time</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -5208,7 +5236,11 @@ written next to it. The sidecar records:</p>
 </tr>
 <tr>
 <td><code>source_url</code></td>
-<td>Full URL the document was downloaded from. Written for <strong>WebDAV</strong> downloads (omitted when a WebDAV source resolves to a local directory) and for <strong>web</strong> pages (the fetched page URL); omitted for <code>fs</code> and <code>scm</code> sources</td>
+<td>Full URL the document was fetched from (see below)</td>
+</tr>
+<tr>
+<td><code>downloaded_time</code></td>
+<td>When the document was last written, ISO 8601 with a UTC offset (see below)</td>
 </tr>
 </tbody>
 </table>
@@ -5221,9 +5253,48 @@ written next to it. The sidecar records:</p>
 </span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a><span class="w">  </span><span class="nt">&quot;sha256&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;…&quot;</span><span class="p">,</span>
 </span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="w">  </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span>
 </span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a><span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a><span class="w">  </span><span class="nt">&quot;source_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://dav.example.com/docs/handbook/readme.md&quot;</span>
-</span><span id="__span-52-10"><a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a><span class="p">}</span>
+</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a><span class="w">  </span><span class="nt">&quot;source_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://dav.example.com/docs/handbook/readme.md&quot;</span><span class="p">,</span>
+</span><span id="__span-52-10"><a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a><span class="w">  </span><span class="nt">&quot;downloaded_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-09-11T14:22:05.123456+00:00&quot;</span>
+</span><span id="__span-52-11"><a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a><span class="p">}</span>
 </span></code></pre></div>
+<h4 id="source_url"><code>source_url</code></h4>
+<p>Every agent records one, but what it points at differs by source:</p>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th><code>source_url</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>webdav</code></td>
+<td>The server URL joined with the document's path</td>
+</tr>
+<tr>
+<td><code>web</code></td>
+<td>The <strong>requested</strong> page URL. Redirects are followed when fetching, but the requested URL is what is recorded -- it is the stable identifier, and the one sync state is keyed on</td>
+</tr>
+<tr>
+<td><code>fs</code></td>
+<td>A <code>file://</code> URL for the resolved source path. Only meaningful on the host that ran the ingest, which is the only address a local document ever had</td>
+</tr>
+<tr>
+<td><code>scm</code></td>
+<td>The provider's browsable <code>html_url</code> for the file or issue, falling back to the contents API <code>url</code> when the provider did not return one</td>
+</tr>
+</tbody>
+</table>
+<p>The field is omitted entirely when an agent has no URL to record -- for
+example an SCM provider whose response carried neither key. Consumers should
+treat it as optional.</p>
+<h4 id="downloaded_time"><code>downloaded_time</code></h4>
+<p>Records when the document's bytes were last <strong>written</strong>, not when they were
+last checked for changes. A document that passes its source's freshness check
+(an unchanged content hash, a matching WebDAV ETag) is never rewritten, so its
+sidecar keeps the timestamp of the fetch that did produce it.</p>
+<p>This also means sidecars written before the field existed will never gain one,
+since nothing rewrites an unchanged document. Treat it as optional too.</p>
 <h3 id="incremental-sync-scm-agent">Incremental Sync (SCM Agent)</h3>
 <p>The <code>run-incremental</code> command uses commit-based tracking for efficient synchronization:</p>
 <ol>
