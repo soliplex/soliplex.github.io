@@ -2453,6 +2453,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flutter-sdk-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Flutter SDK version
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2627,6 +2644,17 @@
   
     <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analyzer-errors-that-dont-match-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Analyzer errors that don't match the code
+      </span>
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#entitlements-require-signing" class="md-nav__link">
@@ -3282,6 +3310,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flutter-sdk-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Flutter SDK version
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3456,6 +3501,17 @@
   
     <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analyzer-errors-that-dont-match-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Analyzer errors that don't match the code
+      </span>
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#entitlements-require-signing" class="md-nav__link">
@@ -3642,23 +3698,39 @@
 <p>Platform-specific setup instructions for building and running Soliplex.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
-<li>Flutter SDK (stable channel, &gt;=3.38.4; CI builds with 3.38.7)</li>
+<li>Flutter SDK, stable channel — exact version in <code>.fvmrc</code> (see below)</li>
 <li>Xcode (for iOS/macOS)</li>
 <li>CocoaPods (<code>gem install cocoapods</code>)</li>
 <li>Android Studio (for Android)</li>
 </ul>
+<h3 id="flutter-sdk-version">Flutter SDK version</h3>
+<p><code>.fvmrc</code> at the repository root names the exact SDK CI builds and tests with,
+and is the only place that version is written. Match it locally:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>fvm<span class="w"> </span>use<span class="w">            </span><span class="c1"># with fvm: reads .fvmrc; run commands as `fvm flutter ...`</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>flutter<span class="w"> </span>--version<span class="w">  </span><span class="c1"># without fvm: install that version, check what your shell resolves</span>
+</span></code></pre></div>
+<p>fvm is convenient, not required. <code>.fvmrc</code> is plain JSON, read with <code>jq</code> rather
+than by invoking fvm, so any tool or a human can read it too.</p>
+<p><code>fvm use</code> pins the project but does not change what bare <code>flutter</code> resolves
+to — run <code>fvm global</code> as well, since the pre-commit hooks call <code>flutter</code>
+directly. Homebrew cannot pin a version: <code>brew install flutter</code> tracks the
+latest release.</p>
+<p>The <code>environment:</code> floor in <code>pubspec.yaml</code> (<code>flutter: "&gt;=3.38.4"</code>) is a
+different number: the oldest SDK this library promises consumers. It may lag
+<code>.fvmrc</code>, and moves only when a dependency forces it.</p>
+<p>Using VS Code, and the analyzer disagrees with the pin? See <strong>Troubleshooting</strong>.</p>
 <h2 id="quick-start">Quick Start</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># The ag_ui dependency is fetched from a Git LFS-enabled repo whose</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># binary assets we don&#39;t use, and one of its LFS objects is missing</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># upstream — which aborts the clone during pub get. We need only its</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># pure Dart sources (not LFS-tracked), so skip the LFS smudge filter:</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GIT_LFS_SKIP_SMUDGE</span><span class="o">=</span><span class="m">1</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Install dependencies</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>flutter<span class="w"> </span>pub<span class="w"> </span>get
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Run the app</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>macos<span class="w">   </span><span class="c1"># or: -d ios, -d chrome, -d android</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># The ag_ui dependency is fetched from a Git LFS-enabled repo whose</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># binary assets we don&#39;t use, and one of its LFS objects is missing</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># upstream — which aborts the clone during pub get. We need only its</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># pure Dart sources (not LFS-tracked), so skip the LFS smudge filter:</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GIT_LFS_SKIP_SMUDGE</span><span class="o">=</span><span class="m">1</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Install dependencies</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>flutter<span class="w"> </span>pub<span class="w"> </span>get
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Run the app</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>macos<span class="w">   </span><span class="c1"># or: -d ios, -d chrome, -d android</span>
 </span></code></pre></div>
 <p>Add <code>export GIT_LFS_SKIP_SMUDGE=1</code> to your shell profile (<code>~/.zshrc</code>,
 <code>~/.bashrc</code>) so it persists. CI sets this automatically for its
@@ -3668,13 +3740,13 @@
 <h4 id="code-signing-required-for-keychain">Code Signing (Required for Keychain)</h4>
 <p>macOS apps require code signing to access Keychain for secure token storage.
 Each developer must configure their own Apple Developer Team ID:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. Copy the template</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cp<span class="w"> </span>macos/Runner/Configs/Local.xcconfig.template<span class="w"> </span>macos/Runner/Configs/Local.xcconfig
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># 2. Edit Local.xcconfig and uncomment/set your Team ID</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 1. Copy the template</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cp<span class="w"> </span>macos/Runner/Configs/Local.xcconfig.template<span class="w"> </span>macos/Runner/Configs/Local.xcconfig
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># 2. Edit Local.xcconfig and uncomment/set your Team ID</span>
 </span></code></pre></div>
 <p>Your <code>Local.xcconfig</code> should contain:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>DEVELOPMENT_TEAM = YOUR_TEAM_ID_HERE
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>DEVELOPMENT_TEAM = YOUR_TEAM_ID_HERE
 </span></code></pre></div>
 <p><strong>Finding your Team ID:</strong></p>
 <ol>
@@ -3683,7 +3755,7 @@ Each developer must configure their own Apple Developer Team ID:</p>
 <li>Copy the 10-character Team ID (e.g., <code>HYA3HSRUJ8</code>)</li>
 </ol>
 <p><strong>Verification:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>flutter<span class="w"> </span>build<span class="w"> </span>macos<span class="w"> </span>--debug
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>flutter<span class="w"> </span>build<span class="w"> </span>macos<span class="w"> </span>--debug
 </span></code></pre></div>
 <p>If configured correctly, Keychain operations succeed and auth tokens persist
 across app restarts.</p>
@@ -3692,13 +3764,13 @@ per-session but tokens don't persist, requiring re-login on each launch.</p>
 <h3 id="ios">iOS</h3>
 <h4 id="code-signing-required-for-physical-devices">Code Signing (Required for Physical Devices)</h4>
 <p>iOS uses the same xcconfig pattern as macOS:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1. Copy the template</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>cp<span class="w"> </span>ios/Runner/Configs/Local.xcconfig.template<span class="w"> </span>ios/Runner/Configs/Local.xcconfig
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 2. Edit Local.xcconfig and uncomment/set your Team ID</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># 1. Copy the template</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>cp<span class="w"> </span>ios/Runner/Configs/Local.xcconfig.template<span class="w"> </span>ios/Runner/Configs/Local.xcconfig
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># 2. Edit Local.xcconfig and uncomment/set your Team ID</span>
 </span></code></pre></div>
 <p>Your <code>Local.xcconfig</code> should contain:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>DEVELOPMENT_TEAM = YOUR_TEAM_ID_HERE
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>DEVELOPMENT_TEAM = YOUR_TEAM_ID_HERE
 </span></code></pre></div>
 <h4 id="privacy-descriptions-infoplist">Privacy Descriptions (Info.plist)</h4>
 <p>The <code>file_picker</code> dependency links against <code>Photos.framework</code>, so iOS requires
@@ -3711,50 +3783,65 @@ microphone, location, etc.), add the corresponding <code>NS*UsageDescription</co
 <li><strong>Physical device:</strong> Requires <code>Local.xcconfig</code> with valid <code>DEVELOPMENT_TEAM</code></li>
 </ul>
 <h4 id="building-for-testflightapp-store">Building for TestFlight/App Store</h4>
-<p>Use Flutter <strong>stable</strong> channel for production builds. Beta/dev channels can
-produce binaries that fail App Store validation.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Verify you&#39;re on stable channel</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>flutter<span class="w"> </span>channel<span class="w"> </span>stable
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>flutter<span class="w"> </span>upgrade
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Build release IPA</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>flutter<span class="w"> </span>build<span class="w"> </span>ipa<span class="w"> </span>--release
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># Upload using Transporter app</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>open<span class="w"> </span>-a<span class="w"> </span>Transporter<span class="w"> </span>build/ios/ipa/soliplex_frontend.ipa
+<p>Build releases with the version in <code>.fvmrc</code> — a stable-channel release.
+Beta/dev-channel binaries can fail App Store validation.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Confirm the SDK you build with is the one in .fvmrc</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>fvm<span class="w"> </span>flutter<span class="w"> </span>--version<span class="w">   </span><span class="c1"># or: flutter --version, without fvm</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Build release IPA</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>flutter<span class="w"> </span>build<span class="w"> </span>ipa<span class="w"> </span>--release
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Upload using Transporter app</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>open<span class="w"> </span>-a<span class="w"> </span>Transporter<span class="w"> </span>build/ios/ipa/soliplex_frontend.ipa
 </span></code></pre></div>
 <h3 id="android">Android</h3>
 <p>No special signing setup required for debug builds. For release builds, see
 <a href="https://docs.flutter.dev/deployment/android#signing-the-app">Android signing docs</a>.</p>
 <h3 id="web">Web</h3>
 <p>No special setup required:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>chrome
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>chrome
 </span></code></pre></div>
 <h3 id="linux">Linux</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Install GTK dependencies (Ubuntu/Debian)</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>clang<span class="w"> </span>cmake<span class="w"> </span>ninja-build<span class="w"> </span>pkg-config<span class="w"> </span>libgtk-3-dev
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>linux
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Install GTK dependencies (Ubuntu/Debian)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>clang<span class="w"> </span>cmake<span class="w"> </span>ninja-build<span class="w"> </span>pkg-config<span class="w"> </span>libgtk-3-dev
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>linux
 </span></code></pre></div>
 <h3 id="windows">Windows</h3>
 <p>Requires Visual Studio with "Desktop development with C++" workload:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>windows
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>windows
 </span></code></pre></div>
 <h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="analyzer-errors-that-dont-match-the-code">Analyzer errors that don't match the code</h3>
+<p><strong>Cause:</strong> The Dart extension analyses and debugs with whatever SDK is on
+<code>PATH</code> unless told otherwise, so it can disagree with the version in <code>.fvmrc</code>.
+The errors it reports never name a version, so the mismatch does not announce
+itself.</p>
+<p><strong>Fix:</strong> Point the extension at the pin. <code>fvm use</code> does it for you, writing a
+version-specific <code>dart.flutterSdkPath</code> into <code>.vscode/settings.json</code> and
+rewriting it on every switch — which is what keeps it correct. Leave that file
+alone; <code>.vscode/*</code> is gitignored, so the churn never reaches a commit.</p>
+<p><code>"updateVscodeSettings": false</code> stops fvm writing the file at all, leaving you
+to point at the version-agnostic <code>.fvm/flutter_sdk</code> by hand. <strong>Don't</strong> — the
+flag lives only in the tracked <code>.fvmrc</code>, so it leaves yours permanently dirty
+in <code>git status</code> and one <code>git add</code> from landing on everyone.</p>
+<p>No <code>dart.flutterSdkPath</code> is committed: every path fvm can offer lives under
+<code>.fvm/</code>, which a developer without fvm does not have, so a committed setting
+would point at nothing on their machine.</p>
 <h3 id="entitlements-require-signing">Entitlements require signing</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&quot;Runner&quot; has entitlements that require signing with a development certificate
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&quot;Runner&quot; has entitlements that require signing with a development certificate
 </span></code></pre></div>
 <p><strong>Cause:</strong> Missing <code>Local.xcconfig</code> or <code>DEVELOPMENT_TEAM</code> not set.</p>
 <p><strong>Fix:</strong> Create <code>Local.xcconfig</code> with <code>DEVELOPMENT_TEAM</code> as shown above.</p>
 <h3 id="keychain-errors-on-macos">Keychain errors on macOS</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>OSStatus error -25293
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>OSStatus error -25293
 </span></code></pre></div>
 <p><strong>Cause:</strong> Missing or invalid code signing configuration.</p>
 <p><strong>Fix:</strong> Follow the macOS code signing setup above.</p>
 <h3 id="pod-install-fails">Pod install fails</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Clean and reinstall</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nb">cd</span><span class="w"> </span>ios<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nb">cd</span><span class="w"> </span>macos<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Clean and reinstall</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">cd</span><span class="w"> </span>ios<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nb">cd</span><span class="w"> </span>macos<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
 </span></code></pre></div>
 <h2 id="related-files">Related Files</h2>
 <table>
@@ -3788,6 +3875,10 @@ produce binaries that fail App Store validation.</p>
 <tr>
 <td><code>.gitignore</code></td>
 <td>Excludes <code>**/Local.xcconfig</code></td>
+</tr>
+<tr>
+<td><code>.fvmrc</code></td>
+<td>The Flutter SDK version CI builds with</td>
 </tr>
 </tbody>
 </table>
