@@ -880,6 +880,8 @@
       
         
       
+        
+      
     
     
     
@@ -1071,6 +1073,33 @@
     
   
   Installation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interpolation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Interpolation
 
     
   </span>
@@ -3439,6 +3468,8 @@
       
         
       
+        
+      
     
     
     
@@ -3476,6 +3507,10 @@ installation.</p>
 <p>E.g., registering a new tool configuration class in the <code>meta.tool_configs</code>
 section allows use of that class when configuring a custom tool in a given
 room.</p>
+<p>A registered class whose fields carry
+<a href="../interpolation/">interpolation contracts</a> is audited exactly as
+Soliplex's own configuration classes are; one which declares none is left
+alone.</p>
 <p>Most subsections register into a global registry which Soliplex has
 already populated with its own defaults at import time. Registration is
 additive: a <code>meta</code> entry adds to those defaults, or replaces one of them

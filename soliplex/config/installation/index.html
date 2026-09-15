@@ -14,7 +14,7 @@
         <link rel="prev" href="../filesystem_layout/">
       
       
-        <link rel="next" href="../logfire/">
+        <link rel="next" href="../interpolation/">
       
       
         
@@ -880,6 +880,8 @@
       
         
       
+        
+      
     
     
     
@@ -1407,6 +1409,33 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interpolation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Interpolation
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -3705,6 +3734,8 @@
       
         
       
+        
+      
     
     
     
@@ -3784,29 +3815,55 @@ installation configuration.  Two marker styles are used:</p>
   <a href="../environment/">environment</a> value.</li>
 </ul>
 <p>Which markers a given field honors depends on the field, as enumerated
-below.</p>
-<h3 id="fields-which-interpolate-only-secrets">Fields which interpolate only secrets</h3>
-<p>The entire value may be given as a <code>secret:</code> reference, resolved from the
-installation secrets:</p>
+below.  So does <em>how much</em> of the value is examined: some fields substitute
+markers found anywhere in the value, while others require the whole value to
+be a single marker.</p>
+<p>Which markers a field honors is declared on the field itself, so the
+runtime and <code>soliplex-cli audit</code> read the same statement.  A configuration
+class defined outside Soliplex can declare the same contracts, and is then
+audited alongside these: see
+<a href="../interpolation/">Environment / Secret Interpolation</a>.</p>
+<p>Several of the fields below belong to an <em>agent configuration</em>, which appears
+in three places:</p>
 <ul>
-<li><code>provider_key</code>, in the <code>agent_configs:</code> stanza of the main installation
-  configuration, or in the <code>agent_config:</code> stanza of a completion, room,
-  or skill configuration.</li>
+<li>the <code>agent_configs:</code> stanza of the main installation configuration</li>
+<li>the <code>agent:</code> stanza of a room or a completion configuration</li>
+<li>the <code>judge_agent:</code> stanza of a quiz configuration (see
+  <a href="../quizzes/">Quizzes</a>)</li>
+</ul>
+<h3 id="fields-which-interpolate-only-secrets">Fields which interpolate only secrets</h3>
+<p>The entire value must be a single <code>secret:</code> reference, resolved from the
+installation secrets.  A marker embedded in a longer string is <strong>not</strong>
+substituted:</p>
+<ul>
+<li><code>provider_key</code>, in any agent configuration.  A value which is not a
+  <code>secret:</code> reference is rejected.</li>
+<li><code>token</code>, in the <code>logfire:</code> configuration (see <a href="../logfire/">Logfire</a>).  A
+  value which is not a <code>secret:</code> reference is rejected.</li>
 <li><code>client_secret</code>, in an OIDC provider configuration (see
-  <a href="../oidc_providers/">OIDC providers</a>).</li>
-<li><code>token</code>, in the <code>logfire:</code> configuration (see <a href="../logfire/">Logfire</a>).</li>
+  <a href="../oidc_providers/">OIDC providers</a>).  Unlike the two above, any other
+  value -- including an <code>env:</code> marker, and including a <code>secret:</code> name which
+  cannot be resolved -- is used literally rather than rejected.</li>
 </ul>
 <h3 id="fields-which-interpolate-only-environment-variables">Fields which interpolate only environment variables</h3>
+<p>Two groups, differing in how much of the value is examined.</p>
 <p>The value may embed one or more <code>env:</code> markers, resolved from the
 installation environment:</p>
 <ul>
-<li><code>model_name</code>, in the <code>agent_configs:</code> stanza of the main installation
-  configuration, or in the <code>agent_config:</code> stanza of a completion, room,
-  or skill configuration.</li>
-<li><code>provider_base_url</code>, in the <code>agent_configs:</code> stanza of the main
-  installation configuration, or in the <code>agent_config:</code> stanza of a
-  completion, room, or skill configuration.</li>
+<li><code>model_name</code>, in any agent configuration.</li>
+<li><code>provider_base_url</code>, in any agent configuration.</li>
 </ul>
+<p>The entire value must be a single <code>env:</code> marker; any other value is used
+literally.  In the <code>logfire:</code> configuration (see <a href="../logfire/">Logfire</a>):</p>
+<ul>
+<li><code>service_name</code>, <code>service_version</code>, and <code>environment</code></li>
+<li><code>config_dir</code>, <code>data_dir</code>, and <code>min_level</code></li>
+<li><code>base_url</code></li>
+</ul>
+<p>All but <code>base_url</code> <em>default</em> to an <code>env:</code> marker naming the corresponding
+<code>LOGFIRE_*</code> entry, so they are interpolated even when the <code>logfire:</code> stanza
+does not mention them.  For all seven, a name which the installation does not
+declare resolves to no value, rather than being reported as an error.</p>
 <h3 id="fields-which-interpolate-both-secrets-and-environment-variables">Fields which interpolate both secrets and environment variables</h3>
 <p>The value may embed one or more <code>secret:</code> and/or <code>env:</code> markers; the two
 marker styles may be mixed within a single value.</p>
@@ -4121,13 +4178,13 @@ the application (outermost first). Omit it to use the built-in default stack
         
         
           
-          <a href="../logfire/" class="md-footer__link md-footer__link--next" aria-label="Next: Logfire">
+          <a href="../interpolation/" class="md-footer__link md-footer__link--next" aria-label="Next: Interpolation">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Logfire
+                Interpolation
               </div>
             </div>
             <div class="md-footer__button md-icon">

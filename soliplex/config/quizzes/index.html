@@ -880,6 +880,8 @@
       
         
       
+        
+      
     
     
     
@@ -1071,6 +1073,33 @@
     
   
   Installation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interpolation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Interpolation
 
     
   </span>
@@ -1288,6 +1317,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Room Configuration
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#judge-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Judge Agent
       </span>
     </span>
   </a>
@@ -3093,6 +3133,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#judge-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Judge Agent
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#api" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3285,6 +3336,8 @@
       
         
       
+        
+      
     
     
     
@@ -3322,6 +3375,21 @@
 <li>Room configurations get a new key, <code>quizzes</code>, with a value which
   is a mapping defining quizzes which can be run in the room
   (see <code>rooms/README.md</code>).</li>
+</ul>
+<h2 id="judge-agent">Judge Agent</h2>
+<ul>
+<li>
+<p>A quiz may carry a <code>judge_agent</code> key, whose value is an agent
+  configuration: the agent which grades free-form answers.  Omit it and
+  Soliplex supplies one, with an <code>id</code> of <code>quiz-&lt;quiz_id&gt;-judge</code> and a
+  <code>model_name</code> of <code>gpt-oss:20b</code>.</p>
+</li>
+<li>
+<p>Because it is an ordinary agent configuration, its <code>model_name</code>,
+  <code>provider_base_url</code>, and <code>provider_key</code> honor the installation's
+  interpolation markers, exactly as they do elsewhere.  See
+  <a href="../installation/#installation-secret-environment-interpolation">Installation</a>.</p>
+</li>
 </ul>
 <h2 id="api">API</h2>
 <h3 id="get-apiv1rooms"><code>GET /api/v1/rooms</code></h3>
