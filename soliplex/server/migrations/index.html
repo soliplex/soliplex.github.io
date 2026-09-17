@@ -1768,6 +1768,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#rolling-a-version-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Rolling a version back
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3147,6 +3158,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#rolling-a-version-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Rolling a version back
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3361,15 +3383,26 @@ image does not carry, so running the <code>alembic</code> CLI there reports <cod
 'script_location' key found in configuration</code>. A deployed Soliplex migrates
 its databases itself, on the first writable open, so there is normally
 nothing for an operator to run.</p>
+<h2 id="rolling-a-version-back">Rolling a version back</h2>
+<p>Migrating happens on the way <em>up</em> only. A database stamped by a newer
+Soliplex than the one now running is refused, naming the revision it
+carries: this release does not have the revisions between its own head and
+that stamp, so it cannot move the database in either direction.</p>
+<p>Downgrade before rolling the code back, from the version that still has
+those revisions and with every writer stopped:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>alx<span class="w"> </span>downgrade<span class="w"> </span>&lt;the<span class="w"> </span>older<span class="w"> </span>release<span class="err">&#39;</span>s<span class="w"> </span>head<span class="w"> </span>revision&gt;
+</span></code></pre></div>
+<p><code>soliplex-cli audit databases</code> reports the same condition, so it surfaces
+there rather than at the next restart.</p>
 <h2 id="cheat-sheet">Cheat Sheet</h2>
 <p>See the <a href="https://alembic.sqlalchemy.org/en/latest/">Alembic docs</a> for details.</p>
 <h3 id="querying">Querying</h3>
 <p>To see the history tree:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>alx<span class="w"> </span><span class="nb">history</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>alx<span class="w"> </span><span class="nb">history</span>
 </span></code></pre></div>
 <p>To discover if updates are required from the running schema to match the
 current <code>soliplex</code> schemae:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>alx<span class="w"> </span>check
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>alx<span class="w"> </span>check
 </span></code></pre></div>
 <p>Nothing creates tables on the way in, so <code>check</code> compares the models
 against the migrated database. A difference means the revisions and the
@@ -3378,15 +3411,15 @@ a model changed without one. <code>scripts/lint_alembic_chain.py</code> fails CI
 the same reason.</p>
 <h3 id="snapshotting">Snapshotting</h3>
 <p>To create a new revison if needed:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>alx<span class="w"> </span>revision<span class="w"> </span>--autogenerate
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>alx<span class="w"> </span>revision<span class="w"> </span>--autogenerate
 </span></code></pre></div>
 <h3 id="upgrading">Upgrading</h3>
 <p>To run a migration live to a given revision:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
 </span></code></pre></div>
 <p>To generate DDL for a migration to a given revision (generates
 <code>agui.sql</code> and <code>authz.sql</code> files in the CWD):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>--sql<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>--sql<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
 </span></code></pre></div>
 
 
