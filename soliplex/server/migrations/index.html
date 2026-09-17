@@ -8,36 +8,36 @@
       
       
       
-        <link rel="canonical" href="https://soliplex.github.io/soliplex/">
+        <link rel="canonical" href="https://soliplex.github.io/soliplex/server/migrations/">
       
       
-        <link rel="prev" href="./..">
+        <link rel="prev" href="../environment/">
       
       
-        <link rel="next" href="./client/">
+        <link rel="next" href="../sse_resume/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="zensical-0.0.43">
     
     
       
-        <title>Soliplex Documentation - Soliplex</title>
+        <title>Database Migrations - Soliplex</title>
       
     
     
       
         
       
-      <link rel="stylesheet" href="../assets/stylesheets/modern/main.fba56155.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.fba56155.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.dfe2e883.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.dfe2e883.min.css">
       
       
 
@@ -56,7 +56,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#soliplex-documentation" class="md-skip">
+        <a href="#database-migrations" class="md-skip">
           Skip to content
         </a>
       
@@ -97,9 +97,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="./.." title="Soliplex" class="md-header__button md-logo" aria-label="Soliplex" data-md-component="logo">
+    <a href="../../.." title="Soliplex" class="md-header__button md-logo" aria-label="Soliplex" data-md-component="logo">
       
-  <img src="../img/logo.png" alt="Soliplex">
+  <img src="../../../img/logo.png" alt="Soliplex">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Soliplex Documentation
+              Database Migrations
             
           </span>
         </div>
@@ -204,7 +204,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="./.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   Home
@@ -259,7 +259,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="././" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
   Core Platform
@@ -303,7 +303,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../ingester/API/" class="md-tabs__link">
+        <a href="../../../ingester/API/" class="md-tabs__link">
           
   
   Ingester
@@ -349,7 +349,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../chatbot-widget/readme/" class="md-tabs__link">
+        <a href="../../../chatbot-widget/readme/" class="md-tabs__link">
           
   
   User Interfaces
@@ -384,7 +384,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../ingester-agents/" class="md-tabs__link">
+        <a href="../../../ingester-agents/" class="md-tabs__link">
           
   
   Supporting Tools
@@ -423,9 +423,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="./.." title="Soliplex" class="md-nav__button md-logo" aria-label="Soliplex" data-md-component="logo">
+    <a href="../../.." title="Soliplex" class="md-nav__button md-logo" aria-label="Soliplex" data-md-component="logo">
       
-  <img src="../img/logo.png" alt="Soliplex">
+  <img src="../../../img/logo.png" alt="Soliplex">
 
     </a>
     Soliplex
@@ -452,7 +452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -530,7 +530,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="././" class="md-nav__link md-nav__link--active">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -547,7 +547,7 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_2" id="__nav_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -572,7 +572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./client/" class="md-nav__link">
+      <a href="../../client/" class="md-nav__link">
         
   
   
@@ -599,7 +599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./docker/" class="md-nav__link">
+      <a href="../../docker/" class="md-nav__link">
         
   
   
@@ -626,7 +626,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./docs-skill/" class="md-nav__link">
+      <a href="../../docs-skill/" class="md-nav__link">
         
   
   
@@ -653,7 +653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./log-ingestion/" class="md-nav__link">
+      <a href="../../log-ingestion/" class="md-nav__link">
         
   
   
@@ -680,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./overview/" class="md-nav__link">
+      <a href="../../overview/" class="md-nav__link">
         
   
   
@@ -707,7 +707,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./prerequisites/" class="md-nav__link">
+      <a href="../../prerequisites/" class="md-nav__link">
         
   
   
@@ -734,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./quickstart/" class="md-nav__link">
+      <a href="../../quickstart/" class="md-nav__link">
         
   
   
@@ -761,7 +761,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./rag/" class="md-nav__link">
+      <a href="../../rag/" class="md-nav__link">
         
   
   
@@ -788,7 +788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./tui/" class="md-nav__link">
+      <a href="../../tui/" class="md-nav__link">
         
   
   
@@ -815,7 +815,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./usage/" class="md-nav__link">
+      <a href="../../usage/" class="md-nav__link">
         
   
   
@@ -928,7 +928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/agui/" class="md-nav__link">
+      <a href="../../config/agui/" class="md-nav__link">
         
   
   
@@ -955,7 +955,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/agents/" class="md-nav__link">
+      <a href="../../config/agents/" class="md-nav__link">
         
   
   
@@ -982,7 +982,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/completions/" class="md-nav__link">
+      <a href="../../config/completions/" class="md-nav__link">
         
   
   
@@ -1009,7 +1009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/environment/" class="md-nav__link">
+      <a href="../../config/environment/" class="md-nav__link">
         
   
   
@@ -1036,7 +1036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/filesystem_layout/" class="md-nav__link">
+      <a href="../../config/filesystem_layout/" class="md-nav__link">
         
   
   
@@ -1063,7 +1063,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/installation/" class="md-nav__link">
+      <a href="../../config/installation/" class="md-nav__link">
         
   
   
@@ -1090,7 +1090,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/interpolation/" class="md-nav__link">
+      <a href="../../config/interpolation/" class="md-nav__link">
         
   
   
@@ -1117,7 +1117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/logfire/" class="md-nav__link">
+      <a href="../../config/logfire/" class="md-nav__link">
         
   
   
@@ -1144,7 +1144,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/logging/" class="md-nav__link">
+      <a href="../../config/logging/" class="md-nav__link">
         
   
   
@@ -1171,7 +1171,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/meta/" class="md-nav__link">
+      <a href="../../config/meta/" class="md-nav__link">
         
   
   
@@ -1198,7 +1198,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/middleware/" class="md-nav__link">
+      <a href="../../config/middleware/" class="md-nav__link">
         
   
   
@@ -1225,7 +1225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/oidc_providers/" class="md-nav__link">
+      <a href="../../config/oidc_providers/" class="md-nav__link">
         
   
   
@@ -1252,7 +1252,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/quizzes/" class="md-nav__link">
+      <a href="../../config/quizzes/" class="md-nav__link">
         
   
   
@@ -1279,7 +1279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/rag/" class="md-nav__link">
+      <a href="../../config/rag/" class="md-nav__link">
         
   
   
@@ -1306,7 +1306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/rooms/" class="md-nav__link">
+      <a href="../../config/rooms/" class="md-nav__link">
         
   
   
@@ -1333,7 +1333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/secrets/" class="md-nav__link">
+      <a href="../../config/secrets/" class="md-nav__link">
         
   
   
@@ -1360,7 +1360,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/skills/" class="md-nav__link">
+      <a href="../../config/skills/" class="md-nav__link">
         
   
   
@@ -1387,7 +1387,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./config/dburis/" class="md-nav__link">
+      <a href="../../config/dburis/" class="md-nav__link">
         
   
   
@@ -1497,7 +1497,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./examples/room-thread-analysis/" class="md-nav__link ">
+            <a href="../../examples/room-thread-analysis/" class="md-nav__link ">
               
   
   
@@ -1539,7 +1539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./examples/room-thread-analysis/model/" class="md-nav__link">
+      <a href="../../examples/room-thread-analysis/model/" class="md-nav__link">
         
   
   
@@ -1579,6 +1579,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1603,15 +1605,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./server/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1634,7 +1636,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_14">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1653,7 +1655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./server/cli/" class="md-nav__link">
+      <a href="../cli/" class="md-nav__link">
         
   
   
@@ -1680,7 +1682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./server/environment/" class="md-nav__link">
+      <a href="../environment/" class="md-nav__link">
         
   
   
@@ -1704,10 +1706,36 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="./server/migrations/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Migrations
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1722,6 +1750,77 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Cheat Sheet
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cheat Sheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#querying" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Querying
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Snapshotting
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrading" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Upgrading
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1734,7 +1833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./server/sse_resume/" class="md-nav__link">
+      <a href="../sse_resume/" class="md-nav__link">
         
   
   
@@ -1846,7 +1945,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/API/" class="md-nav__link">
+      <a href="../../../ingester/API/" class="md-nav__link">
         
   
   
@@ -1873,7 +1972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/ARCHITECTURE/" class="md-nav__link">
+      <a href="../../../ingester/ARCHITECTURE/" class="md-nav__link">
         
   
   
@@ -1900,7 +1999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/AUTHENTICATION/" class="md-nav__link">
+      <a href="../../../ingester/AUTHENTICATION/" class="md-nav__link">
         
   
   
@@ -1927,7 +2026,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/CLI/" class="md-nav__link">
+      <a href="../../../ingester/CLI/" class="md-nav__link">
         
   
   
@@ -1954,7 +2053,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/CONFIGURATION/" class="md-nav__link">
+      <a href="../../../ingester/CONFIGURATION/" class="md-nav__link">
         
   
   
@@ -1981,7 +2080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/DATABASE/" class="md-nav__link">
+      <a href="../../../ingester/DATABASE/" class="md-nav__link">
         
   
   
@@ -2008,7 +2107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/DOCKER/" class="md-nav__link">
+      <a href="../../../ingester/DOCKER/" class="md-nav__link">
         
   
   
@@ -2035,7 +2134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/GETTING_STARTED/" class="md-nav__link">
+      <a href="../../../ingester/GETTING_STARTED/" class="md-nav__link">
         
   
   
@@ -2062,7 +2161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/PARAMETER_SETS/" class="md-nav__link">
+      <a href="../../../ingester/PARAMETER_SETS/" class="md-nav__link">
         
   
   
@@ -2089,7 +2188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ingester/WORKFLOWS/" class="md-nav__link">
+      <a href="../../../ingester/WORKFLOWS/" class="md-nav__link">
         
   
   
@@ -2233,7 +2332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chatbot-widget/readme/" class="md-nav__link">
+      <a href="../../../chatbot-widget/readme/" class="md-nav__link">
         
   
   
@@ -2260,7 +2359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chatbot-widget/plone-integration/" class="md-nav__link">
+      <a href="../../../chatbot-widget/plone-integration/" class="md-nav__link">
         
   
   
@@ -2287,7 +2386,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chatbot-widget/usage/" class="md-nav__link">
+      <a href="../../../chatbot-widget/usage/" class="md-nav__link">
         
   
   
@@ -2386,7 +2485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/authoring-a-flavor/" class="md-nav__link">
+      <a href="../../../frontend/authoring-a-flavor/" class="md-nav__link">
         
   
   
@@ -2413,7 +2512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/developer-setup/" class="md-nav__link">
+      <a href="../../../frontend/developer-setup/" class="md-nav__link">
         
   
   
@@ -2440,7 +2539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/diagnostics-known-risks/" class="md-nav__link">
+      <a href="../../../frontend/diagnostics-known-risks/" class="md-nav__link">
         
   
   
@@ -2467,7 +2566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/mockups/" class="md-nav__link">
+      <a href="../../../frontend/mockups/" class="md-nav__link">
         
   
   
@@ -2494,7 +2593,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/send-cancel-lifecycle/" class="md-nav__link">
+      <a href="../../../frontend/send-cancel-lifecycle/" class="md-nav__link">
         
   
   
@@ -2577,7 +2676,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/adr/ADR-001-reactive-state-management-scoped-statebus/" class="md-nav__link">
+      <a href="../../../frontend/adr/ADR-001-reactive-state-management-scoped-statebus/" class="md-nav__link">
         
   
   
@@ -2604,7 +2703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/adr/ADR-002-customizable-brand-theme/" class="md-nav__link">
+      <a href="../../../frontend/adr/ADR-002-customizable-brand-theme/" class="md-nav__link">
         
   
   
@@ -2631,7 +2730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/adr/ADR-003-flavor-object/" class="md-nav__link">
+      <a href="../../../frontend/adr/ADR-003-flavor-object/" class="md-nav__link">
         
   
   
@@ -2720,7 +2819,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/plans/0001-app-shell/proposal/" class="md-nav__link">
+      <a href="../../../frontend/plans/0001-app-shell/proposal/" class="md-nav__link">
         
   
   
@@ -2801,7 +2900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/plans/citations-ui/data-flow/" class="md-nav__link">
+      <a href="../../../frontend/plans/citations-ui/data-flow/" class="md-nav__link">
         
   
   
@@ -2828,7 +2927,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/plans/citations-ui/plan/" class="md-nav__link">
+      <a href="../../../frontend/plans/citations-ui/plan/" class="md-nav__link">
         
   
   
@@ -2911,7 +3010,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../ingester-agents/" class="md-nav__link ">
+            <a href="../../../ingester-agents/" class="md-nav__link ">
               
   
   
@@ -2953,7 +3052,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pdf-splitter/" class="md-nav__link">
+      <a href="../../../pdf-splitter/" class="md-nav__link">
         
   
   
@@ -2980,7 +3079,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bubble-sandbox/" class="md-nav__link">
+      <a href="../../../bubble-sandbox/" class="md-nav__link">
         
   
   
@@ -3048,24 +3147,52 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Quick Start
+        Cheat Sheet
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cheat Sheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#querying" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Querying
       </span>
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-soliplex" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#snapshotting" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What is Soliplex?
+        Snapshotting
       </span>
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrading" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Upgrading
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3094,7 +3221,7 @@
   
   
     <li class="md-path__item">
-      <a href="./.." class="md-path__link">
+      <a href="../../.." class="md-path__link">
         
   
   <span class="md-ellipsis">
@@ -3148,11 +3275,47 @@
     
     
       <li class="md-path__item">
-        <a href="././" class="md-path__link">
+        <a href="../../" class="md-path__link">
           
   
   <span class="md-ellipsis">
     Core Platform
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    Setup
   </span>
 
         </a>
@@ -3172,27 +3335,59 @@
   
 
 
-<h1 id="soliplex-documentation">Soliplex Documentation</h1>
-<p>Welcome to the Soliplex documentation. This system provides AI-powered
-retrieval-augmented generation capabilities for intelligent document search
-and question answering.</p>
-<h2 id="quick-start">Quick Start</h2>
-<ol>
-<li><strong><a href="quickstart/">Quickstart</a></strong> - Stand up Soliplex the fast way, by letting a skills-compatible AI agent deploy it</li>
-<li><strong><a href="prerequisites/">Prerequisites</a></strong> - Complete installation checklist and setup guide</li>
-<li><strong><a href="overview/">Overview</a></strong> - Learn about the system architecture and features</li>
-<li><strong><a href="rag/">RAG Database Setup</a></strong> - Set up the RAG search database</li>
-<li><strong><a href="server/">Server Setup</a></strong> - Set up the FastAPI backend server</li>
-<li><strong><a href="client/">Client Setup</a></strong> - Configure the Flutter web client</li>
-<li><strong><a href="tui/">Terminal UI (TUI)</a></strong> - Interact with rooms from the command line</li>
-<li><strong><a href="docker/">Docker Deployment</a></strong> - Run Soliplex with Docker and Docker Compose</li>
-<li><strong><a href="usage/">Usage Guide</a></strong> - Start using the system</li>
-</ol>
-<h2 id="what-is-soliplex">What is Soliplex?</h2>
-<p>Soliplex combines the power of retrieval systems with generative AI to
-provide accurate, contextual responses based on your document collections.
-The system indexes your documents and uses them to enhance AI responses
-with relevant, up-to-date information.</p>
+<h1 id="database-migrations">Database Migrations</h1>
+<p>Soliplex keeps two SQLAlchemy databases -- one for AG-UI threads and runs,
+one for authorization data -- and drives both from a single
+<a href="https://alembic.sqlalchemy.org/en/latest/">Alembic</a> revision tree. Their
+DBURIs come from the installation config rather than from Alembic's own
+settings (see <a href="../../config/dburis/">SQLAlchemy DBURIs</a>), so every <code>alembic</code>
+command has to be told which installation it is working on:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>-x soliplex.installation_path=/path/to/installation.yaml
+</span></code></pre></div>
+<p>The revision tree lives inside the <code>soliplex</code> package, at
+<code>src/soliplex/alembic_migrations/</code>, so it ships in the wheel: soliplex runs
+these revisions itself, on every writable open, which is how a database it
+creates ends up stamped. A deployment can therefore migrate from its own
+image, with no source checkout. <code>env.py</code> is a shim over
+<code>soliplex.alembic_migrations</code>, where that logic and its tests live.</p>
+<p>Running <code>alembic</code> by hand is mostly a development task -- writing the
+revision that goes with a schema change. The examples below presume the
+<code>example/minimal.yaml</code> installation, and this <code>alx</code> alias:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">alx</span><span class="o">=</span><span class="s2">&quot;alembic -x soliplex.installation_path=example/minimal.yaml&quot;</span>
+</span></code></pre></div>
+<p>They also presume a <strong>source checkout</strong>. Alembic reads <code>script_location</code>
+from <code>[tool.alembic]</code> in the project's <code>pyproject.toml</code>, which a deployment
+image does not carry, so running the <code>alembic</code> CLI there reports <code>No
+'script_location' key found in configuration</code>. A deployed Soliplex migrates
+its databases itself, on the first writable open, so there is normally
+nothing for an operator to run.</p>
+<h2 id="cheat-sheet">Cheat Sheet</h2>
+<p>See the <a href="https://alembic.sqlalchemy.org/en/latest/">Alembic docs</a> for details.</p>
+<h3 id="querying">Querying</h3>
+<p>To see the history tree:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>alx<span class="w"> </span><span class="nb">history</span>
+</span></code></pre></div>
+<p>To discover if updates are required from the running schema to match the
+current <code>soliplex</code> schemae:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>alx<span class="w"> </span>check
+</span></code></pre></div>
+<p>Nothing creates tables on the way in, so <code>check</code> compares the models
+against the migrated database. A difference means the revisions and the
+models disagree: either a revision is missing a change the models make, or
+a model changed without one. <code>scripts/lint_alembic_chain.py</code> fails CI for
+the same reason.</p>
+<h3 id="snapshotting">Snapshotting</h3>
+<p>To create a new revison if needed:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>alx<span class="w"> </span>revision<span class="w"> </span>--autogenerate
+</span></code></pre></div>
+<h3 id="upgrading">Upgrading</h3>
+<p>To run a migration live to a given revision:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
+</span></code></pre></div>
+<p>To generate DDL for a migration to a given revision (generates
+<code>agui.sql</code> and <code>authz.sql</code> files in the CWD):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>--sql<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
+</span></code></pre></div>
 
 
 
@@ -3232,7 +3427,7 @@ with relevant, up-to-date information.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="./.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+          <a href="../environment/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Environment">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3242,20 +3437,20 @@ with relevant, up-to-date information.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Home
+                Environment
               </div>
             </div>
           </a>
         
         
           
-          <a href="./client/" class="md-footer__link md-footer__link--next" aria-label="Next: Client">
+          <a href="../sse_resume/" class="md-footer__link md-footer__link--next" aria-label="Next: SSE Resume">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Client
+                SSE Resume
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3294,10 +3489,10 @@ with relevant, up-to-date information.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.instant.progress","navigation.path","navigation.tabs","navigation.tabs.sticky","navigation.top","navigation.tracking","search.highlight","search.share","search.suggest","toc.follow"],"search":"../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.instant.progress","navigation.path","navigation.tabs","navigation.tabs.sticky","navigation.top","navigation.tracking","search.highlight","search.share","search.suggest","toc.follow"],"search":"../../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
     
     
-      <script src="../assets/javascripts/bundle.6e5f0216.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.6e5f0216.min.js"></script>
       
     
   </body>

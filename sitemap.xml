@@ -106,6 +106,9 @@
         <loc>https://soliplex.github.io/soliplex/server/environment/</loc>
       </url>
       <url>
+        <loc>https://soliplex.github.io/soliplex/server/migrations/</loc>
+      </url>
+      <url>
         <loc>https://soliplex.github.io/soliplex/server/sse_resume/</loc>
       </url>
       <url>
