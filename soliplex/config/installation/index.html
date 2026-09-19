@@ -3927,11 +3927,14 @@ declare resolves to no value, rather than being reported as an error.</p>
 marker styles may be mixed within a single value.</p>
 <p>In the main installation configuration:</p>
 <ul>
-<li><code>thread_persistence_dburi_sync</code></li>
-<li><code>thread_persistence_dburi_async</code></li>
-<li><code>authorization_dburi_sync</code></li>
-<li><code>authorization_dburi_async</code></li>
+<li><code>thread_persistence_sync_dburi</code></li>
+<li><code>thread_persistence_async_dburi</code></li>
+<li><code>authorization_sync_dburi</code></li>
+<li><code>authorization_async_dburi</code></li>
 </ul>
+<p>Through Soliplex v0.81 these four named the URL flavor first, as
+<code>thread_persistence_dburi_sync</code> and so on.  The old names still work, but
+are deprecated and will be removed after Soliplex v0.84.</p>
 <p>In the <code>mcp_client_toolsets:</code> stanza of a room or completion configuration,
 for each configured MCP client toolset:</p>
 <ul>
