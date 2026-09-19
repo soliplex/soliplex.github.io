@@ -1448,10 +1448,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#thread_persistence_dburi" class="md-nav__link">
+  <a href="#thread_persistence_db" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        <code>thread_persistence_dburi</code>
+        <code>thread_persistence_db</code>
       </span>
     </span>
   </a>
@@ -1459,10 +1459,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#authorization_dburi" class="md-nav__link">
+  <a href="#authorization_db" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        <code>authorization_dburi</code>
+        <code>authorization_db</code>
       </span>
     </span>
   </a>
@@ -1474,6 +1474,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Interpolation
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deprecated-spelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Deprecated spelling
       </span>
     </span>
   </a>
@@ -3130,10 +3141,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#thread_persistence_dburi" class="md-nav__link">
+  <a href="#thread_persistence_db" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        <code>thread_persistence_dburi</code>
+        <code>thread_persistence_db</code>
       </span>
     </span>
   </a>
@@ -3141,10 +3152,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#authorization_dburi" class="md-nav__link">
+  <a href="#authorization_db" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        <code>authorization_dburi</code>
+        <code>authorization_db</code>
       </span>
     </span>
   </a>
@@ -3156,6 +3167,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Interpolation
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deprecated-spelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Deprecated spelling
       </span>
     </span>
   </a>
@@ -3331,13 +3353,13 @@
 <li>
 <p>One database holds history for AG-UI threads and runs, created by clients
   interacting with its AG-UI endpoints.  See
-  <a href="#thread_persistence_dburi">below</a>.</p>
+  <a href="#thread_persistence_db">below</a>.</p>
 </li>
 <li>
 <p>Another database holds authorization information:  a list of
   administrative users, and a list of room authorization policies and
   the access control list (ACL) entries they contain. See
-  <a href="#authorization_dburi">below</a>.</p>
+  <a href="#authorization_db">below</a>.</p>
 </li>
 </ul>
 <p>Configuration for these databases uses SQLAlchemy
@@ -3391,55 +3413,103 @@ all possible SQLAlchemy engines.  Known to work:</p>
   async dialect</p>
 </li>
 </ul>
-<h2 id="thread_persistence_dburi"><code>thread_persistence_dburi</code></h2>
+<h2 id="thread_persistence_db"><code>thread_persistence_db</code></h2>
 <p>Soliplex uses this pair of URLs to record and query information about
 AG-UI threads and runs initiated by clients.  If this sections is
 not configured, Soliplex uses an in-memory Sqlite database, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite://&quot;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite://&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">thread_persistence_db</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite://&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite://&quot;</span>
 </span></code></pre></div>
 <p>To use an on-disk SQLite database for thread persistence (note the four
 forward-slashes!):</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite:////path/to/thread_persistence.sqlite&quot;</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite:////path/to/thread_persistence.sqlite&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">thread_persistence_db</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite:////path/to/thread_persistence.sqlite&quot;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite:////path/to/thread_persistence.sqlite&quot;</span>
 </span></code></pre></div>
 <p>To use a Postgres server, assuming the login is <code>"soliplex"</code> and the
 password is defined as a <a href="../secrets/">secret</a> named <code>"POSTGRES_PASSWORD"</code>:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">thread_persistence_db</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
 </span></code></pre></div>
-<h2 id="authorization_dburi"><code>authorization_dburi</code></h2>
+<h2 id="authorization_db"><code>authorization_db</code></h2>
 <p>Soliplex uses this pair of URLs to record and query authorization information:
 a list of administrative users, and a list of room authorization policies
 and the access control list (ACL) entries they contain.  If this sections is
 not configured, Soliplex uses an in-memory Sqlite database, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite://&quot;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite://&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite://&quot;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite://&quot;</span>
 </span></code></pre></div>
 <p>To use an on-disk SQLite database for thread persistence (note the four
 forward-slashes!):</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite:////path/to/authorization.sqlite&quot;</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite:////path/to/authorization.sqlite&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite:////path/to/authorization.sqlite&quot;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite:////path/to/authorization.sqlite&quot;</span>
 </span></code></pre></div>
 <p>To use a Postgres server, assuming the login is <code>"soliplex"</code> and the
 password is defined as a <a href="../secrets/">secret</a> named <code>"POSTGRES_PASSWORD"</code>:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
 </span></code></pre></div>
 <h2 id="interpolation">Interpolation</h2>
 <p>Each of the DBURI values can include values
 <a href="../installation/#installation-secret-environment-interpolation">interpolated</a>
 from the installation configuration's environment.  E.g:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
 </span></code></pre></div>
+<h2 id="deprecated-spelling">Deprecated spelling</h2>
+<p>Through Soliplex v0.81, these two stanzas named the URL flavor as the
+sub-key, with the word <code>dburi</code> in the stanza name instead:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;sync</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;async</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;sync</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;async</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
+</span></code></pre></div>
+<p>That spelling is still read, but is deprecated and will be removed after
+Soliplex v0.84.  Loading a configuration which uses it emits a
+<code>DeprecationWarning</code> naming the stanza and the configuration file.</p>
+<p>The mapping to the current spelling is mechanical:</p>
+<table>
+<thead>
+<tr>
+<th>Deprecated</th>
+<th>Current</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thread_persistence_dburi</code></td>
+<td><code>thread_persistence_db</code></td>
+</tr>
+<tr>
+<td><code>authorization_dburi</code></td>
+<td><code>authorization_db</code></td>
+</tr>
+<tr>
+<td><code>sync</code></td>
+<td><code>sync_dburi</code></td>
+</tr>
+<tr>
+<td><code>async</code></td>
+<td><code>async_dburi</code></td>
+</tr>
+</tbody>
+</table>
+<p>A configuration which somehow sets <em>both</em> spellings for the same database
+uses the current one, ignoring the deprecated one.</p>
+<p><code>soliplex-cli config &lt;installation-path&gt;</code> exports the resolved
+configuration using the current spelling, which makes it a convenient way
+to derive the replacement text:  <code>secret:</code> and <code>env:</code> markers within the
+DBURIs are exported as written, not resolved, so the exported stanzas can
+be pasted back into <code>installation.yaml</code>.</p>
 
 
 

@@ -3438,7 +3438,7 @@ when running multiple Soliplex server instances behind a load balancer:</p>
   storage (the default), or a filesystem-based storage (<code>sqlite</code> does not
   support multiple writers to a shared filesystem database).  Instead,
   configure the SQLAlchemy using a supported relational database
-  server, as described <a href="../config/dburis/#thread_persistence_dburi">here</a>.</p>
+  server, as described <a href="../config/dburis/#thread_persistence_db">here</a>.</p>
 </li>
 <li>
 <p>The SQLAlchemy DBURI used to store authorization data should not
@@ -3446,7 +3446,7 @@ when running multiple Soliplex server instances behind a load balancer:</p>
   storage (the default), or a filesystem-based storage (<code>sqlite</code> does not
   support multiple writers to a shared filesystem database).  Instead,
   configure the SQLAlchemy using a supported relational database
-  server, as described <a href="../config/dburis/#authorization_dburi">here</a>.</p>
+  server, as described <a href="../config/dburis/#authorization_db">here</a>.</p>
 </li>
 <li>
 <p>The <a href="../config/secrets/#session_middleware_token">secret</a> used to manage

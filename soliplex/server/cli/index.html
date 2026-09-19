@@ -8389,11 +8389,11 @@ compile against the currently-loaded JSONPath environment.</p>
   <a href="#admin-users-delete"><code>admin-users delete --allow-invalid-json-path</code></a>
   to remove such an entry. <code>(none)</code> if every stored row validates.</li>
 </ul>
-<p>When the installation's <code>authorization_dburi</code> is the in-memory
+<p>When the installation's <code>authorization_db</code> is the in-memory
 default (<code>sqlite://</code>), no admin rows are persisted; both blocks read
 as <code>(none)</code>.</p>
 <p>When the authorization database cannot be reached at all — e.g. its
-<code>authorization_dburi</code> names a Postgres server that isn't listening —
+<code>authorization_db</code> names a Postgres server that isn't listening —
 neither block is printed. A single line reports the driver's error
 instead:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>ERROR: authorization database unreachable: &lt;error&gt;
@@ -8470,12 +8470,12 @@ compile:</p>
   <a href="#room-authz-delete-acl-entry"><code>room-authz delete-acl-entry --allow-invalid-json-path</code></a>
   to remove such an entry.</li>
 </ul>
-<p>When the installation's <code>authorization_dburi</code> is the in-memory
+<p>When the installation's <code>authorization_db</code> is the in-memory
 default (<code>sqlite://</code>), every configured room falls into the
 <strong>Default</strong> bucket, the other three state buckets are empty, and no
 ACL rows are persisted so the invalid-JSONPath block is empty.</p>
 <p>When the authorization database cannot be reached at all — e.g. its
-<code>authorization_dburi</code> names a Postgres server that isn't listening —
+<code>authorization_db</code> names a Postgres server that isn't listening —
 none of the blocks are printed. A single line reports the driver's
 error instead:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>ERROR: authorization database unreachable: &lt;error&gt;
@@ -8836,7 +8836,7 @@ below read from and modify that table directly.</p>
 <code>add-admin-user</code> / <code>clear-admin-users</code> commands; see
 <a href="#deprecated-command-names">Deprecated Command Names</a>.</p>
 <p>These subcommands only make sense against a <em>persistent</em> authorization
-database (configured via <code>authorization_dburi</code> in the installation
+database (configured via <code>authorization_db</code> in the installation
 YAML). When the installation uses the default in-memory SQLite DB
 (<code>sqlite://</code>), each command detects the RAM-based URI, prints a note
 that the operation would be a no-op, and exits with status <code>1</code> without
@@ -9174,7 +9174,7 @@ rows.</p>
   policies left behind by removed or renamed rooms; the other
   commands do not, so cleanup of stale rows still requires direct
   database tooling.</li>
-<li>As with <code>admin-users</code>, when the installation's <code>authorization_dburi</code>
+<li>As with <code>admin-users</code>, when the installation's <code>authorization_db</code>
   is the in-memory default (<code>sqlite://</code>), each command detects the
   RAM-based URI, prints a note that the operation would be a no-op,
   and exits with status <code>1</code> without touching the database. There is

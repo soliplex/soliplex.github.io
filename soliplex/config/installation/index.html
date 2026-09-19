@@ -3991,9 +3991,9 @@ Dialects known to work include:</p>
 <li>For async use, <code>aiosqlite</code> (DBURI <code>sqlite+aiosqlite://</code>)</li>
 </ul>
 <p>The default configuration is equivalent to this explicit YAML:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite://&quot;</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite://&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">thread_persistence_db</span><span class="p">:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite://&quot;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite://&quot;</span>
 </span></code></pre></div>
 <h3 id="database-passwords-as-secrets">Database passwords as secrets</h3>
 <p>For DBURIs requiring authentication, we would rather not expose the
@@ -4004,9 +4004,9 @@ Soliplex secret (read <a href=".././secrets/">here</a>), and use that secret in 
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">      </span><span class="c1"># Configure sources here</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nn">...</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg2://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nt">thread_persistence_db</span><span class="p">:</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg2://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
 </span></code></pre></div>
 <h2 id="oidc-auth-provider-paths">OIDC Auth Provider Paths</h2>
 <p>The <code>oidc_paths</code> element specifies one or more filesystem paths to be
