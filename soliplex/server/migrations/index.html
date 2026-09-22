@@ -3489,11 +3489,13 @@ command has to be told which installation it is working on:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>-x soliplex.installation_path=/path/to/installation.yaml
 </span></code></pre></div>
 <p>The revision tree lives inside the <code>soliplex</code> package, at
-<code>src/soliplex/alembic_migrations/</code>, so it ships in the wheel: soliplex runs
-these revisions itself, on every writable open, which is how a database it
-creates ends up stamped. A deployment can therefore migrate from its own
-image, with no source checkout. <code>env.py</code> is a shim over
-<code>soliplex.alembic_migrations</code>, where that logic and its tests live.</p>
+<code>src/soliplex/alembic_migrations/</code>, so it ships in the wheel.</p>
+<p>A deployment can therefore migrate from its own image, with no source
+checkout. <code>env.py</code> is a shim over <code>soliplex.alembic_migrations</code>, where
+that logic and its tests live.</p>
+<p>Unless a <a href="../../config/dburis/#migrations"><code>migration_policy</code></a> is configured
+otherwise, soliplex runs these revisions itself, on every writable open:
+this migration is how a database it creates ends up stamped.</p>
 <h2 id="migrating-a-deployment">Migrating a deployment</h2>
 <p><code>soliplex-cli database</code> drives the same revision tree, out of the
 installed package, so it works in a deployment image -- where the
