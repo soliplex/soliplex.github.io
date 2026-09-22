@@ -1470,6 +1470,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Migrations
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migrations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migration_dburi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        <code>migration_dburi</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration_policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        <code>migration_policy</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#interpolation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3163,6 +3202,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Migrations
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migrations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migration_dburi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        <code>migration_dburi</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration_policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        <code>migration_policy</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#interpolation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3454,24 +3532,129 @@ password is defined as a <a href="../secrets/">secret</a> named <code>"POSTGRES_
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
 </span></code></pre></div>
+<h2 id="migrations">Migrations</h2>
+<p>Soliplex keeps both databases at the schema revision its release expects,
+and by default does that itself, on the first writable open (see
+<a href="../../server/migrations/">Database Migrations</a>).  That is the right
+arrangement when the application role also owns its schema, which is the
+case for SQLite and for a default PostgreSQL stack.</p>
+<p>It does not work for a deployment which deliberately runs the application
+as a least-privilege role -- every object owned by an administrative role,
+the application granted only <code>SELECT, INSERT, UPDATE, DELETE</code>.  Such a
+role is refused <code>CREATE TABLE</code> and <code>ALTER TABLE</code>, correctly.  Two optional
+sub-keys, available on both stanzas, hand the job to somebody else.</p>
+<h3 id="migration_dburi"><code>migration_dburi</code></h3>
+<p>A <strong>synchronous</strong> DBURI naming the role which owns the schema.  Only a
+sync URL is needed, because Alembic's online mode is synchronous.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">migration_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://owner:secret:OWNER_PASSWORD@/soliplex_authz&quot;</span>
+</span></code></pre></div>
+<p>When it is absent, migrations use <code>sync_dburi</code>, which is exactly what
+every release before this key existed did.  A SQLite deployment, a
+<code>soliplex-template</code> stack, or a PostgreSQL deployment which has not
+separated owner from application role needs no change and sees no
+difference.</p>
+<p>Like the other two URLs, it interpolates both <code>secret:</code> and <code>env:</code>
+markers.</p>
+<h3 id="migration_policy"><code>migration_policy</code></h3>
+<p>Two named values; absence is the third state:</p>
+<table>
+<thead>
+<tr>
+<th>value</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>absent</td>
+<td>migrate automatically, on any writable open</td>
+</tr>
+<tr>
+<td><code>explicit</code></td>
+<td>only <code>soliplex-cli database upgrade</code> migrates</td>
+</tr>
+<tr>
+<td><code>disabled</code></td>
+<td>nothing migrates this database from this configuration</td>
+</tr>
+</tbody>
+</table>
+<p>Configuring a <code>migration_dburi</code> and leaving <code>migration_policy</code> unset
+implies <code>explicit</code>.  That is not merely a convenient default: the
+migration tool is the only consumer of that credential, so configuring one
+while leaving the automatic path in charge would name a credential nothing
+reads.</p>
+<p><code>disabled</code> earns its own value rather than folding into <code>explicit</code>,
+because it is what lets a single <code>installation.yaml</code> serve services
+running as different roles: the server resolves <code>disabled</code>, and whatever
+runs the migration resolves <code>explicit</code>.  The whole value may be a single
+<code>env:</code> marker instead of a literal, and Compose already gives each service
+its own environment:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">migration_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://owner:secret:OWNER_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">migration_policy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;env:SOLIPLEX_MIGRATION_POLICY&quot;</span>
+</span></code></pre></div>
+<p>Both the ordinary server container and a special-purpose migrations
+container read that one stanza, and they differ only in what
+<code>SOLIPLEX_MIGRATION_POLICY</code> says:</p>
+<table>
+<thead>
+<tr>
+<th>container</th>
+<th>policy resolves to</th>
+<th>what it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>server</td>
+<td><code>disabled</code></td>
+<td>runs as <code>soliplex</code>, migrates nothing</td>
+</tr>
+<tr>
+<td>migrations</td>
+<td><code>explicit</code></td>
+<td>runs <code>soliplex-cli database upgrade</code> as <code>owner</code></td>
+</tr>
+</tbody>
+</table>
+<p>Which is why the stanza names two credentials.  <code>soliplex</code> /
+<code>APP_PASSWORD</code> is the least-privilege role the application runs as,
+granted only DML; <code>owner</code> / <code>OWNER_PASSWORD</code> owns the schema, and nothing
+but the migrations container's <code>soliplex-cli database</code> invocation ever
+connects with it.</p>
+<p>A value which is neither policy name is an error, reported when the policy
+is read.  Absence means automatic migration, so an unrecognized value must
+not fall through to it.</p>
+<p><strong>Not yet enforced at runtime.</strong>  <code>soliplex-cli database</code> honors both
+values today.  The automatic migration on a writable open does not yet
+consult them: a server started against a database which is still behind
+head will try to migrate it with the runtime credential, and fail as it
+always did, rather than reporting that a migration is owed.  Migrate
+before starting it.</p>
 <h2 id="interpolation">Interpolation</h2>
 <p>Each of the DBURI values can include values
 <a href="../installation/#installation-secret-environment-interpolation">interpolated</a>
 from the installation configuration's environment.  E.g:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
 </span></code></pre></div>
 <h2 id="deprecated-spelling">Deprecated spelling</h2>
 <p>Through Soliplex v0.81, these two stanzas named the URL flavor as the
 sub-key, with the word <code>dburi</code> in the stanza name instead:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;sync</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;async</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;sync</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;async</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;sync</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;async</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nt">authorization_dburi</span><span class="p">:</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;sync</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;async</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
 </span></code></pre></div>
 <p>That spelling is still read, but is deprecated and will be removed after
 Soliplex v0.84.  Loading a configuration which uses it emits a

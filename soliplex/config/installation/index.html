@@ -3912,7 +3912,17 @@ installation environment:</p>
 <li><code>provider_base_url</code>, in any agent configuration.</li>
 </ul>
 <p>The entire value must be a single <code>env:</code> marker; any other value is used
-literally.  In the <code>logfire:</code> configuration (see <a href="../logfire/">Logfire</a>):</p>
+literally.</p>
+<p>In the main installation configuration:</p>
+<ul>
+<li><code>thread_persistence_migration_policy</code></li>
+<li><code>authorization_migration_policy</code></li>
+</ul>
+<p>Both are further constrained by their own value domain: a literal has to
+name one of the migration policies, and anything else is an error rather
+than a value used literally.  See
+<a href="../dburis/#migrations">Migrations</a>.</p>
+<p>In the <code>logfire:</code> configuration (see <a href="../logfire/">Logfire</a>):</p>
 <ul>
 <li><code>service_name</code>, <code>service_version</code>, and <code>environment</code></li>
 <li><code>config_dir</code>, <code>data_dir</code>, and <code>min_level</code></li>
@@ -3929,12 +3939,16 @@ marker styles may be mixed within a single value.</p>
 <ul>
 <li><code>thread_persistence_sync_dburi</code></li>
 <li><code>thread_persistence_async_dburi</code></li>
+<li><code>thread_persistence_migration_dburi</code></li>
 <li><code>authorization_sync_dburi</code></li>
 <li><code>authorization_async_dburi</code></li>
+<li><code>authorization_migration_dburi</code></li>
 </ul>
-<p>Through Soliplex v0.81 these four named the URL flavor first, as
+<p>Through Soliplex v0.81 the four runtime URLs named the flavor first, as
 <code>thread_persistence_dburi_sync</code> and so on.  The old names still work, but
-are deprecated and will be removed after Soliplex v0.84.</p>
+are deprecated and will be removed after Soliplex v0.84.  The two
+migration URLs (see <a href="../dburis/#migrations">Migrations</a>) never had that
+spelling.</p>
 <p>In the <code>mcp_client_toolsets:</code> stanza of a room or completion configuration,
 for each configured MCP client toolset:</p>
 <ul>

@@ -1768,6 +1768,67 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#migrating-a-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Migrating a deployment
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migrating a deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Reporting
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrading-and-downgrading" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Upgrading and downgrading
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emitting-sql-instead" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Emitting SQL instead
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-alembic-by-hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Running <code>alembic</code> by hand
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rolling-a-version-back" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3158,6 +3219,67 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#migrating-a-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Migrating a deployment
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migrating a deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Reporting
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrading-and-downgrading" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Upgrading and downgrading
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emitting-sql-instead" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Emitting SQL instead
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-alembic-by-hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Running <code>alembic</code> by hand
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rolling-a-version-back" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3372,17 +3494,62 @@ these revisions itself, on every writable open, which is how a database it
 creates ends up stamped. A deployment can therefore migrate from its own
 image, with no source checkout. <code>env.py</code> is a shim over
 <code>soliplex.alembic_migrations</code>, where that logic and its tests live.</p>
-<p>Running <code>alembic</code> by hand is mostly a development task -- writing the
-revision that goes with a schema change. The examples below presume the
-<code>example/minimal.yaml</code> installation, and this <code>alx</code> alias:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">alx</span><span class="o">=</span><span class="s2">&quot;alembic -x soliplex.installation_path=example/minimal.yaml&quot;</span>
+<h2 id="migrating-a-deployment">Migrating a deployment</h2>
+<p><code>soliplex-cli database</code> drives the same revision tree, out of the
+installed package, so it works in a deployment image -- where the
+<code>alembic</code> CLI does not (see <a href="#running-alembic-by-hand">below</a>).</p>
+<p>A deployment which lets Soliplex migrate for itself needs none of these
+commands: the first writable open brings each database to head. They are
+for the deployment which has taken that job away from the application
+role (see
+<a href="../../config/dburis/#migrations"><code>migration_dburi</code> / <code>migration_policy</code></a>),
+and for anyone who would rather migrate at a moment of their own choosing
+than at the next restart.</p>
+<h3 id="reporting">Reporting</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>soliplex-cli<span class="w"> </span>database<span class="w"> </span>status<span class="w"> </span>&lt;installation-path&gt;
+</span></code></pre></div>
+<p>reports, for each of the two databases: the DBURI a migration would use
+(with its password masked), the policy in force, the revisions already
+applied, and those still pending. Nothing is created, migrated or
+stamped. It exits non-zero when a database cannot be migrated as it
+stands -- unreachable, unstamped, or stamped by a newer release -- so it
+is also the pre-flight for the two commands below.</p>
+<p>This is not what <code>soliplex-cli audit databases</code> reports. That is one line
+per database inside a whole-installation audit, answering "is anything
+wrong?"; this answers "what would an upgrade do?".</p>
+<h3 id="upgrading-and-downgrading">Upgrading and downgrading</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>soliplex-cli<span class="w"> </span>database<span class="w"> </span>upgrade<span class="w"> </span>&lt;installation-path&gt;
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>soliplex-cli<span class="w"> </span>database<span class="w"> </span>upgrade<span class="w"> </span>&lt;installation-path&gt;<span class="w"> </span>--revision<span class="w"> </span>&lt;revision&gt;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>soliplex-cli<span class="w"> </span>database<span class="w"> </span>downgrade<span class="w"> </span>&lt;installation-path&gt;<span class="w"> </span>&lt;revision&gt;
+</span></code></pre></div>
+<p>Both databases move in one run, committing together, and the whole run is
+refused if any target cannot be moved: <code>migration_policy: disabled</code>, a
+database which will not open, one which is unstamped, or one stamped by a
+release newer than this one. <code>--database agui</code> / <code>--database authz</code>
+narrows a run to one of them, which is what a configuration giving the two
+databases different policies needs.</p>
+<h3 id="emitting-sql-instead">Emitting SQL instead</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>soliplex-cli<span class="w"> </span>database<span class="w"> </span>upgrade<span class="w"> </span>&lt;installation-path&gt;<span class="w"> </span>--sql
+</span></code></pre></div>
+<p>writes <code>agui.sql</code> and <code>authz.sql</code> into the current directory and runs
+nothing, for a deployment whose DDL somebody else applies. Each file
+covers that database's own pending range, taken from its stamp, so the
+output is the delta rather than a replay from base.</p>
+<p>Where the databases cannot be reached from wherever the command runs,
+name the range instead and nothing is connected to:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>soliplex-cli<span class="w"> </span>database<span class="w"> </span>upgrade<span class="w"> </span>&lt;path&gt;<span class="w"> </span>--sql<span class="w"> </span>--revision<span class="w"> </span>&lt;from&gt;:head
+</span></code></pre></div>
+<h2 id="running-alembic-by-hand">Running <code>alembic</code> by hand</h2>
+<p>This is mostly a development task -- writing the revision that goes with a
+schema change. The examples below presume the <code>example/minimal.yaml</code>
+installation, and this <code>alx</code> alias:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">alx</span><span class="o">=</span><span class="s2">&quot;alembic -x soliplex.installation_path=example/minimal.yaml&quot;</span>
 </span></code></pre></div>
 <p>They also presume a <strong>source checkout</strong>. Alembic reads <code>script_location</code>
 from <code>[tool.alembic]</code> in the project's <code>pyproject.toml</code>, which a deployment
 image does not carry, so running the <code>alembic</code> CLI there reports <code>No
-'script_location' key found in configuration</code>. A deployed Soliplex migrates
-its databases itself, on the first writable open, so there is normally
-nothing for an operator to run.</p>
+'script_location' key found in configuration</code>. That is what
+<code>soliplex-cli database</code> is for.</p>
 <h2 id="rolling-a-version-back">Rolling a version back</h2>
 <p>Migrating happens on the way <em>up</em> only. A database stamped by a newer
 Soliplex than the one now running is refused, naming the revision it
@@ -3390,19 +3557,21 @@ carries: this release does not have the revisions between its own head and
 that stamp, so it cannot move the database in either direction.</p>
 <p>Downgrade before rolling the code back, from the version that still has
 those revisions and with every writer stopped:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>alx<span class="w"> </span>downgrade<span class="w"> </span>&lt;the<span class="w"> </span>older<span class="w"> </span>release<span class="err">&#39;</span>s<span class="w"> </span>head<span class="w"> </span>revision&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>soliplex-cli<span class="w"> </span>database<span class="w"> </span>downgrade<span class="w"> </span>&lt;path&gt;<span class="w"> </span>&lt;the<span class="w"> </span>older<span class="w"> </span>release<span class="s1">&#39;s head revision&gt;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="s1">alx downgrade &lt;the older release&#39;</span>s<span class="w"> </span>head<span class="w"> </span>revision&gt;<span class="w">   </span><span class="c1"># from a checkout</span>
 </span></code></pre></div>
-<p><code>soliplex-cli audit databases</code> reports the same condition, so it surfaces
-there rather than at the next restart.</p>
+<p><code>soliplex-cli database status</code> and <code>soliplex-cli audit databases</code> both
+report the condition, so it surfaces there rather than at the next
+restart.</p>
 <h2 id="cheat-sheet">Cheat Sheet</h2>
 <p>See the <a href="https://alembic.sqlalchemy.org/en/latest/">Alembic docs</a> for details.</p>
 <h3 id="querying">Querying</h3>
 <p>To see the history tree:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>alx<span class="w"> </span><span class="nb">history</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>alx<span class="w"> </span><span class="nb">history</span>
 </span></code></pre></div>
 <p>To discover if updates are required from the running schema to match the
 current <code>soliplex</code> schemae:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>alx<span class="w"> </span>check
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>alx<span class="w"> </span>check
 </span></code></pre></div>
 <p>Nothing creates tables on the way in, so <code>check</code> compares the models
 against the migrated database. A difference means the revisions and the
@@ -3411,15 +3580,15 @@ a model changed without one. <code>scripts/lint_alembic_chain.py</code> fails CI
 the same reason.</p>
 <h3 id="snapshotting">Snapshotting</h3>
 <p>To create a new revison if needed:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>alx<span class="w"> </span>revision<span class="w"> </span>--autogenerate
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>alx<span class="w"> </span>revision<span class="w"> </span>--autogenerate
 </span></code></pre></div>
 <h3 id="upgrading">Upgrading</h3>
 <p>To run a migration live to a given revision:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
 </span></code></pre></div>
 <p>To generate DDL for a migration to a given revision (generates
 <code>agui.sql</code> and <code>authz.sql</code> files in the CWD):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>--sql<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>alx<span class="w"> </span>upgrade<span class="w"> </span>--sql<span class="w"> </span>&lt;revision<span class="w"> </span>hash&gt;
 </span></code></pre></div>
 
 
