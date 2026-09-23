@@ -4210,10 +4210,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deprecated-command-names" class="md-nav__link">
+  <a href="#renamed-commands" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Deprecated Command Names
+        Renamed Commands
       </span>
     </span>
   </a>
@@ -8100,10 +8100,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deprecated-command-names" class="md-nav__link">
+  <a href="#renamed-commands" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Deprecated Command Names
+        Renamed Commands
       </span>
     </span>
   </a>
@@ -8259,10 +8259,9 @@
 </ul>
 <h2 id="a-note-on-renamed-commands">A Note on Renamed Commands</h2>
 <p>Several subcommands were renamed and regrouped after the <code>0.62.x</code> release.
-The previous flat names (<code>check-config</code>, <code>list-secrets</code>, <code>pull-models</code>,
-etc.) are preserved as hidden aliases so existing scripts continue to
-work, but new scripts should use the grouped form documented below.
-See <a href="#deprecated-command-names">Deprecated Command Names</a> at the bottom
+The previous flat names (<code>list-secrets</code>, <code>pull-models</code>, etc.) were kept
+as hidden aliases until <code>0.83</code>, which removed all of them except
+<code>check-config</code>. See <a href="#renamed-commands">Renamed Commands</a> at the bottom
 of this page for the full mapping.</p>
 <h2 id="a-note-on-migration-failures">A Note on Migration Failures</h2>
 <p>A refused migration is reported as a single <code>Error: &lt;message&gt;</code> line on
@@ -8479,8 +8478,8 @@ durable. See
 <p>The <code>audit</code> group bundles read-only validation and listing commands —
 each one inspects some aspect of an installation configuration without
 mutating state. Run <code>soliplex-cli audit --help</code> for the full list.</p>
-<p>This group replaces the deprecated flat <code>check-config</code> / <code>list-*</code>
-commands; see <a href="#deprecated-command-names">Deprecated Command Names</a>.</p>
+<p>This group replaces the flat <code>check-config</code> / <code>list-*</code> commands; see
+<a href="#renamed-commands">Renamed Commands</a>.</p>
 <p><strong>Tolerant of missing environment variables.</strong> All <code>audit</code> subcommands
 load the installation in an audit-only mode that swallows
 <code>MissingEnvVars</code> during initial config resolution, so unresolved
@@ -8670,8 +8669,7 @@ by <code>ERROR: &lt;message&gt;</code>.</p>
 <p>List the secrets declared in the installation configuration and report
 whether each one resolves. Useful for auditing a configuration — e.g.,
 confirming that every secret listed in the YAML has at least one working
-source — without exposing the values themselves. (Replaces the
-deprecated <code>soliplex-cli list-secrets</code>.)</p>
+source — without exposing the values themselves.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>soliplex-cli<span class="w"> </span>audit<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>secrets<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <p>See <a href="#group-options">Group Options</a> for the available <code>[OPTIONS]</code>.</p>
@@ -8715,8 +8713,7 @@ into logs.</p>
 along with their resolved values. Useful for confirming that the values
 Soliplex will see at runtime match your expectations, and — with
 <code>--verbose</code> — for diagnosing <em>why</em> a particular value was chosen when
-multiple sources are configured. (Replaces the deprecated
-<code>soliplex-cli list-environment</code>.)</p>
+multiple sources are configured.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>soliplex-cli<span class="w"> </span>audit<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>environment<span class="w"> </span><span class="o">[</span>-v<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <p>See <a href="#group-options">Group Options</a> for the available <code>[OPTIONS]</code>.</p>
@@ -8780,8 +8777,7 @@ contain sensitive values.</p>
 configuration, and validate that each one converts cleanly to its
 runtime model. Useful for confirming which providers will be offered on
 the login screen and what server URLs Soliplex will contact for token
-validation. (Replaces the deprecated
-<code>soliplex-cli list-oidc-auth-providers</code>.)</p>
+validation.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>soliplex-cli<span class="w"> </span>audit<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>oidc<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <p>See <a href="#group-options">Group Options</a> for the available <code>[OPTIONS]</code>.</p>
@@ -8828,8 +8824,7 @@ to its entry.</p>
 their names, descriptions, the AG-UI feature names each room aggregates
 (checked against the
 <a href="../../config/agui/">AG-UI feature registry</a>), and any RAG databases
-they reference (including a live document count for each). (Replaces
-the deprecated <code>soliplex-cli list-rooms</code>.)</p>
+they reference (including a live document count for each).</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>soliplex-cli<span class="w"> </span>audit<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>rooms<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <p>See <a href="#group-options">Group Options</a> for the available <code>[OPTIONS]</code>.</p>
@@ -9172,8 +9167,7 @@ error instead:</p>
 installation configuration, and validate that each one converts cleanly
 to its runtime model. Each completion exposes a Soliplex agent as a
 <code>/v1/chat/completions</code>-style endpoint so that existing OpenAI-client
-code can talk to it unchanged. (Replaces the deprecated
-<code>soliplex-cli list-completions</code>.)</p>
+code can talk to it unchanged.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>soliplex-cli<span class="w"> </span>audit<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>completions<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <p>See <a href="#group-options">Group Options</a> for the available <code>[OPTIONS]</code>.</p>
@@ -9261,8 +9255,7 @@ quiz file fails to load or parse, the <code>OK</code> line is replaced by
 run two complementary validation passes against them: (1) for each
 configured <code>skill_config</code>, surface any errors recorded at load time;
 (2) for each <code>SKILL.md</code>-bearing directory found under the configured
-filesystem skills paths, run the full <code>skills_ref</code> validator.
-(Replaces the deprecated <code>soliplex-cli list-skills</code>.)</p>
+filesystem skills paths, run the full <code>skills_ref</code> validator.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>soliplex-cli<span class="w"> </span>audit<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>skills<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <p>See <a href="#group-options">Group Options</a> for the available <code>[OPTIONS]</code>.</p>
@@ -9635,9 +9628,8 @@ Soliplex authorization policy engine. The common case — an admin keyed
 by email — is stored as <code>$[?$.email == "..."]</code>, mirroring how
 <code>room-authz</code> ACL entries store their discriminators. The subcommands
 below read from and modify that table directly.</p>
-<p>This group replaces the deprecated flat <code>list-admin-users</code> /
-<code>add-admin-user</code> / <code>clear-admin-users</code> commands; see
-<a href="#deprecated-command-names">Deprecated Command Names</a>.</p>
+<p>This group replaces the flat <code>list-admin-users</code> / <code>add-admin-user</code> /
+<code>clear-admin-users</code> commands; see <a href="#renamed-commands">Renamed Commands</a>.</p>
 <p>These subcommands only make sense against a <em>persistent</em> authorization
 database (configured via <code>authorization_db</code> in the installation
 YAML). When the installation uses the default in-memory SQLite DB
@@ -9696,8 +9688,7 @@ touching the database. There is no override.</p>
 </ul>
 <h3 id="admin-users-list"><code>admin-users list</code></h3>
 <p>Dump the current set of admin users from the installation's
-authorization database without changing anything. (Replaces the
-deprecated <code>soliplex-cli list-admin-users</code>.)</p>
+authorization database without changing anything.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-102-1"><a id="__codelineno-102-1" name="__codelineno-102-1" href="#__codelineno-102-1"></a>soliplex-cli<span class="w"> </span>admin-users<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h4 id="examples_18">Examples</h4>
@@ -9710,8 +9701,7 @@ deprecated <code>soliplex-cli list-admin-users</code>.)</p>
 </span></code></pre></div>
 <h3 id="admin-users-add"><code>admin-users add</code></h3>
 <p>Insert a new admin entry into the installation's authorization database
-and then dump the resulting list. (Replaces the deprecated
-<code>soliplex-cli add-admin-user</code>.)</p>
+and then dump the resulting list.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-105-1"><a id="__codelineno-105-1" name="__codelineno-105-1" href="#__codelineno-105-1"></a>soliplex-cli<span class="w"> </span>admin-users<span class="w"> </span>add<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>INSTALLATION_CONFIG_PATH<span class="w"> </span><span class="o">[</span>EMAIL<span class="o">]</span>
 </span></code></pre></div>
 <p>Exactly one discriminator must be supplied, naming which user token(s)
@@ -9822,8 +9812,7 @@ inserted the entry will remove it.</p>
 </span></code></pre></div>
 <h3 id="admin-users-clear"><code>admin-users clear</code></h3>
 <p>Remove <strong>every</strong> row from the installation's admin-user table, then
-dump the (now empty) list. (Replaces the deprecated
-<code>soliplex-cli clear-admin-users</code>.)</p>
+dump the (now empty) list.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-111-1"><a id="__codelineno-111-1" name="__codelineno-111-1" href="#__codelineno-111-1"></a>soliplex-cli<span class="w"> </span>admin-users<span class="w"> </span>clear<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h4 id="behavior-notes_6">Behavior Notes</h4>
@@ -9935,8 +9924,8 @@ and interact with a given room, on top of the admin-user mechanism
 described above. The subcommands below read from and modify the per-room
 authorization policy stored in the installation's authorization
 database.</p>
-<p>This group replaces the deprecated flat <code>show-room-authz</code> command;
-see <a href="#deprecated-command-names">Deprecated Command Names</a>.</p>
+<p>This group replaces the flat <code>show-room-authz</code> command; see
+<a href="#renamed-commands">Renamed Commands</a>.</p>
 <h3 id="the-model-in-one-paragraph">The Model in One Paragraph</h3>
 <p>Each room's authorization is captured by a <code>RoomPolicy</code> row plus zero or
 more <code>ACLEntry</code> rows attached to it. A <code>RoomPolicy</code> has a
@@ -10035,8 +10024,7 @@ rows.</p>
 </li>
 </ul>
 <h3 id="room-authz-show"><code>room-authz show</code></h3>
-<p>Dump the current <code>RoomPolicy</code> for a single room without changing it.
-(Replaces the deprecated <code>soliplex-cli show-room-authz</code>.)</p>
+<p>Dump the current <code>RoomPolicy</code> for a single room without changing it.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-123-1"><a id="__codelineno-123-1" name="__codelineno-123-1" href="#__codelineno-123-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>show<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>INSTALLATION_CONFIG_PATH<span class="w"> </span>ROOM_ID
 </span></code></pre></div>
 <h4 id="options_10">Options</h4>
@@ -10532,8 +10520,8 @@ room's privacy setting, then grant one user:</p>
 <p>The <code>ollama</code> group bundles subcommands that interact with Ollama servers
 referenced by the installation. Currently a single subcommand,
 <code>ollama pull</code>.</p>
-<p>This group replaces the deprecated flat <code>pull-models</code> command; see
-<a href="#deprecated-command-names">Deprecated Command Names</a>.</p>
+<p>This group replaces the flat <code>pull-models</code> command; see
+<a href="#renamed-commands">Renamed Commands</a>.</p>
 <h3 id="group-options_1">Group Options</h3>
 <ul>
 <li><code>-q</code> / <code>--quiet</code> — suppress human-readable console output and emit
@@ -10549,8 +10537,7 @@ referenced by the installation. Currently a single subcommand,
 completions, or tools, and pull each model onto the corresponding Ollama
 server via that server's REST API. Intended to preload a fresh Ollama
 deployment so that the first user-facing request against Soliplex
-doesn't have to wait for a cold-start model download. (Replaces the
-deprecated <code>soliplex-cli pull-models</code>.)</p>
+doesn't have to wait for a cold-start model download.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-158-1"><a id="__codelineno-158-1" name="__codelineno-158-1" href="#__codelineno-158-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h4 id="positional-argument_17">Positional Argument</h4>
@@ -10768,67 +10755,81 @@ with <code>jq</code>:</p>
 <p>Snapshot the schemas to a file for client-side code generation:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-173-1"><a id="__codelineno-173-1" name="__codelineno-173-1" href="#__codelineno-173-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/<span class="w"> </span>&gt;<span class="w"> </span>agui-features.json
 </span></code></pre></div>
-<h2 id="deprecated-command-names">Deprecated Command Names</h2>
-<p>Prior releases exposed each subcommand as a flat top-level name
-(<code>check-config</code>, <code>list-secrets</code>, <code>pull-models</code>, etc.). Those names are
-preserved as <strong>hidden aliases</strong> — existing scripts continue to work — but
-they no longer appear in <code>soliplex-cli --help</code> and may be removed in a
-future major release. New scripts should use the grouped form.</p>
+<h2 id="renamed-commands">Renamed Commands</h2>
+<p>Releases up to <code>0.62.x</code> exposed each subcommand as a flat top-level name.
+Later releases kept those names as <strong>hidden aliases</strong> (absent from
+<code>soliplex-cli --help</code>) until <code>0.83</code>, which removed all of them except
+<code>check-config</code>, which still works but prints a deprecation warning on
+stderr. A script still using a removed name fails with <code>No such command</code>;
+switch it to the grouped form.</p>
 <table>
 <thead>
 <tr>
-<th>Deprecated</th>
+<th>Old name</th>
 <th>Use instead</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>check-config</code></td>
 <td><code>audit</code> (or <code>audit all</code>)</td>
+<td>hidden alias, deprecated</td>
 </tr>
 <tr>
 <td><code>list-secrets</code></td>
 <td><code>audit secrets</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>list-environment</code></td>
 <td><code>audit environment</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>list-oidc-auth-providers</code></td>
 <td><code>audit oidc</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>list-rooms</code></td>
 <td><code>audit rooms</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>list-completions</code></td>
 <td><code>audit completions</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>list-skills</code></td>
 <td><code>audit skills</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>list-admin-users</code></td>
 <td><code>admin-users list</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>add-admin-user</code></td>
 <td><code>admin-users add</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>clear-admin-users</code></td>
 <td><code>admin-users clear</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>show-room-authz</code></td>
 <td><code>room-authz show</code></td>
+<td>removed</td>
 </tr>
 <tr>
 <td><code>pull-models</code></td>
 <td><code>ollama pull</code></td>
+<td>removed</td>
 </tr>
 </tbody>
 </table>
