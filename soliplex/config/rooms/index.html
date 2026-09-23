@@ -3716,16 +3716,7 @@ for configuring an agent.</p>
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skills.rag&quot;</span>
 </span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rag&quot;</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haiku.rag.skills.analysis&quot;</span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">        </span><span class="nt">rag_lancedb_stem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;notes&quot;</span>
 </span></code></pre></div>
-<p>Configure at most one of these two kinds per corpus.  Analysis searches
-  and cites as well as running code, so pairing it with the RAG skill over
-  the same database gives the agent two near-identical search tools, splits
-  its citations across the two records, and gives one question two search
-  budgets to spend.  Two kinds over <em>different</em> databases is fine, as
-  above.</p>
 <h4 id="deferred-loading">Deferred Loading</h4>
 <p>A deferred skill's tools and instructions stay hidden until the model asks
 for them through its <code>load_capability</code> tool, which is offered a catalogue
@@ -3746,10 +3737,6 @@ differs by kind:</p>
 <tbody>
 <tr>
 <td><code>haiku.rag.skills.rag</code></td>
-<td><code>false</code></td>
-</tr>
-<tr>
-<td><code>haiku.rag.skills.analysis</code></td>
 <td><code>false</code></td>
 </tr>
 <tr>
@@ -3802,10 +3789,9 @@ citations are required and recorded, and no history is rewritten.</p>
 <p>A room which configures neither resends every earlier turn's full search
 results on every request.</p>
 <h4 id="default-skill-configuration-kinds">Default Skill Configuration Kinds</h4>
-<p>Soliplex provides two such skill configuration classes by default:
-one of kind <code>haiku.rag.skills.rag</code> and one of kind
-<code>haiku.rag.skills.analysis</code>.  Both of these configurations have options for
-configuring the RAG database and RAG client:</p>
+<p>Soliplex provides one such skill configuration class by default, of kind
+<code>haiku.rag.skills.rag</code>.  It has options for configuring the RAG database
+and RAG client:</p>
 <ul>
 <li>
 <p>At most one of the following.  A configuration providing none of them
@@ -3870,39 +3856,28 @@ embedding model, since one query is embedded once for all of them.</p>
   <code>haiku_rag_config</code>.</li>
 </ul>
 <p>Skill configurations with the <code>kind</code> of <code>"haiku.rag.skills.rag"</code> give the
-agent the following RAG tools:</p>
+agent three tools:</p>
 <ul>
 <li>
-<p><code>"search"</code> — semantic document search with multi-query expansion.
-  Gives the agent a <code>search</code> tool that returns ranked passages with
-  citations.</p>
+<p><code>search</code> — semantic search over the configured databases, returning
+  ranked chunks with the ids a citation quotes.  Picture chunks arrive as
+  images when the room's agent declares <code>multimodal: true</code>.</p>
 </li>
 <li>
-<p><code>"list_documents"</code> — list the documents in the RAG database.</p>
+<p><code>execute_code</code> — Python over the corpus, in an interpreter with
+  <code>search</code> and <code>list_documents</code> available inside it and every document
+  mounted read-only under <code>/documents/</code>.  Suited to counts, aggregation
+  and structural reading a search cannot express.  Variables persist
+  between calls, and the code has no network.</p>
 </li>
 <li>
-<p><code>"get_document"</code> — return the content of a single document in the
-  RAG database.</p>
-</li>
-<li>
-<p><code>"ask"</code> — question-answering via a research graph.  Gives the agent
-  an <code>ask</code> tool that searches, synthesizes an answer with citations,
-  and caches results for similar follow-up questions.</p>
-</li>
-<li>
-<p><code>"research"</code> — deep research via a research graph. Gives the agent
-  a <code>research</code> tool that performs a more elaborate search, analysis,
-  and synthesis. Slower than the <code>ask</code> tool, and more expensive in
-  terms of token budget, but potentially produces a higher-quality
-  result.</p>
+<p><code>cite</code> — register the chunk ids grounding the answer, or an empty list
+  where none do.</p>
 </li>
 </ul>
-<p>The <code>haiku.rag.skills.analysis</code> skill gives the agent an <code>analyze</code> tool that
-iteratively writes and executes Python code in a Docker sandbox with
-access to <code>haiku.rag</code> functions (<code>search</code>, <code>list_documents</code>, <code>get_document</code>,
-<code>llm</code>, etc.).  Suited for aggregation, multi-document comparison, and
-structured data extraction.  Requires Docker.  This skill does not offer
-any additional options.</p>
+<p>The per-question budgets and the sandbox's limits come from the room's
+<code>haiku.rag</code> configuration: <code>qa.max_searches</code>, <code>qa.max_executions</code>,
+<code>sandbox.code_timeout</code> and <code>sandbox.max_output_chars</code>.</p>
 <h3 id="quiz-related-elements">Quiz-related elements</h3>
 <ul>
 <li><code>quizzes</code> is a list of mappings (default <code>()</code>):  each mapping defines a
