@@ -8947,7 +8947,7 @@ from the migration tool's side.</p>
 <p>One entry per database, under a <code>Configured databases</code> rule:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>- agui: postgresql+psycopg://soliplex:***@db.example.net/soliplex_agui (async_dburi)
 </span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>  migration policy: explicit
-</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>  migration dburi: postgresql://owner:***@db.example.net/soliplex_agui
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>  migration dburi: postgresql+psycopg://owner:***@db.example.net/soliplex_agui
 </span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>  OK (a1c7d3e90b42)
 </span></code></pre></div>
 <p>The first line is the DBURI probed, with its password masked, followed by

@@ -3986,21 +3986,25 @@ AG-UI threads, runs, events, etc.</p>
 <p>One DBURI is for sync usage, e.g.  within console scripts.  Examples:</p>
 <ul>
 <li><code>sqlite://</code></li>
-<li><code>postgresql+psycopg2://user:&lt;password&gt;@dbhost/dbname</code></li>
+<li><code>postgresql+psycopg://user:&lt;password&gt;@dbhost/dbname</code></li>
 </ul>
 <h3 id="asynchronous-dburi">Asynchronous DBURI</h3>
 <p>The other DBURI is for async usage, e.g. within the Soliplex server
 process.  Examples:</p>
 <ul>
 <li><code>sqlite+aiosqlite://</code></li>
-<li><code>postgresql+asyncpg://user:&lt;password&gt;@dbhost/dbname</code></li>
+<li><code>postgresql+psycopg://user:&lt;password&gt;@dbhost/dbname</code></li>
 </ul>
 <p>This DBURI must be compatible with SQLAlchemy's <a href="https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html">asyncio extension</a>.
 Dialects known to work include:</p>
 <ul>
 <li><a href="https://aiosqlite.omnilib.dev/en/stable/index.html"><code>aiosqlite</code></a></li>
+<li><a href="https://www.psycopg.org/psycopg3/"><code>psycopg</code></a></li>
 <li><a href="https://magicstack.github.io/asyncpg/current/"><code>asyncpg</code></a></li>
 </ul>
+<p>The PostgreSQL driver (<code>psycopg</code>) is not installed with Soliplex; install
+the <code>postgres</code> or <code>postgres-binary</code> extra (see
+<a href="../dburis/#installing-the-postgresql-driver">Installing the PostgreSQL driver</a>).</p>
 <h3 id="default-configuration">Default configuration</h3>
 <p>By default, Soliplex configures thread persistence using in-memory DBURIS:</p>
 <ul>
@@ -4022,8 +4026,8 @@ Soliplex secret (read <a href=".././secrets/">here</a>), and use that secret in 
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nn">...</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nt">thread_persistence_db</span><span class="p">:</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg2://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
 </span></code></pre></div>
 <h2 id="oidc-auth-provider-paths">OIDC Auth Provider Paths</h2>
 <p>The <code>oidc_paths</code> element specifies one or more filesystem paths to be

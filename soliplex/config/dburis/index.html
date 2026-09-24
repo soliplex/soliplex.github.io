@@ -1448,6 +1448,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installing-the-postgresql-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Installing the PostgreSQL driver
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#thread_persistence_db" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3191,6 +3202,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installing-the-postgresql-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Installing the PostgreSQL driver
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#thread_persistence_db" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3487,8 +3509,14 @@ all possible SQLAlchemy engines.  Known to work:</p>
 </li>
 <li>
 <p><a href="https://docs.sqlalchemy.org/en/20/core/engines.html#postgresql">Postgres</a>
-  via the <a href="https://pypi.org/project/asyncpg/"><code>asyncpg</code></a>
-  async dialect</p>
+  via <a href="https://www.psycopg.org/psycopg3/"><code>psycopg</code></a>, whose
+  <code>postgresql+psycopg://</code> DBURIs serve both the sync and the async
+  engines (see <a href="#installing-the-postgresql-driver">below</a>)</p>
+</li>
+<li>
+<p><a href="https://docs.sqlalchemy.org/en/20/core/engines.html#postgresql">Postgres</a>
+  via the <a href="https://pypi.org/project/asyncpg/"><code>asyncpg</code></a> async dialect
+  (<code>postgresql+asyncpg://</code>), installed separately</p>
 </li>
 </ul>
 <p>Untested:</p>
@@ -3513,6 +3541,44 @@ all possible SQLAlchemy engines.  Known to work:</p>
   async dialect</p>
 </li>
 </ul>
+<h2 id="installing-the-postgresql-driver">Installing the PostgreSQL driver</h2>
+<p>Soliplex installs only the SQLite drivers.  To use PostgreSQL, install one
+of two extras, each providing <a href="https://www.psycopg.org/psycopg3/"><code>psycopg</code></a>:</p>
+<table>
+<thead>
+<tr>
+<th>Extra</th>
+<th>libpq / OpenSSL used</th>
+<th>Needs on the host</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>soliplex[postgres]</code></td>
+<td>the host's own</td>
+<td>libpq (e.g. Debian's <code>libpq5</code>)</td>
+</tr>
+<tr>
+<td><code>soliplex[postgres-binary]</code></td>
+<td>bundled in the <code>psycopg-binary</code> wheel</td>
+<td>nothing</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>postgres</code> for container images and FIPS hosts, where the OS's
+package updates and FIPS configuration cover libpq and OpenSSL; setting
+<code>PSYCOPG_IMPL=python</code> there keeps psycopg on the system libpq even if a
+<code>psycopg-binary</code> wheel is installed alongside.  Use <code>postgres-binary</code> for
+development, and for hosts without libpq.</p>
+<p>The same <code>postgresql+psycopg://</code> DBURI serves both <code>sync_dburi</code> and
+<code>async_dburi</code>.  Name the driver explicitly:  a bare <code>postgresql://</code> means
+<code>psycopg2</code>, which neither extra installs, and a DBURI naming a driver
+that is not installed fails with <code>ModuleNotFoundError</code> when its engine is
+created.</p>
+<p>On Windows, psycopg's async mode cannot run on the event loop Python uses
+there by default.  Use <code>postgresql+asyncpg://</code> for the <code>async_dburi</code>
+instead, installing <a href="https://pypi.org/project/asyncpg/"><code>asyncpg</code></a>
+yourself.</p>
 <h2 id="thread_persistence_db"><code>thread_persistence_db</code></h2>
 <p>Soliplex uses this pair of URLs to record and query information about
 AG-UI threads and runs initiated by clients.  If this sections is
@@ -3530,8 +3596,8 @@ forward-slashes!):</p>
 <p>To use a Postgres server, assuming the login is <code>"soliplex"</code> and the
 password is defined as a <a href="../secrets/">secret</a> named <code>"POSTGRES_PASSWORD"</code>:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">thread_persistence_db</span><span class="p">:</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_threads&quot;</span>
 </span></code></pre></div>
 <h2 id="authorization_db"><code>authorization_db</code></h2>
 <p>Soliplex uses this pair of URLs to record and query authorization information:
@@ -3551,8 +3617,8 @@ forward-slashes!):</p>
 <p>To use a Postgres server, assuming the login is <code>"soliplex"</code> and the
 password is defined as a <a href="../secrets/">secret</a> named <code>"POSTGRES_PASSWORD"</code>:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://soliplex:secret:POSTGRES_PASSWORD@/soliplex_authorization&quot;</span>
 </span></code></pre></div>
 <h2 id="migrations">Migrations</h2>
 <p>Soliplex keeps both databases at the schema revision its release expects,
@@ -3569,9 +3635,9 @@ sub-keys, available on both stanzas, hand the job to somebody else.</p>
 <p>A <strong>synchronous</strong> DBURI naming the role which owns the schema.  Only a
 sync URL is needed, because Alembic's online mode is synchronous.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">migration_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://owner:secret:OWNER_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">migration_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://owner:secret:OWNER_PASSWORD@/soliplex_authz&quot;</span>
 </span></code></pre></div>
 <p>When it is absent, migrations use <code>sync_dburi</code>, which is exactly what
 every release before this key existed did.  A SQLite deployment, a
@@ -3611,9 +3677,9 @@ another (the one which runs the migration) resolves <code>explicit</code>.</p>
 <p>The whole value may be a single <code>env:</code> marker instead of a literal, wired
 via the compose service environment and the installation config:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">migration_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://owner:secret:OWNER_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://soliplex:secret:APP_PASSWORD@/soliplex_authz&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">migration_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://owner:secret:OWNER_PASSWORD@/soliplex_authz&quot;</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">migration_policy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;env:SOLIPLEX_MIGRATION_POLICY&quot;</span>
 </span></code></pre></div>
 <p>Both the ordinary server container and a special-purpose migrations
@@ -3671,8 +3737,8 @@ exactly its job.</p>
 <a href="../installation/#installation-secret-environment-interpolation">interpolated</a>
 from the installation configuration's environment.  E.g:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">authorization_db</span><span class="p">:</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+asyncpg://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
 </span></code></pre></div>
 <h2 id="deprecated-spelling">Deprecated spelling</h2>
 <p>Through Soliplex v0.81, these two stanzas named the URL flavor as the
