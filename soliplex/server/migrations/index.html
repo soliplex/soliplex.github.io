@@ -3564,7 +3564,8 @@ those revisions and with every writer stopped:</p>
 </span></code></pre></div>
 <p><code>soliplex-cli database status</code> and <code>soliplex-cli audit databases</code> both
 report the condition, so it surfaces there rather than at the next
-restart.</p>
+restart. Both load only the installation config, so either runs from a
+migration service holding a cut-down, migration-only configuration.</p>
 <h2 id="cheat-sheet">Cheat Sheet</h2>
 <p>See the <a href="https://alembic.sqlalchemy.org/en/latest/">Alembic docs</a> for details.</p>
 <h3 id="querying">Querying</h3>

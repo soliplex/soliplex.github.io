@@ -8924,6 +8924,11 @@ shown as <code>error</code> rather than a number.</p>
 persistence) and <code>authz</code> (authorization), against the Alembic revision tree
 this release ships. Nothing is created, migrated or stamped: a database
 with no schema is reported as such rather than built.</p>
+<p>Only the installation configuration itself is loaded -- no OIDC, room,
+completion, quiz or skill configs -- just as for the
+<a href="#database"><code>database</code></a> group. So this also works against a cut-down,
+migration-only configuration holding just secrets and the two database
+stanzas.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>soliplex-cli<span class="w"> </span>audit<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>databases<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <p>See <a href="#group-options">Group Options</a> for the available <code>[OPTIONS]</code>.</p>
@@ -8940,16 +8945,27 @@ from the migration tool's side.</p>
 </ul>
 <h4 id="output_6">Output</h4>
 <p>One entry per database, under a <code>Configured databases</code> rule:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>- agui: postgresql://soliplex:***@db.example.net/soliplex_agui
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>- agui: postgresql+psycopg://soliplex:***@db.example.net/soliplex_agui (async_dburi)
 </span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>  migration policy: explicit
 </span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>  migration dburi: postgresql://owner:***@db.example.net/soliplex_agui
 </span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>  OK (a1c7d3e90b42)
 </span></code></pre></div>
-<p>The first line is the runtime DBURI, with its password masked. The
-<code>migration policy</code> and <code>migration dburi</code> lines appear only for a database
-which configures them (see
+<p>The first line is the DBURI probed, with its password masked, followed by
+the configuration key it came from:</p>
+<ul>
+<li><code>async_dburi</code> -- the runtime DBURI the server uses, which also checks
+  the runtime role's access. Probed whenever it is configured.</li>
+<li><code>migration_dburi</code> -- the schema owner's DBURI, probed when no runtime
+  async DBURI is configured (e.g. in a migration-only configuration).</li>
+<li><code>sync_dburi</code> -- the runtime sync DBURI, probed when neither of the
+  others is configured.</li>
+</ul>
+<p>The <code>migration policy</code> and <code>migration dburi</code> lines appear only for a
+database which configures them (see
 <a href="../../config/dburis/#migrations">SQLAlchemy DBURIs</a>); a deployment which
-has not separated the schema owner from the application role sees neither.</p>
+has not separated the schema owner from the application role sees
+neither. The <code>migration dburi</code> line is left out when it is the DBURI
+probed.</p>
 <p>The last line is the state:</p>
 <table>
 <thead>
@@ -9010,11 +9026,17 @@ any findings are emitted as JSON, keyed by database name:</p>
 </span></code></pre></div>
 <p>The finding keys are <code>unreachable</code>, <code>unstamped</code>, <code>downgrade_required</code> and
 <code>migration_owed</code>.</p>
+<p>Run on its own, the section also reports any Python warning raised while
+loading the configuration, exactly as
+<a href="#audit-installation"><code>audit installation</code></a> does (JSON key
+<code>config_warnings</code>). Under <code>audit all</code> those are reported once, in the
+installation section.</p>
 <h4 id="exit-status_7">Exit Status</h4>
 <ul>
 <li><code>0</code> — every database is current, or is behind head (or uncreated) with
   no policy preventing the next writable open from dealing with it.</li>
-<li><code>1</code> — at least one finding above.</li>
+<li><code>1</code> — at least one finding above, or (run on its own) a warning raised
+  while loading the configuration.</li>
 </ul>
 <h4 id="examples_8">Examples</h4>
 <p>Report both databases:</p>
