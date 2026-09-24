@@ -3402,6 +3402,11 @@ value of the <code>--log-config</code> argument, e.g.:</p>
 </span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="m">2026</span>-02-09T18:16:40<span class="p">|</span>INFO<span class="p">|</span>uvicorn.error<span class="p">|</span>Application<span class="w"> </span>startup<span class="w"> </span>complete.
 </span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="m">2026</span>-02-09T18:16:40<span class="p">|</span>INFO<span class="p">|</span>uvicorn.error<span class="p">|</span>Uvicorn<span class="w"> </span>running<span class="w"> </span>on<span class="w"> </span>http://127.0.0.1:8000<span class="w"> </span><span class="o">(</span>Press<span class="w"> </span>CTRL+C<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span>
 </span></code></pre></div>
+<p>During startup, the server logs each Python warning raised while loading
+the installation configuration (e.g., the <code>DeprecationWarning</code> for a
+configuration stanza slated for removal) as a <code>WARNING</code> record on the
+<code>soliplex</code> logger, which <code>soliplex-cli audit installation</code> also reports
+as a finding.</p>
 <h2 id="cli-audit-logging">CLI Audit Logging</h2>
 <p>Privileged <code>soliplex-cli</code> operations (the <code>admin-users</code> and <code>room-authz</code>
 mutations and security-object reads) emit audit records to the dedicated
