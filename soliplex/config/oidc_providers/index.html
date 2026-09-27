@@ -1329,6 +1329,50 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example-defaults-and-overrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Example: defaults and overrides
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frontend-origins" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Frontend origins
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registering-the-redirect-uri" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Registering the redirect URI
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customizing-the-consent-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Customizing the consent page
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3184,6 +3228,50 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example-defaults-and-overrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Example: defaults and overrides
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frontend-origins" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Frontend origins
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registering-the-redirect-uri" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Registering the redirect URI
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customizing-the-consent-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Customizing the consent page
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3349,34 +3437,59 @@
 
 <h1 id="oidc-provider-configuration">OIDC Provider Configuration</h1>
 <p>The <code>config.yaml</code> file in an OIDC provider configuration directory specifies
-one or more authentication systems, sharing a common CA certificate
-store:</p>
+one or more authentication systems.  Settings at the top level of the file
+are defaults, shared by every authentication system it lists:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">oidc_client_pem_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./cacert.pem&quot;</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nt">auth_systems</span><span class="p">:</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myprovder&quot;</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Authenticate</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">MyProovider&quot;</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">server_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://oidc.excample.com/&quot;</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myprovider-token-service&quot;</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">  </span><span class="c1"># &quot;secret:{MYPROVIDER_CLIENT_SECRET}&quot;</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openid</span><span class="nv"> </span><span class="s">email</span><span class="nv"> </span><span class="s">profile&quot;</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="nt">token_validation_pem</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="no">-----BEGIN PUBLIC KEY-----</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="no">MII..AQAB</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="no">-----END PUBLIC KEY-----</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">allowed_frontend_origins</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;https://chat.example.com&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nt">unlisted_frontend_origin</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;consent-required&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">auth_systems</span><span class="p">:</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myprovider&quot;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Authenticate</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">MyProvider&quot;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="nt">server_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://oidc.example.com/&quot;</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myprovider-token-service&quot;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">  </span><span class="c1"># &quot;secret:{MYPROVIDER_CLIENT_SECRET}&quot;</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openid</span><span class="nv"> </span><span class="s">email</span><span class="nv"> </span><span class="s">profile&quot;</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="nt">token_validation_pem</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">        </span><span class="no">-----BEGIN PUBLIC KEY-----</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="no">MII..AQAB</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">        </span><span class="no">-----END PUBLIC KEY-----</span>
 </span></code></pre></div>
 <h2 id="required-configuration-elements">Required Configuration Elements</h2>
 <ul>
-<li><code>authsystems</code> is a list of one or more OIDC provider configurations
+<li><code>auth_systems</code> is a list of one or more OIDC provider configurations
   (see below).</li>
 </ul>
 <h2 id="optional-configuration-elements">Optional Configuration Elements</h2>
+<p>Each of these is a default for every entry in <code>auth_systems</code>.  An entry
+which sets the same key replaces the default:  lists are not merged, so an
+entry with <code>allowed_frontend_origins: []</code> allows no extra origins, whatever
+the top level lists.</p>
 <ul>
-<li><code>oidc_client_pem_path</code> points to a file on the filesystem containing
+<li>
+<p><code>oidc_client_pem_path</code> points to a file on the filesystem containing
   the shared CA certificate store.  If not configured, the Soliplex
-  application will use systemwide default CA certificates.</li>
+  application will use systemwide default CA certificates.</p>
+</li>
+<li>
+<p><code>allowed_frontend_origins</code>: a list of web frontend origins trusted to
+  receive a user's tokens without asking the user first.  See
+  <a href="#frontend-origins">Frontend origins</a> below.</p>
+</li>
+<li>
+<p><code>unlisted_frontend_origin</code>: what to do when sign-in is started for a
+  frontend origin which is not trusted:  <code>consent-required</code> (the default)
+  or <code>deny-all</code>.  See <a href="#frontend-origins">Frontend origins</a> below.</p>
+</li>
+<li>
+<p><code>consent_template_path</code>: a Mako template for the page asking a user to
+  confirm an unlisted frontend origin.  See
+  <a href="#customizing-the-consent-page">Customizing the consent page</a> below.</p>
+</li>
 </ul>
+<p>Relative paths are resolved against the directory holding <code>config.yaml</code>.</p>
 <h2 id="required-oidc-provider-elements">Required OIDC Provider Elements</h2>
 <ul>
 <li>
@@ -3407,7 +3520,165 @@ store:</p>
 <li>
 <p><code>scope</code>: string, an OAuth scope specifier.</p>
 </li>
+<li>
+<p><code>oidc_client_pem_path</code>, <code>allowed_frontend_origins</code>,
+  <code>unlisted_frontend_origin</code>, <code>consent_template_path</code>: as above, for this
+  provider only, replacing any top-level default.</p>
+</li>
 </ul>
+<h2 id="example-defaults-and-overrides">Example: defaults and overrides</h2>
+<p>This file configures two providers.  Only <code>staff</code> overrides any defaults:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">oidc_client_pem_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./cacert.pem&quot;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">allowed_frontend_origins</span><span class="p">:</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;https://chat.example.com&quot;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nt">auth_systems</span><span class="p">:</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;public&quot;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Sign</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">Example</span><span class="nv"> </span><span class="s">ID&quot;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="nt">server_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://id.example.com/realms/public&quot;</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex-public&quot;</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="nt">token_validation_pem</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">        </span><span class="no">-----BEGIN PUBLIC KEY-----</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">        </span><span class="no">MII..AQAB</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">        </span><span class="no">-----END PUBLIC KEY-----</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;staff&quot;</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Staff</span><span class="nv"> </span><span class="s">sign-in&quot;</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="nt">server_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://sso.example.com/realms/staff&quot;</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;soliplex-staff&quot;</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;secret:STAFF_CLIENT_SECRET&quot;</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="nt">token_validation_pem</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">        </span><span class="no">-----BEGIN PUBLIC KEY-----</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">        </span><span class="no">MII..AQAB</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">        </span><span class="no">-----END PUBLIC KEY-----</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">    </span><span class="nt">oidc_client_pem_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./staff-cacert.pem&quot;</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">    </span><span class="nt">allowed_frontend_origins</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">    </span><span class="nt">unlisted_frontend_origin</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;deny-all&quot;</span>
+</span></code></pre></div>
+<p>With this file in <code>oidc/</code>, each provider ends up with these settings:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th><code>public</code></th>
+<th><code>staff</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oidc_client_pem_path</code></td>
+<td><code>oidc/cacert.pem</code> (default)</td>
+<td><code>oidc/staff-cacert.pem</code></td>
+</tr>
+<tr>
+<td><code>allowed_frontend_origins</code></td>
+<td><code>https://chat.example.com</code> (default)</td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>unlisted_frontend_origin</code></td>
+<td><code>consent-required</code> (built-in default)</td>
+<td><code>deny-all</code></td>
+</tr>
+<tr>
+<td>consent template</td>
+<td><code>oidc/consent.html.mako</code> if present, else packaged</td>
+<td>never shown</td>
+</tr>
+</tbody>
+</table>
+<p>So <code>public</code> supports a hosted web client at <code>https://chat.example.com</code>
+with no prompt, and asks users to confirm any other frontend.  <code>staff</code>
+accepts only frontends on the backend's own origin, and refuses every
+other origin without asking.</p>
+<h2 id="frontend-origins">Frontend origins</h2>
+<p>A web frontend starts sign-in by sending the user's browser to
+<code>/api/login/&lt;id&gt;?return_to=&lt;URL&gt;</code>.  After the provider signs the user in,
+Soliplex redirects the browser to that <code>return_to</code> URL, carrying the
+user's tokens, so it first decides whether the URL's origin is trusted to
+receive them.</p>
+<p>These are trusted, with no configuration:</p>
+<ul>
+<li>a path on the backend's own origin, such as <code>/</code> (the default);</li>
+<li>an absolute URL on the origin the backend is served from.  This covers
+  the standard deployment, where the web frontend and <code>/api/</code> are served
+  from the same host.  Behind a proxy which terminates TLS, run
+  <code>soliplex-cli serve</code> with <code>--proxy-headers</code> (see
+  <a href="../../server/cli/">the CLI reference</a>); otherwise the backend sees its
+  own origin as <code>http://</code>, and same-origin sign-ins get the consent page.</li>
+</ul>
+<p>Also trusted:  any origin listed in <code>allowed_frontend_origins</code>.  List a
+frontend served from a different origin than the backend, such as a
+hosted web client which connects to more than one backend.  Each entry is
+an origin only:  a scheme (<code>http</code> or <code>https</code>), a host, and an optional
+port, with no path.</p>
+<p>Any other origin is <em>unlisted</em>, and <code>unlisted_frontend_origin</code> decides
+what happens:</p>
+<ul>
+<li><code>consent-required</code>: Soliplex shows its own page naming the origin, and
+  asks the user to confirm before continuing to the provider.  This keeps
+  the web client's "connect to any server" feature working, while
+  preventing a link from signing a user in silently and sending their
+  tokens elsewhere.</li>
+<li><code>deny-all</code>: sign-in fails with an HTTP 400 response.  Use this where
+  every legitimate frontend is known and listed.</li>
+</ul>
+<p>Some <code>return_to</code> values are refused with an HTTP 400 response whatever the
+policy:</p>
+<ul>
+<li>a plain <code>http</code> URL whose host is not the local machine (<code>localhost</code>,
+  <code>*.localhost</code>, <code>127.0.0.0/8</code> or <code>[::1]</code>), unless it is the backend's own
+  origin or is listed;</li>
+<li>a scheme other than <code>http</code> or <code>https</code>;</li>
+<li>a relative URL not starting with <code>/</code>, or starting with <code>//</code>;</li>
+<li>a URL containing a backslash, control characters, or leading or
+  trailing whitespace.</li>
+</ul>
+<h2 id="registering-the-redirect-uri">Registering the redirect URI</h2>
+<p>The provider redirects back to the backend at <code>/api/auth/&lt;id&gt;</code>, with no
+query string, whichever frontend started the sign-in.  Register that one
+URI exactly in the provider's client configuration, for example
+<code>https://soliplex.example.com/api/auth/myprovider</code>, and avoid wildcards
+such as <code>https://soliplex.example.com/*</code>.  Adding a frontend never requires
+changing the provider's configuration:  frontends are allowed by
+<code>allowed_frontend_origins</code> here, not by the provider.</p>
+<h2 id="customizing-the-consent-page">Customizing the consent page</h2>
+<p>For each provider, Soliplex looks for the consent page's template in this
+order:</p>
+<ol>
+<li>the provider's <code>consent_template_path</code>, or the top-level default;</li>
+<li>a file named <code>consent.html.mako</code> in the directory holding
+   <code>config.yaml</code>;</li>
+<li>the default template packaged with Soliplex.</li>
+</ol>
+<p>To start from the packaged default, copy
+<code>soliplex/views/templates/consent.html.mako</code> from the installed package
+into the OIDC configuration directory as <code>consent.html.mako</code>, and edit it.</p>
+<p>The template is rendered with <a href="https://www.makotemplates.org/">Mako</a>,
+receiving these variables:</p>
+<ul>
+<li><code>server_name</code>: the installation's <code>server_name</code>, or the backend's host
+  name if none is configured</li>
+<li><code>auth_system_title</code>: the provider's <code>title</code></li>
+<li><code>origin</code>: the unlisted frontend origin, with any internationalized
+  host name shown in punycode</li>
+<li><code>form_action</code>: the URL the form must <code>POST</code> to</li>
+<li><code>csrf_token</code>: must be posted back in a field named <code>csrf_token</code></li>
+<li><code>cancelled</code>: <code>True</code> to render the page shown after the user cancels,
+  instead of the prompt</li>
+</ul>
+<p>The form must post a field named <code>decision</code>, with the value <code>continue</code> or
+<code>cancel</code>, along with <code>csrf_token</code>.</p>
+<p>Every <code>${...}</code> expression is HTML-escaped, and a variable not in the list
+above is an error.  If the template fails to render, Soliplex logs the
+error and serves the packaged default instead.</p>
+<p>The page is served with a <code>Content-Security-Policy</code> allowing no scripts
+and no external resources.  Keep styles inline, and embed any images as
+<code>data:</code> URIs.</p>
+<p>A Mako template can run arbitrary Python code, so protect the OIDC
+configuration directory as you would the rest of the installation's
+configuration.</p>
 
 
 
