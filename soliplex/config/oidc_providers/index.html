@@ -3509,6 +3509,10 @@ the top level lists.</p>
 <p><code>client_id</code>: a string identifying the client to the provider.</p>
 </li>
 </ul>
+<p>Soliplex always uses PKCE (<code>S256</code>) when it exchanges the authorization
+code, so the provider must accept a code challenge for this client.
+Providers which support PKCE without requiring it (e.g., Keycloak's
+default) need no extra configuration.</p>
 <h2 id="optional-oidc-provider-elements">Optional OIDC Provider Elements</h2>
 <ul>
 <li>
