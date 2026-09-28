@@ -4130,15 +4130,19 @@ evaluated relative to the installation directory.</p>
   both a <code>pyproject.toml</code> and a <code>.venv</code> initialized from it.</p>
 </li>
 <li>
-<p><code>workdirs_path</code> (optional) -- root for each run's working directory, named
-  <code>&lt;room_id&gt;/&lt;thread_id&gt;/&lt;run_id&gt;</code>. This directory is mounted <strong>read-write</strong>
-  into the sandbox as the execution working directory. If unset, a temporary
-  directory is used and discarded after the run.</p>
+<p><code>workdirs_path</code> (optional) -- root for each thread's sandbox workspace,
+  named <code>&lt;room_id&gt;/&lt;thread_id&gt;</code>. This directory is mounted <strong>read-write</strong>
+  into the sandbox as the execution working directory, and persists across
+  the thread's turns, so a later turn can build on what an earlier one
+  wrote. Soliplex never deletes it. If unset, each sandbox command gets a
+  temporary directory of its own, discarded when that command ends, so
+  commands in one run share nothing and the workdirs endpoint has nothing
+  to serve.</p>
 </li>
 <li>
 <p><code>transcripts_path</code> (optional) -- root under which each <code>run</code> / <code>run_python</code>
-  execution's command line or Python script is saved (under the same
-  <code>&lt;room_id&gt;/&lt;thread_id&gt;/&lt;run_id&gt;</code> layout, with a UUID-based filename), so that
+  execution's command line or Python script is saved (under
+  <code>&lt;room_id&gt;/&lt;thread_id&gt;/&lt;run_id&gt;</code>, with a UUID-based filename), so that
   a reviewer can recover exactly what was executed. Unlike <code>workdirs_path</code>,
   this directory is <strong>never mounted into the sandbox</strong>, so executed code can
   neither read nor tamper with the saved transcripts. The saved files hold the
@@ -4152,12 +4156,16 @@ evaluated relative to the installation directory.</p>
 <p>When the top-level <code>rooms_upload_path</code> / <code>threads_upload_path</code> options are
 configured (these are installation-level options, not part of <code>sandbox_config</code>),
 the skill mounts the corresponding uploaded files into the sandbox
-<strong>read-only</strong>, as the <code>room</code> and <code>thread</code> volumes, and exposes their names
-through the <code>list_volume_files</code> tool. By design these are
+<strong>read-only</strong>, as the <code>room</code> and <code>thread</code> volumes. The agent discovers their
+names by listing those directories with the <code>run</code> tool, which records a
+transcript. By design these are
 <strong>non-protected, availability-intended</strong> material: <strong>room uploads</strong> are
 admin-provided reference / context meant to be available to every room member
 (by download or via the sandbox), and <strong>thread uploads</strong> are provided by the
-thread's own user. Reads of them are therefore not separately audited.</p>
+thread's own user. Reading one with a sandbox command is therefore not
+separately audited -- the command's own record covers it. The <code>read_image</code>
+tool is the exception: it returns bytes to the model with no execution
+behind them, so each read is recorded on its own.</p>
 <p>Nothing technically prevents an administrator from uploading information that
 <em>should</em> be protected. An installation that wants to remove that risk
 entirely can <strong>disable room uploads</strong> by leaving <code>rooms_upload_path</code> unset: the
