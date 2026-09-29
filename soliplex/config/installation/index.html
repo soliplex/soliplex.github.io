@@ -4118,6 +4118,17 @@ be referenced by other parts of the configuration, such as rooms.</p>
 <p>The <code>sandbox_config</code> stanza configures the bubblewrap sandbox that backs the
 <code>bubble-sandbox</code> skill (shell / Python execution). Non-absolute paths are
 evaluated relative to the installation directory.</p>
+<p>The sandbox needs a host where <code>bwrap</code> (bubblewrap) can run: Linux, with
+<code>bwrap</code> on the <code>PATH</code>, and with unprivileged user namespaces allowed.
+Ubuntu 24.04's AppArmor policy
+(<code>kernel.apparmor_restrict_unprivileged_userns</code>) and a container's default
+seccomp profile can each block those namespaces; in a Docker deployment,
+run the backend with a seccomp profile that permits them.</p>
+<p>Soliplex checks once per process by running <code>bwrap</code> with the sandbox's own
+flags. Where that check fails, a configuration naming the skill still
+loads and passes <code>soliplex-cli audit</code>, but a room using it fails to build
+its agent with a <code>BwrapSandboxUnavailable</code> error giving the reason, and
+the <code>sandbox_workdirs</code> endpoints are not mounted.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">sandbox_config</span><span class="p">:</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="nt">environments_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/environments</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">workdirs_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/workdirs</span>
