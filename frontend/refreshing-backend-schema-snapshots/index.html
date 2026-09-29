@@ -3219,7 +3219,8 @@ checks the frontend's RAG state mirror against the AG-UI feature schemas the
 supported backends publish, snapshotted under
 <code>packages/soliplex_client/test/schema/fixtures/agui_feature_schemas/</code>. There is
 one snapshot per supported haiku.rag version: the one <code>afsoc-rag</code> deploys (its
-<code>src/ragserver</code> lock) and the one backend <code>main</code> pins.</p>
+<code>src/ragserver</code> lock) and the one backend <code>main</code> pins. When both resolve the
+same version, one snapshot serves both.</p>
 <p>Refresh a snapshot whenever backend <code>main</code> changes its haiku.rag pin or
 registers or changes an AG-UI feature, or <code>afsoc-rag</code>'s lock resolves a
 different haiku.rag. Run the commands below from the repository root. Backend
