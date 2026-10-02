@@ -135,6 +135,15 @@ Utility for splitting and processing PDF documents for ingestion.
 **Quick Links:**
 - [Documentation](pdf-splitter/index.md)
 
+### [Exquisite](exquisite/index.md)
+
+Corpus management for evaluations: labels question sets with the documents in a RAG database that answer them, so retrieval can be scored.
+
+**Quick Links:**
+- [Documentation](exquisite/index.md)
+- [Worksheets](exquisite/worksheets.md)
+- [Binding](exquisite/binding.md)
+
 ## Getting Started
 
 ### For New Users
@@ -181,5 +190,6 @@ This documentation is automatically synchronized from multiple repositories:
 - **Ingester Agents**: [soliplex/ingester-agents](https://github.com/soliplex/ingester-agents)
 - **PDF Splitter**: [soliplex/pdf-splitter](https://github.com/soliplex/pdf-splitter)
 - **Bubble Sandbox**: [soliplex/bubble-sandbox](https://github.com/soliplex/bubble-sandbox)
+- **Exquisite**: [soliplex/exquisite](https://github.com/soliplex/exquisite)
 
 Documentation is updated automatically when changes are made to the source repositories via git submodules.
