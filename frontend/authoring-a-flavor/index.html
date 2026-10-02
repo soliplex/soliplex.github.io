@@ -2484,6 +2484,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#web-entry-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Web entry page
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rules" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3205,6 +3216,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#web-entry-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Web entry page
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rules" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3383,7 +3405,7 @@ extension and runs the contrast check.</p>
 <div class="language-dart highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">import</span><span class="w"> </span><span class="s1">&#39;package:soliplex_frontend/soliplex_frontend.dart&#39;</span><span class="p">;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">Future</span><span class="o">&lt;</span><span class="n">Flavor</span><span class="o">&gt;</span><span class="w"> </span><span class="n">myFlavor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">Future</span><span class="o">&lt;</span><span class="n">Flavor</span><span class="o">&gt;</span><span class="w"> </span><span class="n">myFlavor</span><span class="p">({</span><span class="kd">required</span><span class="w"> </span><span class="n">CallbackParams</span><span class="w"> </span><span class="n">callbackParams</span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buildSoliplexThemeData</span><span class="p">(</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nl">colors:</span><span class="w"> </span><span class="n">lightSoliplexColors</span><span class="p">.</span><span class="n">copyWith</span><span class="p">(</span><span class="nl">primary:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Color</span><span class="p">(</span><span class="mh">0xFF0A7AFF</span><span class="p">)),</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">      </span><span class="nl">brightness:</span><span class="w"> </span><span class="n">Brightness</span><span class="p">.</span><span class="n">light</span><span class="p">);</span>
@@ -3398,22 +3420,25 @@ extension and runs the contrast check.</p>
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="p">),</span>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="nl">defaultBackendUrl:</span><span class="w"> </span><span class="s1">&#39;https://api.mybrand.com&#39;</span><span class="p">,</span>
 </span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="nl">theme:</span><span class="w"> </span><span class="n">FlavorTheme</span><span class="p">.</span><span class="n">themeData</span><span class="p">(</span><span class="nl">light:</span><span class="w"> </span><span class="n">light</span><span class="p">,</span><span class="w"> </span><span class="nl">dark:</span><span class="w"> </span><span class="n">dark</span><span class="p">),</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="c1">// Custom modules receive the composition kit, so they can share the</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="c1">// standard flavor&#39;s session state:</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="c1">// extraModules: (kit) =&gt; [MyCustomModule(kit.serverManager)],</span>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="p">);</span>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="p">}</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="n">Future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="kd">async</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">  </span><span class="n">WidgetsFlutterBinding</span><span class="p">.</span><span class="n">ensureInitialized</span><span class="p">();</span>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">  </span><span class="n">installLogSinks</span><span class="p">();</span>
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">flavor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">myFlavor</span><span class="p">();</span>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">  </span><span class="c1">// Pass the builder, not the built config: `Flavor.build()` throws on an</span>
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">  </span><span class="c1">// invalid configuration, and a throw out here lands before any view exists —</span>
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">  </span><span class="c1">// which on iOS, macOS and Android is not a crash but a launch that never</span>
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span><span class="c1">// finishes. Inside, it becomes a message naming the route at fault.</span>
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">  </span><span class="kd">await</span><span class="w"> </span><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">);</span>
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="p">}</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="nl">callbackParams:</span><span class="w"> </span><span class="n">callbackParams</span><span class="p">,</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="c1">// Custom modules receive the composition kit, so they can share the</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="c1">// standard flavor&#39;s session state:</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span><span class="c1">// extraModules: (kit) =&gt; [MyCustomModule(kit.serverManager)],</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="p">}</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="n">Future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="kd">async</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">  </span><span class="n">WidgetsFlutterBinding</span><span class="p">.</span><span class="n">ensureInitialized</span><span class="p">();</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span><span class="n">installLogSinks</span><span class="p">();</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">callbackParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CallbackParamsCapture</span><span class="p">.</span><span class="n">captureNow</span><span class="p">();</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">  </span><span class="n">clearCallbackUrl</span><span class="p">();</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">flavor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">await</span><span class="w"> </span><span class="n">myFlavor</span><span class="p">(</span><span class="nl">callbackParams:</span><span class="w"> </span><span class="n">callbackParams</span><span class="p">);</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span><span class="c1">// Pass the builder, not the built config: `Flavor.build()` throws on an</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">  </span><span class="c1">// invalid configuration, and a throw out here lands before any view exists —</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">  </span><span class="c1">// which on iOS, macOS and Android is not a crash but a launch that never</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">  </span><span class="c1">// finishes. Inside, it becomes a message naming the route at fault.</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">  </span><span class="kd">await</span><span class="w"> </span><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">);</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Customize through <code>standardFlavor</code>'s parameters — identity, theme,
 <code>extraModules</code> — not by mutating a built flavor. It performs real provisioning
@@ -3462,6 +3487,36 @@ paragraph is about. Simplest is still <code>buildRouter(flavor.build())</code> �
 exported for exactly this, and it is what the shell runs, so your tests cannot
 drift from production by reproducing the composition slightly differently.
 Prefer <code>standardFlavor</code> unless you genuinely need a different module graph.</p>
+<h2 id="web-entry-page">Web entry page</h2>
+<p>A fork with its own <code>web/index.html</code> must carry the sign-in callback script,
+right after <code>&lt;title&gt;</code>, with no stylesheet <code>&lt;link&gt;</code> or <code>&lt;script src&gt;</code> above it,
+since either would hold it back until that file downloads:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">route</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;#/auth/callback&#39;</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">route</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;?&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">soliplexCallbackQuery</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nx">history</span><span class="p">.</span><span class="nx">replaceState</span><span class="p">(</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">      </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="w"> </span><span class="o">+</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">        </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">route</span><span class="p">);</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="p">})();</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p>After a web sign-in the backend sends the browser to
+<code>#/auth/callback?token=…</code>. The script takes the tokens out of the address bar
+before the app starts downloading, instead of leaving them there until Flutter
+boots. Without it, sign-in still works, but the tokens stay visible for that
+time and the app logs an error that names <code>web/index.html</code> and this document.</p>
+<p>The browser still records the callback URL, tokens included, in its history.
+In Chrome, placing the script after <code>&lt;title&gt;</code> makes the history list show the
+page title rather than the tokens; only a backend change keeps them out of the
+URL.</p>
+<p><code>main()</code> must call <code>CallbackParamsCapture.captureNow()</code>, then
+<code>clearCallbackUrl()</code>, and pass the result to <code>standardFlavor</code> as
+<code>callbackParams</code>, as the example above does. Call them after
+<code>installLogSinks()</code>: without a sink, the missing-script error is discarded.</p>
 <h2 id="rules">Rules</h2>
 <ul>
 <li>Build the theme with <code>buildSoliplexThemeData</code> (never a bare <code>ThemeData</code>) — the
@@ -3487,10 +3542,10 @@ Prefer <code>standardFlavor</code> unless you genuinely need a different module 
   it says so — <code>publicPaths</code> on the <code>ModuleRoutes</code> your <code>AppModule.build()</code>
   returns, one line beside the route it names:</li>
 </ul>
-<div class="language-dart highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">ModuleRoutes</span><span class="w"> </span><span class="n">build</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ModuleRoutes</span><span class="p">(</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">      </span><span class="nl">routes:</span><span class="w"> </span><span class="p">[</span><span class="n">GoRoute</span><span class="p">(</span><span class="nl">path:</span><span class="w"> </span><span class="s1">&#39;/welcome&#39;</span><span class="p">,</span><span class="w"> </span><span class="nl">builder:</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">__</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">WelcomeScreen</span><span class="p">())],</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">      </span><span class="nl">publicPaths:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="s1">&#39;/welcome&#39;</span><span class="p">},</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="p">);</span>
+<div class="language-dart highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">ModuleRoutes</span><span class="w"> </span><span class="n">build</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ModuleRoutes</span><span class="p">(</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">      </span><span class="nl">routes:</span><span class="w"> </span><span class="p">[</span><span class="n">GoRoute</span><span class="p">(</span><span class="nl">path:</span><span class="w"> </span><span class="s1">&#39;/welcome&#39;</span><span class="p">,</span><span class="w"> </span><span class="nl">builder:</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">__</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">WelcomeScreen</span><span class="p">())],</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">      </span><span class="nl">publicPaths:</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="s1">&#39;/welcome&#39;</span><span class="p">},</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="p">);</span>
 </span></code></pre></div>
 <p>There is no flavor-level parameter for this, deliberately: the module that
   owns the route owns the statement that it needs no session, and the standard
@@ -3566,8 +3621,11 @@ Prefer <code>standardFlavor</code> unless you genuinely need a different module 
 - Declaring a path public leaves your <code>initialRoute</code> untouched, so a cold launch
   lands where it did unless you also set <code>signedOutLandingPath</code>. On web a URL to
   a declared path opens it directly, because go_router prefers a non-<code>/</code>
-  platform route over <code>initialLocation</code>; native deep links do not, since no
-  platform in this repo enables Flutter deep linking.
+  platform route over <code>initialLocation</code>. On iOS, Flutter deep linking is on unless
+  <code>Info.plist</code> sets <code>FlutterDeepLinkingEnabled</code> to false, and the app registers
+  the <code>ai.soliplex.client</code> URL scheme, so <code>ai.soliplex.client:///&lt;path&gt;</code> reaches
+  a declared path after the first frame, once the app has built at its initial
+  route.
 - A module needs no <code>go_router</code> dependency of its own, in <code>dependencies</code> or in
   <code>dev_dependencies</code>. The barrel re-exports the routing types module authoring
   and module <em>testing</em> use — <code>GoRoute</code>, <code>GoRouter</code>, <code>GoRouterHelper</code>,
