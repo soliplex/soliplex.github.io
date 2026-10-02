@@ -19,3 +19,6 @@
 [submodule "projects/chatbot-widget"]
 	path = projects/chatbot-widget
 	url = https://github.com/soliplex/chatbot.git
+[submodule "projects/exquisite"]
+	path = projects/exquisite
+	url = https://github.com/soliplex/exquisite.git

@@ -22,6 +22,7 @@ nav = [
     { "Ingester Agents" = "@auto:ingester-agents" },
     { "PDF Splitter" = "@auto:pdf-splitter" },
     { "Bubble Sandbox" = "@auto:bubble-sandbox" },
+    { "Exquisite" = "@auto:exquisite" },
   ]},
 ]
 
