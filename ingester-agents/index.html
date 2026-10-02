@@ -3787,6 +3787,84 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#document-metadata-in-haiku-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Document Metadata in haiku-rag
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Document Metadata in haiku-rag">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sidecar-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Sidecar metadata
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pdf-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        PDF metadata
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#back-filling-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Back-filling metadata
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Back-filling metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pdf-attachments" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        PDF attachments
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Outcome
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4283,8 +4361,11 @@
 <li>Runs <code>haiku-ingester run-batch</code> after each manifest run</li>
 <li>One per-source <code>.lancedb</code> database, configurable command and config file</li>
 <li>Globally serialized — only one load runs at a time</li>
+<li><code>manifest migrate</code> / <code>manifest vacuum</code> maintain those databases</li>
 <li>
-<p><code>manifest migrate</code> / <code>manifest vacuum</code> maintain those databases</p>
+<p>Metadata providers add each document's sidecar and a PDF's page count and
+    document information to its haiku-rag metadata; <code>manifest
+    backfill-metadata</code> fills them in for documents already indexed</p>
 </li>
 <li>
 <p><strong>REST API Server</strong>: Run agents as a web service</p>
@@ -4398,8 +4479,8 @@ by default, or S3-compatible object storage (see
 </span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="c1"># HAIKU_LOAD_TIMEOUT=1800</span>
 </span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="c1"># HAIKU_LOAD_CWD=/var/lib/ingester     # subprocess working dir (default: inherit)</span>
 </span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a>
-</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="c1"># haiku-rag maintenance (`si-agent manifest migrate` / `manifest vacuum`)</span>
-</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="c1"># HAIKU_MAINTENANCE_COMMAND=haiku-rag --config={haiku_cfg} {verb}</span>
+</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="c1"># haiku-rag maintenance (`si-agent manifest migrate` / `vacuum` / `backfill-metadata`)</span>
+</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="c1"># HAIKU_MAINTENANCE_COMMAND=haiku-rag --config={haiku_cfg} {verb}   # not backfill-metadata</span>
 </span><span id="__span-8-37"><a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="c1"># HAIKU_MAINTENANCE_TIMEOUT=3600</span>
 </span><span id="__span-8-38"><a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a>
 </span><span id="__span-8-39"><a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="c1"># haiku subprocess output (load and maintenance) is logged in parts, inside</span>
@@ -4766,6 +4847,7 @@ list down to the files you want, then point a manifest component's
 <a href="#database-maintenance">Database Maintenance</a>):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>migrate<span class="w">           </span><span class="c1"># every manifest in $MANIFEST_DIR</span>
 </span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>vacuum<span class="w"> </span>--dry-run<span class="w">  </span><span class="c1"># print the commands without running them</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>backfill-metadata<span class="w"> </span>--missing<span class="w"> </span>page_count<span class="w"> </span>--check<span class="w">  </span><span class="c1"># what a back-fill would change</span>
 </span></code></pre></div>
 <h4 id="manifest-yaml-format">Manifest YAML Format</h4>
 <p>A manifest file defines the ingestion source, optional shared configuration, and one or more components:</p>
@@ -5221,14 +5303,19 @@ own can of course need fewer or more.</p>
 first, and expansion runs over the parsed data — so a commented-out setting
 costs nothing.</p>
 <h4 id="database-maintenance">Database Maintenance</h4>
-<p>Two verbs operate on the per-source LanceDB databases rather than on the
+<p>Three verbs operate on the per-source LanceDB databases rather than on the
 downloaded documents:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>migrate<span class="w"> </span><span class="o">[</span>PATH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--json<span class="o">]</span><span class="w"> </span><span class="o">[</span>--timeout<span class="w"> </span>N<span class="o">]</span><span class="w"> </span><span class="o">[</span>--dry-run<span class="o">]</span>
 </span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>vacuum<span class="w">  </span><span class="o">[</span>PATH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--json<span class="o">]</span><span class="w"> </span><span class="o">[</span>--timeout<span class="w"> </span>N<span class="o">]</span><span class="w"> </span><span class="o">[</span>--dry-run<span class="o">]</span>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>backfill-metadata<span class="w"> </span><span class="o">[</span>PATH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--missing<span class="w"> </span>KEY<span class="o">]</span>...<span class="w"> </span><span class="o">[</span>--content-type<span class="w"> </span>TYPE<span class="o">]</span>...
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="w">                                    </span><span class="o">[</span>--filter<span class="w"> </span>SQL<span class="o">]</span><span class="w"> </span><span class="o">[</span>--db-name<span class="w"> </span>NAME<span class="o">]</span><span class="w"> </span><span class="o">[</span>--batch-size<span class="w"> </span>N<span class="o">]</span>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="w">                                    </span><span class="o">[</span>--check<span class="o">]</span><span class="w"> </span><span class="o">[</span>--no-attachments<span class="o">]</span><span class="w"> </span><span class="o">[</span>--json<span class="o">]</span><span class="w"> </span><span class="o">[</span>--timeout<span class="w"> </span>N<span class="o">]</span><span class="w"> </span><span class="o">[</span>--dry-run<span class="o">]</span>
 </span></code></pre></div>
 <ul>
 <li><code>migrate</code> runs pending haiku-rag schema migrations; <code>vacuum</code> optimizes and
-  compacts the tables to reclaim disk space.</li>
+  compacts the tables to reclaim disk space; <code>backfill-metadata</code> re-runs each
+  source's haiku-rag <code>metadata_provider</code> over documents already indexed (see
+  <a href="#back-filling-metadata">Back-filling metadata</a>).</li>
 <li><code>PATH</code> is optional and defaults to <code>all</code>:</li>
 </ul>
 <table>
@@ -5255,8 +5342,10 @@ downloaded documents:</p>
 </table>
 <p><code>all</code> is a reserved word, so a file or directory literally named <code>all</code>
   cannot be addressed by name.
-- <strong>Command</strong> is configurable via <code>HAIKU_MAINTENANCE_COMMAND</code> (default
-  <code>haiku-rag --config={haiku_cfg} {verb}</code>). Placeholders: <code>{verb}</code>,
+- <strong>Command</strong> for <code>migrate</code> / <code>vacuum</code> is configurable via
+  <code>HAIKU_MAINTENANCE_COMMAND</code> (default
+  <code>haiku-rag --config={haiku_cfg} {verb}</code>). <code>backfill-metadata</code> always runs
+  <code>python -m soliplex.agents.haiku_backfill</code> with the agent's own interpreter. Placeholders: <code>{verb}</code>,
   <code>{haiku_cfg}</code>, <code>{db}</code>, <code>{source}</code>, <code>{lancedb_dir}</code>, <code>{haiku_path}</code>. As with
   the load command, the template is tokenized before substitution, so values
   containing spaces cannot inject extra arguments.
@@ -5585,6 +5674,14 @@ source and <code>kwargs</code> are the configured extra args.</p>
   loop and making the pass killable via its <code>timeout</code> kwarg (default 1800s),
   so a stuck compaction can't hang the run. Retention comes from the haiku
   config's <code>storage.vacuum_retention_seconds</code>.</li>
+<li><strong><code>backfill_metadata</code></strong> runs the same subprocess as <code>si-agent manifest
+  backfill-metadata</code> for the manifest's source, right after its load, so
+  nothing else is writing the database. Takes <code>missing</code> and <code>content_types</code>
+  (lists), <code>doc_filter</code>, <code>full</code>, <code>database</code>, <code>batch_size</code>, <code>attachments</code>
+  (default <code>true</code>) and <code>timeout</code> (default 1800s). It must be scoped -- <code>missing</code> or <code>doc_filter</code> -- or given
+  <code>full: true</code>, since it runs after every load. Documents it could not fill
+  are logged and do not stop the chain; the subprocess crashing or timing out
+  raises. See <a href="#back-filling-metadata">Back-filling metadata</a>.</li>
 <li><strong><code>notify_webhook</code></strong> POSTs <code>{"event": "load.finished", "source", "status",
   "returncode", "timed_out", "summary", "manifest_id"}</code>, where <code>status</code> is
   <code>ok</code>, <code>failed</code>, <code>timed_out</code> or <code>no_load</code>, plus <code>stderr_tail</code> (the last
@@ -5702,6 +5799,9 @@ written next to it. The sidecar records:</p>
 <p>The field is omitted entirely when an agent has no URL to record -- for
 example an SCM provider whose response carried neither key. Consumers should
 treat it as optional.</p>
+<p>The <code>soliplex-sidecar-metadata</code> haiku-rag metadata provider copies the
+sidecar into each document's haiku-rag metadata at load time; see <a href="#document-metadata-in-haiku-rag">Document
+Metadata in haiku-rag</a>.</p>
 <h4 id="downloaded_time"><code>downloaded_time</code></h4>
 <p>Records when the document's bytes were last <strong>written</strong>, not when they were
 last checked for changes. A document that passes its source's freshness check
@@ -5861,17 +5961,197 @@ whose recorded content type is an archive or opaque binary:</p>
 (<code>QA_MODEL</code>, <code>QA_BASE_URL</code>, <code>OLLAMA_BASE_URL</code>, <code>DOCLING1_BASE_URL</code>,
 <code>DOCLING2_BASE_URL</code>, <code>EMBEDDINGS_BASE_URL</code>); every one must be exported too, or
 the load fails on the missing variable.</p>
+<h3 id="document-metadata-in-haiku-rag">Document Metadata in haiku-rag</h3>
+<p><code>haiku-ingester</code> reads only the document bytes. This package registers haiku-rag
+<a href="https://github.com/ggozad/haiku.rag/blob/main/docs/ingester.md#metadata-providers">metadata providers</a>
+that add more to each document's haiku-rag metadata. A haiku source names one
+<code>metadata_provider</code>, so pick the one covering what you want:</p>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Adds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>soliplex-sidecar-metadata</code></td>
+<td>The document's <a href="#metadata-sidecars"><code>.meta.json</code> sidecar</a>, flattened</td>
+</tr>
+<tr>
+<td><code>soliplex-pdf-metadata</code></td>
+<td>A PDF's page count and document information</td>
+</tr>
+<tr>
+<td><code>soliplex-metadata</code></td>
+<td>Both; the sidecar is applied last, so manifest metadata wins a clash</td>
+</tr>
+</tbody>
+</table>
+<p>haiku-rag does not call providers for the PDF attachments it extracts into
+documents of their own; <a href="#pdf-attachments">back-fill</a> them.</p>
+<p>Both example configs in <code>example-haiku-configs/</code> name <code>soliplex-metadata</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fs</span>
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${SOURCE}</span>
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a><span class="w">      </span><span class="nt">root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${DOWNLOAD_DIR}/${SOURCE}</span>
+</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a><span class="w">      </span><span class="nt">metadata_provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex-metadata</span>
+</span></code></pre></div>
+<h4 id="sidecar-metadata">Sidecar metadata</h4>
+<p><code>soliplex-sidecar-metadata</code> reads the sidecar the manifest run wrote beside
+the document and returns it flattened, as
+<a href="#metadata-sidecars">Metadata Sidecars</a> describes: <code>mime_type</code>, <code>source</code>,
+<code>source_uri</code>, <code>ingestion_type</code>, <code>sha256</code>, <code>size</code>, <code>source_url</code> and
+<code>downloaded_time</code> when set, and the manifest's <code>metadata</code> entries at the top
+level (nested values JSON-encoded). It finds the download store the same way
+the agent does: the haiku source's <code>id</code> is the sanitized manifest source
+(<code>${SOURCE}</code>), and <code>DOWNLOAD_DIR</code> / <code>DOWNLOAD_S3_*</code> come from the load's
+environment, so it works on the local and S3 stores alike.</p>
+<p>A missing, unreadable or malformed sidecar gives the document no sidecar keys
+and a log line; it never fails the document. A sidecar that changes while its
+document does not -- new manifest metadata -- is not picked up by a load,
+because haiku-rag skips an unchanged document before calling any provider
+(and does not ingest <code>*.meta.json</code> itself). Back-fill those with a
+<code>--filter</code>, or a pass without <code>--missing</code>.</p>
+<h4 id="pdf-metadata">PDF metadata</h4>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>page_count</code></td>
+<td>Number of pages (an integer)</td>
+</tr>
+<tr>
+<td><code>pdf_version</code></td>
+<td>PDF version from the header, e.g. <code>"1.7"</code></td>
+</tr>
+<tr>
+<td><code>pdf_title</code>, <code>pdf_author</code>, <code>pdf_subject</code>, <code>pdf_keywords</code>, <code>pdf_creator</code>, <code>pdf_producer</code></td>
+<td>The PDF's document information entries</td>
+</tr>
+<tr>
+<td><code>pdf_creation_date</code>, <code>pdf_mod_date</code></td>
+<td>The PDF's dates, as ISO 8601 (kept as written if they do not parse)</td>
+</tr>
+</tbody>
+</table>
+<p>Only <code>page_count</code> is always present; an information entry the PDF leaves
+empty is left out. A document is a PDF when its content type is
+<code>application/pdf</code> or its first 1024 bytes hold a <code>%PDF-</code> header; anything else
+gets no keys. A PDF pdfium cannot open (password protected, truncated) gets no
+keys either, and a warning is logged -- the provider never fails the document.</p>
+<p>The provider runs inside <code>haiku-ingester</code>, so this package must be installed
+in the environment that runs it (the <code>haiku_load_command</code> default runs it from
+the agent's own). haiku-rag calls a provider only when it fetches a new or
+changed document: after enabling it, existing documents gain the keys the next
+time they change, unless you back-fill them -- <code>--missing source_uri</code> for the
+sidecar keys (every sidecar has one), <code>--missing page_count</code> for the PDF keys.</p>
+<h4 id="back-filling-metadata">Back-filling metadata</h4>
+<p><code>backfill-metadata</code> adds a provider's keys to documents indexed before the
+provider was configured, without re-ingesting them -- nothing is converted,
+chunked or embedded:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="c1"># What would change, without writing anything</span>
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>backfill-metadata<span class="w"> </span>--missing<span class="w"> </span>page_count<span class="w"> </span>--check
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="c1"># Every manifest in $MANIFEST_DIR, PDFs still lacking a page count</span>
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>backfill-metadata<span class="w"> </span>--missing<span class="w"> </span>page_count<span class="w"> </span>--content-type<span class="w"> </span>application/pdf
+</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>
+</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a><span class="c1"># One manifest; print the command instead of running it</span>
+</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a>si-agent<span class="w"> </span>manifest<span class="w"> </span>backfill-metadata<span class="w"> </span>/manifests/handbook.yml<span class="w"> </span>--missing<span class="w"> </span>page_count<span class="w"> </span>--dry-run
+</span></code></pre></div>
+<p>For each source in the haiku config that names a <code>metadata_provider</code>, it
+lists the documents that source ingested, fetches each selected one again
+through that source (so the provider sees what the ingester would hand it),
+calls the provider, and merges the keys it returns into the document's
+metadata. The provider is the one code path: the ingester calls it for new
+documents, the back-fill for old ones.</p>
+<p>Which documents run:</p>
+<ul>
+<li><strong>Scoped in LanceDB.</strong> <code>--missing KEY</code> becomes a <code>WHERE</code> clause on the
+  stored metadata, <code>(metadata IS NULL OR metadata NOT LIKE '%"KEY"%' ...)</code>, so
+  a document that already has every key is never listed, let alone fetched.
+  <code>--filter</code> adds a clause of your own (AND-ed with it), e.g.
+  <code>--filter "uri LIKE '%/reports/%'"</code>. A key may only contain letters, digits,
+  <code>_</code>, <code>.</code> and <code>-</code>.</li>
+<li><strong>Then by type.</strong> Of those, a document runs when its stored <code>content_type</code>
+  is one of the <code>--content-type</code> values, if any are given.</li>
+<li><strong>Unscoped, everything.</strong> With neither <code>--missing</code> nor <code>--filter</code> every
+  document of the source is fetched again. Documents whose metadata the
+  provider would not change are never written either way.</li>
+<li><strong>Database.</strong> The haiku config must place the database
+  (<code>lancedb.databases</code>), as the load's does; <code>--db-name</code> picks one when it
+  places several. <code>--batch-size</code> (default 500) sizes the listing's pages, all
+  of which are read before the first write.</li>
+<li><strong>Stale documents are left alone.</strong> A document whose bytes changed since it
+  was indexed (its stored <code>md5</code> differs) is counted as <code>stale</code>: the next load
+  re-ingests it, which runs the provider anyway.</li>
+<li><strong>Providers can opt out.</strong>  Its documents
+  are counted as skipped and it is never called: run over stored documents it
+  would record the time of the back-fill. Third-party providers of that kind
+  should do the same.</li>
+<li><strong>Never alongside a load.</strong> It writes the same database the load does, so
+  do not run the CLI verb while a load for that source is in progress. As a
+  post-process step it runs after the load by construction, and must be
+  scoped (<code>missing</code> or <code>doc_filter</code>) or given <code>full: true</code>, so that a
+  scheduled load with nothing new does not fetch every document again:</li>
+</ul>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="nt">config</span><span class="p">:</span>
+</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a><span class="w">  </span><span class="nt">post_process</span><span class="p">:</span>
+</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soliplex.agents.manifest.post_processors:backfill_metadata</span>
+</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span>
+</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a><span class="w">        </span><span class="nt">missing</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">page_count</span><span class="p p-Indicator">]</span>
+</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a><span class="w">        </span><span class="nt">content_types</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">application/pdf</span><span class="p p-Indicator">]</span>
+</span></code></pre></div>
+<h5 id="pdf-attachments">PDF attachments</h5>
+<p>haiku-rag stores each file embedded in a PDF as a document of its own:
+<code>&lt;parent uri&gt;#attachment=&lt;percent-encoded name&gt;</code> (nested ones chaining
+fragments), linked by <code>parent_uri</code> and owned by <strong>no</strong> source. It does not
+call a metadata provider for them, and no source can fetch that URI, so the
+back-fill derives each one from its parent instead:</p>
+<ol>
+<li>walk <code>parent_uri</code> up to the top-level document, which a source owns;</li>
+<li>fetch it once through that source, however many attachments it has;</li>
+<li>extract the attachment from it, following nested ones down, exactly as
+   haiku-rag does (same URI, content type and MD5);</li>
+<li>call that source's provider with the attachment's bytes and
+   <code>extra_metadata["parent_uri"]</code> set, and merge as for any document.</li>
+</ol>
+<p>So <code>soliplex-pdf-metadata</code> gives an attached PDF its <strong>own</strong> page count, and
+<code>soliplex-sidecar-metadata</code> gives every attachment its <strong>parent's</strong> sidecar:
+an attachment has no download of its own. An attachment never gains a
+<code>source_id</code>, and no provider can change its <code>parent_uri</code>. An attachment whose
+top-level document changed since it was indexed, or whose stored <code>md5</code> no
+longer matches what the parent embeds, is <code>stale</code>. One whose parent is no
+longer indexed, or no longer embeds it, is <code>orphaned</code>: haiku-rag removes such
+a child only when it re-ingests the parent, and not at all when the new
+parent cannot be opened, so these are worth a look. <code>--no-attachments</code>
+(<code>attachments: false</code>) leaves attachments alone.</p>
+<h5 id="outcome">Outcome</h5>
+<p>The outcome line reports what it did, e.g.
+<code>(scanned 6: 3 updated (2 attachments), 1 unchanged, 0 stale, 1 orphaned,
+1 skipped, 0 errors)</code> -- under <code>--check</code>, <code>would update</code>; <code>--json</code> has the full
+counts. <code>skipped</code> covers documents no source with a provider owns
+(<code>haiku-rag add-src</code> documents and their attachments), providers that opt out,
+and ones <code>--content-type</code> or the exact <code>--missing</code> check left out. A document that fails (gone from the store, provider raised) is listed
+and the run continues; the subprocess then exits 3 and the verb exits 1. A PDF
+the provider cannot read gets no keys and counts as <code>unchanged</code>, so
+<code>--missing page_count</code> selects it again on every run.</p>
 <h2 id="server-api">Server API</h2>
 <p>The agents can be run as a REST API server using FastAPI. The server runs manifests (on a cron schedule, and on demand via <code>POST /api/v1/manifest/run</code>) and exposes read-only inspection routes for each source type, with support for authentication and interactive documentation. Ingestion over HTTP goes only through manifests.</p>
 <h3 id="starting-the-server">Starting the Server</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="c1"># Basic</span>
-</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>si-agent<span class="w"> </span>serve
-</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>
-</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a><span class="c1"># Custom host and port</span>
-</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
-</span><span id="__span-62-6"><a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a>
-</span><span id="__span-62-7"><a id="__codelineno-62-7" name="__codelineno-62-7" href="#__codelineno-62-7"></a><span class="c1"># Development mode with auto-reload</span>
-</span><span id="__span-62-8"><a id="__codelineno-62-8" name="__codelineno-62-8" href="#__codelineno-62-8"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--reload
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="c1"># Basic</span>
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>si-agent<span class="w"> </span>serve
+</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>
+</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a><span class="c1"># Custom host and port</span>
+</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
+</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>
+</span><span id="__span-65-7"><a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a><span class="c1"># Development mode with auto-reload</span>
+</span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a>si-agent<span class="w"> </span>serve<span class="w"> </span>--reload
 </span></code></pre></div>
 <p><strong>The server always runs as a single worker process.</strong> The manifest
 scheduler keeps its cron state and run queue in memory, so running
@@ -5884,20 +6164,20 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 <h3 id="authentication">Authentication</h3>
 <p>The server supports multiple authentication methods:</p>
 <h4 id="1-no-authentication-default">1. No Authentication (Default)</h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>si-agent<span class="w"> </span>serve
-</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a><span class="c1"># All requests allowed</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>si-agent<span class="w"> </span>serve
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a><span class="c1"># All requests allowed</span>
 </span></code></pre></div>
 <h4 id="2-api-key-authentication">2. API Key Authentication</h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">API_KEY</span><span class="o">=</span>your-api-key
-</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>si-agent<span class="w"> </span>serve
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">API_KEY</span><span class="o">=</span>your-api-key
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>si-agent<span class="w"> </span>serve
 </span></code></pre></div>
 <p>Clients must include the API key in the <code>Authorization</code> header:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer your-api-key&quot;</span><span class="w"> </span>http://localhost:8001/api/v1/manifest/queue
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer your-api-key&quot;</span><span class="w"> </span>http://localhost:8001/api/v1/manifest/queue
 </span></code></pre></div>
 <h4 id="3-oauth2-proxy-headers">3. OAuth2 Proxy Headers</h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AUTH_TRUST_PROXY_HEADERS</span><span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>si-agent<span class="w"> </span>serve
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AUTH_TRUST_PROXY_HEADERS</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>si-agent<span class="w"> </span>serve
 </span></code></pre></div>
 <p>The server will trust authentication headers from a reverse proxy (e.g., OAuth2 Proxy):</p>
 <ul>
@@ -5938,16 +6218,16 @@ be enabled on one instance — see <a href="#scheduling">Scheduling</a>).</p>
 <code>404</code> if no valid manifest in <code>MANIFEST_DIR</code> has that id; <code>409</code> if more than
 one file declares it; <code>503</code> if <code>MANIFEST_DIR</code> is unset or not a directory.</p>
 <p><strong>Examples:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="c1"># Queue a manifest run</span>
-</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/run<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;manifest_id=test-scm&quot;</span>
-</span><span id="__span-67-4"><a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a>
-</span><span id="__span-67-5"><a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a><span class="c1"># What is still queued or running</span>
-</span><span id="__span-67-6"><a id="__codelineno-67-6" name="__codelineno-67-6" href="#__codelineno-67-6"></a>curl<span class="w"> </span>http://localhost:8001/api/v1/manifest/queue
-</span><span id="__span-67-7"><a id="__codelineno-67-7" name="__codelineno-67-7" href="#__codelineno-67-7"></a>
-</span><span id="__span-67-8"><a id="__codelineno-67-8" name="__codelineno-67-8" href="#__codelineno-67-8"></a><span class="c1"># Validate manifest files</span>
-</span><span id="__span-67-9"><a id="__codelineno-67-9" name="__codelineno-67-9" href="#__codelineno-67-9"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/validate<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-67-10"><a id="__codelineno-67-10" name="__codelineno-67-10" href="#__codelineno-67-10"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifests&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="c1"># Queue a manifest run</span>
+</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/run<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;manifest_id=test-scm&quot;</span>
+</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a>
+</span><span id="__span-70-5"><a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a><span class="c1"># What is still queued or running</span>
+</span><span id="__span-70-6"><a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a>curl<span class="w"> </span>http://localhost:8001/api/v1/manifest/queue
+</span><span id="__span-70-7"><a id="__codelineno-70-7" name="__codelineno-70-7" href="#__codelineno-70-7"></a>
+</span><span id="__span-70-8"><a id="__codelineno-70-8" name="__codelineno-70-8" href="#__codelineno-70-8"></a><span class="c1"># Validate manifest files</span>
+</span><span id="__span-70-9"><a id="__codelineno-70-9" name="__codelineno-70-9" href="#__codelineno-70-9"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/manifest/validate<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-70-10"><a id="__codelineno-70-10" name="__codelineno-70-10" href="#__codelineno-70-10"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/manifests&quot;</span>
 </span></code></pre></div>
 <h4 id="filesystem-routes-apiv1fs">Filesystem Routes (<code>/api/v1/fs/</code>)</h4>
 <p>Read-only inspection of a server-side directory.</p>
@@ -5978,13 +6258,13 @@ one file declares it; <code>503</code> if <code>MANIFEST_DIR</code> is unset or 
 </tbody>
 </table>
 <p><strong>Examples:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a><span class="c1"># Build configuration from directory</span>
-</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/build-config<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-68-3"><a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/docs&quot;</span>
-</span><span id="__span-68-4"><a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a>
-</span><span id="__span-68-5"><a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a><span class="c1"># Validate using a directory</span>
-</span><span id="__span-68-6"><a id="__codelineno-68-6" name="__codelineno-68-6" href="#__codelineno-68-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/validate-config<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-68-7"><a id="__codelineno-68-7" name="__codelineno-68-7" href="#__codelineno-68-7"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_file=/path/to/docs&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a><span class="c1"># Build configuration from directory</span>
+</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/build-config<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-3"><a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;path=/path/to/docs&quot;</span>
+</span><span id="__span-71-4"><a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a>
+</span><span id="__span-71-5"><a id="__codelineno-71-5" name="__codelineno-71-5" href="#__codelineno-71-5"></a><span class="c1"># Validate using a directory</span>
+</span><span id="__span-71-6"><a id="__codelineno-71-6" name="__codelineno-71-6" href="#__codelineno-71-6"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/fs/validate-config<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-7"><a id="__codelineno-71-7" name="__codelineno-71-7" href="#__codelineno-71-7"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_file=/path/to/docs&quot;</span>
 </span></code></pre></div>
 <h4 id="scm-routes-apiv1scm">SCM Routes (<code>/api/v1/scm/</code>)</h4>
 <table>
@@ -6011,11 +6291,11 @@ one file declares it; <code>503</code> if <code>MANIFEST_DIR</code> is unset or 
 <p><code>{scm}</code> is <code>github</code> or <code>gitea</code>; both take <code>repo_name</code> and <code>owner</code> query
 parameters.</p>
 <p><strong>Examples:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="c1"># List GitHub issues</span>
-</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8001/api/v1/scm/github/issues?repo_name=my-repo&amp;owner=myuser&quot;</span>
-</span><span id="__span-69-3"><a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>
-</span><span id="__span-69-4"><a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a><span class="c1"># List repository files</span>
-</span><span id="__span-69-5"><a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8001/api/v1/scm/github/repo?repo_name=my-repo&amp;owner=myuser&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="c1"># List GitHub issues</span>
+</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8001/api/v1/scm/github/issues?repo_name=my-repo&amp;owner=myuser&quot;</span>
+</span><span id="__span-72-3"><a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>
+</span><span id="__span-72-4"><a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a><span class="c1"># List repository files</span>
+</span><span id="__span-72-5"><a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8001/api/v1/scm/github/repo?repo_name=my-repo&amp;owner=myuser&quot;</span>
 </span></code></pre></div>
 <h4 id="webdav-routes-apiv1webdav">WebDAV Routes (<code>/api/v1/webdav/</code>)</h4>
 <table>
@@ -6040,10 +6320,10 @@ parameters.</p>
 </tbody>
 </table>
 <p><strong>Example:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="c1"># Validate using WebDAV path</span>
-</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/webdav/validate-config<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_path=/documents&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_url=https://webdav.example.com&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a><span class="c1"># Validate using WebDAV path</span>
+</span><span id="__span-73-2"><a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/api/v1/webdav/validate-config<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-73-3"><a id="__codelineno-73-3" name="__codelineno-73-3" href="#__codelineno-73-3"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;config_path=/documents&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-73-4"><a id="__codelineno-73-4" name="__codelineno-73-4" href="#__codelineno-73-4"></a><span class="w">  </span>-F<span class="w"> </span><span class="s2">&quot;webdav_url=https://webdav.example.com&quot;</span>
 </span></code></pre></div>
 <h4 id="health-check">Health Check</h4>
 <table>
@@ -6063,8 +6343,8 @@ parameters.</p>
 </tbody>
 </table>
 <p><strong>Example:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>curl<span class="w"> </span>http://localhost:8001/health
-</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a><span class="c1"># Returns: {&quot;status&quot;: &quot;healthy&quot;}</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>curl<span class="w"> </span>http://localhost:8001/health
+</span><span id="__span-74-2"><a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a><span class="c1"># Returns: {&quot;status&quot;: &quot;healthy&quot;}</span>
 </span></code></pre></div>
 <h3 id="api-documentation">API Documentation</h3>
 <p>Interactive API documentation is available at:</p>
@@ -6105,38 +6385,38 @@ overridable via the <code>APP_UID</code>/<code>APP_GID</code> build args), inclu
 CLI mode, expose port <code>8001</code>, and define a <code>/health</code> healthcheck.</p>
 <h4 id="production">Production</h4>
 <p><code>production</code> is the last stage, so it is built when no <code>--target</code> is given:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="c1"># Build the production image (default target)</span>
-</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ingester-agents:latest<span class="w"> </span>.
-</span><span id="__span-72-3"><a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>
-</span><span id="__span-72-4"><a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a><span class="c1"># Run with environment variables</span>
-</span><span id="__span-72-5"><a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-72-6"><a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">8001</span>:8001<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-72-7"><a id="__codelineno-72-7" name="__codelineno-72-7" href="#__codelineno-72-7"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>/data/downloads<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-72-8"><a id="__codelineno-72-8" name="__codelineno-72-8" href="#__codelineno-72-8"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-72-9"><a id="__codelineno-72-9" name="__codelineno-72-9" href="#__codelineno-72-9"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">API_KEY</span><span class="o">=</span>your-secret-key<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-72-10"><a id="__codelineno-72-10" name="__codelineno-72-10" href="#__codelineno-72-10"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/downloads:/data/downloads&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-72-11"><a id="__codelineno-72-11" name="__codelineno-72-11" href="#__codelineno-72-11"></a><span class="w">  </span>ingester-agents:latest
-</span><span id="__span-72-12"><a id="__codelineno-72-12" name="__codelineno-72-12" href="#__codelineno-72-12"></a>
-</span><span id="__span-72-13"><a id="__codelineno-72-13" name="__codelineno-72-13" href="#__codelineno-72-13"></a><span class="c1"># Check health</span>
-</span><span id="__span-72-14"><a id="__codelineno-72-14" name="__codelineno-72-14" href="#__codelineno-72-14"></a>curl<span class="w"> </span>http://localhost:8001/health
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a><span class="c1"># Build the production image (default target)</span>
+</span><span id="__span-75-2"><a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ingester-agents:latest<span class="w"> </span>.
+</span><span id="__span-75-3"><a id="__codelineno-75-3" name="__codelineno-75-3" href="#__codelineno-75-3"></a>
+</span><span id="__span-75-4"><a id="__codelineno-75-4" name="__codelineno-75-4" href="#__codelineno-75-4"></a><span class="c1"># Run with environment variables</span>
+</span><span id="__span-75-5"><a id="__codelineno-75-5" name="__codelineno-75-5" href="#__codelineno-75-5"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-75-6"><a id="__codelineno-75-6" name="__codelineno-75-6" href="#__codelineno-75-6"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">8001</span>:8001<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-75-7"><a id="__codelineno-75-7" name="__codelineno-75-7" href="#__codelineno-75-7"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">DOWNLOAD_DIR</span><span class="o">=</span>/data/downloads<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-75-8"><a id="__codelineno-75-8" name="__codelineno-75-8" href="#__codelineno-75-8"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">API_KEY_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-75-9"><a id="__codelineno-75-9" name="__codelineno-75-9" href="#__codelineno-75-9"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">API_KEY</span><span class="o">=</span>your-secret-key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-75-10"><a id="__codelineno-75-10" name="__codelineno-75-10" href="#__codelineno-75-10"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/downloads:/data/downloads&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-75-11"><a id="__codelineno-75-11" name="__codelineno-75-11" href="#__codelineno-75-11"></a><span class="w">  </span>ingester-agents:latest
+</span><span id="__span-75-12"><a id="__codelineno-75-12" name="__codelineno-75-12" href="#__codelineno-75-12"></a>
+</span><span id="__span-75-13"><a id="__codelineno-75-13" name="__codelineno-75-13" href="#__codelineno-75-13"></a><span class="c1"># Check health</span>
+</span><span id="__span-75-14"><a id="__codelineno-75-14" name="__codelineno-75-14" href="#__codelineno-75-14"></a>curl<span class="w"> </span>http://localhost:8001/health
 </span></code></pre></div>
 <h4 id="development">Development</h4>
 <p>The <code>development</code> target includes the full toolchain and starts uvicorn
 with <code>--reload</code>. Bind-mount the source so code changes reload live:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a><span class="c1"># Build the development image</span>
-</span><span id="__span-73-2"><a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>development<span class="w"> </span>-t<span class="w"> </span>ingester-agents:dev<span class="w"> </span>.
-</span><span id="__span-73-3"><a id="__codelineno-73-3" name="__codelineno-73-3" href="#__codelineno-73-3"></a>
-</span><span id="__span-73-4"><a id="__codelineno-73-4" name="__codelineno-73-4" href="#__codelineno-73-4"></a><span class="c1"># Run with the source bind-mounted for live reload</span>
-</span><span id="__span-73-5"><a id="__codelineno-73-5" name="__codelineno-73-5" href="#__codelineno-73-5"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-73-6"><a id="__codelineno-73-6" name="__codelineno-73-6" href="#__codelineno-73-6"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">8001</span>:8001<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-73-7"><a id="__codelineno-73-7" name="__codelineno-73-7" href="#__codelineno-73-7"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">:/app&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-73-8"><a id="__codelineno-73-8" name="__codelineno-73-8" href="#__codelineno-73-8"></a><span class="w">  </span>ingester-agents:dev
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a><span class="c1"># Build the development image</span>
+</span><span id="__span-76-2"><a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>development<span class="w"> </span>-t<span class="w"> </span>ingester-agents:dev<span class="w"> </span>.
+</span><span id="__span-76-3"><a id="__codelineno-76-3" name="__codelineno-76-3" href="#__codelineno-76-3"></a>
+</span><span id="__span-76-4"><a id="__codelineno-76-4" name="__codelineno-76-4" href="#__codelineno-76-4"></a><span class="c1"># Run with the source bind-mounted for live reload</span>
+</span><span id="__span-76-5"><a id="__codelineno-76-5" name="__codelineno-76-5" href="#__codelineno-76-5"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-76-6"><a id="__codelineno-76-6" name="__codelineno-76-6" href="#__codelineno-76-6"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">8001</span>:8001<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-76-7"><a id="__codelineno-76-7" name="__codelineno-76-7" href="#__codelineno-76-7"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">:/app&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-76-8"><a id="__codelineno-76-8" name="__codelineno-76-8" href="#__codelineno-76-8"></a><span class="w">  </span>ingester-agents:dev
 </span></code></pre></div>
 <p>To match file ownership on bind mounts to your host user, pass build args:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>development<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-74-2"><a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a><span class="w">  </span>--build-arg<span class="w"> </span><span class="nv">APP_UID</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-74-3"><a id="__codelineno-74-3" name="__codelineno-74-3" href="#__codelineno-74-3"></a><span class="w">  </span>--build-arg<span class="w"> </span><span class="nv">APP_GID</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-74-4"><a id="__codelineno-74-4" name="__codelineno-74-4" href="#__codelineno-74-4"></a><span class="w">  </span>-t<span class="w"> </span>ingester-agents:dev<span class="w"> </span>.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>docker<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>development<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-77-2"><a id="__codelineno-77-2" name="__codelineno-77-2" href="#__codelineno-77-2"></a><span class="w">  </span>--build-arg<span class="w"> </span><span class="nv">APP_UID</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-77-3"><a id="__codelineno-77-3" name="__codelineno-77-3" href="#__codelineno-77-3"></a><span class="w">  </span>--build-arg<span class="w"> </span><span class="nv">APP_GID</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-77-4"><a id="__codelineno-77-4" name="__codelineno-77-4" href="#__codelineno-77-4"></a><span class="w">  </span>-t<span class="w"> </span>ingester-agents:dev<span class="w"> </span>.
 </span></code></pre></div>
 <p>The Docker image includes:</p>
 <ul>
@@ -6160,94 +6440,97 @@ required credentials (<code>scm_auth_token</code>, <code>WEBDAV_URL</code>/<code
 <p>For SCM agents, ensure the repository name and owner are correct. Use the exact repository name, not the URL.</p>
 <h2 id="development_1">Development</h2>
 <h3 id="setup">Setup</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a><span class="c1"># Clone repository</span>
-</span><span id="__span-75-2"><a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a>git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;
-</span><span id="__span-75-3"><a id="__codelineno-75-3" name="__codelineno-75-3" href="#__codelineno-75-3"></a><span class="nb">cd</span><span class="w"> </span>ingester-agents
-</span><span id="__span-75-4"><a id="__codelineno-75-4" name="__codelineno-75-4" href="#__codelineno-75-4"></a>
-</span><span id="__span-75-5"><a id="__codelineno-75-5" name="__codelineno-75-5" href="#__codelineno-75-5"></a><span class="c1"># Install dependencies with dev tools</span>
-</span><span id="__span-75-6"><a id="__codelineno-75-6" name="__codelineno-75-6" href="#__codelineno-75-6"></a>uv<span class="w"> </span>sync
-</span><span id="__span-75-7"><a id="__codelineno-75-7" name="__codelineno-75-7" href="#__codelineno-75-7"></a>
-</span><span id="__span-75-8"><a id="__codelineno-75-8" name="__codelineno-75-8" href="#__codelineno-75-8"></a><span class="c1"># Run tests</span>
-</span><span id="__span-75-9"><a id="__codelineno-75-9" name="__codelineno-75-9" href="#__codelineno-75-9"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
-</span><span id="__span-75-10"><a id="__codelineno-75-10" name="__codelineno-75-10" href="#__codelineno-75-10"></a>
-</span><span id="__span-75-11"><a id="__codelineno-75-11" name="__codelineno-75-11" href="#__codelineno-75-11"></a><span class="c1"># Run linter</span>
-</span><span id="__span-75-12"><a id="__codelineno-75-12" name="__codelineno-75-12" href="#__codelineno-75-12"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a><span class="c1"># Clone repository</span>
+</span><span id="__span-78-2"><a id="__codelineno-78-2" name="__codelineno-78-2" href="#__codelineno-78-2"></a>git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;
+</span><span id="__span-78-3"><a id="__codelineno-78-3" name="__codelineno-78-3" href="#__codelineno-78-3"></a><span class="nb">cd</span><span class="w"> </span>ingester-agents
+</span><span id="__span-78-4"><a id="__codelineno-78-4" name="__codelineno-78-4" href="#__codelineno-78-4"></a>
+</span><span id="__span-78-5"><a id="__codelineno-78-5" name="__codelineno-78-5" href="#__codelineno-78-5"></a><span class="c1"># Install dependencies with dev tools</span>
+</span><span id="__span-78-6"><a id="__codelineno-78-6" name="__codelineno-78-6" href="#__codelineno-78-6"></a>uv<span class="w"> </span>sync
+</span><span id="__span-78-7"><a id="__codelineno-78-7" name="__codelineno-78-7" href="#__codelineno-78-7"></a>
+</span><span id="__span-78-8"><a id="__codelineno-78-8" name="__codelineno-78-8" href="#__codelineno-78-8"></a><span class="c1"># Run tests</span>
+</span><span id="__span-78-9"><a id="__codelineno-78-9" name="__codelineno-78-9" href="#__codelineno-78-9"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
+</span><span id="__span-78-10"><a id="__codelineno-78-10" name="__codelineno-78-10" href="#__codelineno-78-10"></a>
+</span><span id="__span-78-11"><a id="__codelineno-78-11" name="__codelineno-78-11" href="#__codelineno-78-11"></a><span class="c1"># Run linter</span>
+</span><span id="__span-78-12"><a id="__codelineno-78-12" name="__codelineno-78-12" href="#__codelineno-78-12"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check
 </span></code></pre></div>
 <h3 id="testing">Testing</h3>
 <p>The project uses pytest with 100% code coverage requirements:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a><span class="c1"># Run unit tests with coverage</span>
-</span><span id="__span-76-2"><a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
-</span><span id="__span-76-3"><a id="__codelineno-76-3" name="__codelineno-76-3" href="#__codelineno-76-3"></a>
-</span><span id="__span-76-4"><a id="__codelineno-76-4" name="__codelineno-76-4" href="#__codelineno-76-4"></a><span class="c1"># Run specific tests</span>
-</span><span id="__span-76-5"><a id="__codelineno-76-5" name="__codelineno-76-5" href="#__codelineno-76-5"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>tests/unit/test_client.py
-</span><span id="__span-76-6"><a id="__codelineno-76-6" name="__codelineno-76-6" href="#__codelineno-76-6"></a>
-</span><span id="__span-76-7"><a id="__codelineno-76-7" name="__codelineno-76-7" href="#__codelineno-76-7"></a><span class="c1"># Generate coverage report</span>
-</span><span id="__span-76-8"><a id="__codelineno-76-8" name="__codelineno-76-8" href="#__codelineno-76-8"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>--cov-report<span class="o">=</span>html
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a><span class="c1"># Run unit tests with coverage</span>
+</span><span id="__span-79-2"><a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest
+</span><span id="__span-79-3"><a id="__codelineno-79-3" name="__codelineno-79-3" href="#__codelineno-79-3"></a>
+</span><span id="__span-79-4"><a id="__codelineno-79-4" name="__codelineno-79-4" href="#__codelineno-79-4"></a><span class="c1"># Run specific tests</span>
+</span><span id="__span-79-5"><a id="__codelineno-79-5" name="__codelineno-79-5" href="#__codelineno-79-5"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>tests/unit/test_client.py
+</span><span id="__span-79-6"><a id="__codelineno-79-6" name="__codelineno-79-6" href="#__codelineno-79-6"></a>
+</span><span id="__span-79-7"><a id="__codelineno-79-7" name="__codelineno-79-7" href="#__codelineno-79-7"></a><span class="c1"># Generate coverage report</span>
+</span><span id="__span-79-8"><a id="__codelineno-79-8" name="__codelineno-79-8" href="#__codelineno-79-8"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>--cov-report<span class="o">=</span>html
 </span></code></pre></div>
 <h3 id="code-quality">Code Quality</h3>
 <p>The project uses Ruff for linting and code formatting:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a><span class="c1"># Check code</span>
-</span><span id="__span-77-2"><a id="__codelineno-77-2" name="__codelineno-77-2" href="#__codelineno-77-2"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check
-</span><span id="__span-77-3"><a id="__codelineno-77-3" name="__codelineno-77-3" href="#__codelineno-77-3"></a>
-</span><span id="__span-77-4"><a id="__codelineno-77-4" name="__codelineno-77-4" href="#__codelineno-77-4"></a><span class="c1"># Auto-fix issues</span>
-</span><span id="__span-77-5"><a id="__codelineno-77-5" name="__codelineno-77-5" href="#__codelineno-77-5"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>--fix
-</span><span id="__span-77-6"><a id="__codelineno-77-6" name="__codelineno-77-6" href="#__codelineno-77-6"></a>
-</span><span id="__span-77-7"><a id="__codelineno-77-7" name="__codelineno-77-7" href="#__codelineno-77-7"></a><span class="c1"># Format code</span>
-</span><span id="__span-77-8"><a id="__codelineno-77-8" name="__codelineno-77-8" href="#__codelineno-77-8"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>format
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a><span class="c1"># Check code</span>
+</span><span id="__span-80-2"><a id="__codelineno-80-2" name="__codelineno-80-2" href="#__codelineno-80-2"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check
+</span><span id="__span-80-3"><a id="__codelineno-80-3" name="__codelineno-80-3" href="#__codelineno-80-3"></a>
+</span><span id="__span-80-4"><a id="__codelineno-80-4" name="__codelineno-80-4" href="#__codelineno-80-4"></a><span class="c1"># Auto-fix issues</span>
+</span><span id="__span-80-5"><a id="__codelineno-80-5" name="__codelineno-80-5" href="#__codelineno-80-5"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>--fix
+</span><span id="__span-80-6"><a id="__codelineno-80-6" name="__codelineno-80-6" href="#__codelineno-80-6"></a>
+</span><span id="__span-80-7"><a id="__codelineno-80-7" name="__codelineno-80-7" href="#__codelineno-80-7"></a><span class="c1"># Format code</span>
+</span><span id="__span-80-8"><a id="__codelineno-80-8" name="__codelineno-80-8" href="#__codelineno-80-8"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>format
 </span></code></pre></div>
 <h2 id="architecture">Architecture</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>soliplex.agents/
-</span><span id="__span-78-2"><a id="__codelineno-78-2" name="__codelineno-78-2" href="#__codelineno-78-2"></a>├── src/soliplex/agents/
-</span><span id="__span-78-3"><a id="__codelineno-78-3" name="__codelineno-78-3" href="#__codelineno-78-3"></a>│   ├── cli.py              # Main CLI entry point (includes &#39;serve&#39; command)
-</span><span id="__span-78-4"><a id="__codelineno-78-4" name="__codelineno-78-4" href="#__codelineno-78-4"></a>│   ├── local_store.py      # Writes downloaded documents + .meta.json sidecars
-</span><span id="__span-78-5"><a id="__codelineno-78-5" name="__codelineno-78-5" href="#__codelineno-78-5"></a>│   ├── local_state.py      # Per-source SQLite sync state (hashes + commit SHA)
-</span><span id="__span-78-6"><a id="__codelineno-78-6" name="__codelineno-78-6" href="#__codelineno-78-6"></a>│   ├── config.py           # Configuration, settings, and manifest models
-</span><span id="__span-78-7"><a id="__codelineno-78-7" name="__codelineno-78-7" href="#__codelineno-78-7"></a>│   ├── server/             # FastAPI server
-</span><span id="__span-78-8"><a id="__codelineno-78-8" name="__codelineno-78-8" href="#__codelineno-78-8"></a>│   │   ├── __init__.py     # FastAPI app initialization, scheduler
-</span><span id="__span-78-9"><a id="__codelineno-78-9" name="__codelineno-78-9" href="#__codelineno-78-9"></a>│   │   ├── auth.py         # Authentication (API key &amp; OAuth2 proxy)
-</span><span id="__span-78-10"><a id="__codelineno-78-10" name="__codelineno-78-10" href="#__codelineno-78-10"></a>│   │   └── routes/
-</span><span id="__span-78-11"><a id="__codelineno-78-11" name="__codelineno-78-11" href="#__codelineno-78-11"></a>│   │       ├── __init__.py
-</span><span id="__span-78-12"><a id="__codelineno-78-12" name="__codelineno-78-12" href="#__codelineno-78-12"></a>│   │       ├── fs.py       # Filesystem API endpoints
-</span><span id="__span-78-13"><a id="__codelineno-78-13" name="__codelineno-78-13" href="#__codelineno-78-13"></a>│   │       ├── scm.py      # SCM API endpoints
-</span><span id="__span-78-14"><a id="__codelineno-78-14" name="__codelineno-78-14" href="#__codelineno-78-14"></a>│   │       ├── webdav.py   # WebDAV API endpoints
-</span><span id="__span-78-15"><a id="__codelineno-78-15" name="__codelineno-78-15" href="#__codelineno-78-15"></a>│   │       ├── web.py      # Web API endpoints
-</span><span id="__span-78-16"><a id="__codelineno-78-16" name="__codelineno-78-16" href="#__codelineno-78-16"></a>│   │       └── manifest.py # Manifest API endpoints
-</span><span id="__span-78-17"><a id="__codelineno-78-17" name="__codelineno-78-17" href="#__codelineno-78-17"></a>│   ├── common/              # Shared utilities
-</span><span id="__span-78-18"><a id="__codelineno-78-18" name="__codelineno-78-18" href="#__codelineno-78-18"></a>│   │   ├── urls_file.py     # URL list reader (local, S3, WebDAV)
-</span><span id="__span-78-19"><a id="__codelineno-78-19" name="__codelineno-78-19" href="#__codelineno-78-19"></a>│   │   ├── s3.py            # S3 object reader
-</span><span id="__span-78-20"><a id="__codelineno-78-20" name="__codelineno-78-20" href="#__codelineno-78-20"></a>│   │   ├── mime.py          # Content-based MIME detection + extension logic
-</span><span id="__span-78-21"><a id="__codelineno-78-21" name="__codelineno-78-21" href="#__codelineno-78-21"></a>│   │   └── config.py        # Inventory read/validate helpers
-</span><span id="__span-78-22"><a id="__codelineno-78-22" name="__codelineno-78-22" href="#__codelineno-78-22"></a>│   ├── fs/                 # Filesystem agent
-</span><span id="__span-78-23"><a id="__codelineno-78-23" name="__codelineno-78-23" href="#__codelineno-78-23"></a>│   │   ├── app.py          # Core filesystem logic
-</span><span id="__span-78-24"><a id="__codelineno-78-24" name="__codelineno-78-24" href="#__codelineno-78-24"></a>│   │   └── cli.py          # Filesystem CLI commands
-</span><span id="__span-78-25"><a id="__codelineno-78-25" name="__codelineno-78-25" href="#__codelineno-78-25"></a>│   ├── web/                # Web agent
-</span><span id="__span-78-26"><a id="__codelineno-78-26" name="__codelineno-78-26" href="#__codelineno-78-26"></a>│   │   └── app.py          # Core web fetching logic
-</span><span id="__span-78-27"><a id="__codelineno-78-27" name="__codelineno-78-27" href="#__codelineno-78-27"></a>│   ├── webdav/             # WebDAV agent
-</span><span id="__span-78-28"><a id="__codelineno-78-28" name="__codelineno-78-28" href="#__codelineno-78-28"></a>│   │   ├── app.py          # Core WebDAV logic
-</span><span id="__span-78-29"><a id="__codelineno-78-29" name="__codelineno-78-29" href="#__codelineno-78-29"></a>│   │   └── cli.py          # WebDAV CLI commands
-</span><span id="__span-78-30"><a id="__codelineno-78-30" name="__codelineno-78-30" href="#__codelineno-78-30"></a>│   ├── manifest/           # Manifest runner
-</span><span id="__span-78-31"><a id="__codelineno-78-31" name="__codelineno-78-31" href="#__codelineno-78-31"></a>│   │   ├── runner.py       # YAML loading, validation, dispatch
-</span><span id="__span-78-32"><a id="__codelineno-78-32" name="__codelineno-78-32" href="#__codelineno-78-32"></a>│   │   ├── haiku_loader.py # haiku-ingester batch load subprocess
-</span><span id="__span-78-33"><a id="__codelineno-78-33" name="__codelineno-78-33" href="#__codelineno-78-33"></a>│   │   ├── haiku_maint.py  # haiku-rag migrate/vacuum subprocesses
-</span><span id="__span-78-34"><a id="__codelineno-78-34" name="__codelineno-78-34" href="#__codelineno-78-34"></a>│   │   └── cli.py          # Manifest CLI commands
-</span><span id="__span-78-35"><a id="__codelineno-78-35" name="__codelineno-78-35" href="#__codelineno-78-35"></a>│   └── scm/                # SCM agent
-</span><span id="__span-78-36"><a id="__codelineno-78-36" name="__codelineno-78-36" href="#__codelineno-78-36"></a>│       ├── app.py          # Core SCM logic
-</span><span id="__span-78-37"><a id="__codelineno-78-37" name="__codelineno-78-37" href="#__codelineno-78-37"></a>│       ├── cli.py          # SCM CLI commands
-</span><span id="__span-78-38"><a id="__codelineno-78-38" name="__codelineno-78-38" href="#__codelineno-78-38"></a>│       ├── base.py         # Base SCM provider interface
-</span><span id="__span-78-39"><a id="__codelineno-78-39" name="__codelineno-78-39" href="#__codelineno-78-39"></a>│       ├── github/         # GitHub implementation
-</span><span id="__span-78-40"><a id="__codelineno-78-40" name="__codelineno-78-40" href="#__codelineno-78-40"></a>│       ├── gitea/          # Gitea implementation
-</span><span id="__span-78-41"><a id="__codelineno-78-41" name="__codelineno-78-41" href="#__codelineno-78-41"></a>│       └── lib/
-</span><span id="__span-78-42"><a id="__codelineno-78-42" name="__codelineno-78-42" href="#__codelineno-78-42"></a>│           ├── templates/  # Issue rendering templates
-</span><span id="__span-78-43"><a id="__codelineno-78-43" name="__codelineno-78-43" href="#__codelineno-78-43"></a>│           └── utils.py    # Utility functions
-</span><span id="__span-78-44"><a id="__codelineno-78-44" name="__codelineno-78-44" href="#__codelineno-78-44"></a>├── example-manifests/      # Example manifests (fs, scm, web, webdav, composite, delete-stale)
-</span><span id="__span-78-45"><a id="__codelineno-78-45" name="__codelineno-78-45" href="#__codelineno-78-45"></a>├── example-haiku-configs/  # Example haiku-rag configs for the load step (local, S3)
-</span><span id="__span-78-46"><a id="__codelineno-78-46" name="__codelineno-78-46" href="#__codelineno-78-46"></a>├── tests/                  # Test suite
-</span><span id="__span-78-47"><a id="__codelineno-78-47" name="__codelineno-78-47" href="#__codelineno-78-47"></a>│   └── unit/
-</span><span id="__span-78-48"><a id="__codelineno-78-48" name="__codelineno-78-48" href="#__codelineno-78-48"></a>│       ├── test_server_*.py  # Server API tests
-</span><span id="__span-78-49"><a id="__codelineno-78-49" name="__codelineno-78-49" href="#__codelineno-78-49"></a>│       └── ...
-</span><span id="__span-78-50"><a id="__codelineno-78-50" name="__codelineno-78-50" href="#__codelineno-78-50"></a>├── Dockerfile              # Production container
-</span><span id="__span-78-51"><a id="__codelineno-78-51" name="__codelineno-78-51" href="#__codelineno-78-51"></a>├── .dockerignore           # Build context exclusions
-</span><span id="__span-78-52"><a id="__codelineno-78-52" name="__codelineno-78-52" href="#__codelineno-78-52"></a>└── DOCKERFILE_CHANGES.md   # Docker implementation documentation
+<div class="language-text highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>soliplex.agents/
+</span><span id="__span-81-2"><a id="__codelineno-81-2" name="__codelineno-81-2" href="#__codelineno-81-2"></a>├── src/soliplex/agents/
+</span><span id="__span-81-3"><a id="__codelineno-81-3" name="__codelineno-81-3" href="#__codelineno-81-3"></a>│   ├── cli.py              # Main CLI entry point (includes &#39;serve&#39; command)
+</span><span id="__span-81-4"><a id="__codelineno-81-4" name="__codelineno-81-4" href="#__codelineno-81-4"></a>│   ├── local_store.py      # Writes downloaded documents + .meta.json sidecars
+</span><span id="__span-81-5"><a id="__codelineno-81-5" name="__codelineno-81-5" href="#__codelineno-81-5"></a>│   ├── local_state.py      # Per-source SQLite sync state (hashes + commit SHA)
+</span><span id="__span-81-6"><a id="__codelineno-81-6" name="__codelineno-81-6" href="#__codelineno-81-6"></a>│   ├── config.py           # Configuration, settings, and manifest models
+</span><span id="__span-81-7"><a id="__codelineno-81-7" name="__codelineno-81-7" href="#__codelineno-81-7"></a>│   ├── haiku_metadata.py   # haiku-rag metadata providers (sidecar, PDF, combined)
+</span><span id="__span-81-8"><a id="__codelineno-81-8" name="__codelineno-81-8" href="#__codelineno-81-8"></a>│   ├── haiku_backfill.py   # Re-runs metadata providers over indexed documents
+</span><span id="__span-81-9"><a id="__codelineno-81-9" name="__codelineno-81-9" href="#__codelineno-81-9"></a>│   ├── server/             # FastAPI server
+</span><span id="__span-81-10"><a id="__codelineno-81-10" name="__codelineno-81-10" href="#__codelineno-81-10"></a>│   │   ├── __init__.py     # FastAPI app initialization, scheduler
+</span><span id="__span-81-11"><a id="__codelineno-81-11" name="__codelineno-81-11" href="#__codelineno-81-11"></a>│   │   ├── auth.py         # Authentication (API key &amp; OAuth2 proxy)
+</span><span id="__span-81-12"><a id="__codelineno-81-12" name="__codelineno-81-12" href="#__codelineno-81-12"></a>│   │   └── routes/
+</span><span id="__span-81-13"><a id="__codelineno-81-13" name="__codelineno-81-13" href="#__codelineno-81-13"></a>│   │       ├── __init__.py
+</span><span id="__span-81-14"><a id="__codelineno-81-14" name="__codelineno-81-14" href="#__codelineno-81-14"></a>│   │       ├── fs.py       # Filesystem API endpoints
+</span><span id="__span-81-15"><a id="__codelineno-81-15" name="__codelineno-81-15" href="#__codelineno-81-15"></a>│   │       ├── scm.py      # SCM API endpoints
+</span><span id="__span-81-16"><a id="__codelineno-81-16" name="__codelineno-81-16" href="#__codelineno-81-16"></a>│   │       ├── webdav.py   # WebDAV API endpoints
+</span><span id="__span-81-17"><a id="__codelineno-81-17" name="__codelineno-81-17" href="#__codelineno-81-17"></a>│   │       ├── web.py      # Web API endpoints
+</span><span id="__span-81-18"><a id="__codelineno-81-18" name="__codelineno-81-18" href="#__codelineno-81-18"></a>│   │       └── manifest.py # Manifest API endpoints
+</span><span id="__span-81-19"><a id="__codelineno-81-19" name="__codelineno-81-19" href="#__codelineno-81-19"></a>│   ├── common/              # Shared utilities
+</span><span id="__span-81-20"><a id="__codelineno-81-20" name="__codelineno-81-20" href="#__codelineno-81-20"></a>│   │   ├── urls_file.py     # URL list reader (local, S3, WebDAV)
+</span><span id="__span-81-21"><a id="__codelineno-81-21" name="__codelineno-81-21" href="#__codelineno-81-21"></a>│   │   ├── s3.py            # S3 object reader
+</span><span id="__span-81-22"><a id="__codelineno-81-22" name="__codelineno-81-22" href="#__codelineno-81-22"></a>│   │   ├── mime.py          # Content-based MIME detection + extension logic
+</span><span id="__span-81-23"><a id="__codelineno-81-23" name="__codelineno-81-23" href="#__codelineno-81-23"></a>│   │   └── config.py        # Inventory read/validate helpers
+</span><span id="__span-81-24"><a id="__codelineno-81-24" name="__codelineno-81-24" href="#__codelineno-81-24"></a>│   ├── fs/                 # Filesystem agent
+</span><span id="__span-81-25"><a id="__codelineno-81-25" name="__codelineno-81-25" href="#__codelineno-81-25"></a>│   │   ├── app.py          # Core filesystem logic
+</span><span id="__span-81-26"><a id="__codelineno-81-26" name="__codelineno-81-26" href="#__codelineno-81-26"></a>│   │   └── cli.py          # Filesystem CLI commands
+</span><span id="__span-81-27"><a id="__codelineno-81-27" name="__codelineno-81-27" href="#__codelineno-81-27"></a>│   ├── web/                # Web agent
+</span><span id="__span-81-28"><a id="__codelineno-81-28" name="__codelineno-81-28" href="#__codelineno-81-28"></a>│   │   └── app.py          # Core web fetching logic
+</span><span id="__span-81-29"><a id="__codelineno-81-29" name="__codelineno-81-29" href="#__codelineno-81-29"></a>│   ├── webdav/             # WebDAV agent
+</span><span id="__span-81-30"><a id="__codelineno-81-30" name="__codelineno-81-30" href="#__codelineno-81-30"></a>│   │   ├── app.py          # Core WebDAV logic
+</span><span id="__span-81-31"><a id="__codelineno-81-31" name="__codelineno-81-31" href="#__codelineno-81-31"></a>│   │   └── cli.py          # WebDAV CLI commands
+</span><span id="__span-81-32"><a id="__codelineno-81-32" name="__codelineno-81-32" href="#__codelineno-81-32"></a>│   ├── manifest/           # Manifest runner
+</span><span id="__span-81-33"><a id="__codelineno-81-33" name="__codelineno-81-33" href="#__codelineno-81-33"></a>│   │   ├── runner.py       # YAML loading, validation, dispatch
+</span><span id="__span-81-34"><a id="__codelineno-81-34" name="__codelineno-81-34" href="#__codelineno-81-34"></a>│   │   ├── haiku_loader.py # haiku-ingester batch load subprocess
+</span><span id="__span-81-35"><a id="__codelineno-81-35" name="__codelineno-81-35" href="#__codelineno-81-35"></a>│   │   ├── haiku_maint.py  # haiku-rag migrate/vacuum/backfill-metadata subprocesses
+</span><span id="__span-81-36"><a id="__codelineno-81-36" name="__codelineno-81-36" href="#__codelineno-81-36"></a>│   │   ├── post_processors.py  # Built-in post-process callbacks
+</span><span id="__span-81-37"><a id="__codelineno-81-37" name="__codelineno-81-37" href="#__codelineno-81-37"></a>│   │   └── cli.py          # Manifest CLI commands
+</span><span id="__span-81-38"><a id="__codelineno-81-38" name="__codelineno-81-38" href="#__codelineno-81-38"></a>│   └── scm/                # SCM agent
+</span><span id="__span-81-39"><a id="__codelineno-81-39" name="__codelineno-81-39" href="#__codelineno-81-39"></a>│       ├── app.py          # Core SCM logic
+</span><span id="__span-81-40"><a id="__codelineno-81-40" name="__codelineno-81-40" href="#__codelineno-81-40"></a>│       ├── cli.py          # SCM CLI commands
+</span><span id="__span-81-41"><a id="__codelineno-81-41" name="__codelineno-81-41" href="#__codelineno-81-41"></a>│       ├── base.py         # Base SCM provider interface
+</span><span id="__span-81-42"><a id="__codelineno-81-42" name="__codelineno-81-42" href="#__codelineno-81-42"></a>│       ├── github/         # GitHub implementation
+</span><span id="__span-81-43"><a id="__codelineno-81-43" name="__codelineno-81-43" href="#__codelineno-81-43"></a>│       ├── gitea/          # Gitea implementation
+</span><span id="__span-81-44"><a id="__codelineno-81-44" name="__codelineno-81-44" href="#__codelineno-81-44"></a>│       └── lib/
+</span><span id="__span-81-45"><a id="__codelineno-81-45" name="__codelineno-81-45" href="#__codelineno-81-45"></a>│           ├── templates/  # Issue rendering templates
+</span><span id="__span-81-46"><a id="__codelineno-81-46" name="__codelineno-81-46" href="#__codelineno-81-46"></a>│           └── utils.py    # Utility functions
+</span><span id="__span-81-47"><a id="__codelineno-81-47" name="__codelineno-81-47" href="#__codelineno-81-47"></a>├── example-manifests/      # Example manifests (fs, scm, web, webdav, composite, delete-stale)
+</span><span id="__span-81-48"><a id="__codelineno-81-48" name="__codelineno-81-48" href="#__codelineno-81-48"></a>├── example-haiku-configs/  # Example haiku-rag configs for the load step (local, S3)
+</span><span id="__span-81-49"><a id="__codelineno-81-49" name="__codelineno-81-49" href="#__codelineno-81-49"></a>├── tests/                  # Test suite
+</span><span id="__span-81-50"><a id="__codelineno-81-50" name="__codelineno-81-50" href="#__codelineno-81-50"></a>│   └── unit/
+</span><span id="__span-81-51"><a id="__codelineno-81-51" name="__codelineno-81-51" href="#__codelineno-81-51"></a>│       ├── test_server_*.py  # Server API tests
+</span><span id="__span-81-52"><a id="__codelineno-81-52" name="__codelineno-81-52" href="#__codelineno-81-52"></a>│       └── ...
+</span><span id="__span-81-53"><a id="__codelineno-81-53" name="__codelineno-81-53" href="#__codelineno-81-53"></a>├── Dockerfile              # Production container
+</span><span id="__span-81-54"><a id="__codelineno-81-54" name="__codelineno-81-54" href="#__codelineno-81-54"></a>├── .dockerignore           # Build context exclusions
+</span><span id="__span-81-55"><a id="__codelineno-81-55" name="__codelineno-81-55" href="#__codelineno-81-55"></a>└── DOCKERFILE_CHANGES.md   # Docker implementation documentation
 </span></code></pre></div>
 <h3 id="key-components">Key Components</h3>
 <p><strong>CLI Layer:</strong></p>
@@ -6270,6 +6553,13 @@ required credentials (<code>scm_auth_token</code>, <code>WEBDAV_URL</code>/<code
 <li><code>manifest/runner.py</code> - Manifest loading, validation, and dispatch to agents</li>
 <li><code>local_store.py</code> - Writes fetched documents and metadata sidecars to <code>DOWNLOAD_DIR</code></li>
 <li><code>local_state.py</code> - Local synchronization state (content hashes + SCM commit markers)</li>
+</ul>
+<p><strong>haiku-rag Layer:</strong></p>
+<ul>
+<li><code>manifest/haiku_loader.py</code> - The <code>haiku-ingester run-batch</code> load after each manifest run</li>
+<li><code>manifest/haiku_maint.py</code> - <code>migrate</code> / <code>vacuum</code> / <code>backfill-metadata</code> subprocesses</li>
+<li><code>haiku_metadata.py</code> - Metadata providers run inside <code>haiku-ingester</code> (registered entry points)</li>
+<li><code>haiku_backfill.py</code> - Back-fill subprocess re-running those providers over indexed documents</li>
 </ul>
 <p><strong>Configuration:</strong></p>
 <ul>
