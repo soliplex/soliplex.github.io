@@ -3416,7 +3416,7 @@ and <code>formatLogRecord</code> applies no redaction. Two consequences:</p>
 <ul>
 <li>Every <code>attributes:</code> site in the app today carries deployment detail —
   <code>discoveryUrl</code>, <code>serverUrl</code>, <code>hosts</code>, <code>alias</code>, <code>expiresAt</code>, <code>session</code>,
-  <code>platformError</code>, <code>elapsedMs</code>, <code>returnTo</code>. None carries a credential.
+  <code>platformError</code>, <code>elapsedMs</code>. None carries a credential.
   (<code>accessToken</code> / <code>refreshToken</code> / <code>idToken</code> appear in the codebase only as
   token-storage JSON keys, never as log attributes.)</li>
 <li><code>error:</code> takes an arbitrary object. An IdP or plugin exception whose
