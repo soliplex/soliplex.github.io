@@ -5,7 +5,7 @@
 # These directories are copied from git submodules
 ag-ui/
 bubble-sandbox/
-chatbot/
+chatbot-widget/
 flutter/
 frontend/
 ingester-agents/
