@@ -3726,6 +3726,10 @@ document came back, not that the chunk holds the answer.</p>
   deliberately more than a chat agent's search limit: a newly ingested
   document relevant to a question can push a labelled one out of a short
   list without anything being broken.</li>
+<li><code>-v</code> / <code>--verbose</code> shows each question's result, as well as the summary.</li>
+<li><code>--out</code> saves the results to a file, to compare a later run against. An
+  existing file is refused, before any searching, unless <code>--force</code> is
+  passed too. Without <code>--out</code>, nothing is written.</li>
 </ul>
 <p>Binding problems are reported on stderr, as <code>bind</code> reports them. A
 worksheet that isn't ready to bind is refused.</p>
@@ -3739,9 +3743,21 @@ citing nothing) are <em>ineligible</em>: counted, not checked.</p>
 <code>sha256</code> the database records for each document, then its <code>source_url</code>, and
 only failing both by URI. So a database whose documents sit at different
 paths from the manifest's is still checked correctly.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>results saved to check-retrieval.json
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>20/20 questions passed;  mean retrieval_mrr 0.975
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>20/20 questions passed;  mean retrieval_mrr 0.975
 </span></code></pre></div>
+<p>With <code>--verbose</code>, each question gets a line first, in question-set order:
+the rank of its first relevant document, its <code>retrieval_mrr</code>, and the
+question. Below a question not at rank 1 are the documents that came ahead
+of it. Below a miss are the first few that came back instead:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rank  mrr    question
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>   1  1.000  What are the steps of a risk assessment?
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>   ...
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>   2  0.500  What levels of potential impact are used to categorize information and systems?
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>             after: NIST.SP.800-53r4.pdf
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>   ...
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>20/20 questions passed;  mean retrieval_mrr 0.975
+</span></code></pre></div>
+<p>Documents are shown by name; the results file has their full URIs.</p>
 <h2 id="comparing-with-an-earlier-run">Comparing with an earlier run</h2>
 <p><code>--compare</code> names the results of an earlier run. Against it, a question
 fails when it <em>loses</em>: the earlier run hit, and this one misses. The rest
@@ -3761,58 +3777,57 @@ stored with a different embedder. So is one that asked a different question
 under some case's key, the question's <code>metadata.uuid</code>. Different versions of
 <code>exquisite</code> or haiku-rag only warn: a check across an upgrade is meant to
 span them.</p>
-<p><code>--baseline</code> reports misses and losses without failing. Read the report,
-then keep the run as the reference for the next one.</p>
+<p>Any run saved with <code>--out</code> can be a reference, including one that failed:
+read its report, then compare the next run against it.</p>
 <h2 id="exit-status">Exit status</h2>
-<p><code>check-retrieval</code> exits with status 0 when every eligible question passes,
-or when the run is a <code>--baseline</code>. It exits with status 1 when:</p>
+<p><code>check-retrieval</code> exits with status 0 when every eligible question passes.
+It exits with status 1 when:</p>
 <ul>
 <li>a question misses, or loses against <code>--compare</code>;</li>
 <li>no question is eligible;</li>
 <li>the worksheet isn't ready to bind;</li>
 <li>the database is missing, or haiku-rag won't search it as it stands (it
   needs migrating to the installed haiku-rag, say);</li>
-<li>the <code>--compare</code> file isn't a results file, or is refused.</li>
+<li>the <code>--compare</code> file isn't a results file, or is refused;</li>
+<li>the <code>--out</code> file exists, and <code>--force</code> wasn't passed.</li>
 </ul>
 <h2 id="the-results-file">The results file</h2>
-<p>Every run that searches writes its results to <code>--out</code> (default
-<code>check-retrieval.json</code>), whatever its outcome:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exquisite check-retrieval 1&quot;</span><span class="p">,</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;question_set&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;questions/sp800-2020.json&quot;</span><span class="p">,</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">&quot;corpus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sp800&quot;</span><span class="p">,</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nt">&quot;ingestion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sp800-2020&quot;</span><span class="p">,</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">&quot;embedder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vllm:nvidia/llama-nemotron-embed-vl-1b-v2 (dim 2048)&quot;</span><span class="p">,</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">&quot;reranker&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="nt">&quot;top_k&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="nt">&quot;config_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5f8a9bfe…&quot;</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sp800-2020.lancedb&quot;</span><span class="p">,</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="nt">&quot;embedder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vllm:nvidia/llama-nemotron-embed-vl-1b-v2 (dim 2048)&quot;</span><span class="p">,</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="nt">&quot;documents&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="nt">&quot;chunks&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5502</span><span class="p">,</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="nt">&quot;written_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-10-03T01:54:08.941536&quot;</span><span class="p">,</span>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.89.0&quot;</span>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">  </span><span class="nt">&quot;substrate&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;exquisite&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;haiku-rag-slim&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.89.0&quot;</span><span class="p">},</span>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">  </span><span class="nt">&quot;started&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-10-03T08:58:41&quot;</span><span class="p">,</span>
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">  </span><span class="nt">&quot;finished&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-10-03T08:58:45&quot;</span><span class="p">,</span>
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">  </span><span class="nt">&quot;baseline&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">  </span><span class="nt">&quot;cases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">      </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;33e57977-…&quot;</span><span class="p">,</span>
-</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">      </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What levels of potential impact are used to categorize information and systems?&quot;</span><span class="p">,</span>
-</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">      </span><span class="nt">&quot;relevant&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;file:///data/nist-sp-800/nistspecialpublication800-60v1r1.pdf&quot;</span><span class="p">],</span>
-</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">      </span><span class="nt">&quot;retrieved&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">        </span><span class="s2">&quot;file:///data/nist-sp-800/NIST.SP.800-53r4.pdf&quot;</span><span class="p">,</span>
-</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">        </span><span class="s2">&quot;file:///data/nist-sp-800/nistspecialpublication800-60v1r1.pdf&quot;</span>
-</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="w">      </span><span class="p">],</span>
-</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="w">      </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span>
-</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="p">}</span>
+<p>With <code>--out</code>, a run that searches saves its results, whatever its outcome:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exquisite check-retrieval 1&quot;</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;question_set&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;questions/sp800-2020.json&quot;</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&quot;corpus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sp800&quot;</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">&quot;ingestion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sp800-2020&quot;</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">&quot;embedder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vllm:nvidia/llama-nemotron-embed-vl-1b-v2 (dim 2048)&quot;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nt">&quot;reranker&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nt">&quot;top_k&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nt">&quot;config_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5f8a9bfe…&quot;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">  </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sp800-2020.lancedb&quot;</span><span class="p">,</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="nt">&quot;embedder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vllm:nvidia/llama-nemotron-embed-vl-1b-v2 (dim 2048)&quot;</span><span class="p">,</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="nt">&quot;documents&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="nt">&quot;chunks&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5502</span><span class="p">,</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="nt">&quot;written_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-10-03T01:54:08.941536&quot;</span><span class="p">,</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.89.0&quot;</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">  </span><span class="nt">&quot;substrate&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;exquisite&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;haiku-rag-slim&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.89.0&quot;</span><span class="p">},</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">  </span><span class="nt">&quot;started&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-10-03T08:58:41&quot;</span><span class="p">,</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">  </span><span class="nt">&quot;finished&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-10-03T08:58:45&quot;</span><span class="p">,</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">  </span><span class="nt">&quot;cases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">      </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;33e57977-…&quot;</span><span class="p">,</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">      </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What levels of potential impact are used to categorize information and systems?&quot;</span><span class="p">,</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">      </span><span class="nt">&quot;relevant&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;file:///data/nist-sp-800/nistspecialpublication800-60v1r1.pdf&quot;</span><span class="p">],</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">      </span><span class="nt">&quot;retrieved&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">        </span><span class="s2">&quot;file:///data/nist-sp-800/NIST.SP.800-53r4.pdf&quot;</span><span class="p">,</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">        </span><span class="s2">&quot;file:///data/nist-sp-800/nistspecialpublication800-60v1r1.pdf&quot;</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">      </span><span class="p">],</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">      </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
 <li><code>settings</code>: how the searches were made. <code>config_hash</code> is a SHA-256 of the
