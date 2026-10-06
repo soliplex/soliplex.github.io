@@ -4834,39 +4834,40 @@ by default, or S3-compatible object storage (see
 </span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>
 </span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="c1"># haiku-rag loading (runs `haiku-ingester run-batch` after each manifest run)</span>
 </span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="nv">HAIKU_LOAD_ENABLED</span><span class="o">=</span><span class="nb">false</span>
-</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>/var/lib/lancedb<span class="w">          </span><span class="c1"># read by the haiku-rag config, which</span>
-</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">                                      </span><span class="c1"># places &lt;source&gt;.lancedb under it</span>
-</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="nv">HAIKU_PATH</span><span class="o">=</span>/etc/haiku<span class="w">                  </span><span class="c1"># base dir for haiku-rag config files</span>
-</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="c1"># HAIKU_DEFAULT_CONFIG=haiku.rag.default.yaml   # config filename under HAIKU_PATH</span>
-</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="c1"># HAIKU_LOAD_COMMAND=haiku-ingester --config={haiku_cfg} run-batch</span>
-</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="c1"># HAIKU_LOAD_TIMEOUT=1800</span>
-</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="c1"># HAIKU_LOAD_CWD=/var/lib/ingester     # subprocess working dir (default: inherit)</span>
-</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a>
-</span><span id="__span-8-37"><a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="c1"># haiku-rag maintenance (`si-agent manifest migrate` / `vacuum` / `backfill-metadata`)</span>
-</span><span id="__span-8-38"><a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a><span class="c1"># HAIKU_MAINTENANCE_COMMAND=haiku-rag --config={haiku_cfg} {verb}   # not backfill-metadata</span>
-</span><span id="__span-8-39"><a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="c1"># HAIKU_MAINTENANCE_TIMEOUT=3600</span>
-</span><span id="__span-8-40"><a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a>
-</span><span id="__span-8-41"><a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a><span class="c1"># haiku subprocess output (load and maintenance) is logged in parts, inside</span>
-</span><span id="__span-8-42"><a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a><span class="c1"># the run&#39;s span: one record per chunk, split at a line break where possible</span>
-</span><span id="__span-8-43"><a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a><span class="c1"># HAIKU_OUTPUT_CHUNK_BYTES=65536        # size of one logged part</span>
-</span><span id="__span-8-44"><a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a><span class="c1"># HAIKU_OUTPUT_FLUSH_SECONDS=30         # log pending output at least this often</span>
-</span><span id="__span-8-45"><a id="__codelineno-8-45" name="__codelineno-8-45" href="#__codelineno-8-45"></a><span class="c1"># HAIKU_OUTPUT_MAX_BYTES=0              # cap on logged output per stream; 0 = none</span>
-</span><span id="__span-8-46"><a id="__codelineno-8-46" name="__codelineno-8-46" href="#__codelineno-8-46"></a>
-</span><span id="__span-8-47"><a id="__codelineno-8-47" name="__codelineno-8-47" href="#__codelineno-8-47"></a><span class="c1"># Tracing (see Tracing with Logfire below)</span>
-</span><span id="__span-8-48"><a id="__codelineno-8-48" name="__codelineno-8-48" href="#__codelineno-8-48"></a><span class="c1"># LOGFIRE_TOKEN=...                     # or /run/secrets/logfire_token</span>
-</span><span id="__span-8-49"><a id="__codelineno-8-49" name="__codelineno-8-49" href="#__codelineno-8-49"></a><span class="c1"># LOGFIRE_SERVICE_NAME=ingester-agents</span>
-</span><span id="__span-8-50"><a id="__codelineno-8-50" name="__codelineno-8-50" href="#__codelineno-8-50"></a><span class="c1"># HAIKU_TRACE_WRAPPER=false             # join haiku-ingester&#39;s spans to the agent&#39;s trace</span>
-</span><span id="__span-8-51"><a id="__codelineno-8-51" name="__codelineno-8-51" href="#__codelineno-8-51"></a>
-</span><span id="__span-8-52"><a id="__codelineno-8-52" name="__codelineno-8-52" href="#__codelineno-8-52"></a><span class="c1"># S3-compatible storage. S3_ENDPOINT_URL is shared between urls_file reads</span>
-</span><span id="__span-8-53"><a id="__codelineno-8-53" name="__codelineno-8-53" href="#__codelineno-8-53"></a><span class="c1"># and the download store; the rest are the download store&#39;s credentials.</span>
-</span><span id="__span-8-54"><a id="__codelineno-8-54" name="__codelineno-8-54" href="#__codelineno-8-54"></a><span class="nv">S3_ENDPOINT_URL</span><span class="o">=</span>https://minio.example.com:9000
-</span><span id="__span-8-55"><a id="__codelineno-8-55" name="__codelineno-8-55" href="#__codelineno-8-55"></a><span class="c1"># S3_ACCESS_KEY_ID / S3_SECRET_ACCESS_KEY / S3_REGION -- omit to use the AWS</span>
-</span><span id="__span-8-56"><a id="__codelineno-8-56" name="__codelineno-8-56" href="#__codelineno-8-56"></a><span class="c1"># default credential chain (environment, instance role, profile).</span>
-</span><span id="__span-8-57"><a id="__codelineno-8-57" name="__codelineno-8-57" href="#__codelineno-8-57"></a><span class="c1"># S3_ALLOW_HTTP=true                  # required for an http:// endpoint</span>
-</span><span id="__span-8-58"><a id="__codelineno-8-58" name="__codelineno-8-58" href="#__codelineno-8-58"></a>
-</span><span id="__span-8-59"><a id="__codelineno-8-59" name="__codelineno-8-59" href="#__codelineno-8-59"></a><span class="c1"># Setting a bucket moves the download store into object storage. Accepts a</span>
-</span><span id="__span-8-60"><a id="__codelineno-8-60" name="__codelineno-8-60" href="#__codelineno-8-60"></a><span class="c1"># bare name or an s3://bucket/prefix URI. See Object Storage below.</span>
-</span><span id="__span-8-61"><a id="__codelineno-8-61" name="__codelineno-8-61" href="#__codelineno-8-61"></a><span class="c1"># DOWNLOAD_S3_BUCKET=my-documents</span>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="c1"># HAIKU_LOAD_ON_ERROR=false            # load even after a run with errors (see &quot;haiku-rag Loading&quot;)</span>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="nv">LANCEDB_DIR</span><span class="o">=</span>/var/lib/lancedb<span class="w">          </span><span class="c1"># read by the haiku-rag config, which</span>
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="w">                                      </span><span class="c1"># places &lt;source&gt;.lancedb under it</span>
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="nv">HAIKU_PATH</span><span class="o">=</span>/etc/haiku<span class="w">                  </span><span class="c1"># base dir for haiku-rag config files</span>
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="c1"># HAIKU_DEFAULT_CONFIG=haiku.rag.default.yaml   # config filename under HAIKU_PATH</span>
+</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="c1"># HAIKU_LOAD_COMMAND=haiku-ingester --config={haiku_cfg} run-batch</span>
+</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="c1"># HAIKU_LOAD_TIMEOUT=1800</span>
+</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="c1"># HAIKU_LOAD_CWD=/var/lib/ingester     # subprocess working dir (default: inherit)</span>
+</span><span id="__span-8-37"><a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a>
+</span><span id="__span-8-38"><a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a><span class="c1"># haiku-rag maintenance (`si-agent manifest migrate` / `vacuum` / `backfill-metadata`)</span>
+</span><span id="__span-8-39"><a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="c1"># HAIKU_MAINTENANCE_COMMAND=haiku-rag --config={haiku_cfg} {verb}   # not backfill-metadata</span>
+</span><span id="__span-8-40"><a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a><span class="c1"># HAIKU_MAINTENANCE_TIMEOUT=3600</span>
+</span><span id="__span-8-41"><a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a>
+</span><span id="__span-8-42"><a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a><span class="c1"># haiku subprocess output (load and maintenance) is logged in parts, inside</span>
+</span><span id="__span-8-43"><a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a><span class="c1"># the run&#39;s span: one record per chunk, split at a line break where possible</span>
+</span><span id="__span-8-44"><a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a><span class="c1"># HAIKU_OUTPUT_CHUNK_BYTES=65536        # size of one logged part</span>
+</span><span id="__span-8-45"><a id="__codelineno-8-45" name="__codelineno-8-45" href="#__codelineno-8-45"></a><span class="c1"># HAIKU_OUTPUT_FLUSH_SECONDS=30         # log pending output at least this often</span>
+</span><span id="__span-8-46"><a id="__codelineno-8-46" name="__codelineno-8-46" href="#__codelineno-8-46"></a><span class="c1"># HAIKU_OUTPUT_MAX_BYTES=0              # cap on logged output per stream; 0 = none</span>
+</span><span id="__span-8-47"><a id="__codelineno-8-47" name="__codelineno-8-47" href="#__codelineno-8-47"></a>
+</span><span id="__span-8-48"><a id="__codelineno-8-48" name="__codelineno-8-48" href="#__codelineno-8-48"></a><span class="c1"># Tracing (see Tracing with Logfire below)</span>
+</span><span id="__span-8-49"><a id="__codelineno-8-49" name="__codelineno-8-49" href="#__codelineno-8-49"></a><span class="c1"># LOGFIRE_TOKEN=...                     # or /run/secrets/logfire_token</span>
+</span><span id="__span-8-50"><a id="__codelineno-8-50" name="__codelineno-8-50" href="#__codelineno-8-50"></a><span class="c1"># LOGFIRE_SERVICE_NAME=ingester-agents</span>
+</span><span id="__span-8-51"><a id="__codelineno-8-51" name="__codelineno-8-51" href="#__codelineno-8-51"></a><span class="c1"># HAIKU_TRACE_WRAPPER=false             # join haiku-ingester&#39;s spans to the agent&#39;s trace</span>
+</span><span id="__span-8-52"><a id="__codelineno-8-52" name="__codelineno-8-52" href="#__codelineno-8-52"></a>
+</span><span id="__span-8-53"><a id="__codelineno-8-53" name="__codelineno-8-53" href="#__codelineno-8-53"></a><span class="c1"># S3-compatible storage. S3_ENDPOINT_URL is shared between urls_file reads</span>
+</span><span id="__span-8-54"><a id="__codelineno-8-54" name="__codelineno-8-54" href="#__codelineno-8-54"></a><span class="c1"># and the download store; the rest are the download store&#39;s credentials.</span>
+</span><span id="__span-8-55"><a id="__codelineno-8-55" name="__codelineno-8-55" href="#__codelineno-8-55"></a><span class="nv">S3_ENDPOINT_URL</span><span class="o">=</span>https://minio.example.com:9000
+</span><span id="__span-8-56"><a id="__codelineno-8-56" name="__codelineno-8-56" href="#__codelineno-8-56"></a><span class="c1"># S3_ACCESS_KEY_ID / S3_SECRET_ACCESS_KEY / S3_REGION -- omit to use the AWS</span>
+</span><span id="__span-8-57"><a id="__codelineno-8-57" name="__codelineno-8-57" href="#__codelineno-8-57"></a><span class="c1"># default credential chain (environment, instance role, profile).</span>
+</span><span id="__span-8-58"><a id="__codelineno-8-58" name="__codelineno-8-58" href="#__codelineno-8-58"></a><span class="c1"># S3_ALLOW_HTTP=true                  # required for an http:// endpoint</span>
+</span><span id="__span-8-59"><a id="__codelineno-8-59" name="__codelineno-8-59" href="#__codelineno-8-59"></a>
+</span><span id="__span-8-60"><a id="__codelineno-8-60" name="__codelineno-8-60" href="#__codelineno-8-60"></a><span class="c1"># Setting a bucket moves the download store into object storage. Accepts a</span>
+</span><span id="__span-8-61"><a id="__codelineno-8-61" name="__codelineno-8-61" href="#__codelineno-8-61"></a><span class="c1"># bare name or an s3://bucket/prefix URI. See Object Storage below.</span>
+</span><span id="__span-8-62"><a id="__codelineno-8-62" name="__codelineno-8-62" href="#__codelineno-8-62"></a><span class="c1"># DOWNLOAD_S3_BUCKET=my-documents</span>
 </span></code></pre></div>
 <p>See <a href="#haiku-rag-loading">haiku-rag Loading</a> for what these settings do. The
 haiku-rag config file needs a further set of its own — model and service
@@ -5355,6 +5356,7 @@ free-form and accept any keys.</p>
 <li><strong>metadata</strong>: Key-value pairs attached to all ingested documents.</li>
 <li><strong>extensions</strong>: File extensions to include (overrides the global <code>EXTENSIONS</code> setting).</li>
 <li><strong>delete_stale</strong>: Remove locally-stored documents that no longer appear in any component (default: true). See <a href="#stale-document-removal">Stale Document Removal</a> below.</li>
+<li><strong>allow_empty_load</strong>: Run the haiku-rag load even when the download location holds no documents, i.e. empty the source's database on purpose (default: false). See <a href="#haiku-rag-loading">haiku-rag Loading</a>.</li>
 <li><strong>haiku_config</strong>: Override the haiku-rag config file used when loading this manifest's source. Absolute paths are used as-is; relative values resolve under <code>HAIKU_PATH</code>. Defaults to <code>${HAIKU_PATH}/haiku.rag.default.yaml</code>. See <a href="#haiku-rag-loading">haiku-rag Loading</a>.</li>
 <li><strong>pre_run</strong>: Ordered steps run once before any component; one may skip the run. See <a href="#pre-run-steps">Pre-run steps</a> below.</li>
 <li><strong>pre_process</strong>: Ordered steps run on each new or changed document before it is stored; one may skip or modify it. None run unless listed. See <a href="#pre-process-steps">Pre-process steps</a> below.</li>
@@ -5462,6 +5464,7 @@ when the manifest is loaded, so a bad entry fails manifest loading (and
 <ul>
 <li>If <strong>any</strong> component raises, hits an unknown type, reports a <strong>transient per-file error</strong> (timeout / 5xx), or (with <code>error_on_empty</code>) returns nothing, <code>delete_stale</code> is <strong>skipped entirely</strong> for that manifest run. This prevents accidental deletions when the URI set may be incomplete. (A 404 is a removal signal, not a transient error, so it does not trigger this skip.)</li>
 <li>Components that succeed still have their documents ingested normally — only the stale deletion step is skipped.</li>
+<li>The same errors also skip the run's <strong>haiku load</strong>, which would otherwise delete from the database whatever is missing from the folder; so does a download location left empty. See <a href="#haiku-rag-loading">haiku-rag Loading</a>.</li>
 <li>A component that returns <strong>no items</strong> counts as a success unless it sets <code>error_on_empty: true</code> (see below), so an empty listing would otherwise delete every document the source holds.</li>
 </ul>
 <p><strong>Empty-result protection:</strong></p>
@@ -5584,6 +5587,43 @@ places it. See <a href="#where-the-database-comes-from">Where the database comes
 below — a config that does not place one per source is the one
 misconfiguration here that fails quietly.</p>
 <ul>
+<li><strong>No load after a run with errors.</strong> The load deletes from the database
+  every document it no longer finds in the download folder, and a run that
+  failed may have left that folder incomplete. So when a run has any
+  component error (a component raised) or file error (a document failed to
+  download, fetch or write, including a pre-process step failing under
+  <code>on_error: fail</code>), its load is skipped, and its post-process callbacks with
+  it. The folder is left as it is, and the next clean run loads everything at
+  once. Two things do <strong>not</strong> count as errors: a 404 on an individual
+  document (a removal, which the load should apply), and a hook error under
+  <code>on_error: continue</code> (which the manifest declared tolerable). A skipped
+  load is logged at ERROR (<code>Skipping haiku load for manifest ...</code> from the
+  CLI, <code>Manifest ... had errors (...); haiku load not queued</code> from the
+  server), marked <code>haiku.load_skipped</code> on the manifest span, and printed by
+  <code>si-agent manifest run</code> as <code>haiku load: SKIPPED (...)</code>. To load anyway --
+  say, after deciding one document that never downloads is harmless -- set
+  <code>HAIKU_LOAD_ON_ERROR=true</code>, or pass <code>--load-on-error</code> for one CLI run.
+  Mind that a document that fails on every run holds back its source's load
+  on every run, so alert on that log record.</li>
+<li><strong>No load over an empty download location.</strong> Independently of the run's
+  errors, the load itself checks, when it is about to start, that the
+  location it will read holds at least one document (sidecars don't count).
+  If it holds none, or cannot be listed at all, the load is skipped, with its
+  post-process callbacks: over an empty location the load would delete every
+  document of the source from the database. This catches a folder emptied
+  for reasons no run reported, such as files lost earlier or a component
+  whose empty listing the agent's own clean-up acted on. Because the check
+  runs at load time, it also covers a load that waited in the server's queue.
+  It logs <code>Skipping haiku load for manifest ... : no documents in download
+  location (...)</code> (or <code>... could not be listed</code>) at ERROR, records a skipped
+  <code>haiku load</code> span, and the CLI prints <code>haiku load: SKIPPED (...)</code>. A
+  manifest that means to empty its source -- decommissioning it, or
+  clearing it before a re-ingest -- sets <code>config.allow_empty_load: true</code>;
+  <code>--allow-empty-load</code> does the same for one CLI run. <code>HAIKU_LOAD_ON_ERROR</code>
+  does <strong>not</strong> turn this check off. The check only holds if the haiku-rag
+  config reads the same location the agent lists, so read it from
+  <code>${DOWNLOAD_URI}</code> (S3) or <code>${DOWNLOAD_DIR}/${SOURCE}</code> (filesystem), as the
+  example configs do.</li>
 <li><strong>One load at a time.</strong> Inside the server, loads are drained from a
   single global FIFO queue by one worker, so only one <code>haiku-ingester</code>
   process runs at any moment (a capacity constraint). The CLI achieves the
@@ -5604,9 +5644,17 @@ misconfiguration here that fails quietly.</p>
     <code>databases: {db: ${LANCEDB_DIR}/${SOURCE}.lancedb}</code> gets a database per
     source.</li>
 <li><code>DOWNLOAD_DIR</code> — <code>settings.download_dir</code>, so the path above resolves
-    even when it was left at its default.</li>
-<li><code>DOWNLOAD_URI</code> — the resolved base URI of the download store, set in
-    both filesystem and S3 mode so one config form works either way.</li>
+    even when it was left at its default. A local directory is passed
+    <strong>resolved to an absolute path</strong>, so a relative setting can't name a
+    different folder under the subprocess's working directory
+    (<code>HAIKU_LOAD_CWD</code>). In S3 mode it is the configured key prefix, as is.</li>
+<li><code>DOWNLOAD_URI</code> — the resolved base URI of this source's documents:
+    <code>file://...</code> locally, <code>s3://&lt;bucket&gt;/&lt;prefix&gt;/&lt;source&gt;</code> in S3 mode. An
+    S3 source should read <code>uri: ${DOWNLOAD_URI}</code> rather than rebuilding it
+    from <code>${DOWNLOAD_S3_BUCKET}${DOWNLOAD_DIR}/${SOURCE}</code>, which joins raw
+    text and lists an empty prefix (so deletes every document) when the
+    slashes are spelled differently. A filesystem source can't use it:
+    haiku-rag's <code>root</code> is a plain path, not a URI.</li>
 </ul>
 <p>Any other <code>${VAR}</code> interpolated by the haiku-rag config (<code>LANCEDB_DIR</code>
   included, along with e.g. <code>OLLAMA_BASE_URL</code>, <code>DOCLING1_BASE_URL</code>,
@@ -5620,7 +5668,8 @@ misconfiguration here that fails quietly.</p>
 </span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>si-agent<span class="w"> </span>serve
 </span></code></pre></div>
 <p>The CLI honors the same <code>HAIKU_LOAD_ENABLED</code> default; override per
-invocation with <code>si-agent manifest run &lt;path&gt; --load</code> / <code>--no-load</code>.</p>
+invocation with <code>si-agent manifest run &lt;path&gt; --load</code> / <code>--no-load</code>. Likewise
+<code>HAIKU_LOAD_ON_ERROR</code>, with <code>--load-on-error</code> / <code>--no-load-on-error</code>.</p>
 <h5 id="where-the-database-comes-from">Where the database comes from</h5>
 <p>The agent does not choose the database. It passes <code>--config</code> and nothing else,
 and haiku-rag resolves the location from <code>lancedb.databases</code> in that file. So
@@ -5921,6 +5970,9 @@ fire:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>pre_run steps ─► components ─┬─► write ─► pre_process steps ─► store
 </span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>                             │   (per new / changed document)
 </span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>                             └─► stale reconcile ─► haiku load ─► post_process
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>                                                    (skipped, with post_process,
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>                                                     when the run had errors or
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>                                                     the location is empty)
 </span></code></pre></div>
 <p>Every step names a <code>method</code> -- a dotted import path, <code>pkg.mod:func</code> or
 <code>pkg.mod.func</code>, importable in the agent's environment -- plus optional
