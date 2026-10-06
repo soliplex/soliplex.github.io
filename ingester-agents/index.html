@@ -5464,6 +5464,7 @@ when the manifest is loaded, so a bad entry fails manifest loading (and
 <ul>
 <li>If <strong>any</strong> component raises, hits an unknown type, reports a <strong>transient per-file error</strong> (timeout / 5xx), or (with <code>error_on_empty</code>) returns nothing, <code>delete_stale</code> is <strong>skipped entirely</strong> for that manifest run. This prevents accidental deletions when the URI set may be incomplete. (A 404 is a removal signal, not a transient error, so it does not trigger this skip.)</li>
 <li>Components that succeed still have their documents ingested normally — only the stale deletion step is skipped.</li>
+<li>For a WebDAV <code>urls_file</code> / <code>urls</code> component, a URL that fails to be <strong>probed</strong> (resolving its validator and type before download, beyond the tolerated <code>info</code> / <code>HEAD</code> failures) is left out of the inventory, so it counts as a per-file error (<code>stage: "probe"</code> in the component's <code>errors</code>) rather than a removal.</li>
 <li>The same errors also skip the run's <strong>haiku load</strong>, which would otherwise delete from the database whatever is missing from the folder; so does a download location left empty. See <a href="#haiku-rag-loading">haiku-rag Loading</a>.</li>
 <li>A component that returns <strong>no items</strong> counts as a success unless it sets <code>error_on_empty: true</code> (see below), so an empty listing would otherwise delete every document the source holds.</li>
 </ul>
