@@ -4375,7 +4375,7 @@
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   └── index.tsx          # Embeddable widget entry point
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├── public/
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   ├── index.html         # Live demo page (deployed to GitHub Pages)
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   ├── soliplex-chat.js   # Built widget bundle (after build)
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   ├── soliplex-chat.js   # Built widget bundle (git-ignored; built by CI)
 </span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   └── soliplex-auth-callback.html # OIDC popup callback page
 </span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>├── docs/
 </span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   ├── readme.md          # This file
@@ -4459,7 +4459,7 @@
 <p>Build a standalone JavaScript bundle that can be embedded in any website:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>npm<span class="w"> </span>run<span class="w"> </span>build:widget
 </span></code></pre></div>
-<p>This creates <code>public/soliplex-chat.js</code> (~200KB minified).</p>
+<p>This creates <code>public/soliplex-chat.js</code> (~200KB minified). The output is git-ignored: CI builds it on every push to <code>main</code> and publishes it to GitHub Pages at <code>https://soliplex.github.io/chatbot/soliplex-chat.js</code>, and the release workflow attaches it to each GitHub release.</p>
 <h4 id="widget-build-output">Widget Build Output</h4>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>public/
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>├── soliplex-chat.js      # Main bundle (minified)
