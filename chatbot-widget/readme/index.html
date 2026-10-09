@@ -4544,11 +4544,13 @@
 </ul>
 <h2 id="customization">Customization</h2>
 <h3 id="styling">Styling</h3>
-<p>The widget includes embedded CSS to work without external dependencies. To customize:</p>
-<ol>
-<li><strong>Widget bundle</strong> - Modify styles in <code>widget/index.tsx</code> <code>injectStyles()</code> function</li>
-<li><strong>Next.js app</strong> - Edit <code>app/globals.css</code> and Tailwind config</li>
-</ol>
+<p>The widget includes embedded CSS to work without external dependencies. All
+of it lives in <code>lib/theme.ts</code>, scoped under the <code>.soliplex-root</code> class so it
+neither leaks into nor depends on the host page.</p>
+<p>Colors, spacing, radii, and type sizes are the Soliplex design tokens (the
+<code>--sp-*</code> custom properties), copied from the design system in
+<code>soliplex_frontend</code> (<code>design_system/tokens.css</code>). Change a value there first,
+then mirror it here; do not introduce values the design system lacks.</p>
 <h3 id="adding-built-in-tools">Adding Built-in Tools</h3>
 <p>Edit <code>components/Chat.tsx</code> <code>useClientTools()</code> to add tools available to all users:</p>
 <div class="language-typescript highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">useClientTools</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nx">ToolDefinition</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span>
@@ -4567,7 +4569,10 @@
 </span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="theming">Theming</h3>
-<p>The widget accepts a <code>bubbleColor</code> prop. For deeper theming, modify the <code>ChatWidget.tsx</code> component or extend the configuration.</p>
+<p>The widget follows the visitor's OS light/dark setting by default; set
+<code>theme: "light"</code> or <code>theme: "dark"</code> to pin one. <code>bubbleColor</code> recolors the
+launcher bubble and primary buttons, and the widget picks white or near-black
+for the icon and label on top of it, whichever contrasts more.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="failed-to-create-thread-error">"Failed to create thread" Error</h3>
 <ul>
