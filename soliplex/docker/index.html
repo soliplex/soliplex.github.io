@@ -610,6 +610,23 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Docker
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="././" class="md-nav__link md-nav__link--active">
         
   
@@ -625,6 +642,76 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#published-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Published images
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Published images">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tags
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Contents
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extending-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Extending the image
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -3399,6 +3486,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -3410,6 +3502,64 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#published-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Published images
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Published images">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tags
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Contents
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extending-the-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Extending the image
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -3513,11 +3663,108 @@
 
 
 <h1 id="docker-deployment">Docker Deployment</h1>
-<p>Superseded by <code>soliplex-template v0.16</code>, which allows generating
-a full-service <code>compose</code> stack with <code>soliplex</code> cloned and running
-in dev mode.</p>
-<p>See: the <a href="https://soliplex.github.io/soliplex-template/getting-started/tutorials/backend-dev-mode/">tutorial</a></p>
-<p>The <code>soliplex</code> repo does <em>not</em> provide local support for docker.</p>
+<p>To generate a full-service <code>compose</code> stack, use
+<a href="https://github.com/soliplex/soliplex-template"><code>soliplex-template</code></a>
+(v0.16 or later). It can also run a <code>soliplex</code> checkout in dev mode: see
+the <a href="https://soliplex.github.io/soliplex-template/getting-started/tutorials/backend-dev-mode/">tutorial</a>.</p>
+<p>The <code>soliplex</code> repo provides no local <code>compose</code> support. Instead, each
+release publishes base images for deployments to extend.</p>
+<h2 id="published-images">Published images</h2>
+<p>Each published release pushes two images to the GitHub Container Registry:</p>
+<table>
+<thead>
+<tr>
+<th>Image</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ghcr.io/soliplex/soliplex</code></td>
+<td>The server: <code>soliplex-cli</code></td>
+</tr>
+<tr>
+<td><code>ghcr.io/soliplex/soliplex-tui</code></td>
+<td>The server image, plus the TUI (<code>soliplex-tui</code>, <code>soliplex-tui-serve</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Both are built for <code>linux/amd64</code> and <code>linux/arm64</code> from the release's
+tagged checkout. They install <code>soliplex</code> with the repository's <code>uv.lock</code>, so
+they carry the same dependency set as the release's CI run.</p>
+<p>The TUI image is one extra layer on top of the server image. A host which
+pulls both downloads the shared layers only once.</p>
+<h3 id="tags">Tags</h3>
+<p>Tags follow the project version published to PyPI:</p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Moves?</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</code></td>
+<td>no</td>
+<td><code>0.85.1</code>; <code>0.85.0</code> for the <code>0.85</code> release</td>
+</tr>
+<tr>
+<td><code>&lt;major&gt;.&lt;minor&gt;</code></td>
+<td>yes, to each patch release</td>
+<td><code>0.85</code></td>
+</tr>
+<tr>
+<td><code>latest</code></td>
+<td>yes, to the highest released version</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>A patch release on an older maintenance branch (e.g. <code>0.82.5</code> after <code>0.85</code>
+is out) moves only its own <code>&lt;major&gt;.&lt;minor&gt;</code> tag, not <code>latest</code>.</p>
+<h3 id="contents">Contents</h3>
+<ul>
+<li>Python 3.13 and <code>uv</code>, from <code>ghcr.io/astral-sh/uv:python3.13-trixie-slim</code></li>
+<li>A virtual environment at <code>/app/.venv</code>, first on <code>PATH</code>, with <code>soliplex</code>
+  and its <code>postgres</code> extra installed</li>
+<li><code>psycopg</code> over the system <code>libpq5</code>, so PostgreSQL connections use the
+  same system OpenSSL as Python's <code>ssl</code> module</li>
+<li><code>bubblewrap</code> (for the <code>bwrap</code> sandbox), <code>git</code>, <code>jq</code>, <code>curl</code>, and
+  <code>ca-certificates</code></li>
+<li><code>EXPOSE 8000</code>, a <code>HEALTHCHECK</code> against <code>/api/ok</code>, and a default command
+  of <code>soliplex-cli serve --host=0.0.0.0 /app/installation</code></li>
+</ul>
+<p>The images do <em>not</em> provide:</p>
+<ul>
+<li><strong>A runtime user.</strong> They run as <code>root</code>, and create no user or group.
+  Create your own, with your deployment's UID / GID.</li>
+<li><strong>Sandbox environments.</strong> Build the ones your rooms need with the
+  bundled <code>uv</code>.</li>
+<li><strong>An installation.</strong> Copy or mount your configuration at
+  <code>/app/installation</code>, or override the command to point elsewhere.</li>
+</ul>
+<h2 id="extending-the-image">Extending the image</h2>
+<p>Reference a version in <code>FROM</code>:</p>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">ghcr.io/soliplex/soliplex:0.85</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">PUID</span><span class="o">=</span><span class="m">1000</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">PGID</span><span class="o">=</span><span class="m">1000</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">RUN</span><span class="w"> </span>groupadd<span class="w"> </span>-g<span class="w"> </span><span class="si">${</span><span class="nv">PGID</span><span class="si">}</span><span class="w"> </span>soliplex<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span>useradd<span class="w"> </span>-u<span class="w"> </span><span class="si">${</span><span class="nv">PUID</span><span class="si">}</span><span class="w"> </span>-g<span class="w"> </span><span class="si">${</span><span class="nv">PGID</span><span class="si">}</span><span class="w"> </span>-m<span class="w"> </span>soliplex
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">COPY</span><span class="w"> </span>--chown<span class="o">=</span>soliplex:soliplex<span class="w"> </span>installation/<span class="w"> </span>/app/installation/
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">USER</span><span class="w"> </span><span class="s">soliplex</span>
+</span></code></pre></div>
+<p>Pick the tag for the updates you want:</p>
+<ul>
+<li>A moving <code>&lt;major&gt;.&lt;minor&gt;</code> tag picks up that minor release's bug fixes.
+  Rebuild with <code>docker compose build --pull</code> (or <code>docker build --pull</code>) to
+  fetch the newest image behind the tag.</li>
+<li>An exact <code>&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</code> tag rebuilds reproducibly.</li>
+</ul>
 
 
 
