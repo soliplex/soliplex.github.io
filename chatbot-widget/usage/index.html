@@ -4555,7 +4555,7 @@
 <td><code>persist</code></td>
 <td>boolean</td>
 <td><code>true</code></td>
-<td>Save the thread id, message history, open state, and selected room in <code>localStorage</code> so the widget reopens in the same room and the conversation resumes after a page reload. Use the header's <strong>Start new conversation</strong> button (or set to <code>false</code>) to start fresh</td>
+<td>Save the thread id, message history, open state, and selected room in <code>localStorage</code> so the widget reopens in the same room and the conversation resumes after a page reload. A reply still streaming when the page is left is picked up again on the next page, and a client-side tool call in it runs there. Use the header's <strong>Start new conversation</strong> button (or set to <code>false</code>) to start fresh</td>
 </tr>
 <tr>
 <td><code>debug</code></td>
@@ -5258,6 +5258,7 @@
 </span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>    <span class="n">allow_headers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>
 </span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="p">)</span>
 </span></code></pre></div>
+<p>If a proxy in front of the backend sets the CORS headers itself, its <code>Access-Control-Allow-Headers</code> must include <code>Authorization</code>, <code>Content-Type</code> and <code>Last-Event-ID</code>. The widget sends <code>Last-Event-ID</code> to reconnect to a reply that was still streaming when the page was left.</p>
 
 
 
