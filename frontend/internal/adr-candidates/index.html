@@ -1,0 +1,5483 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://soliplex.github.io/frontend/internal/adr-candidates/">
+      
+      
+        <link rel="prev" href="../../adr/ADR-006-thread-timeline-model/">
+      
+      
+        <link rel="next" href="../architecture-mapping-workflow/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.43">
+    
+    
+      
+        <title>ADR candidates - Soliplex</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.fba56155.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adr-candidates" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Soliplex" class="md-header__button md-logo" aria-label="Soliplex" data-md-component="logo">
+      
+  <img src="../../../img/logo.png" alt="Soliplex">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Soliplex
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ADR candidates
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2C5.13 2 2 5.13 2 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7M6 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H6zm13-8h-2l-3.2 9h1.9l.7-2h3.2l.7 2h1.9zm-2.15 5.65L18 15l1.15 3.65z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="gray" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="amber"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/soliplex/soliplex" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+  </div>
+  <div class="md-source__repository">
+    soliplex/soliplex
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../soliplex/" class="md-tabs__link">
+          
+  
+  Core Platform
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ingester/API/" class="md-tabs__link">
+          
+  
+  Ingester
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../chatbot-widget/readme/" class="md-tabs__link">
+          
+  
+  User Interfaces
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ingester-agents/" class="md-tabs__link">
+          
+  
+  Supporting Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Soliplex" class="md-nav__button md-logo" aria-label="Soliplex" data-md-component="logo">
+      
+  <img src="../../../img/logo.png" alt="Soliplex">
+
+    </a>
+    Soliplex
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/soliplex/soliplex" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+  </div>
+  <div class="md-source__repository">
+    soliplex/soliplex
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Home
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../soliplex/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Core Platform
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Core Platform
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Client
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Docker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/docs-skill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Docs Skill
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/log-ingestion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Log Ingestion
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Platform Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Prerequisites
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quickstart
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  RAG
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/tui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  TUI
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usage
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_12" id="__nav_2_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Configuration
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Configuration
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/agui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  AG-UI
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Agents
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/completions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Completions
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/filesystem_layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Filesystem Layout
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Installation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/interpolation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Interpolation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/logfire/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Logfire
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Logging
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/meta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Meta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/middleware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Middleware
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/oidc_providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  OIDC Authentication
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/quizzes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quizzes
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  RAG
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Rooms
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/secrets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Secrets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Skills
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/config/dburis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SQLAlchemy DBURIs
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_13" id="__nav_2_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Examples
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Examples
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_13_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../soliplex/examples/room-thread-analysis/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Room Thread Analysis
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_13_1" id="__nav_2_13_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_13_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_13_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Room Thread Analysis
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/examples/room-thread-analysis/model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Model
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../soliplex/server/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Setup
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_14" id="__nav_2_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Setup
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/server/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CLI
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/server/environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/server/migrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Migrations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../soliplex/server/sse_resume/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SSE Resume
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Ingester
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Ingester
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/AUTHENTICATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Authentication
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/CLI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CLI
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/CONFIGURATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Configuration
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/DATABASE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Database
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/DOCKER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Docker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Getting Started
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/PARAMETER_SETS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Parameter Sets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingester/WORKFLOWS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Workflows
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  User Interfaces
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  User Interfaces
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Chatbot Widget
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Chatbot Widget
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot-widget/readme/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot-widget/plone-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Plone Integration
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot-widget/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usage
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Flutter UI
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Flutter UI
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authoring-a-flavor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Authoring A Flavor
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Developer Setup
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../diagnostics-known-risks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Diagnostics Known Risks
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mockups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Mockups
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../refreshing-backend-schema-snapshots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Refreshing Backend Schema Snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../send-cancel-lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Send Cancel Lifecycle
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../adr/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_7" id="__nav_4_2_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Adr
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/ADR-001-reactive-state-management-scoped-statebus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr 001 Reactive State Management Scoped Statebus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/ADR-002-customizable-brand-theme/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr 002 Customizable Brand Theme
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/ADR-003-flavor-object/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr 003 Flavor Object
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/ADR-004-module-composition-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr 004 Module Composition Contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/ADR-005-module-layering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr 005 Module Layering
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/ADR-006-thread-timeline-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr 006 Thread Timeline Model
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_8" id="__nav_4_2_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Internal
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Internal
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr Candidates
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adr Candidates
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-read-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        How to read this
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ranked-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Ranked summary
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies-between-candidates" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Dependencies between candidates
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#housekeeping-on-existing-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Housekeeping on existing records
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-shell-and-library-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A. Shell and library contract
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A. Shell and library contract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c01-library-public-api-and-compatibility-policy-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C01 Library public API and compatibility policy (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c02-module-composition-contract-retro-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C02 Module composition contract (Retro, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c03-module-layering-and-inter-module-contracts-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C03 Module layering and inter-module contracts (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c04-server-identity-alias-and-url-scheme-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C04 Server identity, alias and URL scheme (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c18-device-local-persistence-scheme-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C18 Device-local persistence scheme (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c19-platform-split-conventions-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C19 Platform split conventions (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b-identity-auth-and-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        B. Identity, auth and security
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B. Identity, auth and security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c05-web-sign-in-via-backend-bff-and-token-custody-on-web-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C05 Web sign-in via backend BFF and token custody on web (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c06-sign-out-and-idp-session-end-retro-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C06 Sign-out and IdP session end (Retro + Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c07-user-identity-and-in-memory-isolation-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C07 User identity and in-memory isolation (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c08-rendering-untrusted-model-output-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C08 Rendering untrusted model output (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c09-logging-privacy-and-diagnostics-exposure-amend-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C09 Logging privacy and diagnostics exposure (Amend + Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c20-oidc-deployment-requirements-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C20 OIDC deployment requirements (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c22-inactivity-logout-policy-open-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C22 Inactivity logout policy (Open, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c-backend-contract-and-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C. Backend contract and runs
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C. Backend contract and runs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c10-backend-compatibility-contract-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C10 Backend compatibility contract (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c11-run-lifecycle-and-failure-reporting-amend-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C11 Run lifecycle and failure reporting (Amend + Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c12-timeline-runs-and-bands-model-retro-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C12 Timeline, runs and bands model (Retro, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c13-signals-convention-and-the-7x-migration-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C13 Signals convention and the 7.x migration (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c14-http-client-stack-and-token-refresh-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C14 HTTP client stack and token refresh (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c15-stream-resume-history-replay-and-failures-as-data-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C15 Stream resume, history replay and failures-as-data (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c16-error-taxonomy-as-a-ui-contract-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C16 Error taxonomy as a UI contract (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c17-client-side-tools-approval-and-host-apis-open-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C17 Client-side tools, approval and host APIs (Open, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c21-multi-database-thread-semantics-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C21 Multi-database thread semantics (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#d-conventions-and-product-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        D. Conventions and product constraints
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="D. Conventions and product constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c23-time-handling-retro-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C23 Time handling (Retro, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c24-product-constraints-that-bind-engineering-retro-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C24 Product constraints that bind engineering (Retro, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c25-design-package-boundary-and-token-governance-amend-adr-002-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C25 Design package boundary and token governance (Amend ADR-002, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c26-boot-validation-and-theme-requirements-amend-adr-003-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C26 Boot validation and theme requirements (Amend ADR-003, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-first-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Suggested first batch
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-mapping-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture Mapping Workflow
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_9" id="__nav_4_2_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Plans
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Plans
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plans/0001-app-shell/proposal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  0001 App Shell
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_9_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_9_2" id="__nav_4_2_9_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Citations UI
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_2_9_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_9_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Citations UI
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plans/citations-ui/data-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Data Flow
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plans/citations-ui/plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Plan
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ingester-agents/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Supporting Tools
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Supporting Tools
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pdf-splitter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  PDF Splitter
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bubble-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Bubble Sandbox
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../exquisite/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Exquisite
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Exquisite
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exquisite/binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Binding
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exquisite/check-retrieval/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Check Retrieval
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exquisite/data-repository/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Data Repository
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exquisite/development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Development
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exquisite/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Installation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exquisite/manifests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Manifests
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exquisite/question-sets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Question Sets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exquisite/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Rules
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exquisite/worksheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Worksheets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-read-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        How to read this
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ranked-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Ranked summary
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies-between-candidates" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Dependencies between candidates
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#housekeeping-on-existing-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Housekeeping on existing records
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-shell-and-library-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A. Shell and library contract
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A. Shell and library contract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c01-library-public-api-and-compatibility-policy-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C01 Library public API and compatibility policy (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c02-module-composition-contract-retro-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C02 Module composition contract (Retro, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c03-module-layering-and-inter-module-contracts-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C03 Module layering and inter-module contracts (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c04-server-identity-alias-and-url-scheme-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C04 Server identity, alias and URL scheme (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c18-device-local-persistence-scheme-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C18 Device-local persistence scheme (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c19-platform-split-conventions-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C19 Platform split conventions (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b-identity-auth-and-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        B. Identity, auth and security
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B. Identity, auth and security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c05-web-sign-in-via-backend-bff-and-token-custody-on-web-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C05 Web sign-in via backend BFF and token custody on web (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c06-sign-out-and-idp-session-end-retro-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C06 Sign-out and IdP session end (Retro + Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c07-user-identity-and-in-memory-isolation-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C07 User identity and in-memory isolation (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c08-rendering-untrusted-model-output-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C08 Rendering untrusted model output (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c09-logging-privacy-and-diagnostics-exposure-amend-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C09 Logging privacy and diagnostics exposure (Amend + Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c20-oidc-deployment-requirements-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C20 OIDC deployment requirements (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c22-inactivity-logout-policy-open-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C22 Inactivity logout policy (Open, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c-backend-contract-and-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C. Backend contract and runs
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C. Backend contract and runs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c10-backend-compatibility-contract-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C10 Backend compatibility contract (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c11-run-lifecycle-and-failure-reporting-amend-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C11 Run lifecycle and failure reporting (Amend + Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c12-timeline-runs-and-bands-model-retro-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C12 Timeline, runs and bands model (Retro, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c13-signals-convention-and-the-7x-migration-open-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C13 Signals convention and the 7.x migration (Open, P1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c14-http-client-stack-and-token-refresh-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C14 HTTP client stack and token refresh (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c15-stream-resume-history-replay-and-failures-as-data-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C15 Stream resume, history replay and failures-as-data (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c16-error-taxonomy-as-a-ui-contract-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C16 Error taxonomy as a UI contract (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c17-client-side-tools-approval-and-host-apis-open-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C17 Client-side tools, approval and host APIs (Open, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c21-multi-database-thread-semantics-retro-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C21 Multi-database thread semantics (Retro, P2)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#d-conventions-and-product-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        D. Conventions and product constraints
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="D. Conventions and product constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c23-time-handling-retro-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C23 Time handling (Retro, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c24-product-constraints-that-bind-engineering-retro-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C24 Product constraints that bind engineering (Retro, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c25-design-package-boundary-and-token-governance-amend-adr-002-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C25 Design package boundary and token governance (Amend ADR-002, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c26-boot-validation-and-theme-requirements-amend-adr-003-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        C26 Boot validation and theme requirements (Amend ADR-003, P3)
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-first-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Suggested first batch
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../../../chatbot-widget/readme/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    User Interfaces
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../../authoring-a-flavor/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    Flutter UI
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="././" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    Internal
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+  
+
+
+<h1 id="adr-candidates">ADR candidates</h1>
+<p>As of 2026-10-09, <code>main</code> @ <code>67b846e3</code>. This document lists the surfaces,
+structures, seams and contracts in this repo that deserve an Architecture
+Decision Record. It builds on <a href="../architecture-overview/"><code>architecture-overview.md</code></a>
+and is the second step of the "Project Management 101" plan.</p>
+<p><strong>How it was produced.</strong> Five read-only Sonnet agents worked in parallel:
+recorded-decision inventory, shell and library contract, auth and security,
+agent/client/wire contract, and git/PR history (1,648 commits, about 300 PRs
+and issues). The load-bearing claims were spot-checked against code before
+writing. Items marked <em>(unverified)</em> were reported but not confirmed.</p>
+<h2 id="how-to-read-this">How to read this</h2>
+<p>Each candidate has a <strong>kind</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Meaning</th>
+<th>Work needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Retro</strong></td>
+<td>The decision is made and shipped; its reasoning lives only in code comments, commit bodies or one person's head.</td>
+<td>Write it down: context, decision, alternatives, consequences. Cheap.</td>
+</tr>
+<tr>
+<td><strong>Open</strong></td>
+<td>The code embodies a choice nobody has explicitly made, or there is a live tension (open issue, known gap, contradiction).</td>
+<td>A decision meeting first, then the ADR.</td>
+</tr>
+<tr>
+<td><strong>Amend</strong></td>
+<td>An existing ADR or doc covers part of it and is stale or too broad.</td>
+<td>Edit or split the existing record.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Priority.</strong></p>
+<ul>
+<li><strong>P1:</strong> a wrong or unrecorded call here constrains forks, deployers, IdP
+  operators or the backend team, or has security impact.</li>
+<li><strong>P2:</strong> a contributor convention that is costly to reverse.</li>
+<li><strong>P3:</strong> useful to pin down, but low reversal cost.</li>
+</ul>
+<p>"Who is bound" names whoever has to know about the decision outside this
+repo's maintainers.</p>
+<h2 id="ranked-summary">Ranked summary</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Candidate</th>
+<th>Kind</th>
+<th>Pri</th>
+<th>Who is bound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C01</td>
+<td>Library public API and compatibility policy</td>
+<td>Open</td>
+<td>P1</td>
+<td>Forks</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>Module composition contract — <strong>done: ADR-004 (#620)</strong></td>
+<td>Retro</td>
+<td>P1</td>
+<td>Forks</td>
+</tr>
+<tr>
+<td>C03</td>
+<td>Module layering and inter-module contracts — <strong>proposed: ADR-005 (#620)</strong></td>
+<td>Open</td>
+<td>P1</td>
+<td>Forks, contributors</td>
+</tr>
+<tr>
+<td>C04</td>
+<td>Server identity, alias and URL scheme</td>
+<td>Open</td>
+<td>P1</td>
+<td>Users (links), forks</td>
+</tr>
+<tr>
+<td>C05</td>
+<td>Web sign-in via backend BFF and token custody on web</td>
+<td>Open</td>
+<td>P1</td>
+<td>Backend, deployers</td>
+</tr>
+<tr>
+<td>C06</td>
+<td>Sign-out and IdP session end</td>
+<td>Retro + Open</td>
+<td>P1</td>
+<td>Backend, IdP operators</td>
+</tr>
+<tr>
+<td>C07</td>
+<td>User identity and in-memory isolation</td>
+<td>Open</td>
+<td>P1</td>
+<td>IdP operators</td>
+</tr>
+<tr>
+<td>C08</td>
+<td>Rendering untrusted model output</td>
+<td>Open</td>
+<td>P1</td>
+<td>Users, deployers</td>
+</tr>
+<tr>
+<td>C09</td>
+<td>Logging privacy and diagnostics exposure</td>
+<td>Amend + Open</td>
+<td>P1</td>
+<td>Contributors, forks</td>
+</tr>
+<tr>
+<td>C10</td>
+<td>Backend compatibility contract</td>
+<td>Open</td>
+<td>P1</td>
+<td>Backend team</td>
+</tr>
+<tr>
+<td>C11</td>
+<td>Run lifecycle and failure reporting</td>
+<td>Amend + Open</td>
+<td>P1</td>
+<td>Backend team</td>
+</tr>
+<tr>
+<td>C12</td>
+<td>Timeline, runs and bands model — <strong>done: ADR-006 (#620)</strong></td>
+<td>Retro</td>
+<td>P1</td>
+<td>Contributors</td>
+</tr>
+<tr>
+<td>C13</td>
+<td>Signals convention and the 7.x migration</td>
+<td>Open</td>
+<td>P1</td>
+<td>Contributors, forks</td>
+</tr>
+<tr>
+<td>C14</td>
+<td>HTTP client stack and token refresh</td>
+<td>Retro</td>
+<td>P2</td>
+<td>Forks</td>
+</tr>
+<tr>
+<td>C15</td>
+<td>Stream resume, history replay and failures-as-data</td>
+<td>Retro</td>
+<td>P2</td>
+<td>Backend team</td>
+</tr>
+<tr>
+<td>C16</td>
+<td>Error taxonomy as a UI contract</td>
+<td>Retro</td>
+<td>P2</td>
+<td>Forks</td>
+</tr>
+<tr>
+<td>C17</td>
+<td>Client-side tools, approval and host APIs</td>
+<td>Open</td>
+<td>P2</td>
+<td>Forks</td>
+</tr>
+<tr>
+<td>C18</td>
+<td>Device-local persistence scheme</td>
+<td>Retro</td>
+<td>P2</td>
+<td>Contributors</td>
+</tr>
+<tr>
+<td>C19</td>
+<td>Platform split conventions</td>
+<td>Retro</td>
+<td>P2</td>
+<td>Contributors</td>
+</tr>
+<tr>
+<td>C20</td>
+<td>OIDC deployment requirements</td>
+<td>Retro</td>
+<td>P2</td>
+<td>IdP operators</td>
+</tr>
+<tr>
+<td>C21</td>
+<td>Multi-database thread semantics</td>
+<td>Retro</td>
+<td>P2</td>
+<td>Backend team</td>
+</tr>
+<tr>
+<td>C22</td>
+<td>Inactivity logout policy</td>
+<td>Open</td>
+<td>P3</td>
+<td>Deployers</td>
+</tr>
+<tr>
+<td>C23</td>
+<td>Time handling</td>
+<td>Retro</td>
+<td>P3</td>
+<td>Contributors</td>
+</tr>
+<tr>
+<td>C24</td>
+<td>Product constraints that bind engineering</td>
+<td>Retro</td>
+<td>P3</td>
+<td>Contributors</td>
+</tr>
+<tr>
+<td>C25</td>
+<td>Design package boundary and token governance</td>
+<td>Amend</td>
+<td>P3</td>
+<td>Forks</td>
+</tr>
+<tr>
+<td>C26</td>
+<td>Boot validation and theme requirements — <strong>partly covered by ADR-004 §3.7</strong></td>
+<td>Amend</td>
+<td>P3</td>
+<td>Forks</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dependencies-between-candidates">Dependencies between candidates</h2>
+<p>Deciding some of these first makes others easier or changes their answer.</p>
+<pre class="mermaid"><code>flowchart LR
+  C01["C01 Public API policy"] --&gt; C02["C02 Module contract"]
+  C01 --&gt; C14["C14 HTTP stack"]
+  C01 --&gt; C16["C16 Error taxonomy"]
+  C02 --&gt; C03["C03 Layering"]
+  C03 --&gt; C18["C18 Persistence"]
+  C04["C04 Server identity"] --&gt; C18
+  C04 --&gt; C07["C07 User isolation"]
+  C05["C05 Web BFF + tokens"] --&gt; C06["C06 Sign-out"]
+  C05 --&gt; C07
+  C10["C10 Backend compat"] --&gt; C15["C15 Resume and replay"]
+  C10 --&gt; C21["C21 Multi-db"]
+  C11["C11 Run lifecycle"] --&gt; C12["C12 Timeline model"]
+  C15 --&gt; C12
+  C13["C13 Signals convention"] --&gt; C12
+  C09["C09 Logging privacy"] --&gt; C08["C08 Untrusted rendering"]</code></pre>
+<h2 id="housekeeping-on-existing-records">Housekeeping on existing records</h2>
+<blockquote>
+<p><strong>Done in #608</strong>, except splitting ADR-001, which was deferred: its axes
+are numbered, so it can be split when one of them changes.</p>
+</blockquote>
+<p>Do these before writing new ADRs. They are small and they set the template.</p>
+<ul>
+<li><strong>ADR-003 is <code>Proposed</code> but shipped.</strong> <code>Flavor</code> and <code>FlavorTheme</code> are in
+  <code>lib/src/core/flavor.dart</code>. Mark it <code>Accepted</code>. Its §2 blockquote about
+  <code>runSoliplexShell</code> taking a builder was patched in place, so record it as
+  an amendment instead.</li>
+<li><strong>ADR-001 bundles six decisions.</strong> These include the <code>ThreadKey</code> record,
+  ownership-based discovery and runtime-owned disposal. The repo-wide rule
+  "Riverpod is DI only, signals for state" sits in §5.3 as a rejected
+  alternative. Lift that rule into its own record, or into C13.</li>
+<li><strong><code>docs/plans/0001-app-shell/proposal.md</code> is stale.</strong> It says modules use "no
+  base class or registry", but <code>AppModule</code> replaced <code>ModuleContribution</code> in
+  <code>da882974</code>. Add a superseded note.</li>
+<li><strong><code>docs/developer-setup.md</code> is stale.</strong> It still describes <code>ag_ui</code> as a git
+  dependency with Git LFS. <code>pubspec.lock</code> shows the hosted pub.dev <code>0.3.0</code>.</li>
+<li><strong><code>docs/adr/</code> has no index.</strong> Add a <code>README.md</code> with the template, the
+  status vocabulary (<code>Proposed</code>, <code>Accepted</code>, <code>Superseded</code>, <code>Deprecated</code>)
+  and a table of ADRs. <code>AGENTS.md</code>'s "Key Documentation" lists neither ADRs
+  nor <code>diagnostics-known-risks.md</code>.</li>
+<li><strong>Template.</strong> Keep the existing numbered shape:</li>
+<li>header bullets: Status, Date, Authors, Supersedes, Superseded by,
+    Amends;</li>
+<li>§1 Context;</li>
+<li>§2 Decision;</li>
+<li>§3 Decisions by axis;</li>
+<li>Consequences;</li>
+<li>Alternatives (as a table).</li>
+</ul>
+<p>Retro ADRs can drop Migration.</p>
+<h2 id="a-shell-and-library-contract">A. Shell and library contract</h2>
+<h3 id="c01-library-public-api-and-compatibility-policy-open-p1">C01 Library public API and compatibility policy (Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li><code>lib/soliplex_frontend.dart</code> exports a curated surface: <code>AppModule</code>,
+    <code>ModuleRoutes</code>, <code>Flavor</code>, <code>ShellConfig</code>, <code>buildRouter</code>, <code>standard</code>,
+    <code>standardFlavor</code>, <code>ServerManager</code>, <code>AuthState</code>, and a <code>show</code>-listed subset
+    of go_router, design and logging.</li>
+<li>Two tests guard it: <code>test/barrel_module_authoring_test.dart</code> and
+    <code>test/barrel_reexport_test.dart</code>.</li>
+<li>All packages are <code>publish_to: none</code>. The app is <code>0.107.0+93</code>, and
+    <code>soliplex_client</code> is <code>1.0.0-dev</code>.</li>
+<li><code>soliplex_agent</code> re-exports most of <code>soliplex_client</code>, and the client
+    re-exports <code>ag_ui</code> (pre-1.0) wholesale. Forks therefore inherit a
+    third-party wire type as public API.</li>
+<li><strong>Why.</strong> Forks build on this surface (CLAUDE.md: "runnable app and
+  importable library"). There is no statement of what is stable, how
+  breaking changes are versioned, or whether forks may import the packages
+  directly. The CHANGELOG already carries "Library consumers (breaking)"
+  bullets for agent types the barrel does not export.</li>
+<li><strong>Decide.</strong></li>
+<li>Is the barrel the only stable surface?</li>
+<li>Is the library version separate from the app's build number?</li>
+<li>Should the internal DI providers that leak out today
+    (<code>serverManagerProvider</code>, <code>inactivityLogoutFlagsProvider</code>) be exported?</li>
+<li>Should <code>ag_ui</code> sit behind an anti-corruption layer?</li>
+<li>Which packages do forks consume?</li>
+</ul>
+<h3 id="c02-module-composition-contract-retro-p1">C02 Module composition contract (Retro, P1)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li><code>ShellConfig.fromModules</code> (<code>lib/src/core/shell_config.dart</code>) validates
+    namespaces, routes and public paths. It builds modules in registration
+    order and disposes them in reverse. On abort it tears down every module.</li>
+<li><code>ShellConfig.redirect</code> admits declared public paths first. Module
+    redirects then run in order, and the first non-null result wins.</li>
+<li><code>publicPaths</code> must belong to the declaring module's own routes
+    (<code>router.dart</code>, <code>validateModulePublicPaths</code>).</li>
+<li>The embedder owns <code>dispose</code>.</li>
+<li><strong>Why.</strong> This is the extension contract for every fork module. Two things
+  are security-relevant behaviour: the redirect order, which is implied by
+  the order modules are registered, and the rule that public paths belong to
+  their module. A hand-built router silently drops an in-flight sign-in
+  (comment in <code>auth_module.dart</code>). Origin: <code>da882974</code>, ADR-003.</li>
+</ul>
+<h3 id="c03-module-layering-and-inter-module-contracts-open-p1">C03 Module layering and inter-module contracts (Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li><code>core/</code> imports auth, lobby and room storage
+    (<code>removed_server_cleanup.dart</code>, <code>inactivity/*</code>). <code>lobby</code> and <code>room</code>
+    import each other.</li>
+<li><code>lib/src/interfaces/</code> holds only the sealed <code>AuthState</code>. Everything else
+    crosses modules by concrete import or constructor injection.</li>
+<li><strong>Why.</strong> CLAUDE.md says modules are "included/excluded by presence".
+  Today a fork cannot drop <code>lobby</code> or <code>room</code>. Root cause:
+  <code>d6085bec</code> moved cleanup into core.</li>
+<li><strong>Decide.</strong></li>
+<li>The layering rule.</li>
+<li>Whether <code>interfaces/</code> becomes the real contract layer.</li>
+<li>How per-server cleanup is registered.</li>
+<li>How the rule is enforced in CI.</li>
+<li><strong>Tracked in</strong> <a href="https://github.com/soliplex/frontend/issues/607">#607</a>;
+  related to #23 (split <code>ServerManager</code>).</li>
+</ul>
+<h3 id="c04-server-identity-alias-and-url-scheme-open-p1">C04 Server identity, alias and URL scheme (Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li><code>serverIdFromUrl(url) =&gt; url.origin</code>
+    (<code>lib/src/modules/auth/server_entry.dart:10</code>) is the storage and session
+    key.</li>
+<li><code>aliasFromUrl</code> replaces dots in the host with dashes, appends <code>-port</code>,
+    and adds <code>-2</code>, <code>-3</code> and so on when an alias collides. It is persisted and
+    used in paths (<code>/room/:serverAlias/:roomId/...</code>).</li>
+<li>Lobby uses <code>?server=&lt;serverId&gt;</code>, so one server has two identifiers.</li>
+<li><strong>Why.</strong></li>
+<li>Web URLs and bookmarks are user-facing.</li>
+<li>The alias is lossy: <code>http</code> and <code>https</code> on one host collide, and
+    collision suffixes depend on the order servers were added. A shared link
+    can therefore open a different server on another device.</li>
+<li>Same-origin backends on different paths cannot coexist.</li>
+<li>The direction toward shared databases builds on this model.</li>
+<li><strong>Decide.</strong></li>
+<li>A stable identifier in the path, versus the alias.</li>
+<li>Whether one origin can hold several servers or accounts.</li>
+<li>What happens to bookmarks when a server is renamed.</li>
+</ul>
+<h3 id="c18-device-local-persistence-scheme-retro-p2">C18 Device-local persistence scheme (Retro, P2)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li><code>core/keyed_storage.dart</code> builds percent-encoded composite keys with
+    <code>serverId</code> first, and uses an <code>unauthenticated</code> bucket.</li>
+<li><code>core/storage_migration.dart</code> keeps a single monotonic schema version
+    (1) and runs best-effort.</li>
+<li>Tokens are in <code>flutter_secure_storage</code>; everything else is in
+    <code>SharedPreferences</code>.</li>
+<li>Read markers are swept by key prefix.</li>
+<li><strong>Why.</strong> The keys are on-disk user data, so changing them needs a
+  migration. Every new store must follow the convention and register for
+  cleanup on server removal. Today that registration is a hard-coded list in
+  core (C03).</li>
+</ul>
+<h3 id="c19-platform-split-conventions-retro-p2">C19 Platform split conventions (Retro, P2)</h3>
+<ul>
+<li><strong>Today.</strong> Three mechanisms coexist:</li>
+<li>conditional imports, mostly on <code>dart.library.js_interop</code>, with a few on
+    <code>dart.library.io</code>;</li>
+<li><code>kIsWeb</code> branches;</li>
+<li>the injected <code>PlatformConstraints</code>.</li>
+<li><strong>Why.</strong> Contributors need a rule for which mechanism to use. Some failures
+  only show at runtime on web: <code>Isolate.run</code> compiles but throws, and
+  <code>Platform.*</code> throws.</li>
+</ul>
+<h2 id="b-identity-auth-and-security">B. Identity, auth and security</h2>
+<h3 id="c05-web-sign-in-via-backend-bff-and-token-custody-on-web-open-p1">C05 Web sign-in via backend BFF and token custody on web (Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong> Web signs in through the backend (<code>/api/login/{provider}</code>, a
+  full-page redirect); native uses <code>flutter_appauth</code>. Sessions persist through
+  <code>SecureServerStorage</code> on every platform.</li>
+<li><strong>Why.</strong> It binds the backend to the login contract, and the web and native
+  flows rest on two different trust models.</li>
+<li><strong>Decide.</strong> The token-custody posture on web. Security specifics are tracked privately until fixed; ask the maintainers.</li>
+</ul>
+<h3 id="c06-sign-out-and-idp-session-end-retro-open-p1">C06 Sign-out and IdP session end (Retro + Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li>Signing out of or removing any server with a session triggers
+    RP-initiated logout at the IdP (<code>server_logout.dart</code>; <code>ed513e41</code>,
+    <code>50112f68</code>).</li>
+<li><strong>Native.</strong> <code>end_session</code> runs first, and local state is cleared only if
+    it succeeds. A user therefore cannot remove a server while the IdP is
+    unreachable.</li>
+<li><strong>Web.</strong> Local state is cleared first, then the app navigates to the
+    IdP, which may be abandoned.</li>
+<li><strong>Why.</strong> The asymmetry is deliberate but easy to re-litigate. The
+  <code>server_logout.dart</code> docstring proposes a BFF logout endpoint, which would
+  be a backend commitment.</li>
+</ul>
+<h3 id="c07-user-identity-and-in-memory-isolation-open-p1">C07 User identity and in-memory isolation (Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong> <code>AuthSession.currentUserId</code> derives the user from the access
+  token; <code>room/user_switch_teardown.dart</code> evicts in-memory stores when it
+  changes, and persisted state is partitioned by identity.</li>
+<li><strong>Why.</strong> The identity source is an assumption IdP operators are not told
+  about, the partition scheme is baked into storage keys, and every new cache
+  must opt in to eviction by hand.</li>
+<li><strong>Decide.</strong> The identity source, and an enforced registry of caches that must
+  be evicted. Security specifics are tracked privately until fixed; ask the maintainers.</li>
+</ul>
+<h3 id="c08-rendering-untrusted-model-output-open-p1">C08 Rendering untrusted model output (Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong> Model output renders as markdown with images, SVG code blocks,
+  LaTeX and tappable links (<code>room/ui/markdown/</code>, <code>shared/markdown/</code>).</li>
+<li><strong>Why.</strong> Model output is attacker-influenced (prompt injection through
+  documents), and forks inherit whatever policy the renderer has.</li>
+<li><strong>Decide.</strong> A rendering policy for images, links and embedded formats, and
+  whether a flavor can tighten it. Security specifics are tracked privately until fixed; ask the maintainers.</li>
+</ul>
+<h3 id="c09-logging-privacy-and-diagnostics-exposure-amend-open-p1">C09 Logging privacy and diagnostics exposure (Amend + Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong> The <code>CLAUDE.md</code> rule "never log a user/backend-supplied value; use
+  <code>describeFailure</code>" is enforced by review only. <code>HttpRedactor</code> redacts
+  captured HTTP traffic by name. <code>soliplex_logging</code>'s <code>LogManager</code> replaced
+  <code>dart:developer</code> (<code>9d66cea7</code>, <code>660a29e6</code>).</li>
+<li><strong>Why.</strong> A security boundary held up by convention; it binds every
+  contributor and fork. <code>docs/diagnostics-known-risks.md</code> lists the open
+  questions.</li>
+<li><strong>Decide.</strong> Redaction of log records, a lint or CI check, and the
+  diagnostics screen's exposure. <strong>Promote</strong> the <code>CLAUDE.md</code> section and the
+  risk register into one ADR.</li>
+</ul>
+<h3 id="c20-oidc-deployment-requirements-retro-p2">C20 OIDC deployment requirements (Retro, P2)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li>Every discovery endpoint must share the discovery URL's origin
+    (<code>soliplex_client/lib/src/auth/oidc_discovery.dart</code>), or sign-in fails.</li>
+<li>Native needs a public client and the <code>ai.soliplex.client://callback</code>
+    redirect.</li>
+<li>Sign-out needs <code>end_session_endpoint</code> and post-logout redirect URIs.</li>
+<li><strong>Why.</strong> These are requirements for IdP operators (split-host Keycloak and
+  custom domains fail) that are currently discoverable only by failing.
+  Write an operator-facing section alongside the ADR.</li>
+</ul>
+<h3 id="c22-inactivity-logout-policy-open-p3">C22 Inactivity logout policy (Open, P3)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li>A warning after 10 minutes idle, then a local logout after a 5-minute
+    grace period (<code>core/inactivity/</code>).</li>
+<li>Configurable per flavor at compile time; it can be disabled.</li>
+<li><strong>Decide.</strong></li>
+<li>Whether the logout should also end the IdP session.</li>
+<li>Whether the policy should come from the backend.</li>
+<li>Whether a sleeping tab counts as idle (#409).</li>
+</ul>
+<h2 id="c-backend-contract-and-runs">C. Backend contract and runs</h2>
+<h3 id="c10-backend-compatibility-contract-open-p1">C10 Backend compatibility contract (Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li><code>ragStateKey = 'rag'</code> and <code>ragSourcesKey = 'sources'</code>
+    (<code>soliplex_client/lib/src/application/rag_snapshot.dart</code>) must match
+    haiku.rag's <code>STATE_NAMESPACE</code>.</li>
+<li>One schema snapshot (<code>haiku-rag-0.89.0.json</code>) and a drift test guard the
+    mirror.</li>
+<li>Support for haiku.rag 0.40 was dropped in favour of a single version
+    (<code>73d44744</code>, #414).</li>
+<li>Code that no supported backend reaches is pruned (<code>fd4328b6</code>,
+    <code>c9f8165e</code>).</li>
+<li>Capability is detected by skill, not by config flag (#452 and #455).
+    Activities are rendered from the AG-UI envelope, not from backend
+    schemas (<code>b39e190a</code>).</li>
+<li><code>getBackendVersionInfo</code> exists but gates no behaviour <em>(not
+    exhaustively checked)</em>.</li>
+<li><strong>Why.</strong> This is the tightest coupling to another team. A key rename
+  silently breaks citations and filters. There is no stated window of
+  supported backend versions and no feature-detection rule.</li>
+<li><strong>Decide.</strong></li>
+<li>The supported range: N backend versions, a minimum version, and how the
+    app behaves outside it.</li>
+<li>Detection by skill versus by version.</li>
+<li>Who owns the snapshot refresh.</li>
+<li>Whether the backend should publish a versioned state schema.</li>
+</ul>
+<h3 id="c11-run-lifecycle-and-failure-reporting-amend-open-p1">C11 Run lifecycle and failure reporting (Amend + Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong> <code>docs/send-cancel-lifecycle.md</code> states the rule: only the cancel
+  button cancels, and navigation only stops observing. <code>RunRegistry</code> keeps
+  runs alive across navigation. For a failed run that has a <code>runId</code>,
+  <code>run_registry.dart</code> posts an automatic <code>thumbsDown</code> feedback. The comment
+  explains that the backend keeps no queryable run status.</li>
+<li><strong>Why.</strong> The lifecycle doc is the strongest de-facto ADR in the repo.
+  Auto-feedback uses the user-feedback table as a failure log, which skews
+  feedback analytics and is a workaround for a missing backend API.</li>
+<li><strong>Decide.</strong> Whether to keep auto-feedback or ask the backend for a
+  run-status or telemetry endpoint. Then promote the lifecycle doc to an ADR.</li>
+</ul>
+<h3 id="c12-timeline-runs-and-bands-model-retro-p1">C12 Timeline, runs and bands model (Retro, P1)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li><code>layOutTimeline</code> is a single pure function. Its invariant is that every
+    ended run has a hosting tile and every band attaches exactly once.</li>
+<li>The parked outcome is the only record of how a run ended.</li>
+<li>Runs, bands and the registry form the central concept (#566, #578;
+    <code>cc1fb454</code>, <code>7e84ce07</code>).</li>
+<li><strong>Why.</strong> This is the most-churned area: <code>room_screen.dart</code> has 206
+  touches, <code>thread_view_state.dart</code> 73 and <code>run_orchestrator.dart</code> 63. It has
+  been rewritten several times: <code>NoResponseTile</code> was added and later deleted,
+  and the band vocabulary was renamed. Pin the reasoning before #601 splits
+  <code>_RoomScreenState</code>.</li>
+</ul>
+<h3 id="c13-signals-convention-and-the-7x-migration-open-p1">C13 Signals convention and the 7.x migration (Open, P1)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li>CLAUDE.md mandates <code>signal.watch(context)</code> and <code>Watch(...)</code>, and says
+    Riverpod is DI only. A grep found no <code>FutureProvider</code>, <code>AsyncNotifier</code>
+    or <code>StateNotifier</code>.</li>
+<li>signals 7.x deprecates both mandated APIs. Adopting it fails the
+    zero-warning gate (#314, about 30 sites).</li>
+<li>Open issues #52 and #54 argue for replacing one-shot or error signals
+    with returned values or <code>FutureBuilder</code>.</li>
+<li><strong>Why.</strong> The mandated convention is deprecated upstream, so a decision is
+  forced.</li>
+<li><strong>Decide.</strong></li>
+<li>The new subscription idiom.</li>
+<li>When to use a signal and when to use a <code>Future</code>.</li>
+<li>Whether to amend ADR-001 or write a new ADR.</li>
+</ul>
+<h3 id="c14-http-client-stack-and-token-refresh-retro-p2">C14 HTTP client stack and token refresh (Retro, P2)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li>The chain, outermost first: Concurrency (max 6), Refreshing,
+    Authenticated, Observable, Platform. Built by <code>createAgentHttpClient</code>.</li>
+<li>Refresh uses a separate unauthenticated <code>plainClient</code>: the probe and
+    refresh clients were split and then reverted to one (<code>6078f08b</code>).</li>
+<li><code>invalid_grant</code> puts the session in <code>ExpiredSession</code>, which a later
+    refresh can revive. Network errors and unexpected errors do not expire
+    the session.</li>
+<li>Platform clients: <code>cupertino_http</code> on Apple, XHR on web, <code>dart:io</code>
+    elsewhere.</li>
+<li><strong>Why.</strong> The order matters:</li>
+<li>the redactor sees the injected headers;</li>
+<li>retries re-run token injection;</li>
+<li>the expire-or-retry choice decides whether a user gets locked out.</li>
+</ul>
+<h3 id="c15-stream-resume-history-replay-and-failures-as-data-retro-p2">C15 Stream resume, history replay and failures-as-data (Retro, P2)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li><strong>Resume.</strong> On a dropped stream, <code>Last-Event-ID</code> resume is tried up to 5
+    times with 500 ms to 8 s backoff and ±20% jitter
+    (<code>soliplex_client/lib/src/http/resume_policy.dart</code>).</li>
+<li><strong>History.</strong> It is rebuilt by replaying stored run events through the
+    same reducer as the live stream (<code>SoliplexApi._replayEventsToHistory</code>).</li>
+<li><strong>Bad events.</strong> An undecodable event becomes a <code>DroppedEventMessage</code>
+    tile. A per-tile try/catch was tried and reverted (<code>0fabfb60</code>).
+    Citations fail soft, raising <code>ThreadStateWarning</code>s.</li>
+<li><strong>Why.</strong> This assumes the backend keeps a resumable event log and per-run
+  event retrieval. Keeping replay identical to live behaviour is subtle. "A
+  failure is data, not an exception" is a principle worth stating once.</li>
+</ul>
+<h3 id="c16-error-taxonomy-as-a-ui-contract-retro-p2">C16 Error taxonomy as a UI contract (Retro, P2)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li>The <code>SoliplexException</code> family is: Auth, PermissionDenied, Network, Api,
+    NotFound, Cancelled, MalformedResponse, Unexpected.</li>
+<li><code>HttpTransport</code> maps 401 to Auth, 403 to PermissionDenied, 404 to
+    NotFound, and everything else to Api.</li>
+<li>429 and 5xx have no dedicated types, but <code>FailureReason</code> has
+    <code>rateLimited</code> <em>(mapping not traced)</em>.</li>
+<li><strong>Why.</strong> The UI and forks branch on these types, so adding or splitting
+  one is a breaking change (C01).</li>
+</ul>
+<h3 id="c17-client-side-tools-approval-and-host-apis-open-p2">C17 Client-side tools, approval and host APIs (Open, P2)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li>A flavor supplies <code>ToolRegistry</code> per room. The standard flavor's is
+    empty.</li>
+<li>Approval is a <code>SessionExtension</code> and denies by default when none is
+    registered.</li>
+<li><code>HumanApprovalExtension</code> auto-denies on cancel.</li>
+<li>The host APIs (<code>AgentApi</code>, <code>HostApi</code>, <code>BlackboardApi</code>, <code>FormApi</code>) and the
+    interpreter-shaped <code>PlatformConstraints</code> flags have no consumer in the
+    standard flavor.</li>
+<li><strong>Why.</strong> This decides who may run code on a user's device on the model's
+  say-so. If the host APIs are aspirational, they are public surface with no
+  owner.</li>
+<li><strong>Decide.</strong></li>
+<li>The intent of this surface: keep, document, or delete.</li>
+<li>Which tools must require approval.</li>
+</ul>
+<h3 id="c21-multi-database-thread-semantics-retro-p2">C21 Multi-database thread semantics (Retro, P2)</h3>
+<ul>
+<li><strong>Today.</strong></li>
+<li>A thread's database set is frozen by its first message, so that
+    "evidence stays comparable" (#563).</li>
+<li>The <code>sources</code> wire shape and MISSING marker follow backend issue #1322.</li>
+<li><strong>Why.</strong> It is a cross-repo contract and a product rule. Both are recorded
+  only in commits and personal notes.</li>
+</ul>
+<h2 id="d-conventions-and-product-constraints">D. Conventions and product constraints</h2>
+<h3 id="c23-time-handling-retro-p3">C23 Time handling (Retro, P3)</h3>
+<p><code>createdAt</code> is nullable. No client clock is used on the display path, and
+UTC is stamped at the marker-store boundary (<code>94061061</code>, <code>a7a05fa7</code>,
+<code>3c46382c</code>).</p>
+<h3 id="c24-product-constraints-that-bind-engineering-retro-p3">C24 Product constraints that bind engineering (Retro, P3)</h3>
+<p>Some product calls currently live only in commit bodies:</p>
+<ul>
+<li>"No new snackbars" (<code>84b62fc4</code>; the commit cites <code>docs/plans/home-server-list/known-issues.md</code>, which is not on <code>main</code>).</li>
+<li>Classification markings are theme-only, with no wire field and no
+  per-room value (#319–#322).</li>
+</ul>
+<p>Record them in one place so they stop being rediscovered.</p>
+<h3 id="c25-design-package-boundary-and-token-governance-amend-adr-002-p3">C25 Design package boundary and token governance (Amend ADR-002, P3)</h3>
+<ul>
+<li><code>soliplex_design</code> was extracted as a package (<code>b127f3bc</code>, #274), and its
+  boundary keeps renderer dependencies out of it.</li>
+<li>Adding a token requires approval and changes to <code>design_system/</code> in the
+  same commit.</li>
+<li>The CLAUDE.md hard rules are enforced only by a hygiene test and a review
+  checklist.</li>
+</ul>
+<h3 id="c26-boot-validation-and-theme-requirements-amend-adr-003-p3">C26 Boot validation and theme requirements (Amend ADR-003, P3)</h3>
+<ul>
+<li><code>ShellConfigurationError</code> reaches the screen verbatim.</li>
+<li>Any theme, including the full-token-control tier, must carry the
+  <code>SoliplexTheme</code> extension or it is rejected at boot.</li>
+</ul>
+<h2 id="suggested-first-batch">Suggested first batch</h2>
+<p>Start with the items that are cheap or that block other work:</p>
+<ol>
+<li><strong>Housekeeping</strong> (above). This is a single small PR.</li>
+<li><strong>Decision meetings for the Open P1s that bind other parties:</strong></li>
+<li>C05, C07 and C08 (security posture);</li>
+<li>C10 and C11 (with the backend team);</li>
+<li>C01 (with fork consumers);</li>
+<li>C13 (forced by #314).</li>
+<li><strong>Retro ADRs that de-risk the next refactors:</strong></li>
+<li>C02 and C03, before #607;</li>
+<li>C12, before #601.</li>
+<li><strong>P2 retro ADRs.</strong> These can be written by one person per area
+   from the evidence cited here.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../adr/ADR-006-thread-timeline-model/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Adr 006 Thread Timeline Model">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Adr 006 Thread Timeline Model
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../architecture-mapping-workflow/" class="md-footer__link md-footer__link--next" aria-label="Next: Architecture Mapping Workflow">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Architecture Mapping Workflow
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.instant.progress","navigation.path","navigation.tabs","navigation.tabs.sticky","navigation.top","navigation.tracking","search.highlight","search.share","search.suggest","toc.follow"],"search":"../../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6e5f0216.min.js"></script>
+      
+    
+  </body>
+</html>
