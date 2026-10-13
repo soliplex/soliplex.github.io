@@ -181,6 +181,15 @@
         <loc>https://soliplex.github.io/frontend/adr/ADR-003-flavor-object/</loc>
       </url>
       <url>
+        <loc>https://soliplex.github.io/frontend/adr/ADR-004-module-composition-contract/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/frontend/adr/ADR-005-module-layering/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/frontend/adr/ADR-006-thread-timeline-model/</loc>
+      </url>
+      <url>
         <loc>https://soliplex.github.io/frontend/plans/0001-app-shell/proposal/</loc>
       </url>
       <url>
