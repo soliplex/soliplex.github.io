@@ -2878,6 +2878,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -2897,8 +2901,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_7" >
         
           
-          <label class="md-nav__link" for="__nav_4_2_7" id="__nav_4_2_7_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../adr/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -2911,8 +2916,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_7" id="__nav_4_2_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_2_7">
@@ -2923,6 +2934,8 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -4169,21 +4182,12 @@ different number: the oldest SDK this library promises consumers. It may lag
 <code>.fvmrc</code>, and moves only when a dependency forces it.</p>
 <p>Using VS Code, and the analyzer disagrees with the pin? See <strong>Troubleshooting</strong>.</p>
 <h2 id="quick-start">Quick Start</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># The ag_ui dependency is fetched from a Git LFS-enabled repo whose</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># binary assets we don&#39;t use, and one of its LFS objects is missing</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># upstream — which aborts the clone during pub get. We need only its</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># pure Dart sources (not LFS-tracked), so skip the LFS smudge filter:</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GIT_LFS_SKIP_SMUDGE</span><span class="o">=</span><span class="m">1</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Install dependencies</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>flutter<span class="w"> </span>pub<span class="w"> </span>get
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Run the app</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>macos<span class="w">   </span><span class="c1"># or: -d ios, -d chrome, -d android</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Install dependencies</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>flutter<span class="w"> </span>pub<span class="w"> </span>get
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Run the app</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>macos<span class="w">   </span><span class="c1"># or: -d ios, -d chrome, -d android</span>
 </span></code></pre></div>
-<p>Add <code>export GIT_LFS_SKIP_SMUDGE=1</code> to your shell profile (<code>~/.zshrc</code>,
-<code>~/.bashrc</code>) so it persists. CI sets this automatically for its
-<code>pub get</code> step.</p>
 <h2 id="platform-setup">Platform Setup</h2>
 <h3 id="macos">macOS</h3>
 <h4 id="code-signing-required-for-keychain">Code Signing (Required for Keychain)</h4>

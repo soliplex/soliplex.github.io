@@ -2561,6 +2561,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -2580,8 +2584,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_7" checked>
         
           
-          <label class="md-nav__link" for="__nav_4_2_7" id="__nav_4_2_7_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -2594,8 +2599,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_7" id="__nav_4_2_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2_7">
@@ -2606,6 +2617,8 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -3995,6 +4008,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -4005,7 +4022,7 @@
     
     
       <li class="md-path__item">
-        <a href="../ADR-001-reactive-state-management-scoped-statebus/" class="md-path__link">
+        <a href="../" class="md-path__link">
           
   
   <span class="md-ellipsis">
@@ -4031,13 +4048,14 @@
 
 <h1 id="adr-003-reify-the-flavor-a-declaration-object-between-composition-and-boot">ADR-003: Reify the Flavor — a Declaration Object Between Composition and Boot</h1>
 <ul>
-<li><strong>Status:</strong> Proposed</li>
+<li><strong>Status:</strong> Accepted (implemented in #428 and #430)</li>
 <li><strong>Date:</strong> 2026-07-16</li>
 <li><strong>Authors:</strong> William Karol Di Cioccio</li>
 <li><strong>Supersedes:</strong> —</li>
 <li><strong>Amends:</strong> ADR-002 §2 (barrel-boundary change shipped in #426) and §3.9/§5.2
   (link contrast policy)</li>
 <li><strong>Superseded by:</strong> —</li>
+<li><strong>Amended by:</strong> #536 (<code>runSoliplexShell</code> takes a builder; §2, §4)</li>
 </ul>
 <hr />
 <h2 id="1-context-and-problem-statement">1. Context and Problem Statement</h2>
@@ -4176,9 +4194,9 @@ paths (<code>FlavorTheme.brand(BrandTheme, …)</code>, lowered at build; or
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">runSoliplexShell</span><span class="p">(</span><span class="n">flavor</span><span class="p">.</span><span class="n">build</span><span class="p">());</span>
 </span></code></pre></div>
 <blockquote>
-<p>Since superseded: <code>runSoliplexShell</code> takes the builder — <code>await
-runSoliplexShell(flavor.build)</code> — so a configuration failure reaches the
-screen rather than stalling the launch. The rest of this record stands.</p>
+<p><strong>Amended by #536 (2026-09-02):</strong> <code>runSoliplexShell</code> takes the builder —
+<code>await runSoliplexShell(flavor.build)</code> — so a configuration failure reaches
+the screen rather than stalling the launch. The rest of this record stands.</p>
 </blockquote>
 <hr />
 <h2 id="3-the-decisions-by-axis">3. The Decisions, by Axis</h2>
@@ -4230,7 +4248,8 @@ construction, failing even earlier with the same message. Deferred until the
   sits on top of it, not instead of it. (This change renames #426's
   <code>StandardModules</code> / <code>buildStandardModules</code> to <code>StandardKit</code> /
   <code>buildStandardKit</code> and relocates it beside <code>standard.dart</code>; §6.)</li>
-<li><code>runSoliplexShell(ShellConfig)</code> and the shell widget tree.</li>
+<li>The shell widget tree. (<code>runSoliplexShell</code> itself changed later: it takes
+  a <code>ShellConfig</code> builder since #536; see §2.)</li>
 <li>The shipped Soliplex app's behavior, byte for byte.</li>
 </ul>
 <hr />

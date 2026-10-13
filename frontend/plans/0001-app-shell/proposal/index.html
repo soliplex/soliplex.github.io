@@ -2559,6 +2559,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -2578,8 +2582,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_7" >
         
           
-          <label class="md-nav__link" for="__nav_4_2_7" id="__nav_4_2_7_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../adr/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -2592,8 +2597,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_7" id="__nav_4_2_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_2_7">
@@ -2604,6 +2615,8 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -4009,6 +4022,16 @@
 <p><strong>Status:</strong> Implemented
 <strong>Date:</strong> 2026-03-11
 <strong>Branch:</strong> <code>feat/shell-core</code></p>
+<blockquote>
+<p><strong>Partly superseded.</strong> This is a historical plan, not the current design.
+<code>ModuleContribution</code> and "no base class, no registry" (decision 2) were
+replaced by the <code>AppModule</code> lifecycle in #172. Flavor functions were
+replaced by the <code>Flavor</code> declaration object
+(<a href="../../../adr/ADR-003-flavor-object/">ADR-003</a>). Riverpod-as-DI and
+signals (decisions 3 and 4) stand, and are the subject of
+<a href="../../../adr/ADR-001-reactive-state-management-scoped-statebus/">ADR-001</a>.
+For the current architecture see <code>CLAUDE.md</code> and <code>docs/adr/</code>.</p>
+</blockquote>
 <h2 id="context">Context</h2>
 <p>The old <code>soliplex_frontend</code> is a white-label Flutter app configured via
 branding, URLs, feature flags, and theme colors. Features are controlled by

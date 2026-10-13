@@ -169,6 +169,9 @@
         <loc>https://soliplex.github.io/frontend/send-cancel-lifecycle/</loc>
       </url>
       <url>
+        <loc>https://soliplex.github.io/frontend/adr/</loc>
+      </url>
+      <url>
         <loc>https://soliplex.github.io/frontend/adr/ADR-001-reactive-state-management-scoped-statebus/</loc>
       </url>
       <url>
