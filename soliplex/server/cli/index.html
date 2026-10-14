@@ -8915,19 +8915,26 @@ answer for a bug. See <a href="../migrations/">Database Migrations</a>.</p>
 </ul>
 <h3 id="hot-reload-options">Hot Reload Options</h3>
 <ul>
-<li><code>-r {python,config,both}</code> / <code>--reload {python,config,both}</code> — enable
-  uvicorn's reloader, watching Python sources, YAML config, or both.
-  Not valid together with <code>--workers</code>.</li>
+<li><code>-r {python,config,both,explicit}</code> /
+  <code>--reload {python,config,both,explicit}</code> — enable
+  uvicorn's reloader, watching Python sources, YAML config, both, or only
+  explicit <code>--reload-dirs</code>.  Not valid together with <code>--workers</code>.</li>
 </ul>
 <p>When <code>--reload python</code> or <code>--reload both</code> is set, the <code>soliplex</code>
   package directories are added to the watch list automatically.</p>
 <p>When <code>--reload config</code> or <code>--reload both</code> is set, the installation
   file's directory is added to the watch list automatically, and
   <code>*.yaml</code>, <code>*.yml</code>, <code>*.txt</code> are added to the include patterns.</p>
+<p>When <code>--reload explicit</code> is set, only values passed via explicit
+  <code>--reload-dirs DIR</code> arguments are added to the watch list.</p>
 <ul>
-<li><code>--reload-dirs DIR</code> — additional directory to watch (repeatable).</li>
-<li><code>--reload-includes PATTERN</code> — additional file glob to include in the
-  watch (repeatable).</li>
+<li>
+<p><code>--reload-dirs DIR</code> — additional directory to watch (repeatable).</p>
+</li>
+<li>
+<p><code>--reload-includes PATTERN</code> — additional file glob to include in the
+  watch (repeatable).</p>
+</li>
 </ul>
 <h3 id="process-options">Process Options</h3>
 <ul>
