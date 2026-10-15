@@ -2630,6 +2630,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Android">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#release-signing" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Release Signing
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4131,6 +4148,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Android">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#release-signing" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Release Signing
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4484,21 +4518,35 @@ Beta/dev-channel binaries can fail App Store validation.</p>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>open<span class="w"> </span>-a<span class="w"> </span>Transporter<span class="w"> </span>build/ios/ipa/soliplex_frontend.ipa
 </span></code></pre></div>
 <h3 id="android">Android</h3>
-<p>No special signing setup required for debug builds. For release builds, see
-<a href="https://docs.flutter.dev/deployment/android#signing-the-app">Android signing docs</a>.</p>
+<p>No special signing setup required for debug builds.</p>
+<h4 id="release-signing">Release Signing</h4>
+<p>Release builds (<code>flutter build apk --release</code>, <code>flutter build appbundle</code>,
+<code>flutter run --release</code>) sign with the app's release keystore and fail without
+it. The keystore and its passwords are not in the repo; get them from whoever
+cuts releases, keep the keystore outside the repo, and create
+<code>android/key.properties</code> (gitignored):</p>
+<div class="language-properties highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="na">storePassword</span><span class="o">=</span><span class="s">&lt;store password&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="na">keyPassword</span><span class="o">=</span><span class="s">&lt;key password&gt;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="na">keyAlias</span><span class="o">=</span><span class="s">soliplex</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="na">storeFile</span><span class="o">=</span><span class="s">/absolute/path/to/soliplex-release.jks</span>
+</span></code></pre></div>
+<p>Without it, a release build stops at packaging with
+<code>SigningConfig "release" is missing required property "storeFile"</code>.</p>
+<p>Every release must be signed with the same keystore: Android refuses to
+install an APK over one signed by a different key.</p>
 <h3 id="web">Web</h3>
 <p>No special setup required:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>chrome
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>chrome
 </span></code></pre></div>
 <h3 id="linux">Linux</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Install GTK dependencies (Ubuntu/Debian)</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>clang<span class="w"> </span>cmake<span class="w"> </span>ninja-build<span class="w"> </span>pkg-config<span class="w"> </span>libgtk-3-dev
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>linux
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Install GTK dependencies (Ubuntu/Debian)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>clang<span class="w"> </span>cmake<span class="w"> </span>ninja-build<span class="w"> </span>pkg-config<span class="w"> </span>libgtk-3-dev
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>linux
 </span></code></pre></div>
 <h3 id="windows">Windows</h3>
 <p>Requires Visual Studio with "Desktop development with C++" workload:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>windows
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>windows
 </span></code></pre></div>
 <h2 id="backend-sign-in-settings">Backend sign-in settings</h2>
 <p>These live in the backend's OIDC config (<code>oidc/config.yaml</code> in the installation,
@@ -4553,19 +4601,19 @@ in <code>git status</code> and one <code>git add</code> from landing on everyone
 <code>.fvm/</code>, which a developer without fvm does not have, so a committed setting
 would point at nothing on their machine.</p>
 <h3 id="entitlements-require-signing">Entitlements require signing</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&quot;Runner&quot; has entitlements that require signing with a development certificate
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&quot;Runner&quot; has entitlements that require signing with a development certificate
 </span></code></pre></div>
 <p><strong>Cause:</strong> Missing <code>Local.xcconfig</code> or <code>DEVELOPMENT_TEAM</code> not set.</p>
 <p><strong>Fix:</strong> Create <code>Local.xcconfig</code> with <code>DEVELOPMENT_TEAM</code> as shown above.</p>
 <h3 id="keychain-errors-on-macos">Keychain errors on macOS</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>OSStatus error -25293
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>OSStatus error -25293
 </span></code></pre></div>
 <p><strong>Cause:</strong> Missing or invalid code signing configuration.</p>
 <p><strong>Fix:</strong> Follow the macOS code signing setup above.</p>
 <h3 id="pod-install-fails">Pod install fails</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Clean and reinstall</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">cd</span><span class="w"> </span>ios<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nb">cd</span><span class="w"> </span>macos<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Clean and reinstall</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>ios<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nb">cd</span><span class="w"> </span>macos<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>deintegrate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pod<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
 </span></code></pre></div>
 <h2 id="related-files">Related Files</h2>
 <table>
@@ -4595,6 +4643,10 @@ would point at nothing on their machine.</p>
 <tr>
 <td><code>ios/Runner/Info.plist</code></td>
 <td>iOS privacy descriptions and app config</td>
+</tr>
+<tr>
+<td><code>android/key.properties</code></td>
+<td>Your Android release signing config (gitignored)</td>
 </tr>
 <tr>
 <td><code>.gitignore</code></td>
