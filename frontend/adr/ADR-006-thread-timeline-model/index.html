@@ -4080,11 +4080,11 @@ than rediscover it.</p>
   stored["Reload: stored run events"] --&gt; dec
   dec --&gt; fold["RunFold&lt;br/&gt;one reducer per run"]
   fold --&gt; conv["Conversation&lt;br/&gt;messages, runOutcomes, citations"]
-  ev["Session ExecutionEvents"] --&gt; trk["TrackerRegistry&lt;br/&gt;live bands"]
-  hist["ThreadHistory"] --&gt; rep["replayToTrackers&lt;br/&gt;reload bands"]
+  ev["Live: session states + ExecutionEvents"] --&gt; trk["TrackerRegistry&lt;br/&gt;bands"]
+  fold --&gt; rep["Reload: ReplayedBands&lt;br/&gt;replay's fold, step by step"]
+  rep --&gt; trk
   conv --&gt; tvs["ThreadViewState&lt;br/&gt;MessagesLoaded"]
   trk --&gt; tvs
-  rep --&gt; tvs
   tvs --&gt; lay["layOutTimeline&lt;br/&gt;pure, total"]
   lay --&gt; tiles["tiles + dropped bands"]</code></pre>
 <ol>
@@ -4107,8 +4107,17 @@ than rediscover it.</p>
 <li>Before any message speaks for it, it is keyed by
      <code>noResponseMessageId(runId)</code>, the same id as the run's parked outcome.</li>
 <li>Once a reply speaks, the band is handed to it (#578).</li>
-<li>Live bands route only through <code>TrackerRegistry</code>. Reload bands come from
-     <code>replayToTrackers</code>. Both use the same <code>ResponseSegmenter</code>.</li>
+<li>Bands are built only by <code>TrackerRegistry</code>, on both paths. Live, the
+     session feeds it each run state and then the event bridged from it.
+     On reload, <code>ReplayedBands</code> (<code>lib/src/modules/room/replayed_bands.dart</code>)
+     watches history replay's fold through a <code>ReplayObserver</code> and feeds a
+     registry per turn the same, in the same order.</li>
+<li>What a band is fed is the same. A live band times its steps by a
+     running clock, a reloaded one by the stored events' times. Replay holds
+     a run's terminal event until it knows whether the run waited on a client
+     tool, which live knows at once.</li>
+<li>A client tool's call has one step, from the model's <code>TOOL_CALL_START</code>.
+     Running the tool adds none; its card shows how it went.</li>
 <li><strong>Where things render is decided once, by a pure function.</strong>
    <code>layOutTimeline</code> (<code>lib/src/modules/room/lay_out_timeline.dart</code>) takes the
    committed messages, the bands, the parked outcomes and the active run's
@@ -4225,7 +4234,7 @@ run that produced it.</p>
 <td><code>test/modules/room/lay_out_timeline_test.dart</code></td>
 </tr>
 <tr>
-<td>Live and reload agree on messages, states and outcomes</td>
+<td>Live and reload agree on messages, states, outcomes and bands</td>
 <td><code>test/modules/room/replay_parity_test.dart</code></td>
 </tr>
 <tr>
@@ -4256,13 +4265,12 @@ run that produced it.</p>
 </ol>
 <p>Client-tool support is best effort and not used in production.
 2. <strong>Remaining display gaps.</strong>
-   - A client tool's step shows twice in the live band.
    - A row created before any timed event is undated live but dated on
      reload.
 3. <strong>Unhosted combinations.</strong> A system-role reply cannot host a band. The
    <code>GenUiMessage</code> combination is "unsupported rather than intended".
-   Changing either touches <code>layOutTimeline</code>, <code>TrackerRegistry</code>, replay and the
-   tile together.
+   Changing either touches <code>layOutTimeline</code>, <code>TrackerRegistry</code> and the tile
+   together.
 4. <strong>Backend assumptions.</strong>
    - Drop-tile ids match across paths only because the backend stores one
      event per streamed event. That assumption is unpinned.
@@ -4325,6 +4333,11 @@ run that produced it.</p>
 <td>Bands subscribing themselves</td>
 <td>Routing only through <code>TrackerRegistry</code> (<code>79febc27</code>)</td>
 <td>Production never used the self-subscription; tests did</td>
+</tr>
+<tr>
+<td>Reload bands bucketed by <code>replayToTrackers</code> against the replayed messages</td>
+<td>Reload feeding a <code>TrackerRegistry</code>, the one live uses, from replay's fold</td>
+<td>A second copy of the speaking rule, the band endings and the activities, which drifted from live</td>
 </tr>
 <tr>
 <td>A run-keyed band held until the response ended</td>
