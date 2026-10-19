@@ -4080,9 +4080,8 @@ than rediscover it.</p>
   stored["Reload: stored run events"] --&gt; dec
   dec --&gt; fold["RunFold&lt;br/&gt;one reducer per run"]
   fold --&gt; conv["Conversation&lt;br/&gt;messages, runOutcomes, citations"]
-  ev["Live: session states + ExecutionEvents"] --&gt; trk["TrackerRegistry&lt;br/&gt;bands"]
-  fold --&gt; rep["Reload: ReplayedBands&lt;br/&gt;replay's fold, step by step"]
-  rep --&gt; trk
+  fold --&gt; rep["ExecutionBands&lt;br/&gt;each fold step, live or replayed"]
+  rep --&gt; trk["TrackerRegistry&lt;br/&gt;bands"]
   conv --&gt; tvs["ThreadViewState&lt;br/&gt;MessagesLoaded"]
   trk --&gt; tvs
   tvs --&gt; lay["layOutTimeline&lt;br/&gt;pure, total"]
@@ -4107,15 +4106,22 @@ than rediscover it.</p>
 <li>Before any message speaks for it, it is keyed by
      <code>noResponseMessageId(runId)</code>, the same id as the run's parked outcome.</li>
 <li>Once a reply speaks, the band is handed to it (#578).</li>
-<li>Bands are built only by <code>TrackerRegistry</code>, on both paths. Live, the
-     session feeds it each run state and then the event bridged from it.
-     On reload, <code>ReplayedBands</code> (<code>lib/src/modules/room/replayed_bands.dart</code>)
-     watches history replay's fold through a <code>ReplayObserver</code> and feeds a
-     registry per turn the same, in the same order.</li>
-<li>What a band is fed is the same. A live band times its steps by a
-     running clock, a reloaded one by the stored events' times. Replay holds
-     a run's terminal event until it knows whether the run waited on a client
-     tool, which live knows at once.</li>
+<li>Bands are built only by <code>TrackerRegistry</code>, fed on both paths by
+     <code>ExecutionBands</code> (<code>lib/src/modules/room/execution_bands.dart</code>) through a
+     <code>RunFoldObserver</code>: each run starting, each event folded, and how each
+     run ended. Live, <code>RunOrchestrator</code> reports them as it folds the stream
+     (<code>AgentSession.observeRunFold</code>); on reload, history replay as it folds
+     the stored events. For the same events both report the same calls in
+     the same order (except a client-tool wait that ended without resuming
+     the turn, which only live sees), so the order a registry is fed in, how
+     a run's end settles its band, and ignoring what a run folds after its
+     terminal event are each written once, in <code>ExecutionBands</code>.</li>
+<li>What differs is the source of the steps, the clock, and when an ending
+     is told. A live band times its steps by a running clock, a reloaded one
+     by the stored events' times. Live knows at once that a run waits on a
+     client tool; replay holds each run's ending until the next run whose
+     events were read starts and says whether it continues the turn, or the
+     history ends.</li>
 <li>A client tool's call has one step, from the model's <code>TOOL_CALL_START</code>.
      Running the tool adds none; its card shows how it went.</li>
 <li><strong>Where things render is decided once, by a pure function.</strong>
