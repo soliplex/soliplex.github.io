@@ -4107,6 +4107,16 @@
 
 
 <h1 id="citation-data-flow">Citation Data Flow</h1>
+<blockquote>
+<p><strong>Status: the April 2026 plan, not current code.</strong> The client no longer
+reads the <code>qa_history</code> schema below, and the extraction it describes
+(<code>RunOrchestrator._extractCitations</code>, <code>CitationExtractor.extractNew</code>, the
+per-run diff of <code>_preRunAguiState</code>) no longer exists. A run's citations are
+resolved by <code>RunFold.resolveTurn</code> through <code>CitationExtractor.resolve</code>,
+against the session-cumulative <code>citation_index</code>; read
+<code>packages/soliplex_client/lib/src/application/citation_extractor.dart</code> and
+<code>run_fold.dart</code> for how it works now.</p>
+</blockquote>
 <h2 id="overview">Overview</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Backend ask() → RAGState → JSON/SSE → Conversation.aguiState (raw)
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>→ CitationExtractor (schema firewall) → SourceReference (domain)
