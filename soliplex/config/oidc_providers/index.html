@@ -1365,6 +1365,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#protecting-other-services-with-nginx-auth_request" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Protecting other services with nginx <code>auth_request</code>
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protecting other services with nginx auth_request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-authn-cookie" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The authn cookie
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-check-endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The check endpoint
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signing-in-from-a-proxied-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Signing in from a proxied service
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#customizing-the-consent-page" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3874,6 +3924,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#protecting-other-services-with-nginx-auth_request" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Protecting other services with nginx <code>auth_request</code>
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protecting other services with nginx auth_request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-authn-cookie" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The authn cookie
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-check-endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The check endpoint
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signing-in-from-a-proxied-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Signing in from a proxied service
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#customizing-the-consent-page" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4137,6 +4237,15 @@ default) need no extra configuration.</p>
 <p><code>scope</code>: string, an OAuth scope specifier.</p>
 </li>
 <li>
+<p><code>cookie_claims</code>: a list of token claim names to copy into the authn
+  cookie set at sign-in (default: <code>email</code> and <code>preferred_username</code>).
+  List top-level claim names:  a listed claim is copied whole, including
+  any nested values.  The authn cookie is signed, not encrypted:  do
+  not list claims you consider sensitive.  See
+  <a href="#protecting-other-services-with-nginx-auth_request">Protecting other services with nginx <code>auth_request</code></a>
+  below.</p>
+</li>
+<li>
 <p><code>oidc_client_pem_path</code>, <code>allowed_frontend_origins</code>,
   <code>unlisted_frontend_origin</code>, <code>consent_template_path</code>: as above, for this
   provider only, replacing any top-level default.</p>
@@ -4259,6 +4368,184 @@ URI exactly in the provider's client configuration, for example
 such as <code>https://soliplex.example.com/*</code>.  Adding a frontend never requires
 changing the provider's configuration:  frontends are allowed by
 <code>allowed_frontend_origins</code> here, not by the provider.</p>
+<h2 id="protecting-other-services-with-nginx-auth_request">Protecting other services with nginx <code>auth_request</code></h2>
+<p>A deployment can put other web services (for example, an ingester
+dashboard) behind the same nginx as Soliplex, and let Soliplex decide who
+reaches them, through nginx's
+<a href="https://nginx.org/en/docs/http/ngx_http_auth_request_module.html"><code>auth_request</code></a>.</p>
+<h3 id="the-authn-cookie">The authn cookie</h3>
+<p>A browser following a link to a proxied service sends no bearer token.
+So, whenever a sign-in completes, Soliplex also sets an <code>HttpOnly</code>,
+<code>SameSite=Lax</code> cookie named <code>soliplex_authn</code>, with <code>Path=/</code>, which the
+browser then sends with every request to that host.</p>
+<ul>
+<li>The cookie is signed with the <code>SESSION_MIDDLEWARE_TOKEN</code> installation
+  secret, but not encrypted:  anyone holding it can read the claims it
+  carries.</li>
+<li>Configure <code>SESSION_MIDDLEWARE_TOKEN</code> from a stable source, shared by
+  every backend process:  with the <code>random_chars</code> fallback, each
+  process signs with its own key, so every restart (including a
+  <code>--reload=config</code> reload) invalidates every authn cookie, and each
+  user must sign in again.</li>
+<li>It encodes the signing auth system's id, the expiry, the <code>sub</code> claim,
+  and the claims named in the provider's <code>cookie_claims</code>.</li>
+<li>It expires with the access token, and is not renewed when the web
+  client refreshes its tokens.</li>
+<li>It is marked <code>Secure</code>, unless <code>soliplex-cli serve</code> runs with
+  <code>--insecure-session-cookie</code> for local testing.</li>
+<li>A value larger than 4000 bytes is logged as an error, and the
+  callback clears the cookie rather than setting it:  the browser
+  ignores an oversized <code>Set-Cookie</code> entirely (its 4096-byte limit
+  counts name and value, and this cookie's name takes 14 of them),
+  which would otherwise leave any previously-held cookie -- possibly
+  from a different visitor's sign-in -- in place.  Proxied-service
+  sessions re-login on every request until the deployment trims the
+  provider's <code>cookie_claims</code>;  a <code>delivery=cookie</code> sign-in answers
+  with an error page (HTTP 500) rather than redirecting.</li>
+</ul>
+<p><code>POST /api/auth/&lt;id&gt;/logout</code> clears the cookie.  The web client's own
+logout drops only its tokens:  the authn cookie persists until this
+endpoint is called or the cookie expires.</p>
+<h3 id="the-check-endpoint">The check endpoint</h3>
+<p><code>GET /api/v1/authz/check/&lt;resource&gt;</code> answers an <code>auth_request</code>
+subrequest:</p>
+<ul>
+<li><code>204</code> if the user is an admin user (see
+  <a href="../../server/cli/#admin-users"><code>admin-users</code></a>), with the
+  <code>X-Soliplex-User</code> header
+  naming the user (their <code>preferred_username</code>, <code>email</code>, or <code>sub</code> claim;
+  the header is omitted when none of the three is a printable ASCII
+  string);</li>
+<li><code>401</code> if the request has no authn cookie, or the cookie does not
+  verify or has expired;</li>
+<li><code>403</code> if the user is authenticated, but not an admin user.</li>
+</ul>
+<p>It reads only the authn cookie, not a bearer token:  the check answers
+for browser navigations, which carry only the cookie, while a client
+holding a bearer token authenticates to the proxied service's own API
+directly.  The admin check
+matches the deployment's admin-user discriminators against the claims
+carried by the cookie, so the provider's <code>cookie_claims</code> must name every
+claim those discriminators reference (<code>sub</code> is always carried):
+otherwise the check denies users whom it would otherwise admit.</p>
+<p><code>&lt;resource&gt;</code> is a label
+for the audit log, such as <code>ingester_control</code>, made of letters, digits,
+<code>_</code>, <code>.</code>, <code>:</code>, and <code>-</code>.  In no-auth mode, it answers as the rest of the
+API does.</p>
+<p>On success, the response's <code>X-Soliplex-User</code> header is an unverified
+display name, projected onto the proxied request by nginx:  treat it
+as a value for logs and interface display, never as an input to
+authorization, and never as a record key.  It is trustworthy only in
+locations whose <code>proxy_set_header</code> overwrites whatever the client
+itself sent, so keep the proxied service reachable only through nginx,
+and repeat the <code>proxy_set_header</code> in every proxied location.</p>
+<p>nginx makes the check subrequest for every request through the
+protected location, not once per session:  each page load, asset, and
+API call the proxied service makes costs a cookie verification and an
+admin-policy lookup, so a service which polls its own API keeps up a
+steady load on the check endpoint.  Stock nginx does not cache
+<code>auth_request</code> results.  A deployment which needs fewer checks can give
+the check location a <code>proxy_cache</code> keyed on the <code>soliplex_authn</code>
+cookie, at the cost of answering from the cache for as long as an entry
+lives:  a user removed from the admin users, or whose cookie expires,
+keeps access until the entry does.</p>
+<h3 id="signing-in-from-a-proxied-service">Signing in from a proxied service</h3>
+<p>To sign in from a proxied service, send the browser to
+<code>/api/login/&lt;id&gt;?return_to=&lt;path&gt;&amp;delivery=cookie</code>.  With
+<code>delivery=cookie</code>, the callback sets the authn cookie and redirects to
+<code>return_to</code> without appending the user's tokens, which only the Soliplex
+web client knows to remove from the address bar.  The default,
+<code>delivery=fragment</code>, appends the tokens as usual.</p>
+<p>For example:</p>
+<div class="language-nginx highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># in &#39;http {}&#39;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">map</span><span class="w"> </span><span class="nv">$http_sec_fetch_mode</span><span class="w"> </span><span class="nv">$soliplex_login_redirect</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kn">navigate</span><span class="w">  </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kn">default</span><span class="w">   </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">location</span><span class="w"> </span><span class="s">/ingester/</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="kn">auth_request</span><span class="w"> </span><span class="s">/_soliplex_authz_check</span><span class="p">;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="kn">auth_request_set</span><span class="w"> </span><span class="nv">$soliplex_user</span><span class="w"> </span><span class="nv">$upstream_http_x_soliplex_user</span><span class="p">;</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Soliplex-User</span><span class="w"> </span><span class="nv">$soliplex_user</span><span class="p">;</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="kn">error_page</span><span class="w"> </span><span class="mi">401</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">@soliplex_login</span><span class="p">;</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://ingester:8080/</span><span class="p">;</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">}</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="k">location</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">/_soliplex_authz_check</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="kn">internal</span><span class="p">;</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://soliplex:8000/api/v1/authz/check/ingester_control</span><span class="p">;</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="kn">proxy_pass_request_body</span><span class="w"> </span><span class="no">off</span><span class="p">;</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Content-Length</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">}</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="k">location</span><span class="w"> </span><span class="s">@soliplex_login</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">    </span><span class="kn">if</span><span class="w"> </span><span class="s">(</span><span class="nv">$soliplex_login_redirect</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="s">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">        </span><span class="kn">return</span><span class="w"> </span><span class="mi">401</span><span class="p">;</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">302</span><span class="w"> </span><span class="s">/api/login/myprovider?delivery=cookie&amp;return_to=</span><span class="nv">$request_uri</span><span class="p">;</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Redirect only top-level navigations to the login, which browsers mark
+with <code>Sec-Fetch-Mode: navigate</code>, and answer every other request with
+the 401.  <code>error_page</code> applies to every request through the location,
+including the proxied service's own <code>fetch()</code> / XHR calls:  redirected,
+each of those starts a sign-in it can never finish, and overwrites the
+session holding the OIDC <code>state</code>, so a real sign-in in another tab
+fails at the callback (<code>MismatchingStateError</code>) for as long as the
+service's page keeps making calls.  With the redirect limited to
+navigations:</p>
+<ul>
+<li>A proxied service sees a lapsed session as a 401 on its own API
+  calls, and reacts however it reacts to any 401 (the ingester
+  dashboard, for one, prompts for a bearer token), though reloading the
+  page is all the user needs to do to sign in again.</li>
+<li>Clients sending no <code>Sec-Fetch-Mode</code> header, such as scripts and
+  <code>curl</code>, get the 401 rather than a redirect to a login page they
+  cannot complete.</li>
+</ul>
+<p><code>return_to=$request_uri</code> pastes the proxied request's URI into the
+redirect unescaped:  a request whose own URI carries a query string
+truncates the parameter at the first <code>&amp;</code> (<code>/ingester/x?a=1&amp;b=2</code>
+arrives as <code>return_to=/ingester/x?a=1</code>).  Stock nginx has no
+variable-escaping directive:  deployments which need the query string
+preserved can escape it first, with the <code>set-misc</code> module's
+<code>set_escape_uri</code>, or an <code>njs</code> <code>js_set</code> handler:</p>
+<div class="language-nginx highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">set_escape_uri</span><span class="w"> </span><span class="nv">$escaped_uri</span><span class="w"> </span><span class="nv">$request_uri</span><span class="p">;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">location</span><span class="w"> </span><span class="s">@soliplex_login</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="kn">if</span><span class="w"> </span><span class="s">(</span><span class="nv">$soliplex_login_redirect</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="s">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="kn">return</span><span class="w"> </span><span class="mi">401</span><span class="p">;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">302</span><span class="w"> </span><span class="s">/api/login/myprovider?delivery=cookie&amp;return_to=</span><span class="nv">$escaped_uri</span><span class="p">;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Soliplex decodes the escaped parameter, so the user lands on the full
+original URI.  Deployments whose proxied paths carry no query strings
+are unaffected.</p>
+<p>The proxied service receives the <code>soliplex_authn</code> cookie along with
+every other cookie for the host.  To keep it from the service, remove
+it in nginx before proxying.</p>
+<p>The header's name is nginx's to change, too:  a service expecting,
+say, <code>X-Forwarded-User</code> takes one line in the same location,</p>
+<div class="language-nginx highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-User</span><span class="w"> </span><span class="nv">$soliplex_user</span><span class="p">;</span>
+</span></code></pre></div>
+<p>and different proxied locations may project the same check under
+different names.</p>
+<p>The login redirect issued after a lapsed session carries the original
+path, but as a <code>GET</code> request:  a <code>POST</code> submission lost to a lapse is
+not replayed after sign-in, and must be re-entered.</p>
+<p>Sign-ins which deliver tokens (<code>delivery=fragment</code>, the default)
+redirect through the same nginx, and an IdP issuing larger tokens can
+push the callback's <code>Location</code> header past nginx's default
+response-header buffer (4k or 8k, one memory page):  nginx logs
+<code>upstream sent too big header</code>, and the login fails with a 502.
+Where the Soliplex API is proxied, size the buffers to the
+deployment's largest tokens:</p>
+<div class="language-nginx highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">proxy_buffer_size</span><span class="w"> </span><span class="mi">64k</span><span class="p">;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">proxy_buffers</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">64k</span><span class="p">;</span>
+</span></code></pre></div>
+<p><code>delivery=cookie</code> logins — the proxied-service flow above — do not
+have this problem:  their redirects carry no tokens at all.</p>
 <h2 id="customizing-the-consent-page">Customizing the consent page</h2>
 <p>For each provider, Soliplex looks for the consent page's template in this
 order:</p>

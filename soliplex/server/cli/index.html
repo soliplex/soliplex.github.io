@@ -9679,7 +9679,7 @@ compile against the currently-loaded JSONPath environment.</p>
   variable.</li>
 </ul>
 <h4 id="output_7">Output</h4>
-<p>Two blocks are printed:</p>
+<p>Three blocks are printed:</p>
 <ul>
 <li><strong>Admin users (N)</strong> — one line per stored admin row. Email-keyed and
   <code>preferred_username</code>-keyed admins (the canonical
@@ -9693,9 +9693,31 @@ compile against the currently-loaded JSONPath environment.</p>
   longer present. Use
   <a href="#admin-users-delete"><code>admin-users delete --allow-invalid-json-path</code></a>
   to remove such an entry. <code>(none)</code> if every stored row validates.</li>
+<li>
+<p><strong>Claims not carried in the authn cookie</strong> — a warning-grade
+  diagnostic about the gap between the stored discriminators and the
+  authn cookie's claims (see
+  <a href="../../config/oidc_providers/#the-check-endpoint">the check endpoint</a>);
+  a warning, not an audit error:  <code>admin-users</code> never fails on its
+  account, and it matters only to deployments which gate protected
+  services through the check endpoint.  Two sub-blocks:</p>
+</li>
+<li>
+<p><strong>Unresolvable discriminators</strong> — one line per stored
+    discriminator which no auth system's cookie fully covers. Such
+    an entry can never admit anyone through the check endpoint:
+    widen the providers' <code>cookie_claims</code>, or remove the entry.
+    Claims read only inside a registered JSONPath function extension
+    are invisible to this check.</p>
+</li>
+<li><strong>Gaps by auth system</strong> — one line per auth system, naming the
+    referenced claims its <code>cookie_claims</code> does not carry. Matters
+    only for auth systems whose users are expected to be admin
+    candidates.</li>
 </ul>
+<p>Each sub-block is <code>(none)</code> when empty.</p>
 <p>When the installation's <code>authorization_db</code> is the in-memory
-default (<code>sqlite://</code>), no admin rows are persisted; both blocks read
+default (<code>sqlite://</code>), no admin rows are persisted; all three blocks read
 as <code>(none)</code>.</p>
 <p>When the authorization database cannot be reached at all — e.g. its
 <code>authorization_db</code> names a Postgres server that isn't listening —
