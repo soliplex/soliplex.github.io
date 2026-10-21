@@ -10605,24 +10605,30 @@ database.</p>
 <h3 id="the-model-in-one-paragraph">The Model in One Paragraph</h3>
 <p>Each room's authorization is captured by a <code>RoomPolicy</code> row plus zero or
 more <code>ACLEntry</code> rows attached to it. A <code>RoomPolicy</code> has a
-<code>default_allow_deny</code> flag (default: <code>DENY</code>) that applies when no ACL
-entry matches the requesting user. An <code>ACLEntry</code> has an <code>allow_deny</code>
-flag plus a discriminator — one of <code>everyone</code>, <code>authenticated</code>,
-<code>preferred_username</code>, <code>email</code>, or a free-form <code>json_path</code> — used to
-decide whether it matches the caller's token. (The
-<code>preferred_username</code> and <code>email</code> discriminators are stored as
-equivalent <code>json_path</code> queries; the row layout has just <code>everyone</code>,
-<code>authenticated</code>, and <code>json_path</code> underneath.) The first matching entry wins; if none match, the
-policy's <code>default_allow_deny</code> is used.</p>
+<code>default_allow_deny</code> flag (default: <code>DENY</code>) which governs <strong>read</strong>
+access. An <code>ACLEntry</code> has an <code>allow_deny</code> flag plus a discriminator —
+one of <code>everyone</code>, <code>authenticated</code>, <code>preferred_username</code>, <code>email</code>, or a
+free-form <code>json_path</code> — used to decide whether it matches the caller's
+token, plus a <code>permission</code> flag (<code>read</code>, <code>write</code>, or <code>admin</code>) scoping
+the entry to that permission. (The <code>preferred_username</code> and <code>email</code>
+discriminators are stored as equivalent <code>json_path</code> queries;
+the row layout has just <code>everyone</code>, <code>authenticated</code>, and <code>json_path</code>
+underneath.)</p>
+<p>The first matching entry — scoped to the queried permission — wins. If
+no entry scoped to that permission matches, read access falls back to
+<code>default_allow_deny</code>, while write and admin access fall back to <code>DENY</code>:
+only an entry explicitly scoped to <code>write</code> or <code>admin</code> can grant it.</p>
 <p>The critical distinction to keep in mind is between <strong>no policy row</strong>
 and <strong>an empty policy row</strong>:</p>
 <ul>
-<li>A room with <strong>no <code>RoomPolicy</code> row at all</strong> is treated as <strong>public</strong>:
-  every authenticated user is allowed in. This is the default state of
-  every room on a fresh authz database.</li>
+<li>A room with <strong>no <code>RoomPolicy</code> row at all</strong> is treated as <strong>public
+  for read</strong>: every authenticated user is allowed in, but write and
+  admin operations remain denied unless explicitly granted. This is
+  the default state of every room on a fresh authz database.</li>
 <li>A room with a <code>RoomPolicy</code> row and <strong>no matching ACL entries</strong> falls
-  through to <code>default_allow_deny</code>, which defaults to <code>DENY</code> — making
-  the room effectively <strong>private</strong>.</li>
+  through for reads to <code>default_allow_deny</code>, which defaults to <code>DENY</code> —
+  making the room effectively <strong>private</strong>. Write and admin access are
+  denied unless an entry scoped to them grants it.</li>
 </ul>
 <p>The eight commands below create, inspect, edit, and populate these
 rows.</p>
@@ -10658,14 +10664,15 @@ rows.</p>
 </span><span id="__span-122-4"><a id="__codelineno-122-4" name="__codelineno-122-4" href="#__codelineno-122-4"></a><span class="w">  </span><span class="nt">&quot;acl_entries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 </span><span id="__span-122-5"><a id="__codelineno-122-5" name="__codelineno-122-5" href="#__codelineno-122-5"></a><span class="w">    </span><span class="p">{</span>
 </span><span id="__span-122-6"><a id="__codelineno-122-6" name="__codelineno-122-6" href="#__codelineno-122-6"></a><span class="w">      </span><span class="nt">&quot;allow_deny&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ALLOW&quot;</span><span class="p">,</span>
-</span><span id="__span-122-7"><a id="__codelineno-122-7" name="__codelineno-122-7" href="#__codelineno-122-7"></a><span class="w">      </span><span class="nt">&quot;everyone&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-122-8"><a id="__codelineno-122-8" name="__codelineno-122-8" href="#__codelineno-122-8"></a><span class="w">      </span><span class="nt">&quot;authenticated&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-122-9"><a id="__codelineno-122-9" name="__codelineno-122-9" href="#__codelineno-122-9"></a><span class="w">      </span><span class="nt">&quot;preferred_username&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-122-10"><a id="__codelineno-122-10" name="__codelineno-122-10" href="#__codelineno-122-10"></a><span class="w">      </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;alice@example.com&quot;</span><span class="p">,</span>
-</span><span id="__span-122-11"><a id="__codelineno-122-11" name="__codelineno-122-11" href="#__codelineno-122-11"></a><span class="w">      </span><span class="nt">&quot;json_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
-</span><span id="__span-122-12"><a id="__codelineno-122-12" name="__codelineno-122-12" href="#__codelineno-122-12"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-122-13"><a id="__codelineno-122-13" name="__codelineno-122-13" href="#__codelineno-122-13"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-122-14"><a id="__codelineno-122-14" name="__codelineno-122-14" href="#__codelineno-122-14"></a><span class="p">}</span>
+</span><span id="__span-122-7"><a id="__codelineno-122-7" name="__codelineno-122-7" href="#__codelineno-122-7"></a><span class="w">      </span><span class="nt">&quot;permission&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;READ&quot;</span><span class="p">,</span>
+</span><span id="__span-122-8"><a id="__codelineno-122-8" name="__codelineno-122-8" href="#__codelineno-122-8"></a><span class="w">      </span><span class="nt">&quot;everyone&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-122-9"><a id="__codelineno-122-9" name="__codelineno-122-9" href="#__codelineno-122-9"></a><span class="w">      </span><span class="nt">&quot;authenticated&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-122-10"><a id="__codelineno-122-10" name="__codelineno-122-10" href="#__codelineno-122-10"></a><span class="w">      </span><span class="nt">&quot;preferred_username&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-122-11"><a id="__codelineno-122-11" name="__codelineno-122-11" href="#__codelineno-122-11"></a><span class="w">      </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;alice@example.com&quot;</span><span class="p">,</span>
+</span><span id="__span-122-12"><a id="__codelineno-122-12" name="__codelineno-122-12" href="#__codelineno-122-12"></a><span class="w">      </span><span class="nt">&quot;json_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+</span><span id="__span-122-13"><a id="__codelineno-122-13" name="__codelineno-122-13" href="#__codelineno-122-13"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-122-14"><a id="__codelineno-122-14" name="__codelineno-122-14" href="#__codelineno-122-14"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-122-15"><a id="__codelineno-122-15" name="__codelineno-122-15" href="#__codelineno-122-15"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
 <li>The <code>-v</code> / <code>--verbose</code> and <code>-q</code> / <code>--quiet</code> flags at the
@@ -10679,10 +10686,11 @@ rows.</p>
   flipped the default to verbose. Example verbose output:</li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-123-1"><a id="__codelineno-123-1" name="__codelineno-123-1" href="#__codelineno-123-1"></a>─── Room policy: chat ───
-</span><span id="__span-123-2"><a id="__codelineno-123-2" name="__codelineno-123-2" href="#__codelineno-123-2"></a>Default: DENY (private -- denies callers that don&#39;t match an ALLOW entry).
-</span><span id="__span-123-3"><a id="__codelineno-123-3" name="__codelineno-123-3" href="#__codelineno-123-3"></a>ACL entries (2):
-</span><span id="__span-123-4"><a id="__codelineno-123-4" name="__codelineno-123-4" href="#__codelineno-123-4"></a>  1. ALLOW  email=alice@example.com
-</span><span id="__span-123-5"><a id="__codelineno-123-5" name="__codelineno-123-5" href="#__codelineno-123-5"></a>  2. DENY   everyone
+</span><span id="__span-123-2"><a id="__codelineno-123-2" name="__codelineno-123-2" href="#__codelineno-123-2"></a>Default: DENY READ (private -- denies callers that don&#39;t match an
+</span><span id="__span-123-3"><a id="__codelineno-123-3" name="__codelineno-123-3" href="#__codelineno-123-3"></a>ALLOW READ entry).
+</span><span id="__span-123-4"><a id="__codelineno-123-4" name="__codelineno-123-4" href="#__codelineno-123-4"></a>ACL entries (2):
+</span><span id="__span-123-5"><a id="__codelineno-123-5" name="__codelineno-123-5" href="#__codelineno-123-5"></a>  1. ALLOW READ  email=alice@example.com
+</span><span id="__span-123-6"><a id="__codelineno-123-6" name="__codelineno-123-6" href="#__codelineno-123-6"></a>  2. DENY READ   everyone
 </span></code></pre></div>
 <ul>
 <li>
@@ -10721,7 +10729,8 @@ rows.</p>
 </span><span id="__span-126-2"><a id="__codelineno-126-2" name="__codelineno-126-2" href="#__codelineno-126-2"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.acl_entries[] | select(.allow_deny == &quot;ALLOW&quot;) | .email&#39;</span>
 </span></code></pre></div>
 <p>A <code>null</code> response means no <code>RoomPolicy</code> row exists yet — i.e. the room
-is in its default public state:</p>
+is in its default public (for read) state, with writes and admin
+operations denied unless explicitly granted:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-127-1"><a id="__codelineno-127-1" name="__codelineno-127-1" href="#__codelineno-127-1"></a>$<span class="w"> </span>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>show<span class="w"> </span>example/installation.yaml<span class="w"> </span>search
 </span><span id="__span-127-2"><a id="__codelineno-127-2" name="__codelineno-127-2" href="#__codelineno-127-2"></a>null
 </span></code></pre></div>
@@ -10755,8 +10764,9 @@ inverse of <a href="#room-authz-from-yaml"><code>from-yaml</code></a>.</p>
 <h4 id="behavior-notes_9">Behavior Notes</h4>
 <ul>
 <li><strong>Per-entry shape mirrors <code>ACLEntry</code>.</strong> Each entry dumps with the
-  same fields as the public <code>ACLEntry</code> model: an entry stored as a
-  <code>preferred_username</code> or <code>email</code> query is surfaced back under
+  same fields as the public <code>ACLEntry</code> model, including the entry's
+  <code>permission</code> scope (<code>READ</code> / <code>WRITE</code> / <code>ADMIN</code>): an entry stored as
+  a <code>preferred_username</code> or <code>email</code> query is surfaced back under
   <code>preferred_username</code> / <code>email</code> (with <code>json_path: null</code>), and a
   general-purpose query is surfaced under <code>json_path</code>. The document
   re-loads cleanly via <a href="#room-authz-from-yaml"><code>from-yaml</code></a>.</li>
@@ -10815,7 +10825,7 @@ round-trip.</p>
   (and all its ACL entries) is replaced by the imported one.</li>
 <li><strong><code>null</code> removes the policy.</strong> Importing a <code>null</code> document deletes
   the target room's <code>RoomPolicy</code> entirely, returning it to the default
-  public state.</li>
+  public (for read) state.</li>
 <li><strong>Configured-room check.</strong> Unlike <a href="#room-authz-as-yaml"><code>as-yaml</code></a>,
   <code>from-yaml</code> always requires the target room to be configured in the
   installation's YAML; there is no <code>--allow-stale</code> escape hatch.</li>
@@ -10871,9 +10881,9 @@ no existing ACL entries are deleted by this command.</p>
   existing policy — including all its ACL entries — is dumped
   unchanged.</li>
 <li><strong>Public-no-row vs. public-by-policy.</strong> A room with no policy row
-  at all is the default public state; this command transitions it
-  directly to private (<code>DENY</code>, no entries) without needing
-  <code>--update</code>. A room with an explicit policy whose
+  at all is the default public (for read) state; this command
+  transitions it directly to private (<code>DENY</code>, no entries) without
+  needing <code>--update</code>. A room with an explicit policy whose
   <code>default_allow_deny=ALLOW</code> is a deliberately public-by-policy
   room — the command refuses to flip it without <code>--update</code>, so an
   operator who relied on the explicit ALLOW isn't silently overridden.</li>
@@ -10910,7 +10920,8 @@ access and everyone else is now denied):</p>
 </span><span id="__span-140-4"><a id="__codelineno-140-4" name="__codelineno-140-4" href="#__codelineno-140-4"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <h3 id="room-authz-make-public"><code>room-authz make-public</code></h3>
-<p>Ensure a room is public. Inverse of <code>make-private</code>: a room with no
+<p>Ensure a room is public for read (WRITE and ADMIN remain granted only
+by entries scoped to them). Inverse of <code>make-private</code>: a room with no
 <code>RoomPolicy</code> row is already public-to-all-authenticated-users, so the
 command is a no-op in that case; a room with an existing policy whose
 <code>default_allow_deny=ALLOW</code> is also already public-by-policy, again a
@@ -10936,8 +10947,8 @@ no-op. The command refuses to silently flip a private room
   up with <a href="#room-authz-clear-acl"><code>clear-acl</code></a> and rebuild.</li>
 <li><strong>No row needed for "public."</strong> Unlike <code>make-private</code>, this command
   does not create a <code>RoomPolicy</code> row in the no-row case — the room
-  is already in the default public state. As a result, the JSON
-  dump may be <code>null</code> after a successful run.</li>
+  is already in the default public (for read) state. As a result,
+  the JSON dump may be <code>null</code> after a successful run.</li>
 </ul>
 <h4 id="exit-status_22">Exit Status</h4>
 <ul>
@@ -10964,6 +10975,7 @@ users):</p>
 <h3 id="room-authz-add-acl-entry"><code>room-authz add-acl-entry</code></h3>
 <p>Add an <code>ACLEntry</code> to a room's <code>RoomPolicy</code>. The entry's allow/deny
 flag is selected with <code>--allow</code> or <code>--deny</code>; the entry's
+permission scope is selected with <code>--permission</code>; the entry's
 discriminator (what it matches against the caller's token) is
 selected with one of <code>--everyone</code>, <code>--authenticated</code>, <code>--json-path</code>,
 <code>--preferred-username</code>, or <code>--email</code>.</p>
@@ -11001,21 +11013,33 @@ public room to private as a side effect of adding the first entry.</p>
   <code>email</code> claim equals <code>TEXT</code>. Stored as the equivalent <code>--json-path</code>
   query <code>$[?$.email == "TEXT"]</code>.</li>
 </ul>
+<p>Plus (the permission scope):</p>
+<ul>
+<li><code>--permission read|write|admin</code> — scope the entry to that
+  permission. A <code>write</code>- or <code>admin</code>-scoped entry grants/denies that
+  permission for matched callers without affecting read
+  adjudication: reads always fall back to the policy's
+  <code>default_allow_deny</code>, while write and admin access fall back to
+  <code>DENY</code> — only an entry scoped to the same permission can grant
+  them (see <a href="#the-model-in-one-paragraph">The Model in One Paragraph</a>).</li>
+</ul>
 <h4 id="behavior-notes_13">Behavior Notes</h4>
 <ul>
 <li><strong>Existing policy required.</strong> If no <code>RoomPolicy</code> row exists for the
   room, the command prints an error and exits with status <code>1</code>. Run
   <code>make-private</code> (or <code>make-public</code>) first.</li>
-<li><strong>Dedup is per-discriminator.</strong> Adding an entry whose discriminator
-  matches an existing entry on the policy deletes the existing entry
-  before inserting the new one. Adding <code>--allow --email alice@x.y</code>
-  replaces any prior <code>email=alice@x.y</code> entry (whether previously
-  <code>ALLOW</code> or <code>DENY</code>). Entries keyed by other discriminators
-  (<code>--preferred-username alice</code>, <code>--email bob@x.y</code>, etc.) are left
-  alone.</li>
-<li><strong>First-match-wins, in insertion order.</strong> ACL entries are checked
-  in their creation order at request time; the first one whose
-  discriminator matches the caller wins (see
+<li><strong>Dedup is per-discriminator, per-permission.</strong> Adding an entry
+  whose discriminator and permission match an existing entry on the
+  policy deletes the existing entry before inserting the new one.
+  Adding <code>--allow --email alice@x.y</code> replaces any prior <code>read</code>-scoped
+  <code>email=alice@x.y</code> entry (whether previously <code>ALLOW</code> or <code>DENY</code>);
+  adding <code>--allow --permission write --email alice@x.y</code> leaves any
+  prior <code>read</code>-scoped entry for the same email in place. Entries keyed
+  by other discriminators (<code>--preferred-username alice</code>,
+  <code>--email bob@x.y</code>, etc.) are left alone.</li>
+<li><strong>First-match-wins, in insertion order.</strong> For each permission, the
+  entries scoped to it are checked in their creation order at request
+  time; the first one whose discriminator matches the caller wins (see
   <code>ACLEntry.check_token</code>). This means a <code>--deny --email alice@x.y</code>
   added <em>after</em> a <code>--allow --everyone</code> will still keep Alice out,
   because the <code>email</code> entry matches her token before the catch-all
@@ -11029,52 +11053,73 @@ public room to private as a side effect of adding the first entry.</p>
 <li><code>1</code> when <code>--allow</code>/<code>--deny</code> are both passed or both omitted; when
   no (or more than one) discriminator option is supplied; when no
   <code>RoomPolicy</code> exists for the room; or when the RAM-DB guard fires.</li>
+<li><code>2</code> when <code>--permission</code> is omitted or names an unknown permission
+  (usage errors; the command is not run at all).</li>
 </ul>
 <h4 id="examples_29">Examples</h4>
 <p>Grant a single user access to a private room:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-146-1"><a id="__codelineno-146-1" name="__codelineno-146-1" href="#__codelineno-146-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-146-2"><a id="__codelineno-146-2" name="__codelineno-146-2" href="#__codelineno-146-2"></a><span class="w">  </span>--allow<span class="w"> </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-146-3"><a id="__codelineno-146-3" name="__codelineno-146-3" href="#__codelineno-146-3"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+</span><span id="__span-146-2"><a id="__codelineno-146-2" name="__codelineno-146-2" href="#__codelineno-146-2"></a><span class="w">  </span>--allow<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-146-3"><a id="__codelineno-146-3" name="__codelineno-146-3" href="#__codelineno-146-3"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-146-4"><a id="__codelineno-146-4" name="__codelineno-146-4" href="#__codelineno-146-4"></a><span class="w">  </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-146-5"><a id="__codelineno-146-5" name="__codelineno-146-5" href="#__codelineno-146-5"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <p>Block a single user on a public-by-policy room:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-147-1"><a id="__codelineno-147-1" name="__codelineno-147-1" href="#__codelineno-147-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-147-2"><a id="__codelineno-147-2" name="__codelineno-147-2" href="#__codelineno-147-2"></a><span class="w">  </span>--deny<span class="w"> </span>--email<span class="w"> </span>mallory@example.com<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-147-3"><a id="__codelineno-147-3" name="__codelineno-147-3" href="#__codelineno-147-3"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+</span><span id="__span-147-2"><a id="__codelineno-147-2" name="__codelineno-147-2" href="#__codelineno-147-2"></a><span class="w">  </span>--deny<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-147-3"><a id="__codelineno-147-3" name="__codelineno-147-3" href="#__codelineno-147-3"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-147-4"><a id="__codelineno-147-4" name="__codelineno-147-4" href="#__codelineno-147-4"></a><span class="w">  </span>--email<span class="w"> </span>mallory@example.com<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-147-5"><a id="__codelineno-147-5" name="__codelineno-147-5" href="#__codelineno-147-5"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <p>Open the room to every authenticated user, on top of an existing
 private policy (useful for temporarily widening access without
 flipping <code>default_allow_deny</code>):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-148-1"><a id="__codelineno-148-1" name="__codelineno-148-1" href="#__codelineno-148-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-148-2"><a id="__codelineno-148-2" name="__codelineno-148-2" href="#__codelineno-148-2"></a><span class="w">  </span>--allow<span class="w"> </span>--authenticated<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-148-3"><a id="__codelineno-148-3" name="__codelineno-148-3" href="#__codelineno-148-3"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+</span><span id="__span-148-2"><a id="__codelineno-148-2" name="__codelineno-148-2" href="#__codelineno-148-2"></a><span class="w">  </span>--allow<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-148-3"><a id="__codelineno-148-3" name="__codelineno-148-3" href="#__codelineno-148-3"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-148-4"><a id="__codelineno-148-4" name="__codelineno-148-4" href="#__codelineno-148-4"></a><span class="w">  </span>--authenticated<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-148-5"><a id="__codelineno-148-5" name="__codelineno-148-5" href="#__codelineno-148-5"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <p>Keyed by <code>preferred_username</code> instead of <code>email</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-149-1"><a id="__codelineno-149-1" name="__codelineno-149-1" href="#__codelineno-149-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-149-2"><a id="__codelineno-149-2" name="__codelineno-149-2" href="#__codelineno-149-2"></a><span class="w">  </span>--allow<span class="w"> </span>--preferred-username<span class="w"> </span>alice<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-149-3"><a id="__codelineno-149-3" name="__codelineno-149-3" href="#__codelineno-149-3"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+</span><span id="__span-149-2"><a id="__codelineno-149-2" name="__codelineno-149-2" href="#__codelineno-149-2"></a><span class="w">  </span>--allow<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-149-3"><a id="__codelineno-149-3" name="__codelineno-149-3" href="#__codelineno-149-3"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-149-4"><a id="__codelineno-149-4" name="__codelineno-149-4" href="#__codelineno-149-4"></a><span class="w">  </span>--preferred-username<span class="w"> </span>alice<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-149-5"><a id="__codelineno-149-5" name="__codelineno-149-5" href="#__codelineno-149-5"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <p>Catch-all <code>DENY</code> for a public-by-policy room, with selective ALLOW
 exceptions added beforehand (because earlier entries win):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-150-1"><a id="__codelineno-150-1" name="__codelineno-150-1" href="#__codelineno-150-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>make-public<span class="w"> </span>example/installation.yaml<span class="w"> </span>chat
 </span><span id="__span-150-2"><a id="__codelineno-150-2" name="__codelineno-150-2" href="#__codelineno-150-2"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-150-3"><a id="__codelineno-150-3" name="__codelineno-150-3" href="#__codelineno-150-3"></a><span class="w">  </span>--allow<span class="w"> </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-150-4"><a id="__codelineno-150-4" name="__codelineno-150-4" href="#__codelineno-150-4"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
-</span><span id="__span-150-5"><a id="__codelineno-150-5" name="__codelineno-150-5" href="#__codelineno-150-5"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-150-6"><a id="__codelineno-150-6" name="__codelineno-150-6" href="#__codelineno-150-6"></a><span class="w">  </span>--deny<span class="w"> </span>--everyone<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-150-7"><a id="__codelineno-150-7" name="__codelineno-150-7" href="#__codelineno-150-7"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+</span><span id="__span-150-3"><a id="__codelineno-150-3" name="__codelineno-150-3" href="#__codelineno-150-3"></a><span class="w">  </span>--allow<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-150-4"><a id="__codelineno-150-4" name="__codelineno-150-4" href="#__codelineno-150-4"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-150-5"><a id="__codelineno-150-5" name="__codelineno-150-5" href="#__codelineno-150-5"></a><span class="w">  </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-150-6"><a id="__codelineno-150-6" name="__codelineno-150-6" href="#__codelineno-150-6"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+</span><span id="__span-150-7"><a id="__codelineno-150-7" name="__codelineno-150-7" href="#__codelineno-150-7"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-150-8"><a id="__codelineno-150-8" name="__codelineno-150-8" href="#__codelineno-150-8"></a><span class="w">  </span>--deny<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-150-9"><a id="__codelineno-150-9" name="__codelineno-150-9" href="#__codelineno-150-9"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-150-10"><a id="__codelineno-150-10" name="__codelineno-150-10" href="#__codelineno-150-10"></a><span class="w">  </span>--everyone<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-150-11"><a id="__codelineno-150-11" name="__codelineno-150-11" href="#__codelineno-150-11"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+</span></code></pre></div>
+<p>Grant a user write access (explicitly scoped, so who can read the room
+is unaffected, and the policy's <code>default_allow_deny</code> is not consulted
+for writes):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-151-1"><a id="__codelineno-151-1" name="__codelineno-151-1" href="#__codelineno-151-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-151-2"><a id="__codelineno-151-2" name="__codelineno-151-2" href="#__codelineno-151-2"></a><span class="w">  </span>--allow<span class="w"> </span>--permission<span class="w"> </span>write<span class="w"> </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-151-3"><a id="__codelineno-151-3" name="__codelineno-151-3" href="#__codelineno-151-3"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <h3 id="room-authz-delete-acl-entry"><code>room-authz delete-acl-entry</code></h3>
 <p>Delete a single <code>ACLEntry</code> from a room's <code>RoomPolicy</code>. The entry is
 identified by the same parameter shape as
 <a href="#room-authz-add-acl-entry"><code>add-acl-entry</code></a>: the combination of
-<code>--allow</code>/<code>--deny</code> and one discriminator option (<code>--everyone</code>,
+<code>--allow</code>/<code>--deny</code>, one discriminator option (<code>--everyone</code>,
 <code>--authenticated</code>, <code>--json-path</code>, <code>--preferred-username</code>, or
-<code>--email</code>).</p>
+<code>--email</code>), and a <code>--permission</code> scope.</p>
 <p>The room must already have a <code>RoomPolicy</code> row with at least one ACL
 entry matching the supplied parameters. If no match is found, the
 command exits with status <code>1</code> so the operator can tell that the
 delete was a no-op.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-151-1"><a id="__codelineno-151-1" name="__codelineno-151-1" href="#__codelineno-151-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>INSTALLATION_CONFIG_PATH<span class="w"> </span>ROOM_ID
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-152-1"><a id="__codelineno-152-1" name="__codelineno-152-1" href="#__codelineno-152-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>INSTALLATION_CONFIG_PATH<span class="w"> </span>ROOM_ID
 </span></code></pre></div>
 <h4 id="options_16">Options</h4>
 <p>Exactly one of:</p>
@@ -11095,6 +11140,12 @@ delete was a no-op.</p>
 <li><code>--email TEXT</code> — convenience alias matching the entry stored as the
   equivalent <code>--json-path</code> query <code>$[?$.email == "TEXT"]</code>.</li>
 </ul>
+<p>Plus (the permission scope):</p>
+<ul>
+<li><code>--permission read|write|admin</code> — match entries scoped to this
+  permission. The match on permission is exact: a <code>write</code>-scoped
+  entry is removed only by a delete carrying <code>--permission write</code>.</li>
+</ul>
 <p>Optional:</p>
 <ul>
 <li><code>--allow-invalid-json-path</code> — skip JSONPath compile-validation of
@@ -11107,10 +11158,11 @@ delete was a no-op.</p>
 </ul>
 <h4 id="behavior-notes_14">Behavior Notes</h4>
 <ul>
-<li><strong>Exact match on (allow/deny, discriminator).</strong> An entry with the
-  same discriminator but the opposite allow/deny flag is <em>not</em> a
-  match. To swap an entry from <code>DENY</code> to <code>ALLOW</code> for the same
-  discriminator, just call
+<li><strong>Exact match on (allow/deny, permission, discriminator).</strong> An
+  entry with the same discriminator but the opposite allow/deny flag —
+  or scoped to a different permission — is <em>not</em> a match. To swap an
+  entry from <code>DENY</code> to <code>ALLOW</code> for the same discriminator and
+  permission, just call
   <a href="#room-authz-add-acl-entry"><code>add-acl-entry</code></a> with the new flag —
   its per-discriminator dedup will replace the existing row.</li>
 <li><strong>Policy preserved.</strong> Only the matching ACL entries are removed;
@@ -11128,30 +11180,40 @@ delete was a no-op.</p>
   no (or more than one) discriminator option is supplied; when no
   <code>RoomPolicy</code> exists for the room; when no entry matches the
   supplied parameters; or when the RAM-DB guard fires.</li>
+<li><code>2</code> when <code>--permission</code> is omitted or names an unknown permission
+  (usage errors; the command is not run at all).</li>
 </ul>
 <h4 id="examples_30">Examples</h4>
 <p>Revoke a single user's access:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-152-1"><a id="__codelineno-152-1" name="__codelineno-152-1" href="#__codelineno-152-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-152-2"><a id="__codelineno-152-2" name="__codelineno-152-2" href="#__codelineno-152-2"></a><span class="w">  </span>--allow<span class="w"> </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-152-3"><a id="__codelineno-152-3" name="__codelineno-152-3" href="#__codelineno-152-3"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-153-1"><a id="__codelineno-153-1" name="__codelineno-153-1" href="#__codelineno-153-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-153-2"><a id="__codelineno-153-2" name="__codelineno-153-2" href="#__codelineno-153-2"></a><span class="w">  </span>--allow<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-153-3"><a id="__codelineno-153-3" name="__codelineno-153-3" href="#__codelineno-153-3"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-153-4"><a id="__codelineno-153-4" name="__codelineno-153-4" href="#__codelineno-153-4"></a><span class="w">  </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-153-5"><a id="__codelineno-153-5" name="__codelineno-153-5" href="#__codelineno-153-5"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <p>Remove a <code>DENY</code> blocking a specific user, so they fall back to the
 policy's <code>default_allow_deny</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-153-1"><a id="__codelineno-153-1" name="__codelineno-153-1" href="#__codelineno-153-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-153-2"><a id="__codelineno-153-2" name="__codelineno-153-2" href="#__codelineno-153-2"></a><span class="w">  </span>--deny<span class="w"> </span>--email<span class="w"> </span>mallory@example.com<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-153-3"><a id="__codelineno-153-3" name="__codelineno-153-3" href="#__codelineno-153-3"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-154-1"><a id="__codelineno-154-1" name="__codelineno-154-1" href="#__codelineno-154-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-154-2"><a id="__codelineno-154-2" name="__codelineno-154-2" href="#__codelineno-154-2"></a><span class="w">  </span>--deny<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-154-3"><a id="__codelineno-154-3" name="__codelineno-154-3" href="#__codelineno-154-3"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-154-4"><a id="__codelineno-154-4" name="__codelineno-154-4" href="#__codelineno-154-4"></a><span class="w">  </span>--email<span class="w"> </span>mallory@example.com<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-154-5"><a id="__codelineno-154-5" name="__codelineno-154-5" href="#__codelineno-154-5"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <p>Lift a temporary <code>--allow --authenticated</code> catch-all that was added
 to widen access while keeping the policy private:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-154-1"><a id="__codelineno-154-1" name="__codelineno-154-1" href="#__codelineno-154-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-154-2"><a id="__codelineno-154-2" name="__codelineno-154-2" href="#__codelineno-154-2"></a><span class="w">  </span>--allow<span class="w"> </span>--authenticated<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-154-3"><a id="__codelineno-154-3" name="__codelineno-154-3" href="#__codelineno-154-3"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-155-1"><a id="__codelineno-155-1" name="__codelineno-155-1" href="#__codelineno-155-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-155-2"><a id="__codelineno-155-2" name="__codelineno-155-2" href="#__codelineno-155-2"></a><span class="w">  </span>--allow<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-155-3"><a id="__codelineno-155-3" name="__codelineno-155-3" href="#__codelineno-155-3"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-155-4"><a id="__codelineno-155-4" name="__codelineno-155-4" href="#__codelineno-155-4"></a><span class="w">  </span>--authenticated<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-155-5"><a id="__codelineno-155-5" name="__codelineno-155-5" href="#__codelineno-155-5"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <p>Remove a stale ACL entry reported by <code>audit room-authz</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-155-1"><a id="__codelineno-155-1" name="__codelineno-155-1" href="#__codelineno-155-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-155-2"><a id="__codelineno-155-2" name="__codelineno-155-2" href="#__codelineno-155-2"></a><span class="w">  </span>--allow<span class="w"> </span>--json-path<span class="w"> </span><span class="s1">&#39;$[?stale_filter_func($.email)]&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-155-3"><a id="__codelineno-155-3" name="__codelineno-155-3" href="#__codelineno-155-3"></a><span class="w">  </span>--allow-invalid-json-path<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-155-4"><a id="__codelineno-155-4" name="__codelineno-155-4" href="#__codelineno-155-4"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-156-1"><a id="__codelineno-156-1" name="__codelineno-156-1" href="#__codelineno-156-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>delete-acl-entry<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-156-2"><a id="__codelineno-156-2" name="__codelineno-156-2" href="#__codelineno-156-2"></a><span class="w">  </span>--allow<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-156-3"><a id="__codelineno-156-3" name="__codelineno-156-3" href="#__codelineno-156-3"></a><span class="w">  </span>--permission<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-156-4"><a id="__codelineno-156-4" name="__codelineno-156-4" href="#__codelineno-156-4"></a><span class="w">  </span>--json-path<span class="w"> </span><span class="s1">&#39;$[?stale_filter_func($.email)]&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-156-5"><a id="__codelineno-156-5" name="__codelineno-156-5" href="#__codelineno-156-5"></a><span class="w">  </span>--allow-invalid-json-path<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-156-6"><a id="__codelineno-156-6" name="__codelineno-156-6" href="#__codelineno-156-6"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <h3 id="room-authz-clear-acl"><code>room-authz clear-acl</code></h3>
 <p>Delete every <code>ACLEntry</code> attached to a room's <code>RoomPolicy</code> while
@@ -11159,7 +11221,7 @@ leaving the policy itself in place. The room's <code>default_allow_deny</code>
 setting is preserved: a private room (<code>DENY</code>) stays private and now
 denies <em>everyone</em> (no ACL entries left to grant exceptions); a
 public-by-policy room (<code>ALLOW</code>) stays public-by-policy.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-156-1"><a id="__codelineno-156-1" name="__codelineno-156-1" href="#__codelineno-156-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>clear-acl<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>INSTALLATION_CONFIG_PATH<span class="w"> </span>ROOM_ID
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-157-1"><a id="__codelineno-157-1" name="__codelineno-157-1" href="#__codelineno-157-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>clear-acl<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>INSTALLATION_CONFIG_PATH<span class="w"> </span>ROOM_ID
 </span></code></pre></div>
 <h4 id="behavior-notes_15">Behavior Notes</h4>
 <ul>
@@ -11183,14 +11245,14 @@ public-by-policy room (<code>ALLOW</code>) stays public-by-policy.</p>
 <h4 id="examples_31">Examples</h4>
 <p>Strip every ACL entry from the <code>chat</code> room while keeping it
 private (no one can get in until <code>add-acl-entry</code> is run again):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-157-1"><a id="__codelineno-157-1" name="__codelineno-157-1" href="#__codelineno-157-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>clear-acl<span class="w"> </span>example/installation.yaml<span class="w"> </span>chat
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-158-1"><a id="__codelineno-158-1" name="__codelineno-158-1" href="#__codelineno-158-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>clear-acl<span class="w"> </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <p>Reset-and-seed — clear all existing access without changing the
 room's privacy setting, then grant one user:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-158-1"><a id="__codelineno-158-1" name="__codelineno-158-1" href="#__codelineno-158-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>clear-acl<span class="w"> </span>example/installation.yaml<span class="w"> </span>chat
-</span><span id="__span-158-2"><a id="__codelineno-158-2" name="__codelineno-158-2" href="#__codelineno-158-2"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-158-3"><a id="__codelineno-158-3" name="__codelineno-158-3" href="#__codelineno-158-3"></a><span class="w">  </span>--allow<span class="w"> </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-158-4"><a id="__codelineno-158-4" name="__codelineno-158-4" href="#__codelineno-158-4"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-159-1"><a id="__codelineno-159-1" name="__codelineno-159-1" href="#__codelineno-159-1"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>clear-acl<span class="w"> </span>example/installation.yaml<span class="w"> </span>chat
+</span><span id="__span-159-2"><a id="__codelineno-159-2" name="__codelineno-159-2" href="#__codelineno-159-2"></a>soliplex-cli<span class="w"> </span>room-authz<span class="w"> </span>add-acl-entry<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-159-3"><a id="__codelineno-159-3" name="__codelineno-159-3" href="#__codelineno-159-3"></a><span class="w">  </span>--allow<span class="w"> </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-159-4"><a id="__codelineno-159-4" name="__codelineno-159-4" href="#__codelineno-159-4"></a><span class="w">  </span>example/installation.yaml<span class="w"> </span>chat
 </span></code></pre></div>
 <h2 id="ollama"><code>ollama</code></h2>
 <p>The <code>ollama</code> group bundles subcommands that interact with Ollama servers
@@ -11214,7 +11276,7 @@ completions, or tools, and pull each model onto the corresponding Ollama
 server via that server's REST API. Intended to preload a fresh Ollama
 deployment so that the first user-facing request against Soliplex
 doesn't have to wait for a cold-start model download.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-159-1"><a id="__codelineno-159-1" name="__codelineno-159-1" href="#__codelineno-159-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-160-1"><a id="__codelineno-160-1" name="__codelineno-160-1" href="#__codelineno-160-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h4 id="positional-argument_17">Positional Argument</h4>
 <ul>
@@ -11296,25 +11358,25 @@ check fires before any pulls are attempted, so a run that fails on
 unknown URLs reports <code>unknown_ollama_urls</code> and skips the pull loop.</p>
 <h4 id="examples_32">Examples</h4>
 <p>Preview which models would be pulled, without pulling anything:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-160-1"><a id="__codelineno-160-1" name="__codelineno-160-1" href="#__codelineno-160-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span>--dry-run
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-161-1"><a id="__codelineno-161-1" name="__codelineno-161-1" href="#__codelineno-161-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span>--dry-run
 </span></code></pre></div>
 <p>Pull every Ollama model referenced by a full installation:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-161-1"><a id="__codelineno-161-1" name="__codelineno-161-1" href="#__codelineno-161-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-162-1"><a id="__codelineno-162-1" name="__codelineno-162-1" href="#__codelineno-162-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml
 </span></code></pre></div>
 <p>Pull models only for a specific Ollama instance (useful when an
 installation references multiple Ollama URLs):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-162-1"><a id="__codelineno-162-1" name="__codelineno-162-1" href="#__codelineno-162-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-162-2"><a id="__codelineno-162-2" name="__codelineno-162-2" href="#__codelineno-162-2"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama.internal:11434
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-163-1"><a id="__codelineno-163-1" name="__codelineno-163-1" href="#__codelineno-163-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-163-2"><a id="__codelineno-163-2" name="__codelineno-163-2" href="#__codelineno-163-2"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama.internal:11434
 </span></code></pre></div>
 <p>Restrict the scan to several specific Ollama instances by repeating
 <code>--ollama-url</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-163-1"><a id="__codelineno-163-1" name="__codelineno-163-1" href="#__codelineno-163-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-163-2"><a id="__codelineno-163-2" name="__codelineno-163-2" href="#__codelineno-163-2"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama-a.internal:11434<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-163-3"><a id="__codelineno-163-3" name="__codelineno-163-3" href="#__codelineno-163-3"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama-b.internal:11434
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-164-1"><a id="__codelineno-164-1" name="__codelineno-164-1" href="#__codelineno-164-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-164-2"><a id="__codelineno-164-2" name="__codelineno-164-2" href="#__codelineno-164-2"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama-a.internal:11434<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-164-3"><a id="__codelineno-164-3" name="__codelineno-164-3" href="#__codelineno-164-3"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama-b.internal:11434
 </span></code></pre></div>
 <p>Drive the command from automation, suppressing the rule-decorated
 output and capturing any errors as JSON:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-164-1"><a id="__codelineno-164-1" name="__codelineno-164-1" href="#__codelineno-164-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>-q<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-165-1"><a id="__codelineno-165-1" name="__codelineno-165-1" href="#__codelineno-165-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>-q<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml
 </span></code></pre></div>
 <h2 id="config"><code>config</code></h2>
 <p>Dump the installation's fully-resolved declarative configuration as a
@@ -11322,7 +11384,7 @@ single YAML document on stdout. Useful for debugging how nested config
 files and defaults combine, for diffing two installations, or for
 producing a flattened reference copy of a configuration that is
 normally split across many files.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-165-1"><a id="__codelineno-165-1" name="__codelineno-165-1" href="#__codelineno-165-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-166-1"><a id="__codelineno-166-1" name="__codelineno-166-1" href="#__codelineno-166-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h3 id="positional-argument_18">Positional Argument</h3>
 <ul>
@@ -11334,10 +11396,10 @@ normally split across many files.</p>
 <h3 id="output_16">Output</h3>
 <p>The command prints a three-line banner comment followed by the YAML
 document:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-166-1"><a id="__codelineno-166-1" name="__codelineno-166-1" href="#__codelineno-166-1"></a>#------------------------------------------------------------------------------
-</span><span id="__span-166-2"><a id="__codelineno-166-2" name="__codelineno-166-2" href="#__codelineno-166-2"></a># Source: &lt;installation_config_path&gt;
-</span><span id="__span-166-3"><a id="__codelineno-166-3" name="__codelineno-166-3" href="#__codelineno-166-3"></a>#------------------------------------------------------------------------------
-</span><span id="__span-166-4"><a id="__codelineno-166-4" name="__codelineno-166-4" href="#__codelineno-166-4"></a>&lt;yaml document&gt;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-167-1"><a id="__codelineno-167-1" name="__codelineno-167-1" href="#__codelineno-167-1"></a>#------------------------------------------------------------------------------
+</span><span id="__span-167-2"><a id="__codelineno-167-2" name="__codelineno-167-2" href="#__codelineno-167-2"></a># Source: &lt;installation_config_path&gt;
+</span><span id="__span-167-3"><a id="__codelineno-167-3" name="__codelineno-167-3" href="#__codelineno-167-3"></a>#------------------------------------------------------------------------------
+</span><span id="__span-167-4"><a id="__codelineno-167-4" name="__codelineno-167-4" href="#__codelineno-167-4"></a>&lt;yaml document&gt;
 </span></code></pre></div>
 <p>Key ordering is preserved from the original declaration (the dump uses
 <code>sort_keys=False</code>), so the output tracks the structure of the
@@ -11369,15 +11431,15 @@ installation.</p>
 </ul>
 <h3 id="examples_33">Examples</h3>
 <p>Dump the minimal example:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-167-1"><a id="__codelineno-167-1" name="__codelineno-167-1" href="#__codelineno-167-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/minimal.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-168-1"><a id="__codelineno-168-1" name="__codelineno-168-1" href="#__codelineno-168-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/minimal.yaml
 </span></code></pre></div>
 <p>Snapshot a directory-style installation to a file:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-168-1"><a id="__codelineno-168-1" name="__codelineno-168-1" href="#__codelineno-168-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/<span class="w"> </span>&gt;<span class="w"> </span>snapshot.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-169-1"><a id="__codelineno-169-1" name="__codelineno-169-1" href="#__codelineno-169-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/<span class="w"> </span>&gt;<span class="w"> </span>snapshot.yaml
 </span></code></pre></div>
 <p>Diff two installations after normalizing both through <code>config</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-169-1"><a id="__codelineno-169-1" name="__codelineno-169-1" href="#__codelineno-169-1"></a>diff<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-169-2"><a id="__codelineno-169-2" name="__codelineno-169-2" href="#__codelineno-169-2"></a><span class="w">  </span>&lt;<span class="o">(</span>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/minimal.yaml<span class="o">)</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-169-3"><a id="__codelineno-169-3" name="__codelineno-169-3" href="#__codelineno-169-3"></a><span class="w">  </span>&lt;<span class="o">(</span>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/installation.yaml<span class="o">)</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-170-1"><a id="__codelineno-170-1" name="__codelineno-170-1" href="#__codelineno-170-1"></a>diff<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-170-2"><a id="__codelineno-170-2" name="__codelineno-170-2" href="#__codelineno-170-2"></a><span class="w">  </span>&lt;<span class="o">(</span>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/minimal.yaml<span class="o">)</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-170-3"><a id="__codelineno-170-3" name="__codelineno-170-3" href="#__codelineno-170-3"></a><span class="w">  </span>&lt;<span class="o">(</span>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/installation.yaml<span class="o">)</span>
 </span></code></pre></div>
 <h2 id="agui-feature-schemas"><code>agui-feature-schemas</code></h2>
 <p>Export the JSON Schemas for every AG-UI feature registered in the
@@ -11386,7 +11448,7 @@ the AG-UI protocol's <code>state</code> mapping — whose shape is defined by a
 Pydantic model. This command dumps each feature's schema alongside its
 source (<code>client</code>, <code>server</code>, or <code>either</code>), suitable for consumption by
 client-side code generators or schema-diffing tools.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-170-1"><a id="__codelineno-170-1" name="__codelineno-170-1" href="#__codelineno-170-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-171-1"><a id="__codelineno-171-1" name="__codelineno-171-1" href="#__codelineno-171-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h3 id="positional-argument_19">Positional Argument</h3>
 <ul>
@@ -11398,12 +11460,12 @@ client-side code generators or schema-diffing tools.</p>
 <h3 id="output_17">Output</h3>
 <p>The command prints a single JSON object on stdout, mapping each
 feature's <code>name</code> to a two-field record:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-171-1"><a id="__codelineno-171-1" name="__codelineno-171-1" href="#__codelineno-171-1"></a><span class="p">{</span>
-</span><span id="__span-171-2"><a id="__codelineno-171-2" name="__codelineno-171-2" href="#__codelineno-171-2"></a><span class="w">  </span><span class="nt">&quot;&lt;feature_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-171-3"><a id="__codelineno-171-3" name="__codelineno-171-3" href="#__codelineno-171-3"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;client|server|either&gt;&quot;</span><span class="p">,</span>
-</span><span id="__span-171-4"><a id="__codelineno-171-4" name="__codelineno-171-4" href="#__codelineno-171-4"></a><span class="w">    </span><span class="nt">&quot;json_schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Pydantic-generated JSON Schema */</span><span class="w"> </span><span class="p">}</span>
-</span><span id="__span-171-5"><a id="__codelineno-171-5" name="__codelineno-171-5" href="#__codelineno-171-5"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-171-6"><a id="__codelineno-171-6" name="__codelineno-171-6" href="#__codelineno-171-6"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-172-1"><a id="__codelineno-172-1" name="__codelineno-172-1" href="#__codelineno-172-1"></a><span class="p">{</span>
+</span><span id="__span-172-2"><a id="__codelineno-172-2" name="__codelineno-172-2" href="#__codelineno-172-2"></a><span class="w">  </span><span class="nt">&quot;&lt;feature_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-172-3"><a id="__codelineno-172-3" name="__codelineno-172-3" href="#__codelineno-172-3"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;client|server|either&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-172-4"><a id="__codelineno-172-4" name="__codelineno-172-4" href="#__codelineno-172-4"></a><span class="w">    </span><span class="nt">&quot;json_schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Pydantic-generated JSON Schema */</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-172-5"><a id="__codelineno-172-5" name="__codelineno-172-5" href="#__codelineno-172-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-172-6"><a id="__codelineno-172-6" name="__codelineno-172-6" href="#__codelineno-172-6"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
 <li><code>source</code> identifies which side of the AG-UI protocol is allowed to
@@ -11422,14 +11484,14 @@ so it pipes cleanly into <code>jq</code>, code generators, or file redirections.
 <h3 id="examples_34">Examples</h3>
 <p>Dump the feature schemas from the minimal example and pretty-print
 with <code>jq</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-172-1"><a id="__codelineno-172-1" name="__codelineno-172-1" href="#__codelineno-172-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/minimal.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-173-1"><a id="__codelineno-173-1" name="__codelineno-173-1" href="#__codelineno-173-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/minimal.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
 </span></code></pre></div>
 <p>List just the registered feature names:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-173-1"><a id="__codelineno-173-1" name="__codelineno-173-1" href="#__codelineno-173-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-173-2"><a id="__codelineno-173-2" name="__codelineno-173-2" href="#__codelineno-173-2"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;keys&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-174-1"><a id="__codelineno-174-1" name="__codelineno-174-1" href="#__codelineno-174-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-174-2"><a id="__codelineno-174-2" name="__codelineno-174-2" href="#__codelineno-174-2"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;keys&#39;</span>
 </span></code></pre></div>
 <p>Snapshot the schemas to a file for client-side code generation:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-174-1"><a id="__codelineno-174-1" name="__codelineno-174-1" href="#__codelineno-174-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/<span class="w"> </span>&gt;<span class="w"> </span>agui-features.json
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-175-1"><a id="__codelineno-175-1" name="__codelineno-175-1" href="#__codelineno-175-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/<span class="w"> </span>&gt;<span class="w"> </span>agui-features.json
 </span></code></pre></div>
 <h2 id="renamed-commands">Renamed Commands</h2>
 <p>Releases up to <code>0.62.x</code> exposed each subcommand as a flat top-level name.
