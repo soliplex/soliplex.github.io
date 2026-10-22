@@ -1486,6 +1486,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ag-ui-sse-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AG-UI SSE Delivery
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#quiz-related-elements" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3970,6 +3981,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ag-ui-sse-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AG-UI SSE Delivery
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#quiz-related-elements" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4490,18 +4512,33 @@ agent three tools:</p>
 <p>The per-question budgets and the sandbox's limits come from the room's
 <code>haiku.rag</code> configuration: <code>qa.max_searches</code>, <code>qa.max_executions</code>,
 <code>sandbox.code_timeout</code> and <code>sandbox.max_output_chars</code>.</p>
+<h3 id="ag-ui-sse-delivery">AG-UI SSE Delivery</h3>
+<ul>
+<li><code>sse_delivery_config_name</code> (a string, optional); names one of the
+  installation's <code>sse_delivery</code> profiles (see
+  <a href="../installation/#ag-ui-sse-delivery">Installation Configuration</a>) as
+  the default delivery profile for this room's threads. If unset, the
+  room uses the installation's <code>default</code> profile; with no installation
+  stanza at all, runs use <code>strategy: "message"</code>. The name is validated
+  when the configuration loads: naming a profile the installation does
+  not declare is an error.</li>
+</ul>
+<p>E.g., to keep whole-message delivery in one room of an installation
+whose default profile delivers bounded deltas:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">sse_delivery_config_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;whole-message&quot;</span>
+</span></code></pre></div>
 <h3 id="quiz-related-elements">Quiz-related elements</h3>
 <ul>
 <li><code>quizzes</code> is a list of mappings (default <code>()</code>):  each mapping defines a
   quiz which can be run in the room (see <a href="../quizzes/">this page</a> for
   details of the quiz dataset).</li>
 </ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">quizzes</span><span class="p">:</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test_quiz&quot;</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test</span><span class="nv"> </span><span class="s">Quiz&quot;</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">question_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/questions.json&quot;</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">randomize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nt">max_questions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">quizzes</span><span class="p">:</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test_quiz&quot;</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test</span><span class="nv"> </span><span class="s">Quiz&quot;</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="nt">question_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/questions.json&quot;</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="nt">randomize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="nt">max_questions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </span></code></pre></div>
 <h2 id="location-of-rag-database-files">Location of RAG database files</h2>
 <p>Rooms need to be able to find the LanceDB database containing the chunks

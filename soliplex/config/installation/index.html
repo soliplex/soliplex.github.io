@@ -1364,6 +1364,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ag-ui-sse-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AG-UI SSE Delivery
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#room-configuration-paths" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4246,6 +4257,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ag-ui-sse-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AG-UI SSE Delivery
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#room-configuration-paths" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4799,6 +4821,63 @@ behind them, so each read is recorded on its own.</p>
 entirely can <strong>disable room uploads</strong> by leaving <code>rooms_upload_path</code> unset: the
 room-upload endpoint then returns <code>404</code> and no <code>room</code> volume is mounted into
 the sandbox.</p>
+<h2 id="ag-ui-sse-delivery">AG-UI SSE Delivery</h2>
+<p>The optional <code>sse_delivery</code> stanza declares <em>named</em> delivery profiles: how
+the AG-UI run endpoint groups the model's streamed deltas (text, thinking,
+reasoning and tool-call arguments) into SSE events. Each profile shares the
+shape of the strategies below, plus a short <code>description</code> for delivery
+to clients (the name is the mapping key): clients may name one profile in
+the run request's <code>forwarded_props</code> (see <a href="../rooms/#ag-ui-sse-delivery">Room Configuration</a>); a room without its own choice uses the
+stanza's <code>default</code> profile. Unknown profile names, at either level, fall
+back to the next level's default; with no stanza at all, runs use
+<code>strategy: "message"</code>.</p>
+<ul>
+<li>
+<p><code>strategy: "message"</code> merges adjacent deltas of one message, or of one
+  tool call's arguments, and sends them when any other event arrives --
+  normally the message's end. This keeps bytes, events and stored rows
+  low, but text generally reaches the client only when the message ends.</p>
+</li>
+<li>
+<p><code>strategy: "bounded"</code> merges adjacent deltas of one message or tool call
+  in the same way, and also sends the merged event as soon as it holds
+  <code>max_deltas</code> deltas, or <code>max_bytes</code> bytes of UTF-8 text, or has been
+  held for <code>max_ms</code> milliseconds, whichever comes first. All three are
+  required, as positive integers. A single delta is never split, so one
+  large delta can exceed <code>max_bytes</code>. (One difference: after a different
+  message's delta, <code>message</code> sends the next delta on its own, while
+  <code>bounded</code> starts merging again.)</p>
+</li>
+</ul>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">sse_delivery</span><span class="p">:</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;fine-grained&quot;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="nt">configs</span><span class="p">:</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">        </span><span class="s">&quot;whole-message&quot;</span><span class="p p-Indicator">:</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">            </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;message&quot;</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">            </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Text</span><span class="nv"> </span><span class="s">arrives</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">each</span><span class="nv"> </span><span class="s">assistant</span><span class="nv"> </span><span class="s">message&quot;</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">        </span><span class="s">&quot;fine-grained&quot;</span><span class="p p-Indicator">:</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">            </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bounded&quot;</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">            </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Text</span><span class="nv"> </span><span class="s">streams</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">few</span><span class="nv"> </span><span class="s">deltas</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">time&quot;</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">            </span><span class="nt">max_deltas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">            </span><span class="nt">max_bytes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">            </span><span class="nt">max_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+</span></code></pre></div>
+<p>With a model producing about 25 deltas a second, these bounds send about
+eight updates a second, each holding about three deltas: on loopback, an
+80-delta answer took 27 events and about 3.8 times the bytes of
+<code>message</code>.</p>
+<p><code>bounded</code> sends text sooner, at the cost of more SSE events, more bytes
+(each event carries its own envelope), and one stored row, saved in its
+own transaction, per event. <code>max_ms</code> is a target for how long merged text
+is held, not a guarantee: it is checked when the server's event loop gets
+to it, and time spent before the text is held, saving each event to the
+database, and the network all add to the delay a client sees. No default
+bounds are provided: suitable values depend on the pace at which the
+room's model produces deltas.</p>
+<p>Unknown keys, unknown strategies, bounds given with <code>message</code>, and
+missing or non-positive bounds with <code>bounded</code> are rejected when the
+configuration loads. A room naming a profile the installation does not
+declare is also rejected at load time.</p>
 <h2 id="room-configuration-paths">Room Configuration Paths</h2>
 <p>The <code>room_paths</code> element specify one or more filesystem paths to
 search for room configs.</p>
@@ -4824,19 +4903,19 @@ but does not treat them as findings:  the search path mechanism is the
 documented way to override one or more of a shared set of configured rooms.</p>
 <p>By default, Soliplex loads room configurations found under the path './rooms',
 just as though we had configured:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">room_paths</span><span class="p">:</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./rooms&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">room_paths</span><span class="p">:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./rooms&quot;</span>
 </span></code></pre></div>
 <p>To disable all rooms, list a single, "null" path, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">room_paths</span><span class="p">:</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">   </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">room_paths</span><span class="p">:</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">   </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 <h3 id="reloading-room-configurations">Reloading room configurations</h3>
 <p>Soliplex loads room configurations when the server starts.  Python code
 running inside the server, e.g. an app router which writes a new room
 directory under one of the <code>room_paths</code>, can reload them without a
 restart:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">reloaded</span> <span class="o">=</span> <span class="k">await</span> <span class="n">the_installation</span><span class="o">.</span><span class="n">reload_room_configs</span><span class="p">()</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">reloaded</span> <span class="o">=</span> <span class="k">await</span> <span class="n">the_installation</span><span class="o">.</span><span class="n">reload_room_configs</span><span class="p">()</span>
 </span></code></pre></div>
 <p>The reload:</p>
 <ul>
@@ -4894,17 +4973,17 @@ configuration is used for any conflict on completion ID:  completions
 found earlier in the list "win" over later ones with the same ID.</p>
 <p>By default, Soliplex loads completion configurations found under the path
 './completions', just as though we had configured:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./completions&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./completions&quot;</span>
 </span></code></pre></div>
 <p>To disable all completions, list a single, "null" path, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 <h2 id="logfire-configuration">Logfire Configuration</h2>
 <p>See the <a href="../logfire/">Soliplex logfire configuration</a> page.</p>
 <h2 id="asgi-middleware-stack">ASGI Middleware Stack</h2>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">middleware_stack</span><span class="p">:</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nt">middleware_stack</span><span class="p">:</span>
 </span></code></pre></div>
 <p>The optional <code>middleware_stack</code> section declares the ASGI middleware wrapping
 the application (outermost first). Omit it to use the built-in default stack
