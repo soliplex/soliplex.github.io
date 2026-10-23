@@ -4108,7 +4108,11 @@ URL.</p>
   <code>SoliplexTheme</code> extension is required and <code>Flavor.build()</code> (via
   <code>ShellConfig.fromModules</code>) throws without it.</li>
 <li>Composition is append-only: add your own modules via <code>extraModules</code>; do not
-  drop standard ones (Room depends on Lobby, and modules share session state).</li>
+  drop standard ones. They no longer import each other (ADR-005), but they
+  still link to each other's routes: auth redirects to the lobby, and room
+  links to quiz and diagnostics. A dropped module leaves those links pointing
+  at an unknown route. Lobby and room also share the instances that
+  <code>StoresAppModule</code> owns.</li>
 <li>Logging is yours to install, and nothing installs it for you: with no sink
   attached <code>LogManager</code> discards every record. Call <code>installLogSinks()</code> before
   you build your flavor, as the <code>main()</code> above does — the storage migration,
