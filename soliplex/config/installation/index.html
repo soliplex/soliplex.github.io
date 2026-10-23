@@ -4819,8 +4819,8 @@ behind them, so each read is recorded on its own.</p>
 <p>Nothing technically prevents an administrator from uploading information that
 <em>should</em> be protected. An installation that wants to remove that risk
 entirely can <strong>disable room uploads</strong> by leaving <code>rooms_upload_path</code> unset: the
-room-upload endpoint then returns <code>404</code> and no <code>room</code> volume is mounted into
-the sandbox.</p>
+room-upload endpoint then returns <code>405</code> for <code>POST</code>, and no <code>room</code> volume
+is mounted into the sandbox.</p>
 <h2 id="ag-ui-sse-delivery">AG-UI SSE Delivery</h2>
 <p>The optional <code>sse_delivery</code> stanza declares <em>named</em> delivery profiles: how
 the AG-UI run endpoint groups the model's streamed deltas (text, thinking,
