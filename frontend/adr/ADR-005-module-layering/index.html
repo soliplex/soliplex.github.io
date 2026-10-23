@@ -4124,7 +4124,7 @@
 
 <h1 id="adr-005-module-layering-and-cross-feature-state">ADR-005: Module Layering and Cross-Feature State</h1>
 <ul>
-<li><strong>Status:</strong> Proposed</li>
+<li><strong>Status:</strong> Accepted (2026-10-16)</li>
 <li><strong>Date:</strong> 2026-10-13</li>
 <li><strong>Authors:</strong> William Karol Di Cioccio</li>
 <li><strong>Supersedes:</strong> —</li>
@@ -4227,7 +4227,7 @@ plus itself.</p>
   core["core/ + status_message/&lt;br/&gt;shell, routing, inactivity, keyed storage"]
   auth["modules/auth&lt;br/&gt;platform: servers, sessions, guards"]
   stores["stores/&lt;br/&gt;cross-feature state and services"]
-  features["modules/lobby, room, quiz, diagnostics, versions&lt;br/&gt;features: never import each other"]
+  features["modules/lobby, room, quiz, diagnostics, versions, preferences&lt;br/&gt;features: never import each other"]
   flavors["flavors/&lt;br/&gt;composition root: may import anything"]
   shared --&gt; core --&gt; auth --&gt; stores --&gt; features --&gt; flavors</code></pre>
 <p>The arrows point upward: each layer may be imported by the layers above it.
@@ -4311,7 +4311,7 @@ progress tracker for #607.</p>
   question.</li>
 </ul>
 <p><strong>Enforcement.</strong> <code>test/architecture/import_boundaries_test.dart</code>, run in the
-existing CI test job. Until it lands, review is the only check.</p>
+existing CI test job.</p>
 <h2 id="5-known-limitations-and-open-questions">5. Known Limitations and Open Questions</h2>
 <ol>
 <li><strong>Omittable at compile time is not omittable at run time.</strong> Modules
