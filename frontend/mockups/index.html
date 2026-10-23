@@ -2574,6 +2574,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-datasets-mockup" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The datasets mockup
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3788,6 +3799,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-datasets-mockup" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The datasets mockup
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4049,6 +4071,103 @@ also holds what is open, scrolled and typed, so it is there again on reopen.</p>
 <p>The composer's leading controls are one <code>+</code> menu: attach (files, images, a
 folder) and <em>Filter documents</em>, which is stubbed to a notice until its purpose
 (RAG scope, embeds, or both) is settled.</p>
+<h2 id="the-datasets-mockup">The datasets mockup</h2>
+<p><code>lib/src/mockups/datasets/</code> prototypes rooms as presets rather than walled
+gardens: a user picks from every dataset they can access, creates their own,
+uploads to them, and shares them once tagged. Nothing here is on the wire —
+the backend has no dataset entity yet — and every rule the screens apply is a
+working assumption to confirm, not a decision.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-t<span class="w"> </span>lib/main_mockups.dart<span class="w"> </span>-d<span class="w"> </span>linux<span class="w"> </span>--dart-define<span class="o">=</span><span class="nv">MOCKUP</span><span class="o">=</span>Datasets
+</span></code></pre></div>
+<p>Add <code>--dart-define=DATASETS_ROUTE=/datasets/ops/pump-service-manuals</code> (any of
+the routes below) to open straight on a screen.</p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/lobby</code>, <code>/lobby?view=datasets</code></td>
+<td>Room presets, or the dataset catalog with search and facets.</td>
+</tr>
+<tr>
+<td><code>/datasets/new</code></td>
+<td>Create a dataset: namespace, name, level, optional tags.</td>
+</tr>
+<tr>
+<td><code>/datasets/&lt;namespace&gt;/&lt;name&gt;</code></td>
+<td>A dataset's files and ingestion. Anyone with access uploads and marks files outdated; the owner shares and deprecates.</td>
+</tr>
+<tr>
+<td><code>/datasets/&lt;namespace&gt;/&lt;name&gt;/upload</code></td>
+<td>Choose files, scan, review and commit.</td>
+</tr>
+<tr>
+<td><code>/room/mock/&lt;room&gt;[/thread/&lt;id&gt;]</code></td>
+<td>The chat mockup's room screen, its panel showing the thread's datasets.</td>
+</tr>
+</tbody>
+</table>
+<p>The rules it assumes:</p>
+<ul>
+<li><strong>Levels.</strong> A room's level is a ceiling the deployer sets. A thread may use
+  datasets at or below it; the picker shows the rest locked.</li>
+<li><strong>Access.</strong> A dataset is listed only when the user is cleared for its level
+  <em>and</em> is in its audience. Clearance alone is not need-to-know.</li>
+<li><strong>No enforcement.</strong> Nothing checks classification, so uploads and shares end
+  with an attestation and the scan's results are worded as advisory.</li>
+<li><strong>Fixed after the first message.</strong> A new thread starts from the room's
+  defaults and can change them until its first message; after that they are
+  fixed, and <em>New thread with these datasets</em> is the way out.</li>
+<li><strong>No deletion.</strong> Uploads can't be undone. A wrong or outdated file is
+  marked outdated instead: it stays indexed and searchable, and the mark shows
+  in the files table and the thread panel, and to the agent. A whole dataset
+  can be deprecated, which hides it from the catalog.</li>
+<li><strong>One upload per place.</strong> The dataset page's <em>Upload to dataset</em> is the only
+  way files join a dataset, and its copy sets it apart from attaching a file
+  to a thread.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classification_levels.dart</code></td>
+<td>The marking vocabulary: PUBLIC, INTERNAL, CONFIDENTIAL, RESTRICTED. The only file allowed hex colors.</td>
+</tr>
+<tr>
+<td><code>model.dart</code></td>
+<td>Datasets, files and their ingestion states, tags, principals, room presets.</td>
+</tr>
+<tr>
+<td><code>store.dart</code></td>
+<td><code>DatasetsStore</code>: the catalog query, access rule, thread trays, simulated ingestion.</td>
+</tr>
+<tr>
+<td><code>upload_session.dart</code></td>
+<td>One upload: staged files, the simulated scan, what committing adds.</td>
+</tr>
+<tr>
+<td><code>sample_data.dart</code></td>
+<td>The user, about 115 datasets, three room presets and their conversations.</td>
+</tr>
+<tr>
+<td><code>ui/</code></td>
+<td>The screens, and the panel section plugged into the chat mockup.</td>
+</tr>
+</tbody>
+</table>
+<p>The chat screen takes the datasets through <code>ThreadDatasetsSeam</code>
+(<code>chat/thread_panel/panel_section.dart</code>): it replaces the panel's Databases
+segment and adds a summary row above the composer. Without one, the chat
+mockup is unchanged.</p>
 
 
 
