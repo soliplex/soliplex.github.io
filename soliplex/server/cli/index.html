@@ -11646,17 +11646,25 @@ and / or <code>email</code>.</p>
 </ul>
 <h4 id="options_17">Options</h4>
 <ul>
-<li><code>--claims JSON</code> — required. The token's claims, as a JSON object, e.g.
+<li><code>--claims JSON</code> — the token's claims, as a JSON object, e.g.
   <code>'{"preferred_username": "ops", "email": "ops@example.com"}'</code>. If the
   object has no <code>sub</code>, the token's <code>sub</code> is a random UUID. It may not
   hold <code>iat</code> or <code>exp</code>: those are set when minting.</li>
-<li><code>--expires-in DURATION</code> — required. The token's lifetime: an integer
-  followed by one of <code>s</code>, <code>m</code>, <code>h</code>, <code>d</code>, or <code>w</code> (e.g. <code>15m</code>, <code>90d</code>).</li>
-<li><code>-o PATH</code> / <code>--output PATH</code> — file to which the token is written. If
-  omitted, or <code>-</code>, the token is written to stdout.</li>
-<li><code>--force</code> — replace the output file, if it exists.</li>
-<li><code>-q</code> / <code>--quiet</code> — report only errors.</li>
+<li><code>-i PATH</code> / <code>--input PATH</code> — file from which the token's claims are
+  read: as a YAML mapping if its extension is <code>.yaml</code> or <code>.yml</code> (in any
+  case), and otherwise as a JSON object. As with <code>--claims</code>, a missing
+  <code>sub</code> becomes a random UUID. Any <code>iat</code> or <code>exp</code> claims in the file are
+  dropped (noted on stderr unless <code>--quiet</code> is given), so the file
+  written by <a href="#service-token-validate"><code>service-token validate</code></a> can be
+  used to mint a fresh token with the same claims.</li>
 </ul>
+<p>Give exactly one of <code>--claims</code> or <code>--input</code>.
+- <code>--expires-in DURATION</code> — required. The token's lifetime: an integer
+  followed by one of <code>s</code>, <code>m</code>, <code>h</code>, <code>d</code>, or <code>w</code> (e.g. <code>15m</code>, <code>90d</code>).
+- <code>-o PATH</code> / <code>--output PATH</code> — file to which the token is written. If
+  omitted, or <code>-</code>, the token is written to stdout.
+- <code>--force</code> — replace the output file, if it exists.
+- <code>-q</code> / <code>--quiet</code> — report only errors.</p>
 <h4 id="output_16">Output</h4>
 <p>The token is written, followed by a newline, to the output file or to
 stdout. A file is created readable only by its owner (mode <code>0600</code>).</p>
@@ -11686,7 +11694,9 @@ any), the token's <code>sub</code>, and its expiry time (UTC).</p>
 <li><code>1</code> — <code>URL_SAFE_TOKEN_SECRET</code> resolves only from a <code>random_chars</code>
   source, the claims hold <code>iat</code> or <code>exp</code>, the lifetime is zero, or the
   output file exists and <code>--force</code> was not given.</li>
-<li><code>2</code> — a usage error: <code>--claims</code> is not a JSON object, <code>--expires-in</code>
+<li><code>2</code> — a usage error: <code>--claims</code> is not a JSON object, the <code>--input</code>
+  file is missing, does not parse, or does not hold a mapping / object,
+  both or neither of <code>--claims</code> and <code>--input</code> are given, <code>--expires-in</code>
   is not a valid duration, or a required option is missing.</li>
 </ul>
 <h4 id="examples_32">Examples</h4>
@@ -11698,15 +11708,31 @@ any), the token's <code>sub</code>, and its expiry time (UTC).</p>
 </span><span id="__span-161-5"><a id="__codelineno-161-5" name="__codelineno-161-5" href="#__codelineno-161-5"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="k">$(</span>cat<span class="w"> </span>~/.config/soliplex/ops.token<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-161-6"><a id="__codelineno-161-6" name="__codelineno-161-6" href="#__codelineno-161-6"></a><span class="w">  </span>http://localhost:8000/api/v1/rooms
 </span></code></pre></div>
+<p>Mint a token from claims kept in a YAML file, e.g. <code>ops-claims.yaml</code>
+holding:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-162-1"><a id="__codelineno-162-1" name="__codelineno-162-1" href="#__codelineno-162-1"></a><span class="nt">preferred_username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ops</span>
+</span><span id="__span-162-2"><a id="__codelineno-162-2" name="__codelineno-162-2" href="#__codelineno-162-2"></a><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ops@example.com</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-163-1"><a id="__codelineno-163-1" name="__codelineno-163-1" href="#__codelineno-163-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>mint<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-163-2"><a id="__codelineno-163-2" name="__codelineno-163-2" href="#__codelineno-163-2"></a><span class="w">  </span>--input<span class="w"> </span>ops-claims.yaml<span class="w"> </span>--expires-in<span class="w"> </span>90d<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-163-3"><a id="__codelineno-163-3" name="__codelineno-163-3" href="#__codelineno-163-3"></a><span class="w">  </span>--output<span class="w"> </span>~/.config/soliplex/ops.token
+</span></code></pre></div>
+<p>Renew a token, keeping its claims (including its <code>sub</code>):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-164-1"><a id="__codelineno-164-1" name="__codelineno-164-1" href="#__codelineno-164-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>validate<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-164-2"><a id="__codelineno-164-2" name="__codelineno-164-2" href="#__codelineno-164-2"></a><span class="w">  </span>--input<span class="w"> </span>~/.config/soliplex/ops.token<span class="w"> </span>--output<span class="w"> </span>ops-claims.yaml<span class="w"> </span>--quiet
+</span><span id="__span-164-3"><a id="__codelineno-164-3" name="__codelineno-164-3" href="#__codelineno-164-3"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>mint<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-164-4"><a id="__codelineno-164-4" name="__codelineno-164-4" href="#__codelineno-164-4"></a><span class="w">  </span>--input<span class="w"> </span>ops-claims.yaml<span class="w"> </span>--expires-in<span class="w"> </span>90d<span class="w"> </span>--quiet<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-164-5"><a id="__codelineno-164-5" name="__codelineno-164-5" href="#__codelineno-164-5"></a><span class="w">  </span>--output<span class="w"> </span>~/.config/soliplex/ops.token<span class="w"> </span>--force
+</span></code></pre></div>
 <p>Mint a short-lived token at the point of use, capturing it from stdout:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-162-1"><a id="__codelineno-162-1" name="__codelineno-162-1" href="#__codelineno-162-1"></a><span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>mint<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-162-2"><a id="__codelineno-162-2" name="__codelineno-162-2" href="#__codelineno-162-2"></a><span class="w">  </span>--claims<span class="w"> </span><span class="s1">&#39;{&quot;preferred_username&quot;: &quot;ci-bot&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-162-3"><a id="__codelineno-162-3" name="__codelineno-162-3" href="#__codelineno-162-3"></a><span class="w">  </span>--expires-in<span class="w"> </span>5m<span class="w"> </span>--quiet<span class="k">)</span>
-</span><span id="__span-162-4"><a id="__codelineno-162-4" name="__codelineno-162-4" href="#__codelineno-162-4"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>http://localhost:8000/api/v1/rooms
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-165-1"><a id="__codelineno-165-1" name="__codelineno-165-1" href="#__codelineno-165-1"></a><span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>mint<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-165-2"><a id="__codelineno-165-2" name="__codelineno-165-2" href="#__codelineno-165-2"></a><span class="w">  </span>--claims<span class="w"> </span><span class="s1">&#39;{&quot;preferred_username&quot;: &quot;ci-bot&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-165-3"><a id="__codelineno-165-3" name="__codelineno-165-3" href="#__codelineno-165-3"></a><span class="w">  </span>--expires-in<span class="w"> </span>5m<span class="w"> </span>--quiet<span class="k">)</span>
+</span><span id="__span-165-4"><a id="__codelineno-165-4" name="__codelineno-165-4" href="#__codelineno-165-4"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>http://localhost:8000/api/v1/rooms
 </span></code></pre></div>
 <h3 id="service-token-validate"><code>service-token validate</code></h3>
 <p>Validate a service token, and write its claims to a file or to stdout.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-163-1"><a id="__codelineno-163-1" name="__codelineno-163-1" href="#__codelineno-163-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>validate<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-166-1"><a id="__codelineno-166-1" name="__codelineno-166-1" href="#__codelineno-166-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>validate<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h4 id="positional-argument_18">Positional Argument</h4>
 <ul>
@@ -11756,18 +11782,18 @@ it has expired.</p>
 </ul>
 <h4 id="examples_33">Examples</h4>
 <p>Check the claims of a token kept in a file:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-164-1"><a id="__codelineno-164-1" name="__codelineno-164-1" href="#__codelineno-164-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>validate<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-164-2"><a id="__codelineno-164-2" name="__codelineno-164-2" href="#__codelineno-164-2"></a><span class="w">  </span>--input<span class="w"> </span>~/.config/soliplex/ops.token
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-167-1"><a id="__codelineno-167-1" name="__codelineno-167-1" href="#__codelineno-167-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>validate<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-167-2"><a id="__codelineno-167-2" name="__codelineno-167-2" href="#__codelineno-167-2"></a><span class="w">  </span>--input<span class="w"> </span>~/.config/soliplex/ops.token
 </span></code></pre></div>
 <p>Save a token's claims as YAML, e.g. to edit them by hand:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-165-1"><a id="__codelineno-165-1" name="__codelineno-165-1" href="#__codelineno-165-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>validate<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-165-2"><a id="__codelineno-165-2" name="__codelineno-165-2" href="#__codelineno-165-2"></a><span class="w">  </span>--input<span class="w"> </span>~/.config/soliplex/ops.token<span class="w"> </span>--output<span class="w"> </span>ops-claims.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-168-1"><a id="__codelineno-168-1" name="__codelineno-168-1" href="#__codelineno-168-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>validate<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-168-2"><a id="__codelineno-168-2" name="__codelineno-168-2" href="#__codelineno-168-2"></a><span class="w">  </span>--input<span class="w"> </span>~/.config/soliplex/ops.token<span class="w"> </span>--output<span class="w"> </span>ops-claims.yaml
 </span></code></pre></div>
 <p>Check a freshly-minted token, extracting a claim with <code>jq</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-166-1"><a id="__codelineno-166-1" name="__codelineno-166-1" href="#__codelineno-166-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>mint<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-166-2"><a id="__codelineno-166-2" name="__codelineno-166-2" href="#__codelineno-166-2"></a><span class="w">  </span>--claims<span class="w"> </span><span class="s1">&#39;{&quot;preferred_username&quot;: &quot;ci-bot&quot;}&#39;</span><span class="w"> </span>--expires-in<span class="w"> </span>5m<span class="w"> </span>--quiet<span class="w"> </span><span class="p">|</span>
-</span><span id="__span-166-3"><a id="__codelineno-166-3" name="__codelineno-166-3" href="#__codelineno-166-3"></a><span class="w">  </span>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>validate<span class="w"> </span>example/installation.yaml<span class="w"> </span>--quiet<span class="w"> </span><span class="p">|</span>
-</span><span id="__span-166-4"><a id="__codelineno-166-4" name="__codelineno-166-4" href="#__codelineno-166-4"></a><span class="w">  </span>jq<span class="w"> </span>-r<span class="w"> </span>.preferred_username
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-169-1"><a id="__codelineno-169-1" name="__codelineno-169-1" href="#__codelineno-169-1"></a>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>mint<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-169-2"><a id="__codelineno-169-2" name="__codelineno-169-2" href="#__codelineno-169-2"></a><span class="w">  </span>--claims<span class="w"> </span><span class="s1">&#39;{&quot;preferred_username&quot;: &quot;ci-bot&quot;}&#39;</span><span class="w"> </span>--expires-in<span class="w"> </span>5m<span class="w"> </span>--quiet<span class="w"> </span><span class="p">|</span>
+</span><span id="__span-169-3"><a id="__codelineno-169-3" name="__codelineno-169-3" href="#__codelineno-169-3"></a><span class="w">  </span>soliplex-cli<span class="w"> </span>service-token<span class="w"> </span>validate<span class="w"> </span>example/installation.yaml<span class="w"> </span>--quiet<span class="w"> </span><span class="p">|</span>
+</span><span id="__span-169-4"><a id="__codelineno-169-4" name="__codelineno-169-4" href="#__codelineno-169-4"></a><span class="w">  </span>jq<span class="w"> </span>-r<span class="w"> </span>.preferred_username
 </span></code></pre></div>
 <h2 id="ollama"><code>ollama</code></h2>
 <p>The <code>ollama</code> group bundles subcommands that interact with Ollama servers
@@ -11791,7 +11817,7 @@ completions, or tools, and pull each model onto the corresponding Ollama
 server via that server's REST API. Intended to preload a fresh Ollama
 deployment so that the first user-facing request against Soliplex
 doesn't have to wait for a cold-start model download.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-167-1"><a id="__codelineno-167-1" name="__codelineno-167-1" href="#__codelineno-167-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-170-1"><a id="__codelineno-170-1" name="__codelineno-170-1" href="#__codelineno-170-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h4 id="positional-argument_19">Positional Argument</h4>
 <ul>
@@ -11873,25 +11899,25 @@ check fires before any pulls are attempted, so a run that fails on
 unknown URLs reports <code>unknown_ollama_urls</code> and skips the pull loop.</p>
 <h4 id="examples_34">Examples</h4>
 <p>Preview which models would be pulled, without pulling anything:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-168-1"><a id="__codelineno-168-1" name="__codelineno-168-1" href="#__codelineno-168-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span>--dry-run
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-171-1"><a id="__codelineno-171-1" name="__codelineno-171-1" href="#__codelineno-171-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span>--dry-run
 </span></code></pre></div>
 <p>Pull every Ollama model referenced by a full installation:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-169-1"><a id="__codelineno-169-1" name="__codelineno-169-1" href="#__codelineno-169-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-172-1"><a id="__codelineno-172-1" name="__codelineno-172-1" href="#__codelineno-172-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml
 </span></code></pre></div>
 <p>Pull models only for a specific Ollama instance (useful when an
 installation references multiple Ollama URLs):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-170-1"><a id="__codelineno-170-1" name="__codelineno-170-1" href="#__codelineno-170-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-170-2"><a id="__codelineno-170-2" name="__codelineno-170-2" href="#__codelineno-170-2"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama.internal:11434
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-173-1"><a id="__codelineno-173-1" name="__codelineno-173-1" href="#__codelineno-173-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-173-2"><a id="__codelineno-173-2" name="__codelineno-173-2" href="#__codelineno-173-2"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama.internal:11434
 </span></code></pre></div>
 <p>Restrict the scan to several specific Ollama instances by repeating
 <code>--ollama-url</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-171-1"><a id="__codelineno-171-1" name="__codelineno-171-1" href="#__codelineno-171-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-171-2"><a id="__codelineno-171-2" name="__codelineno-171-2" href="#__codelineno-171-2"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama-a.internal:11434<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-171-3"><a id="__codelineno-171-3" name="__codelineno-171-3" href="#__codelineno-171-3"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama-b.internal:11434
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-174-1"><a id="__codelineno-174-1" name="__codelineno-174-1" href="#__codelineno-174-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-174-2"><a id="__codelineno-174-2" name="__codelineno-174-2" href="#__codelineno-174-2"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama-a.internal:11434<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-174-3"><a id="__codelineno-174-3" name="__codelineno-174-3" href="#__codelineno-174-3"></a><span class="w">  </span>--ollama-url<span class="w"> </span>http://ollama-b.internal:11434
 </span></code></pre></div>
 <p>Drive the command from automation, suppressing the rule-decorated
 output and capturing any errors as JSON:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-172-1"><a id="__codelineno-172-1" name="__codelineno-172-1" href="#__codelineno-172-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>-q<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-175-1"><a id="__codelineno-175-1" name="__codelineno-175-1" href="#__codelineno-175-1"></a>soliplex-cli<span class="w"> </span>ollama<span class="w"> </span>-q<span class="w"> </span>pull<span class="w"> </span>example/installation.yaml
 </span></code></pre></div>
 <h2 id="config"><code>config</code></h2>
 <p>Dump the installation's fully-resolved declarative configuration as a
@@ -11899,7 +11925,7 @@ single YAML document on stdout. Useful for debugging how nested config
 files and defaults combine, for diffing two installations, or for
 producing a flattened reference copy of a configuration that is
 normally split across many files.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-173-1"><a id="__codelineno-173-1" name="__codelineno-173-1" href="#__codelineno-173-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-176-1"><a id="__codelineno-176-1" name="__codelineno-176-1" href="#__codelineno-176-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h3 id="positional-argument_20">Positional Argument</h3>
 <ul>
@@ -11911,10 +11937,10 @@ normally split across many files.</p>
 <h3 id="output_18">Output</h3>
 <p>The command prints a three-line banner comment followed by the YAML
 document:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-174-1"><a id="__codelineno-174-1" name="__codelineno-174-1" href="#__codelineno-174-1"></a>#------------------------------------------------------------------------------
-</span><span id="__span-174-2"><a id="__codelineno-174-2" name="__codelineno-174-2" href="#__codelineno-174-2"></a># Source: &lt;installation_config_path&gt;
-</span><span id="__span-174-3"><a id="__codelineno-174-3" name="__codelineno-174-3" href="#__codelineno-174-3"></a>#------------------------------------------------------------------------------
-</span><span id="__span-174-4"><a id="__codelineno-174-4" name="__codelineno-174-4" href="#__codelineno-174-4"></a>&lt;yaml document&gt;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-177-1"><a id="__codelineno-177-1" name="__codelineno-177-1" href="#__codelineno-177-1"></a>#------------------------------------------------------------------------------
+</span><span id="__span-177-2"><a id="__codelineno-177-2" name="__codelineno-177-2" href="#__codelineno-177-2"></a># Source: &lt;installation_config_path&gt;
+</span><span id="__span-177-3"><a id="__codelineno-177-3" name="__codelineno-177-3" href="#__codelineno-177-3"></a>#------------------------------------------------------------------------------
+</span><span id="__span-177-4"><a id="__codelineno-177-4" name="__codelineno-177-4" href="#__codelineno-177-4"></a>&lt;yaml document&gt;
 </span></code></pre></div>
 <p>Key ordering is preserved from the original declaration (the dump uses
 <code>sort_keys=False</code>), so the output tracks the structure of the
@@ -11946,15 +11972,15 @@ installation.</p>
 </ul>
 <h3 id="examples_35">Examples</h3>
 <p>Dump the minimal example:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-175-1"><a id="__codelineno-175-1" name="__codelineno-175-1" href="#__codelineno-175-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/minimal.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-178-1"><a id="__codelineno-178-1" name="__codelineno-178-1" href="#__codelineno-178-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/minimal.yaml
 </span></code></pre></div>
 <p>Snapshot a directory-style installation to a file:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-176-1"><a id="__codelineno-176-1" name="__codelineno-176-1" href="#__codelineno-176-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/<span class="w"> </span>&gt;<span class="w"> </span>snapshot.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-179-1"><a id="__codelineno-179-1" name="__codelineno-179-1" href="#__codelineno-179-1"></a>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/<span class="w"> </span>&gt;<span class="w"> </span>snapshot.yaml
 </span></code></pre></div>
 <p>Diff two installations after normalizing both through <code>config</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-177-1"><a id="__codelineno-177-1" name="__codelineno-177-1" href="#__codelineno-177-1"></a>diff<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-177-2"><a id="__codelineno-177-2" name="__codelineno-177-2" href="#__codelineno-177-2"></a><span class="w">  </span>&lt;<span class="o">(</span>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/minimal.yaml<span class="o">)</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-177-3"><a id="__codelineno-177-3" name="__codelineno-177-3" href="#__codelineno-177-3"></a><span class="w">  </span>&lt;<span class="o">(</span>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/installation.yaml<span class="o">)</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-180-1"><a id="__codelineno-180-1" name="__codelineno-180-1" href="#__codelineno-180-1"></a>diff<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-180-2"><a id="__codelineno-180-2" name="__codelineno-180-2" href="#__codelineno-180-2"></a><span class="w">  </span>&lt;<span class="o">(</span>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/minimal.yaml<span class="o">)</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-180-3"><a id="__codelineno-180-3" name="__codelineno-180-3" href="#__codelineno-180-3"></a><span class="w">  </span>&lt;<span class="o">(</span>soliplex-cli<span class="w"> </span>config<span class="w"> </span>example/installation.yaml<span class="o">)</span>
 </span></code></pre></div>
 <h2 id="agui-feature-schemas"><code>agui-feature-schemas</code></h2>
 <p>Export the JSON Schemas for every AG-UI feature registered in the
@@ -11963,7 +11989,7 @@ the AG-UI protocol's <code>state</code> mapping — whose shape is defined by a
 Pydantic model. This command dumps each feature's schema alongside its
 source (<code>client</code>, <code>server</code>, or <code>either</code>), suitable for consumption by
 client-side code generators or schema-diffing tools.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-178-1"><a id="__codelineno-178-1" name="__codelineno-178-1" href="#__codelineno-178-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-181-1"><a id="__codelineno-181-1" name="__codelineno-181-1" href="#__codelineno-181-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span><span class="o">[</span>INSTALLATION_CONFIG_PATH<span class="o">]</span>
 </span></code></pre></div>
 <h3 id="positional-argument_21">Positional Argument</h3>
 <ul>
@@ -11975,12 +12001,12 @@ client-side code generators or schema-diffing tools.</p>
 <h3 id="output_19">Output</h3>
 <p>The command prints a single JSON object on stdout, mapping each
 feature's <code>name</code> to a two-field record:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-179-1"><a id="__codelineno-179-1" name="__codelineno-179-1" href="#__codelineno-179-1"></a><span class="p">{</span>
-</span><span id="__span-179-2"><a id="__codelineno-179-2" name="__codelineno-179-2" href="#__codelineno-179-2"></a><span class="w">  </span><span class="nt">&quot;&lt;feature_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-179-3"><a id="__codelineno-179-3" name="__codelineno-179-3" href="#__codelineno-179-3"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;client|server|either&gt;&quot;</span><span class="p">,</span>
-</span><span id="__span-179-4"><a id="__codelineno-179-4" name="__codelineno-179-4" href="#__codelineno-179-4"></a><span class="w">    </span><span class="nt">&quot;json_schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Pydantic-generated JSON Schema */</span><span class="w"> </span><span class="p">}</span>
-</span><span id="__span-179-5"><a id="__codelineno-179-5" name="__codelineno-179-5" href="#__codelineno-179-5"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-179-6"><a id="__codelineno-179-6" name="__codelineno-179-6" href="#__codelineno-179-6"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-182-1"><a id="__codelineno-182-1" name="__codelineno-182-1" href="#__codelineno-182-1"></a><span class="p">{</span>
+</span><span id="__span-182-2"><a id="__codelineno-182-2" name="__codelineno-182-2" href="#__codelineno-182-2"></a><span class="w">  </span><span class="nt">&quot;&lt;feature_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-182-3"><a id="__codelineno-182-3" name="__codelineno-182-3" href="#__codelineno-182-3"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;client|server|either&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-182-4"><a id="__codelineno-182-4" name="__codelineno-182-4" href="#__codelineno-182-4"></a><span class="w">    </span><span class="nt">&quot;json_schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Pydantic-generated JSON Schema */</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-182-5"><a id="__codelineno-182-5" name="__codelineno-182-5" href="#__codelineno-182-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-182-6"><a id="__codelineno-182-6" name="__codelineno-182-6" href="#__codelineno-182-6"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
 <li><code>source</code> identifies which side of the AG-UI protocol is allowed to
@@ -11999,14 +12025,14 @@ so it pipes cleanly into <code>jq</code>, code generators, or file redirections.
 <h3 id="examples_36">Examples</h3>
 <p>Dump the feature schemas from the minimal example and pretty-print
 with <code>jq</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-180-1"><a id="__codelineno-180-1" name="__codelineno-180-1" href="#__codelineno-180-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/minimal.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-183-1"><a id="__codelineno-183-1" name="__codelineno-183-1" href="#__codelineno-183-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/minimal.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
 </span></code></pre></div>
 <p>List just the registered feature names:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-181-1"><a id="__codelineno-181-1" name="__codelineno-181-1" href="#__codelineno-181-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-181-2"><a id="__codelineno-181-2" name="__codelineno-181-2" href="#__codelineno-181-2"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;keys&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-184-1"><a id="__codelineno-184-1" name="__codelineno-184-1" href="#__codelineno-184-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/installation.yaml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-184-2"><a id="__codelineno-184-2" name="__codelineno-184-2" href="#__codelineno-184-2"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;keys&#39;</span>
 </span></code></pre></div>
 <p>Snapshot the schemas to a file for client-side code generation:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-182-1"><a id="__codelineno-182-1" name="__codelineno-182-1" href="#__codelineno-182-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/<span class="w"> </span>&gt;<span class="w"> </span>agui-features.json
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-185-1"><a id="__codelineno-185-1" name="__codelineno-185-1" href="#__codelineno-185-1"></a>soliplex-cli<span class="w"> </span>agui-feature-schemas<span class="w"> </span>example/<span class="w"> </span>&gt;<span class="w"> </span>agui-features.json
 </span></code></pre></div>
 <h2 id="renamed-commands">Renamed Commands</h2>
 <p>Releases up to <code>0.62.x</code> exposed each subcommand as a flat top-level name.
