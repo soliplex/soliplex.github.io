@@ -11088,20 +11088,22 @@ instead, e.g.:</p>
   <code>random_chars</code> source.</li>
 <li><strong>The check is not audited.</strong> Unlike the server's checks at the point
   of a privileged operation, it emits no admin-access audit record.</li>
-<li><strong>A stale admin entry stops the check.</strong> If an admin entry's stored
+<li><strong>A stale admin entry never matches.</strong> If an admin entry's stored
   <code>json_path</code> no longer compiles (e.g., it references a meta-config
-  filter function that is no longer registered), the command exits with
-  status <code>1</code>. Find such entries with
+  filter function that is no longer registered), the check skips it,
+  as the server does, logging a warning on the <code>soliplex.authz</code>
+  logger. Find such entries with
   <a href="#audit-admin-users"><code>audit admin-users</code></a>, and remove them with
-  <a href="#admin-users-delete"><code>admin-users delete --allow-invalid-json-path</code></a>.</li>
+  <a href="#admin-users-delete"><code>admin-users delete --allow-invalid-json-path</code></a>.
+  With <code>--verbose</code>, a "not an admin user" result suggests running the
+  audit.</li>
 </ul>
 <h4 id="exit-status_19">Exit Status</h4>
 <ul>
 <li><code>0</code> — the token's user is an admin user.</li>
 <li><code>1</code> — the token's user is not an admin user, the token is not valid,
   <code>URL_SAFE_TOKEN_SECRET</code> resolves only from a <code>random_chars</code> source,
-  an admin entry's <code>json_path</code> no longer compiles, or the RAM-DB guard
-  fires.</li>
+  or the RAM-DB guard fires.</li>
 <li><code>2</code> — a usage error, e.g. the input file does not exist.</li>
 </ul>
 <h4 id="examples_19">Examples</h4>
@@ -11527,20 +11529,22 @@ instead, e.g.:</p>
   uploads) also allow admin users write access to every room.</li>
 <li><strong>The check is not audited.</strong> Unlike the server's checks at the point
   of a gated operation, it emits no room-access audit record.</li>
-<li><strong>A stale ACL entry stops the check.</strong> If one of the room's ACL
+<li><strong>A stale ACL entry can only deny.</strong> If one of the room's ACL
   entries has a stored <code>json_path</code> which no longer compiles (e.g., it
   references a meta-config filter function that is no longer
-  registered), the command exits with status <code>1</code>. Find such entries
+  registered), the check treats it as the server does: a <code>deny</code> entry
+  matches every token, and an <code>allow</code> entry matches none, logging a
+  warning on the <code>soliplex.authz</code> logger. Find such entries
   with <a href="#audit-room-authz"><code>audit room-authz</code></a>, and remove them with
-  <a href="#room-authz-delete-acl-entry"><code>room-authz delete-acl-entry --allow-invalid-json-path</code></a>.</li>
+  <a href="#room-authz-delete-acl-entry"><code>room-authz delete-acl-entry --allow-invalid-json-path</code></a>.
+  With <code>--verbose</code>, a "denied" result suggests running the audit.</li>
 </ul>
 <h4 id="exit-status_20">Exit Status</h4>
 <ul>
 <li><code>0</code> — the room's policy allows the permission.</li>
 <li><code>1</code> — the room's policy denies the permission, the token is not
   valid, <code>URL_SAFE_TOKEN_SECRET</code> resolves only from a <code>random_chars</code>
-  source, <code>ROOM_ID</code> doesn't match a configured room, one of the room's
-  ACL entries has a <code>json_path</code> which no longer compiles, or the RAM-DB
+  source, <code>ROOM_ID</code> doesn't match a configured room, or the RAM-DB
   guard fires.</li>
 <li><code>2</code> — a usage error, e.g. <code>--permission</code> is missing or not one of
   <code>read</code>, <code>write</code>, or <code>admin</code>, or the input file does not exist.</li>
