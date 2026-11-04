@@ -10347,6 +10347,14 @@ compile against the currently-loaded JSONPath environment.</p>
   longer present. Use
   <a href="#admin-users-delete"><code>admin-users delete --allow-invalid-json-path</code></a>
   to remove such an entry. <code>(none)</code> if every stored row validates.</li>
+<li><strong>Admin users matching a null/empty claims token</strong> — one line per row
+  whose stored <code>json_path</code> matches a synthetic token seeding each claim
+  it references with JSON <code>null</code>, or an empty token. Presence tests and
+  bare selectors count a <code>null</code> claim as matching, and <code>$</code>-root or
+  constant filters match an empty token, so such a row could grant when
+  it shouldn't. Entries driven by registered filter functions
+  (predicates) are deployment software and contribute no flags here.
+  <code>(none)</code> if every stored row is clean.</li>
 <li>
 <p><strong>Claims not carried in the authn cookie</strong> — a warning-grade
   diagnostic about the gap between the stored discriminators and the
@@ -10381,16 +10389,20 @@ instead:</p>
 </span></code></pre></div>
 <h4 id="exit-status_8">Exit Status</h4>
 <ul>
-<li><code>0</code> when every stored <code>AdminUser.json_path</code> validates.</li>
-<li><code>1</code> when at least one row fails to validate. In <code>-q</code> / <code>--quiet</code>
+<li><code>0</code> when every stored <code>AdminUser.json_path</code> validates and no row
+  matches a null/empty claims token.</li>
+<li><code>1</code> when at least one row fails to validate or matches a null/empty
+  claims token. In <code>-q</code> / <code>--quiet</code>
   mode, the errors are emitted to stdout as JSON of the form:</li>
 </ul>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="p">{</span>
 </span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="w">  </span><span class="nt">&quot;admin_users&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="w">    </span><span class="nt">&quot;invalid_json_paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;&lt;json_path&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;error&gt;&quot;</span><span class="p">],</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
-</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a><span class="p">}</span>
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="w">    </span><span class="nt">&quot;invalid_json_paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;&lt;json_path&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;error&gt;&quot;</span><span class="p">],</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="w">    </span><span class="nt">&quot;null_matching&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;&lt;json_path&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;token-json&gt;&quot;</span><span class="p">],</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-50-6"><a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Each sub-key is absent when its corresponding block is empty.</p>
 <ul>
 <li><code>1</code> when the authorization database is unreachable, reported in
   <code>-q</code> / <code>--quiet</code> mode as:</li>
@@ -10450,6 +10462,14 @@ compile:</p>
   longer present. Use
   <a href="#room-authz-delete-acl-entry"><code>room-authz delete-acl-entry --allow-invalid-json-path</code></a>
   to remove such an entry.</li>
+<li><strong>ACL entries matching a null/empty claims token</strong> — for each
+  affected room, one line per entry whose stored <code>json_path</code> matches a
+  synthetic token seeding each claim it references with JSON <code>null</code>,
+  or an empty token. Presence tests and bare selectors count a <code>null</code>
+  claim as matching, and <code>$</code>-root or constant filters match an empty
+  token, so such an entry could grant when it shouldn't. Entries driven
+  by registered filter functions (predicates) are deployment software
+  and contribute no flags here.</li>
 </ul>
 <p>When the installation's <code>authorization_db</code> is the in-memory
 default (<code>sqlite://</code>), every configured room falls into the
@@ -10463,10 +10483,11 @@ error instead:</p>
 </span></code></pre></div>
 <h4 id="exit-status_9">Exit Status</h4>
 <ul>
-<li><code>0</code> when the <strong>Stale</strong> bucket is empty and no ACL <code>json_path</code> fails
-  to compile.</li>
-<li><code>1</code> when at least one stale row is detected, or at least one
-  <code>ACLEntry.json_path</code> fails to validate. In <code>-q</code> / <code>--quiet</code> mode, the
+<li><code>0</code> when the <strong>Stale</strong> bucket is empty, and no ACL <code>json_path</code> fails
+  to compile or matches a null/empty claims token.</li>
+<li><code>1</code> when at least one stale row is detected, at least one
+  <code>ACLEntry.json_path</code> fails to validate, or at least one entry matches
+  a null/empty claims token. In <code>-q</code> / <code>--quiet</code> mode, the
   errors are emitted to stdout as JSON of the form:</li>
 </ul>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="p">{</span>
@@ -10474,11 +10495,14 @@ error instead:</p>
 </span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="w">    </span><span class="nt">&quot;stale_rooms&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&lt;room_id&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
 </span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="w">    </span><span class="nt">&quot;invalid_acls&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a><span class="w">      </span><span class="nt">&quot;&lt;room_id&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;&lt;json_path&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;error&gt;&quot;</span><span class="p">],</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
-</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-56-7"><a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a><span class="p">}</span>
+</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-56-7"><a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a><span class="w">    </span><span class="nt">&quot;null_matching_acls&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a><span class="w">      </span><span class="nt">&quot;&lt;room_id&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;&lt;json_path&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;token-json&gt;&quot;</span><span class="p">],</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+</span><span id="__span-56-9"><a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-56-10"><a id="__codelineno-56-10" name="__codelineno-56-10" href="#__codelineno-56-10"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-56-11"><a id="__codelineno-56-11" name="__codelineno-56-11" href="#__codelineno-56-11"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Either sub-key may be absent if its corresponding bucket is empty.</p>
+<p>Each sub-key is absent when its corresponding block is empty.</p>
 <ul>
 <li><code>1</code> when the authorization database is unreachable, reported in
   <code>-q</code> / <code>--quiet</code> mode as:</li>
