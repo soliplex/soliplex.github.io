@@ -9925,11 +9925,11 @@ skill paths.</p>
 <p>If <code>models.Installation.from_config(...)</code> raises, the <code>OK</code> is replaced
 by <code>ERROR: &lt;message&gt;</code>.</p>
 <p>Any Python warning raised while loading the configuration -- for
-example, the <code>DeprecationWarning</code> for a configuration stanza slated for
+example, the <code>DeprecationWarning</code> for a configuration setting slated for
 removal -- follows as a finding of its own, naming the warning's
 category:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>WARNING: DeprecationWarning
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  The &#39;authorization_dburi&#39; installation configuration stanza is deprecated,
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  The &#39;accepted_azp_list&#39; OIDC provider setting
 </span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  ...
 </span></code></pre></div>
 <p>Python hides <code>DeprecationWarning</code> by default, so this section is where an

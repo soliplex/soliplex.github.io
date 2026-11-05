@@ -1544,10 +1544,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deprecated-spelling" class="md-nav__link">
+  <a href="#removed-spelling" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Deprecated spelling
+        Removed spelling
       </span>
     </span>
   </a>
@@ -3908,10 +3908,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deprecated-spelling" class="md-nav__link">
+  <a href="#removed-spelling" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Deprecated spelling
+        Removed spelling
       </span>
     </span>
   </a>
@@ -4352,7 +4352,7 @@ from the installation configuration's environment.  E.g:</p>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://env:SOLIPLEX_AUTHZ_USER:secret:POSTGRES_PASSWORD@/env:SOLIPLEX_AUTHZ_DBNAME&quot;</span>
 </span></code></pre></div>
-<h2 id="deprecated-spelling">Deprecated spelling</h2>
+<h2 id="removed-spelling">Removed spelling</h2>
 <p>Through Soliplex v0.81, these two stanzas named the URL flavor as the
 sub-key, with the word <code>dburi</code> in the stanza name instead:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">thread_persistence_dburi</span><span class="p">:</span>
@@ -4363,14 +4363,15 @@ sub-key, with the word <code>dburi</code> in the stanza name instead:</p>
 </span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">sync</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;sync</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
 </span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;async</span><span class="nv"> </span><span class="s">dburi&gt;&quot;</span>
 </span></code></pre></div>
-<p>That spelling is still read, but is deprecated and will be removed after
-Soliplex v0.84.  Loading a configuration which uses it emits a
-<code>DeprecationWarning</code> naming the stanza and the configuration file.</p>
+<p>That spelling was deprecated from v0.82 through v0.90, and is no longer
+read:  a configuration which still uses it fails to load, with an error
+naming the unexpected <code>thread_persistence_dburi</code> or <code>authorization_dburi</code>
+key.</p>
 <p>The mapping to the current spelling is mechanical:</p>
 <table>
 <thead>
 <tr>
-<th>Deprecated</th>
+<th>Removed</th>
 <th>Current</th>
 </tr>
 </thead>
@@ -4393,13 +4394,11 @@ Soliplex v0.84.  Loading a configuration which uses it emits a
 </tr>
 </tbody>
 </table>
-<p>A configuration which somehow sets <em>both</em> spellings for the same database
-uses the current one, ignoring the deprecated one.</p>
-<p><code>soliplex-cli config &lt;installation-path&gt;</code> exports the resolved
-configuration using the current spelling, which makes it a convenient way
-to derive the replacement text:  <code>secret:</code> and <code>env:</code> markers within the
-DBURIs are exported as written, not resolved, so the exported stanzas can
-be pasted back into <code>installation.yaml</code>.</p>
+<p>Alternatively, with a release which still reads the old spelling (v0.90
+or earlier), <code>soliplex-cli config &lt;installation-path&gt;</code> exports the
+configuration using the current spelling:  <code>secret:</code> and <code>env:</code> markers
+within the DBURIs are exported as written, not resolved, so the exported
+stanzas can be pasted back into <code>installation.yaml</code>.</p>
 
 
 

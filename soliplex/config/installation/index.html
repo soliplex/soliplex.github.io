@@ -1242,63 +1242,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#thread-persistence-dburi" class="md-nav__link">
+  <a href="#databases" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Thread Persistence DBURI
+        Databases
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Thread Persistence DBURI">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synchronous-dburi" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Synchronous DBURI
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#asynchronous-dburi" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Asynchronous DBURI
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#default-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Default configuration
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#database-passwords-as-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Database passwords as secrets
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4135,63 +4085,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#thread-persistence-dburi" class="md-nav__link">
+  <a href="#databases" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Thread Persistence DBURI
+        Databases
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Thread Persistence DBURI">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synchronous-dburi" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Synchronous DBURI
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#asynchronous-dburi" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Asynchronous DBURI
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#default-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Default configuration
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#database-passwords-as-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Database passwords as secrets
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4613,10 +4513,9 @@ marker styles may be mixed within a single value.</p>
 <li><code>authorization_migration_dburi</code></li>
 </ul>
 <p>Through Soliplex v0.81 the four runtime URLs named the flavor first, as
-<code>thread_persistence_dburi_sync</code> and so on.  The old names still work, but
-are deprecated and will be removed after Soliplex v0.84.  The two
-migration URLs (see <a href="../dburis/#migrations">Migrations</a>) never had that
-spelling.</p>
+<code>thread_persistence_dburi_sync</code> and so on.  Those names were deprecated
+from v0.82 through v0.90, and have since been removed.  The two migration
+URLs (see <a href="../dburis/#migrations">Migrations</a>) never had that spelling.</p>
 <p>In the <code>mcp_client_toolsets:</code> stanza of a room or completion configuration,
 for each configured MCP client toolset:</p>
 <ul>
@@ -4647,73 +4546,42 @@ looked up by ID from Python code using <code>the_installation.get_agent_by_id</c
 <p>Please see <a href="../agents/">this page</a> for details on configuring agents.
 In addition to the values described there, note that the <code>id</code> element is
 required here.</p>
-<h2 id="thread-persistence-dburi">Thread Persistence DBURI</h2>
-<p>An installation can define two DBURIs for the database used to store
-AG-UI threads, runs, events, etc.</p>
-<h3 id="synchronous-dburi">Synchronous DBURI</h3>
-<p>One DBURI is for sync usage, e.g.  within console scripts.  Examples:</p>
+<h2 id="databases">Databases</h2>
+<p>Two stanzas configure the installation's databases, each as a pair of
+SQLAlchemy URLs (<code>sync_dburi</code> and <code>async_dburi</code>):</p>
 <ul>
-<li><code>sqlite://</code></li>
-<li><code>postgresql+psycopg://user:&lt;password&gt;@dbhost/dbname</code></li>
+<li><code>thread_persistence_db</code>:  AG-UI threads, runs, and events</li>
+<li><code>authorization_db</code>:  administrative users, and room authorization
+  policies with their ACL entries</li>
 </ul>
-<h3 id="asynchronous-dburi">Asynchronous DBURI</h3>
-<p>The other DBURI is for async usage, e.g. within the Soliplex server
-process.  Examples:</p>
-<ul>
-<li><code>sqlite+aiosqlite://</code></li>
-<li><code>postgresql+psycopg://user:&lt;password&gt;@dbhost/dbname</code></li>
-</ul>
-<p>This DBURI must be compatible with SQLAlchemy's <a href="https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html">asyncio extension</a>.
-Dialects known to work include:</p>
-<ul>
-<li><a href="https://aiosqlite.omnilib.dev/en/stable/index.html"><code>aiosqlite</code></a></li>
-<li><a href="https://www.psycopg.org/psycopg3/"><code>psycopg</code></a></li>
-<li><a href="https://magicstack.github.io/asyncpg/current/"><code>asyncpg</code></a></li>
-</ul>
-<p>The PostgreSQL driver (<code>psycopg</code>) is not installed with Soliplex; install
-the <code>postgres</code> or <code>postgres-binary</code> extra (see
-<a href="../dburis/#installing-the-postgresql-driver">Installing the PostgreSQL driver</a>).</p>
-<h3 id="default-configuration">Default configuration</h3>
-<p>By default, Soliplex configures thread persistence using in-memory DBURIS:</p>
-<ul>
-<li>For sync use, <code>sqlite</code> (DBURI <code>sqlite://</code>)</li>
-<li>For async use, <code>aiosqlite</code> (DBURI <code>sqlite+aiosqlite://</code>)</li>
-</ul>
-<p>The default configuration is equivalent to this explicit YAML:</p>
+<p>If a stanza is omitted, that database is an in-memory SQLite database,
+equivalent to:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">thread_persistence_db</span><span class="p">:</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite://&quot;</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sqlite+aiosqlite://&quot;</span>
 </span></code></pre></div>
-<h3 id="database-passwords-as-secrets">Database passwords as secrets</h3>
-<p>For DBURIs requiring authentication, we would rather not expose the
-password in plain-text configuration.  In this case, we can define a
-Soliplex secret (read <a href=".././secrets/">here</a>), and use that secret in the DBURI.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">secrets</span><span class="p">:</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">secret_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MY_DBURI_SECRET</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">      </span><span class="c1"># Configure sources here</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nn">...</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nt">thread_persistence_db</span><span class="p">:</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">sync_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">async_dburi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql+psycopg://user:secret:MY_DBURI_SECRET@dbhost/dbname&quot;</span>
-</span></code></pre></div>
+<p>A password in a DBURI can come from a <a href="../secrets/">secret</a>, e.g.
+<code>postgresql+psycopg://user:secret:MY_DBURI_SECRET@dbhost/dbname</code>.</p>
+<p>See <a href="../dburis/">SQLAlchemy DBURIs</a> for the full reference:  supported
+dialects, on-disk SQLite and PostgreSQL examples, installing the
+PostgreSQL driver, and migrations.</p>
 <h2 id="oidc-auth-provider-paths">OIDC Auth Provider Paths</h2>
 <p>The <code>oidc_paths</code> element specifies one or more filesystem paths to be
 searched for OIDC provider configs.</p>
 <p>Please see <a href="../oidc_providers/">this page</a> for details on how to configure
 these providers.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">oidc_paths</span><span class="p">:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;/path/to/oidc/config/dir&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">oidc_paths</span><span class="p">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;/path/to/oidc/config/dir&quot;</span>
 </span></code></pre></div>
 <p>Non-absolute paths will be evaluated relative to the installation directory.</p>
 <p>By default, Soliplex loads provider configurations found under the path
 './oidc', just as though we had configured:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">oidc_paths</span><span class="p">:</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./oidc&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">oidc_paths</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./oidc&quot;</span>
 </span></code></pre></div>
 <p>To disable authentication, list a single, "null" path, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">oidc_paths</span><span class="p">:</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">oidc_paths</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 <p>Or else run 'soliplex-cli serve --no-auth-mode'</p>
 <h2 id="filesystem-skill-paths">Filesystem Skill Paths</h2>
@@ -4737,19 +4605,19 @@ skill configuration is used for any conflict on skill name:  filesystem
 skills found earlier in the list "win" over later ones with the same name.</p>
 <p>By default, Soliplex loads skill configurations found under the path
 './skills', just as though we had configured:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">filesystem_skills_paths</span><span class="p">:</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./skills&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">filesystem_skills_paths</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./skills&quot;</span>
 </span></code></pre></div>
 <p>To disable filesystem skill discovery, list a single, "null" path, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">filesystem_skills_paths</span><span class="p">:</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">filesystem_skills_paths</span><span class="p">:</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 <h2 id="selecting-skill-configurations">Selecting Skill Configurations</h2>
 <p>All discovered filesystem skills are enabled by default. If <code>skill_configs</code>
 contains any entries, it acts as a whitelist. For example:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">skill_configs</span><span class="p">:</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bare-bones&quot;</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;filesystem&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">skill_configs</span><span class="p">:</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">skill_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bare-bones&quot;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;filesystem&quot;</span>
 </span></code></pre></div>
 <p>With this configuration, discovered skills other than <code>bare-bones</code> cannot
 be referenced by other parts of the configuration, such as rooms.</p>
@@ -4768,10 +4636,10 @@ flags. Where that check fails, a configuration naming the skill still
 loads and passes <code>soliplex-cli audit</code>, but a room using it fails to build
 its agent with a <code>BwrapSandboxUnavailable</code> error giving the reason, and
 the <code>sandbox_workdirs</code> endpoints are not mounted.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">sandbox_config</span><span class="p">:</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="nt">environments_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/environments</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">workdirs_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/workdirs</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="nt">transcripts_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/transcripts</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">sandbox_config</span><span class="p">:</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="nt">environments_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/environments</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">workdirs_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/workdirs</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">transcripts_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../sandbox/transcripts</span>
 </span></code></pre></div>
 <ul>
 <li>
@@ -4850,18 +4718,18 @@ back to the next level's default; with no stanza at all, runs use
   <code>bounded</code> starts merging again.)</p>
 </li>
 </ul>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">sse_delivery</span><span class="p">:</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;fine-grained&quot;</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="nt">configs</span><span class="p">:</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">        </span><span class="s">&quot;whole-message&quot;</span><span class="p p-Indicator">:</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">            </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;message&quot;</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">            </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Text</span><span class="nv"> </span><span class="s">arrives</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">each</span><span class="nv"> </span><span class="s">assistant</span><span class="nv"> </span><span class="s">message&quot;</span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">        </span><span class="s">&quot;fine-grained&quot;</span><span class="p p-Indicator">:</span>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">            </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bounded&quot;</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">            </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Text</span><span class="nv"> </span><span class="s">streams</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">few</span><span class="nv"> </span><span class="s">deltas</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">time&quot;</span>
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">            </span><span class="nt">max_deltas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
-</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">            </span><span class="nt">max_bytes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024</span>
-</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">            </span><span class="nt">max_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">sse_delivery</span><span class="p">:</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;fine-grained&quot;</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">configs</span><span class="p">:</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">        </span><span class="s">&quot;whole-message&quot;</span><span class="p p-Indicator">:</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">            </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;message&quot;</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">            </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Text</span><span class="nv"> </span><span class="s">arrives</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">each</span><span class="nv"> </span><span class="s">assistant</span><span class="nv"> </span><span class="s">message&quot;</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">        </span><span class="s">&quot;fine-grained&quot;</span><span class="p p-Indicator">:</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">            </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bounded&quot;</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">            </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Text</span><span class="nv"> </span><span class="s">streams</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">few</span><span class="nv"> </span><span class="s">deltas</span><span class="nv"> </span><span class="s">at</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">time&quot;</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">            </span><span class="nt">max_deltas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">            </span><span class="nt">max_bytes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">            </span><span class="nt">max_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </span></code></pre></div>
 <p>With a model producing about 25 deltas a second, these bounds send about
 eight updates a second, each holding about three deltas: on loopback, an
@@ -4904,19 +4772,19 @@ but does not treat them as findings:  the search path mechanism is the
 documented way to override one or more of a shared set of configured rooms.</p>
 <p>By default, Soliplex loads room configurations found under the path './rooms',
 just as though we had configured:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">room_paths</span><span class="p">:</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./rooms&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">room_paths</span><span class="p">:</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./rooms&quot;</span>
 </span></code></pre></div>
 <p>To disable all rooms, list a single, "null" path, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">room_paths</span><span class="p">:</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">   </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">room_paths</span><span class="p">:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">   </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 <h3 id="reloading-room-configurations">Reloading room configurations</h3>
 <p>Soliplex loads room configurations when the server starts.  Python code
 running inside the server, e.g. an app router which writes a new room
 directory under one of the <code>room_paths</code>, can reload them without a
 restart:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">reloaded</span> <span class="o">=</span> <span class="k">await</span> <span class="n">the_installation</span><span class="o">.</span><span class="n">reload_room_configs</span><span class="p">()</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">reloaded</span> <span class="o">=</span> <span class="k">await</span> <span class="n">the_installation</span><span class="o">.</span><span class="n">reload_room_configs</span><span class="p">()</span>
 </span></code></pre></div>
 <p>The reload:</p>
 <ul>
@@ -4974,17 +4842,17 @@ configuration is used for any conflict on completion ID:  completions
 found earlier in the list "win" over later ones with the same ID.</p>
 <p>By default, Soliplex loads completion configurations found under the path
 './completions', just as though we had configured:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./completions&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;./completions&quot;</span>
 </span></code></pre></div>
 <p>To disable all completions, list a single, "null" path, e.g.:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">completion_paths</span><span class="p">:</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="p p-Indicator">-</span>
 </span></code></pre></div>
 <h2 id="logfire-configuration">Logfire Configuration</h2>
 <p>See the <a href="../logfire/">Soliplex logfire configuration</a> page.</p>
 <h2 id="asgi-middleware-stack">ASGI Middleware Stack</h2>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nt">middleware_stack</span><span class="p">:</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">middleware_stack</span><span class="p">:</span>
 </span></code></pre></div>
 <p>The optional <code>middleware_stack</code> section declares the ASGI middleware wrapping
 the application (outermost first). Omit it to use the built-in default stack

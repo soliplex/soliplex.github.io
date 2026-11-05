@@ -1099,6 +1099,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Databases
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#room-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3753,6 +3764,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Databases
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#room-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3963,8 +3985,9 @@
 <p>An "installation" is a set of filesystem-based configuration files, organized
 as a directory tree.</p>
 <p>At the root of an installation directory is a file, <code>installation.yaml</code>, which
-is used to configure environment variables and secrets used by the
-installation.  There may be alternative configurations available, e.g. to
+configures the installation as a whole:  its environment variables and
+secrets, its databases, and where to find the other configuration files
+described below.  There may be alternative configurations available, e.g. to
 configure how the installation runs inside a container.</p>
 <p>See <a href="../installation/">this page</a> for
 documentation on the schema of one of these configurations.</p>
@@ -3990,6 +4013,18 @@ configurations for a given type of entity.</p>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>      room_config.yaml
 </span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    ...
 </span></code></pre></div>
+<h2 id="databases">Databases</h2>
+<p>Soliplex keeps AG-UI thread history and authorization data in two
+databases, configured by the <code>thread_persistence_db</code> and
+<code>authorization_db</code> stanzas of <code>installation.yaml</code>.  By default both are
+in-memory SQLite databases, so nothing is written to the installation
+directory.</p>
+<p>The example configurations instead use SQLite files under <code>db/sqlite/</code>,
+e.g. <code>sqlite:///db/sqlite/thread_persistence.sqlite</code>.  A relative path
+like this is resolved against the server's working directory, not the
+installation directory, and its parent directory must already exist.</p>
+<p>See <a href="../dburis/">SQLAlchemy DBURIs</a> for the full reference, including
+PostgreSQL and database migrations.</p>
 <h2 id="room-configuration">Room Configuration</h2>
 <p>Within a "rooms" directory, each room is represented by a subdirectory,
 whose name is the room ID.</p>
