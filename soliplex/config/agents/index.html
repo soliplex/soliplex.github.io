@@ -4188,14 +4188,15 @@ supplied by the template.  Any fields set locally override the template.</p>
 </span></code></pre></div>
 <h3 id="optional-elements">Optional Elements</h3>
 <ul>
-<li>
-<p><code>provider_type</code>: a string, must be one of <code>"ollama"</code> (the default),
-  <code>"openai"</code>, or <code>"google"</code>.</p>
-</li>
-<li>
-<p><code>provider_base_url</code>: a string, is the base API URL for the agent's LLM
-  provider.</p>
-</li>
+<li><code>provider_type</code>: a string, must be one of <code>"ollama"</code> (the default),
+  <code>"openai"</code>, <code>"google"</code>, or <code>"vllm"</code>.</li>
+</ul>
+<p>Use <code>"vllm"</code> for models served by vLLM, including Qwen chat templates
+  that require a single leading system message. It uses the provider's
+  model profile to handle system messages.</p>
+<ul>
+<li><code>provider_base_url</code>: a string, is the base API URL for the agent's LLM
+  provider.</li>
 </ul>
 <p>If provided, the value can
   <a href="../installation/#installation-secret-environment-interpolation">interpolate</a>
@@ -4203,6 +4204,8 @@ supplied by the template.  Any fields set locally override the template.</p>
   <code>"env:MY_PROVIDER_BASE_URL"</code>.</p>
 <p>If not provided, and <code>provider_type</code> is set to <code>"ollama"</code>, defaults to
   the value configured in the installation environment as <code>OLLAMA_BASE_URL</code></p>
+<p>If not provided, and <code>provider_type</code> is set to <code>"vllm"</code>, defaults to
+  the value configured in the installation environment as <code>VLLM_BASE_URL</code>.</p>
 <p>If not provided, and <code>provider_type</code> is set to <code>"openai"</code>, defaults to
   the default OpenAI service URL.</p>
 <p><strong>Must not be set</strong> if <code>provider_type</code> is set to <code>"google"</code>.</p>
