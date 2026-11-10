@@ -4258,9 +4258,12 @@ the following required elements:</p>
 </li>
 <li>
 <p><code>logo_image</code> (a string, default unset) is a path to an image file that
-  the UI can display as the room's logo.  Relative paths are resolved
-  against the room's configuration directory.  The image is served via
-  the <code>/v1/rooms/{room_id}/image</code> endpoint.  E.g.:</p>
+  the UI can display as the room's logo.  The path is resolved against
+  the room's configuration directory, and must resolve (following any
+  symlinks) to a file inside it:  an absolute path elsewhere, or one
+  which escapes the directory via <code>..</code>, is refused.  The image is
+  served via the <code>/v1/rooms/{room_id}/bg_image</code> endpoint, which returns
+  404 for a refused path.  E.g.:</p>
 </li>
 </ul>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">logo_image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./logo.png&quot;</span>

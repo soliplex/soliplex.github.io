@@ -4165,7 +4165,10 @@ LLM provider directly.</p>
 <ul>
 <li><code>system_prompt</code> is the "instructions" for the LLM serving the room.
   If it starts with a <code>./</code>, it will be treated as a filename in the
-  same directory, whose contents will be read in its place.</li>
+  same directory, whose contents will be read in its place.  The file
+  must resolve (following any symlinks) to a path inside that
+  directory: reading a prompt file which escapes it, e.g. via <code>..</code>,
+  raises an error.</li>
 </ul>
 <p><strong>Template exception:</strong> When an agent config uses <code>template_id</code> to
 inherit from an entry in the installation-level <code>agent_configs</code>, both
