@@ -2583,6 +2583,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="The datasets mockup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conversations-outside-rooms" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Conversations outside rooms
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -3837,6 +3854,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="The datasets mockup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conversations-outside-rooms" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Conversations outside rooms
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -4119,8 +4153,8 @@ the routes below) to open straight on a screen.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>/lobby</code>, <code>/lobby?view=datasets</code></td>
-<td>Room presets, or the dataset catalog with search and facets.</td>
+<td><code>/lobby</code>, <code>/lobby?view=threads</code>, <code>/lobby?view=datasets</code></td>
+<td>Room presets, every thread wherever it lives, or the dataset catalog with search and facets.</td>
 </tr>
 <tr>
 <td><code>/datasets/new</code></td>
@@ -4138,15 +4172,20 @@ the routes below) to open straight on a screen.</p>
 <td><code>/room/mock/&lt;room&gt;[/thread/&lt;id&gt;]</code></td>
 <td>The chat mockup's room screen, its panel showing the thread's datasets.</td>
 </tr>
+<tr>
+<td><code>/conversations[/thread/&lt;id&gt;][?new]</code></td>
+<td>Conversations outside any room, with no room rail; <code>?new</code> opens on a fresh one.</td>
+</tr>
 </tbody>
 </table>
 <p>The rules it assumes:</p>
 <ul>
 <li><strong>Levels.</strong> A room's level is a ceiling the deployer sets. A thread may use
   datasets at or below it; the picker shows the rest locked.</li>
-<li><strong>Access.</strong> A dataset is listed only when the user is cleared for its level
-  <em>and</em> is in its audience. Clearance alone is not need-to-know.</li>
-<li><strong>No enforcement.</strong> Nothing checks classification, so uploads and shares end
+<li><strong>Access.</strong> A dataset is listed only when the user's access reaches its
+  level <em>and</em> the user is in its audience. A high enough level alone is not
+  enough.</li>
+<li><strong>No enforcement.</strong> Nothing checks sensitivity, so uploads and shares end
   with an attestation and the scan's results are worded as advisory.</li>
 <li><strong>Fixed after the first message.</strong> A new thread starts from the room's
   defaults and can change them until its first message; after that they are
@@ -4168,8 +4207,8 @@ the routes below) to open straight on a screen.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>classification_levels.dart</code></td>
-<td>The marking vocabulary: PUBLIC, INTERNAL, CONFIDENTIAL, RESTRICTED. The only file allowed hex colors.</td>
+<td><code>sensitivity_levels.dart</code></td>
+<td>The sensitivity levels: PUBLIC, INTERNAL, CONFIDENTIAL, RESTRICTED. The only file allowed hex colors.</td>
 </tr>
 <tr>
 <td><code>model.dart</code></td>
@@ -4197,6 +4236,99 @@ the routes below) to open straight on a screen.</p>
 (<code>chat/thread_panel/panel_section.dart</code>): it replaces the panel's Databases
 segment and adds a summary row above the composer. Without one, the chat
 mockup is unchanged.</p>
+<h3 id="conversations-outside-rooms">Conversations outside rooms</h3>
+<p>The same mockup prototypes a conversation that belongs to no room. <em>New
+conversation</em> in the lobby opens one on the conversations page: the chat
+screen with no room rail, its sidebar listing only conversations outside
+rooms, and a link back to the lobby.</p>
+<p>The lobby's Threads view lists them beside room threads. It is a copy of the
+app's cross-room listing (<code>ui/threads/</code>) on the app's own
+<code>GlobalThreadsState</code>, adding what a listing of both kinds needs:</p>
+<ul>
+<li>a trailing icon on each row, a door for a thread in a room and a bubble
+  for one outside;</li>
+<li>a scope filter under <em>Show</em>: <em>All</em>, <em>In rooms</em>, <em>No room</em>, set apart by a
+  rule from <em>Group by</em>;</li>
+<li><code>in:room</code> in the search box beside <code>@label</code>, completed the same way, with
+  <code>in:none</code> for conversations outside rooms;</li>
+<li><code>@no-label</code> for threads carrying no label, alone or any-of beside other
+  labels;</li>
+<li>label chips on each row, at most three and then "+N"; tapping one adds it
+  to the search;</li>
+<li><em>Group by: Room</em>, with section headers and conversations outside rooms
+  first. It groups only the pages already loaded, so a section can grow as
+  the list scrolls.</li>
+</ul>
+<p>The scope and <code>in:</code> filters need a <code>room_ids</code> parameter on
+<code>GET /v1/agui/threads</code>, any-of like <code>label_ids</code>. Under A the client sends the
+hidden room's id for "No room" and every other room's for "In rooms"; under B
+the parameter needs a value for no room, such as <code>room_ids=none</code>.
+<code>@no-label</code> is the app's own: <code>unlabeled=true</code>, OR-ed with <code>label_ids</code>. The
+mockup fakes the room filter with <code>StaticSoliplexApi.roomFilter</code>.</p>
+<p>What a conversation outside a room assumes:</p>
+<ul>
+<li><strong>No preset.</strong> It starts with no datasets, picked in the thread panel and
+  fixed after the first message, like any thread. The agent and its skills
+  would be the installation's default; the mockup does not model them.</li>
+<li><strong>No ceiling.</strong> Its level is that of the most restrictive dataset it uses,
+  so it rises as datasets are added, and the band follows. It can never pass
+  the user's own access, because the catalog lists nothing beyond it.</li>
+<li><strong>Labels, not rooms, group it.</strong> It is found through the conversations
+  page, and through the Threads view with its label and room filters.</li>
+</ul>
+<p>Two backend shapes could carry it, and the mockup follows the first:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>A. A hidden room</th>
+<th>B. Threads without a room</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>The installation provides one room that the room list never shows.</td>
+<td><code>Thread.room_id</code> becomes nullable.</td>
+</tr>
+<tr>
+<td>Routes</td>
+<td>None new: every <code>/v1/rooms/{room_id}/…</code> route (runs, uploads, labels, feedback) works as is.</td>
+<td>Roomless twins of the thread, run, upload and label routes.</td>
+</tr>
+<tr>
+<td>Thread listing</td>
+<td>Unchanged; the client maps the hidden room's id to "No room".</td>
+<td><code>room_id: null</code> in <code>GET /v1/agui/threads</code>.</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>The hidden room's agent config.</td>
+<td>An installation-level default, such as a <code>default_agent_config_id</code>.</td>
+</tr>
+<tr>
+<td>Frontend</td>
+<td>The room screen without its rail as the conversations page; the rail and room list hide the room.</td>
+<td>A nullable room id through <code>ThreadInfo</code>, <code>ThreadKey</code>, <code>RoomState</code> and the routes.</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>A room that is not really a room: its stats and uploads mix every user's conversations.</td>
+<td>A migration and a second set of routes.</td>
+</tr>
+</tbody>
+</table>
+<p>A is the cheaper first step. B is cleaner if rooms later become folders that
+a thread can move in and out of.</p>
+<p>Open questions:</p>
+<ul>
+<li>A thread's level is derived on the client from its datasets. Should the
+  backend store it, so the thread listing and other clients can show it?</li>
+<li>Can a conversation move into a room, or a room thread move out? A move would
+  change its preset and its ceiling partway through.</li>
+<li>"In rooms" under A sends every room's id. With many rooms, an exclusion
+  parameter, or a <code>scope</code> parameter, would be shorter.</li>
+</ul>
 
 
 
