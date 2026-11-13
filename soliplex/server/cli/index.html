@@ -9998,11 +9998,22 @@ source — without exposing the values themselves.</p>
 <h4 id="output_2">Output</h4>
 <p>For each secret declared in the installation, one line is printed in the
 form:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>- &lt;secret_name&gt;               OK
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>- &lt;secret_name&gt;               OK (&lt;source_kind&gt;)
 </span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>- &lt;secret_name&gt;               MISSING
 </span></code></pre></div>
 <p><code>OK</code> means the secret resolved via at least one of its configured
-sources; <code>MISSING</code> means no source produced a value.</p>
+sources, and names the kind of the source which resolved it (e.g.,
+<code>OK (env_var)</code>); <code>MISSING</code> means no source produced a value.</p>
+<p>If any secret resolved from a <code>random_chars</code> source, a warning follows
+the list:  such values change whenever the server restarts
+(including a <code>serve --reload=config</code> reload), and differ between server
+processes, which breaks e.g. <code>SESSION_MIDDLEWARE_TOKEN</code> (in-progress
+logins and authn cookies) and <code>URL_SAFE_TOKEN_SECRET</code> (tokens).  The
+warning does not change the exit status.</p>
+<p>The audit runs in its own process, so it resolves secrets from that
+process's environment:  for a container deployment, run it in the
+backend's service (e.g., <code>docker compose run --rm backend soliplex-cli
+audit ...</code>) so that its answer matches the server's.</p>
 <h4 id="exit-status_3">Exit Status</h4>
 <ul>
 <li><code>0</code> — every declared secret resolved.</li>
