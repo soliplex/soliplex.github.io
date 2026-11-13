@@ -4876,7 +4876,7 @@
 <p>No <code>dependency_overrides</code> or git dependencies are declared.</p>
 <h2 id="build-ci-and-platform-seams">Build, CI and platform seams</h2>
 <ul>
-<li>Toolchain: Flutter 3.41.9 pinned in <code>.fvmrc</code> (read by CI and the Dockerfile); SDK <code>^3.6.0</code>; pub workspace with <code>resolution: workspace</code>. App version <code>0.107.0+93</code>, managed by <code>tool/bump_version.dart</code> and <code>tool/update_version.dart</code>.</li>
+<li>Toolchain: Flutter 3.47.9 pinned in <code>.fvmrc</code> (read by CI and the Dockerfile); SDK <code>^3.6.0</code>; pub workspace with <code>resolution: workspace</code>. App version <code>0.107.0+93</code>, managed by <code>tool/bump_version.dart</code> and <code>tool/update_version.dart</code>.</li>
 <li><code>.github/workflows/flutter.yaml</code> triggers on push to main and PRs to main and <code>feat/**</code>, <code>fix/**</code>, <code>refactor/**</code>, <code>chore/**</code> (docs and md ignored).</li>
 <li>Lint: <code>dart format --set-exit-if-changed</code>, <code>flutter analyze --fatal-infos</code>, <code>dart doc --dry-run</code>, markdownlint-cli2.</li>
 <li>Test: app tests with a random seed and coverage, then per-package tests. agent, client and logging run <code>dart test --exclude-tags integration</code>; client_native and design run <code>flutter test</code> (goldens use a Linux baseline).</li>
