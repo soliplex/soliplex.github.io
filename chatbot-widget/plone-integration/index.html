@@ -4186,10 +4186,6 @@ the token's <code>sub</code> claim) or if you set <code>userId</code> / <code>ge
 <code>PloneSoliplex.configure(...)</code>.</p>
 </blockquote>
 <h3 id="adding-the-logged-in-user-endpoint">Adding the <code>@logged-in-user</code> endpoint</h3>
-<p>A minimal implementation registers a GET service on the site root. A complete,
-working example lives at
-<code>/trabajo/runyan/ESP/ploud/backend/sources/esp-library/src/esp/library/restapi</code>
-— reproduced here:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># logged_in_user.py</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">plone</span><span class="w"> </span><span class="kn">import</span> <span class="n">api</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">plone.restapi.services</span><span class="w"> </span><span class="kn">import</span> <span class="n">Service</span>
