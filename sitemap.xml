@@ -112,34 +112,178 @@
         <loc>https://soliplex.github.io/soliplex/server/sse_resume/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/API/</loc>
+        <loc>https://soliplex.github.io/template/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/ARCHITECTURE/</loc>
+        <loc>https://soliplex.github.io/template/contributing/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/AUTHENTICATION/</loc>
+        <loc>https://soliplex.github.io/template/contributing/development/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/CLI/</loc>
+        <loc>https://soliplex.github.io/template/getting-started/generator/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/CONFIGURATION/</loc>
+        <loc>https://soliplex.github.io/template/getting-started/using-the-skill/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/DATABASE/</loc>
+        <loc>https://soliplex.github.io/template/getting-started/tutorials/01-first-steps/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/DOCKER/</loc>
+        <loc>https://soliplex.github.io/template/getting-started/tutorials/02-populate-rag/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/GETTING_STARTED/</loc>
+        <loc>https://soliplex.github.io/template/getting-started/tutorials/03-add-a-custom-tool/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/PARAMETER_SETS/</loc>
+        <loc>https://soliplex.github.io/template/getting-started/tutorials/04-next-steps/</loc>
       </url>
       <url>
-        <loc>https://soliplex.github.io/ingester/WORKFLOWS/</loc>
+        <loc>https://soliplex.github.io/template/getting-started/tutorials/backend-dev-mode/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/getting-started/tutorials/concierge-admin/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/getting-started/tutorials/concierge-room/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/getting-started/tutorials/separate-rag-database/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/getting-started/tutorials/work-with-gitea/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/build-on-soliplex-release-images/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/move-to-soliplex-0.85/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/move-to-soliplex-0.86.1/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/move-to-soliplex-0.87/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/move-to-soliplex-0.93/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/move-to-src-layout/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/oidc-providers-and-stack-init/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/provision-rooms-on-request/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/provisioner-on-concierge/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/room-id-forms-and-tracker-labels/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/upgrades/serve-through-nginx/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/authentication/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/custom-package/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/installation/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/architecture/backend/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/architecture/configuration/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/architecture/services/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/ingester/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/migrations/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/ollama/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/rag/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/secrets/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/room-provisioning/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/room-provisioning/command-line/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/room-provisioning/configuration/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/room-provisioning/how-it-works/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/room-provisioning/reconcile/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/template/users/operations/room-provisioning/service/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/reference/cli/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/reference/provisioner-rest-api/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/reference/api/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/skills/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/skills/soliplex-concierge-admin/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/skills/soliplex-concierge-installer/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/skills/soliplex-concierge-room/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/tasks/admin/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/tasks/admin/room_access/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/tasks/admin/room_creation/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/tasks/provisioners/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/tasks/rooms/</loc>
+      </url>
+      <url>
+        <loc>https://soliplex.github.io/concierge/tasks/rooms/setup/</loc>
       </url>
       <url>
         <loc>https://soliplex.github.io/chatbot-widget/readme/</loc>
