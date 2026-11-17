@@ -31,7 +31,7 @@ if platform.system() == 'Windows':
 # navigation title (e.g. "API.md" -> "API", not "Api").
 ACRONYMS = {
     'AG', 'AGUI', 'AI', 'API', 'CLI', 'CRUD', 'DB', 'HTTP', 'ID', 'JSON', 'LLM',
-    'MCP', 'OAUTH', 'OIDC', 'PDF', 'RAG', 'SQL', 'SSE', 'TUI', 'UI', 'URI',
+    'MCP', 'OAUTH', 'OIDC', 'PDF', 'RAG', 'REST', 'SQL', 'SSE', 'TUI', 'UI', 'URI',
     'URIS', 'UX', 'YAML',
 }
 
@@ -160,6 +160,22 @@ def _humanize(name: str) -> str:
     return ' '.join(words) or name
 
 
+def _find_index(dir_path: pathlib.Path) -> pathlib.Path | None:
+    """The directory's landing page, matched case-exactly against INDEX_NAMES.
+
+    Compares against the real directory listing rather than probing with
+    ``Path.exists()``, which is case-insensitive on Windows and macOS and would
+    report ``readme.md`` under the ``README.md`` spelling.
+    """
+    names = {child.name for child in dir_path.iterdir() if child.is_file()}
+    return next((dir_path / n for n in INDEX_NAMES if n in names), None)
+
+
+def _is_excluded(rel: str, excludes: frozenset[str]) -> bool:
+    """True if ``rel`` (a docs-relative path) is, or lies under, an excluded path."""
+    return any(rel == ex or rel.startswith(ex.rstrip('/') + '/') for ex in excludes)
+
+
 def _title_for(rel: str, fallback_name: str, overrides: dict[str, str]) -> str:
     """Title for a page/section: explicit override wins, else humanized name."""
     if rel in overrides:
@@ -171,6 +187,7 @@ def build_dir_nodes(
     dir_path: pathlib.Path,
     docs_dir: pathlib.Path,
     overrides: dict[str, str],
+    excludes: frozenset[str] = frozenset(),
 ) -> list[NavNode]:
     """Build nav nodes for the entries directly under ``dir_path``.
 
@@ -179,7 +196,9 @@ def build_dir_nodes(
     """
     nodes: list[NavNode] = []
 
-    index = next((dir_path / n for n in INDEX_NAMES if (dir_path / n).exists()), None)
+    index = _find_index(dir_path)
+    if index is not None and _is_excluded(index.relative_to(docs_dir).as_posix(), excludes):
+        index = None
     if index is not None:
         rel = index.relative_to(docs_dir).as_posix()
         nodes.append({overrides.get(rel, 'Overview'): rel})
@@ -188,6 +207,8 @@ def build_dir_nodes(
     subdirs = []
     for child in sorted(dir_path.iterdir(), key=lambda p: p.name.lower()):
         if index is not None and child == index:
+            continue
+        if _is_excluded(child.relative_to(docs_dir).as_posix(), excludes):
             continue
         if child.is_dir():
             subdirs.append(child)
@@ -202,7 +223,7 @@ def build_dir_nodes(
 
     dir_nodes: list[NavNode] = []
     for d in subdirs:
-        value = build_dir_value(d, docs_dir, overrides)
+        value = build_dir_value(d, docs_dir, overrides, excludes)
         if value is None:
             continue
         reldir = d.relative_to(docs_dir).as_posix()
@@ -216,10 +237,11 @@ def build_dir_value(
     dir_path: pathlib.Path,
     docs_dir: pathlib.Path,
     overrides: dict[str, str],
+    excludes: frozenset[str] = frozenset(),
 ) -> NavValue | None:
     """Nav value for a directory: a list of nodes, or a single page collapsed to a
     direct path string, or None when the directory has no markdown."""
-    nodes = build_dir_nodes(dir_path, docs_dir, overrides)
+    nodes = build_dir_nodes(dir_path, docs_dir, overrides, excludes)
     if not nodes:
         return None
     if len(nodes) == 1:
@@ -233,11 +255,12 @@ def build_project_value(
     project_dir: pathlib.Path,
     docs_dir: pathlib.Path,
     overrides: dict[str, str],
+    excludes: frozenset[str] = frozenset(),
 ) -> NavValue | None:
     """Nav value for a whole project's copied docs directory."""
     if not project_dir.is_dir():
         return None
-    return build_dir_value(project_dir, docs_dir, overrides)
+    return build_dir_value(project_dir, docs_dir, overrides, excludes)
 
 
 def expand_nav(
@@ -245,6 +268,7 @@ def expand_nav(
     docs_dir: pathlib.Path,
     overrides: dict[str, str],
     errors: list[str],
+    excludes: frozenset[str] = frozenset(),
 ) -> list[NavNode]:
     """Recursively replace ``@auto:<project>`` stubs with generated nav subtrees."""
     expanded: list[NavNode] = []
@@ -252,7 +276,7 @@ def expand_nav(
         (title, value), = node.items()
         if isinstance(value, str) and value.startswith(AUTO_PREFIX):
             project = value[len(AUTO_PREFIX):]
-            generated = build_project_value(docs_dir / project, docs_dir, overrides)
+            generated = build_project_value(docs_dir / project, docs_dir, overrides, excludes)
             if not generated:
                 errors.append(
                     f"Auto-nav stub '{value}' produced no pages "
@@ -261,7 +285,7 @@ def expand_nav(
                 continue
             expanded.append({title: generated})
         elif isinstance(value, list):
-            expanded.append({title: expand_nav(value, docs_dir, overrides, errors)})
+            expanded.append({title: expand_nav(value, docs_dir, overrides, errors, excludes)})
         else:
             expanded.append({title: value})
     return expanded
@@ -325,6 +349,20 @@ def render_provenance(hashes: dict[str, str]) -> str:
     return '\n'.join(lines) + '\n\n'
 
 
+def load_nav_excludes(template_file: pathlib.Path) -> frozenset[str]:
+    """Docs-relative paths (files or directories) kept out of the generated nav.
+
+    Read from ``[nav_exclude].paths`` in the template. Use it for Markdown that
+    upstream copies along but is not a page, such as ``--8<--`` snippet
+    fragments; excluded files are still built, just not listed or flagged as
+    orphans.
+    """
+    if not template_file.exists():
+        return frozenset()
+    data = tomllib.loads(template_file.read_text(encoding='utf-8'))
+    return frozenset(data.get('nav_exclude', {}).get('paths', []))
+
+
 def generate_config(
     template_file: pathlib.Path,
     config_file: pathlib.Path,
@@ -358,12 +396,13 @@ def generate_config(
     template_text = template_file.read_text(encoding='utf-8')
     data = tomllib.loads(template_text)
     overrides = data.get('nav_title_overrides', {})
+    excludes = frozenset(data.get('nav_exclude', {}).get('paths', []))
     nav = data.get('project', {}).get('nav')
     if nav is None:
         errors.append("Template has no [project].nav array")
         return errors
 
-    expanded = expand_nav(nav, docs_dir, overrides, errors)
+    expanded = expand_nav(nav, docs_dir, overrides, errors, excludes)
     nav_text = 'nav = ' + dump_nav_value(expanded, 0)
 
     body, count = NAV_RE.subn(lambda _m: nav_text, template_text, count=1)
@@ -386,6 +425,7 @@ def validate_nav(
     config_file: pathlib.Path,
     docs_dir: pathlib.Path,
     projects: list[str],
+    excludes: frozenset[str] = frozenset(),
 ) -> list[str]:
     """Validate navigation references against the copied documentation.
 
@@ -407,7 +447,7 @@ def validate_nav(
 
     referenced = {
         match.group(1)
-        for match in re.finditer(r'=\s*"([a-zA-Z0-9_/-]+\.md)"', content)
+        for match in re.finditer(r'=\s*"([a-zA-Z0-9_./-]+\.md)"', content)
     }
 
     # Broken references: nav points at a file that isn't there.
@@ -422,7 +462,7 @@ def validate_nav(
             continue
         for md_file in sorted(project_dir.rglob('*.md')):
             rel = md_file.relative_to(docs_dir).as_posix()
-            if rel not in referenced:
+            if rel not in referenced and not _is_excluded(rel, excludes):
                 errors.append(f"Orphaned page not in navigation: {rel}")
 
     if errors:
@@ -552,7 +592,9 @@ def main():
     # Validate only mode
     if args.validate_only:
         errors = generate_config(template_file, config_file, docs_dir, all_projects)
-        errors += validate_nav(config_file, docs_dir, all_projects)
+        errors += validate_nav(
+            config_file, docs_dir, all_projects, load_nav_excludes(template_file)
+        )
         return 1 if errors else 0
 
     # Update submodules
@@ -587,7 +629,9 @@ def main():
     gen_errors = generate_config(template_file, config_file, docs_dir, all_projects)
 
     # Validate navigation (self-consistency check of the generated config)
-    nav_errors = validate_nav(config_file, docs_dir, all_projects)
+    nav_errors = validate_nav(
+        config_file, docs_dir, all_projects, load_nav_excludes(template_file)
+    )
 
     # Update .gitignore
     generate_gitignore(docs_dir, all_projects)

@@ -81,25 +81,35 @@ The main Soliplex RAG system with FastAPI backend and Flutter frontend.
 
 **Quick Links:**
 - [Overview](soliplex/overview.md)
-- [Server Setup](soliplex/server/index.md)
+- [Server Setup](soliplex/server.md)
 - [Client Setup](soliplex/client.md)
 - [RAG Database](soliplex/rag.md)
 - [Configuration Guide](soliplex/config/installation.md)
 - [Usage](soliplex/usage.md)
 
-### [Ingester](ingester/GETTING_STARTED.md)
+## Deployment
 
-Robust document ingestion system for loading content into RAG databases.
+### [Docker Compose Template](template/index.md)
+
+A Docker Compose template that assembles a full Soliplex stack (nginx-served Flutter frontend, backend, haiku.rag document pipeline, docling-serve, Postgres) and a generator for producing your own tailored stack from it.
 
 **Quick Links:**
-- [Getting Started](ingester/GETTING_STARTED.md)
-- [Architecture](ingester/ARCHITECTURE.md)
-- [API Reference](ingester/API.md)
-- [CLI Reference](ingester/CLI.md)
-- [Configuration](ingester/CONFIGURATION.md)
-- [Database Schema](ingester/DATABASE.md)
-- [Workflows](ingester/WORKFLOWS.md)
-- [Agents](ingester-agents/index.md)
+- [Overview](template/index.md)
+- [Generate a Project](template/getting-started/generator.md)
+- [Tutorial: First Steps](template/getting-started/tutorials/01-first-steps.md)
+- [Installation](template/users/installation.md)
+- [Upgrading a Generated Stack](template/upgrades/index.md)
+
+### [Concierge](concierge/index.md)
+
+Soliplex extension for LLM-driven, on-demand room requests: users ask a self-serve "about" room for access to a non-public room or for a new room, and the concierge provisions it or files a tracking issue for an administrator.
+
+**Quick Links:**
+- [Overview](concierge/index.md)
+- [Room Setup](concierge/tasks/rooms/setup.md)
+- [Administering Requests](concierge/tasks/admin/index.md)
+- [Skills](concierge/skills/index.md)
+- [CLI Scripts](concierge/reference/cli.md)
 
 ## User Interfaces
 
@@ -109,7 +119,7 @@ Cross-platform mobile and desktop client application for Soliplex.
 
 **Quick Links:**
 - [Developer Setup Guide](frontend/developer-setup.md)
-- [State Bus Overview](frontend/state-bus.md)
+- [Send / Cancel Lifecycle](frontend/send-cancel-lifecycle.md)
 
 ### [Chatbot Widget](chatbot-widget/readme.md)
 
@@ -123,7 +133,7 @@ Embeddable Next.js chat widget for integrating Soliplex into web applications.
 
 ### [Ingester Agents](ingester-agents/index.md)
 
-Agents for ingesting documents from various sources (filesystem, GitHub, Gitea) into the Soliplex Ingester.
+Agents for ingesting documents from various sources (filesystem, GitHub, Gitea, WebDAV, web pages) into a Soliplex RAG pipeline.
 
 **Quick Links:**
 - [Documentation](ingester-agents/index.md)
@@ -149,22 +159,23 @@ Corpus management for evaluations: labels question sets with the documents in a 
 ### For New Users
 
 1. [Core Platform Overview](soliplex/overview.md) - Understanding the Soliplex system
-2. [Server Setup](soliplex/server/index.md) - Set up the backend server
+2. [Server Setup](soliplex/server.md) - Set up the backend server
 3. [Client Setup](soliplex/client.md) - Configure the client application
-4. [Getting Started with Ingester](ingester/GETTING_STARTED.md) - Document ingestion basics
+4. [Docker Compose Template](template/getting-started/tutorials/01-first-steps.md) - Run a full stack with Docker Compose
 
 ### For Developers
 
 1. [Core Platform Architecture](soliplex/overview.md) - System design and components
-2. [Ingester Architecture](ingester/ARCHITECTURE.md) - Ingestion pipeline design
-3. [API References](ingester/API.md) - REST API documentation
+2. [Stack Services](template/users/architecture/services.md) - How a deployed stack fits together
+3. [Concierge Python API](concierge/reference/api.md) - Concierge library reference
 
 ### For Operations
 
 1. [Configuration Guide](soliplex/config/installation.md) - Installation configuration
 2. [Environment Setup](soliplex/config/environment.md) - Environment variables
 3. [Secrets Management](soliplex/config/secrets.md) - Handling sensitive configuration
-4. [Ingester CLI Reference](ingester/CLI.md) - Command-line tool usage
+4. [Generate a Project](template/getting-started/generator.md) - Create your own stack from the template
+5. [Database Migrations](template/users/operations/migrations.md) - Migrating a generated stack's databases
 
 ## What is Soliplex?
 
@@ -184,7 +195,8 @@ Soliplex combines the power of retrieval systems with generative AI to provide a
 This documentation is automatically synchronized from multiple repositories:
 
 - **Core Platform**: [soliplex/soliplex](https://github.com/soliplex/soliplex)
-- **Ingester**: [soliplex/ingester](https://github.com/soliplex/ingester)
+- **Docker Compose Template**: [soliplex/soliplex-template](https://github.com/soliplex/soliplex-template)
+- **Concierge**: [soliplex/soliplex-concierge](https://github.com/soliplex/soliplex-concierge)
 - **Flutter Client**: [soliplex/frontend](https://github.com/soliplex/frontend)
 - **Chatbot Widget**: [soliplex/chatbot](https://github.com/soliplex/chatbot)
 - **Ingester Agents**: [soliplex/ingester-agents](https://github.com/soliplex/ingester-agents)

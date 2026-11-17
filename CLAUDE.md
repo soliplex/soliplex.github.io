@@ -4,7 +4,7 @@ This document provides context for Claude (or any AI assistant) to understand an
 
 ## Project Overview
 
-This is a **unified documentation site** (`soliplex.github.io`) that aggregates documentation from **7 separate git submodule repositories** and builds it with [Zensical](https://github.com/squidfunk/zensical). When documentation changes in any submodule, the site automatically rebuilds and deploys.
+This is a **unified documentation site** (`soliplex.github.io`) that aggregates documentation from **9 separate git submodule repositories** and builds it with [Zensical](https://github.com/squidfunk/zensical). When documentation changes in any submodule, the site automatically rebuilds and deploys.
 
 ### Core Concept
 
@@ -15,14 +15,14 @@ Individual Repos          Documentation Site
 │  /docs      │      │   │      .io         │
 └─────────────┘      │   │                  │
 ┌─────────────┐      ├──>│  Aggregates all  │
-│  ingester   │      │   │  documentation   │
+│  template   │      │   │  documentation   │
 │  /docs      │──────┤   │  into one site   │
 └─────────────┘      │   │                  │
 ┌─────────────┐      │   └──────────────────┘
 │  chatbot    │──────┤            │
 │  /docs      │      │            ▼
 └─────────────┘      │   https://soliplex.github.io/
-     (+ 4 more)──────┘
+     (+ 6 more)──────┘
 ```
 
 ## Prerequisites
@@ -60,8 +60,10 @@ Location: `projects/` directory
 
 Each submodule is a separate git repository:
 - `projects/soliplex/` - Core platform docs
-- `projects/ingester/` - Document ingestion system
-- `projects/chatbot/` - Chat widget
+- `projects/template/` - Docker Compose template (soliplex-template)
+- `projects/concierge/` - Room access / creation concierge (soliplex-concierge)
+- `projects/chatbot-widget/` - Chat widget (soliplex/chatbot)
+- `projects/exquisite/` - Evaluation corpus management
 - `projects/frontend/` - Flutter client
 - `projects/ingester-agents/` - Ingestion agents (README only)
 - `projects/pdf-splitter/` - PDF utilities (README only)
@@ -217,6 +219,9 @@ nav = [
 - Generated nav entries use `.md` files (`.mdx` is copied but not added to nav)
 - Paths are case-sensitive
 - The `[nav_title_overrides]` table is stripped from the generated `zensical.toml`
+- `[nav_exclude].paths` (docs-relative files or directories) keeps copied Markdown that is not a page — e.g. soliplex-template's `--8<--` snippet fragments — out of the generated nav and the orphan check
+- `--8<--` snippet paths in upstream docs are relative to *that* repo's root; add the submodule root (e.g. `projects/template`) to the snippets `base_path` in the template. `check_paths = true` fails the build on an unresolved include
+- A submodule directory name is its URL path; never reuse the name of a soliplex repo that publishes its own GitHub Pages site (`soliplex-template`, `soliplex-concierge`, `chatbot`) or that site shadows the section
 
 ### Modifying Path Filters
 
@@ -262,7 +267,7 @@ projects/
 │   ├── config/
 │   │   ├── installation.md
 │   │   └── ...
-├── ingester/docs/          # Full docs directory
+├── template/docs/          # Full docs directory
 ├── ingester-agents/        # README only
 │   └── README.md
 ```
@@ -275,7 +280,7 @@ docs/
 ├── soliplex/               # Generated - gitignored
 │   ├── overview.md
 │   └── config/
-├── ingester/               # Generated - gitignored
+├── template/               # Generated - gitignored
 ├── ingester-agents/        # Generated - gitignored
 │   └── index.md            # Copied from README.md
 └── .gitignore              # Auto-updated by build-docs.py
@@ -331,13 +336,15 @@ Or use the build script which does this automatically (unless `--no-update` is s
 
 ## Current Configuration
 
-### Projects: 7 Total
+### Projects: 9 Total
 
 | Project | Type | Docs Location | In Nav |
 |---------|------|---------------|--------|
 | soliplex | Full docs | `projects/soliplex/docs/` | ✅ |
-| ingester | Full docs | `projects/ingester/docs/` | ✅ |
-| chatbot | Full docs | `projects/chatbot/docs/` | ✅ |
+| template | Full docs | `projects/template/docs/` (soliplex-template) | ✅ |
+| concierge | Full docs | `projects/concierge/docs/` (soliplex-concierge) | ✅ |
+| chatbot-widget | Full docs | `projects/chatbot-widget/docs/` (soliplex/chatbot) | ✅ |
+| exquisite | Full docs | `projects/exquisite/docs/` | ✅ |
 | frontend | Full docs | `projects/frontend/docs/` | ✅ |
 | ingester-agents | README only | `projects/ingester-agents/README.md` | ✅ |
 | pdf-splitter | README only | `projects/pdf-splitter/README.md` | ✅ |
@@ -497,4 +504,4 @@ git rm -f projects/name
 
 **Last Updated**: 2026-06-01
 **Documentation Version**: Zensical build with template-generated navigation and repository_dispatch + nightly triggers
-**Active Projects**: 7 (soliplex, ingester, chatbot, frontend, ingester-agents, pdf-splitter, bubble-sandbox)
+**Active Projects**: 9 (soliplex, template, concierge, chatbot-widget, frontend, exquisite, ingester-agents, pdf-splitter, bubble-sandbox)

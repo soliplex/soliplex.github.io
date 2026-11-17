@@ -16,8 +16,10 @@ soliplex.github.io/
 │   ├── index.md                   # Landing page (tracked)
 │   ├── img/                       # Shared images (tracked)
 │   ├── soliplex/                  # Copied from projects/soliplex/docs/
-│   ├── ingester/                  # Copied from projects/ingester/docs/
-│   ├── chatbot/                   # Copied from projects/chatbot/docs/
+│   ├── template/                  # Copied from projects/template/docs/ (soliplex-template)
+│   ├── concierge/                 # Copied from projects/concierge/docs/ (soliplex-concierge)
+│   ├── chatbot-widget/            # Copied from projects/chatbot-widget/docs/
+│   ├── exquisite/                 # Copied from projects/exquisite/docs/
 │   ├── frontend/                  # Copied from projects/frontend/docs/
 │   ├── ingester-agents/           # Created from projects/ingester-agents/README.md
 │   ├── pdf-splitter/              # Created from projects/pdf-splitter/README.md

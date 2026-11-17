@@ -37,7 +37,9 @@ zensical.toml
 # These directories are automatically synchronized from upstream repositories
 # and should not be committed to this repository
 docs/soliplex/
-docs/ingester/
+docs/template/
+docs/concierge/
+docs/exquisite/
 docs/agents/
 docs/chatbot-widget/
 docs/flutter/

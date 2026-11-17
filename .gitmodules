@@ -1,9 +1,6 @@
 [submodule "projects/soliplex"]
 	path = projects/soliplex
 	url = https://github.com/soliplex/soliplex.git
-[submodule "projects/ingester"]
-	path = projects/ingester
-	url = https://github.com/soliplex/ingester.git
 [submodule "projects/ingester-agents"]
 	path = projects/ingester-agents
 	url = https://github.com/soliplex/ingester-agents.git
@@ -22,3 +19,9 @@
 [submodule "projects/exquisite"]
 	path = projects/exquisite
 	url = https://github.com/soliplex/exquisite.git
+[submodule "projects/concierge"]
+	path = projects/concierge
+	url = https://github.com/soliplex/soliplex-concierge.git
+[submodule "projects/template"]
+	path = projects/template
+	url = https://github.com/soliplex/soliplex-template.git
