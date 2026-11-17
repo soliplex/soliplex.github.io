@@ -5,6 +5,9 @@ dev_addr = "127.0.0.1:9001"
 repo_name = "soliplex/soliplex"
 repo_url = "https://github.com/soliplex/soliplex"
 
+# Site-only styles shipped by an aggregated project (copied into docs/ with it).
+extra_css = ["template/stylesheets/extra.css"]
+
 # Navigation. Local pages are listed literally; each "@auto:<project>" stub is
 # expanded by scripts/build-docs.py from the copied docs/<project>/ tree, so new,
 # renamed, or removed upstream pages flow into the site automatically. Edit section
@@ -13,7 +16,10 @@ repo_url = "https://github.com/soliplex/soliplex"
 nav = [
   { "Home" = "index.md" },
   { "Core Platform" = "@auto:soliplex" },
-  { "Ingester" = "@auto:ingester" },
+  { "Deployment" = [
+    { "Docker Compose Template" = "@auto:template" },
+    { "Concierge" = "@auto:concierge" },
+  ]},
   { "User Interfaces" = [
     { "Chatbot Widget" = "@auto:chatbot-widget" },
     { "Flutter UI" = "@auto:frontend" },
@@ -85,14 +91,24 @@ toggle.name = "Switch to system preference"
 # --------------------------------------------------------------------------
 [project.markdown_extensions.admonition]
 [project.markdown_extensions.attr_list]
+[project.markdown_extensions.footnotes]
 [project.markdown_extensions.pymdownx.details]
+# Icon shortcodes such as ':lucide-wand-sparkles:' (used by soliplex-template).
+[project.markdown_extensions.pymdownx.emoji]
+emoji_generator = "zensical.extensions.emoji.to_svg"
+emoji_index = "zensical.extensions.emoji.twemoji"
 [project.markdown_extensions.pymdownx.highlight]
 anchor_linenums = true
 line_spans = "__span"
 pygments_lang_class = true
 use_pygments = true
 [project.markdown_extensions.pymdownx.inlinehilite]
+# '--8<-- "path"' includes are written relative to the upstream repo's root, so
+# each project that uses them needs its submodule root on the search path.
+# check_paths makes an unresolved include fail the build instead of vanishing.
 [project.markdown_extensions.pymdownx.snippets]
+base_path = [".", "projects/template"]
+check_paths = true
 [project.markdown_extensions.pymdownx.superfences]
 custom_fences = [
   { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
@@ -114,3 +130,27 @@ custom_fences = [
 "soliplex/config/agui.md" = "AG-UI"
 "soliplex/config/filesystem_layout.md" = "Filesystem Layout"
 "soliplex/server/sse_resume.md" = "SSE Resume"
+"template/getting-started" = "Getting Started"
+"template/users" = "Using a Generated Stack"
+"template/upgrades" = "Upgrading a Generated Stack"
+"template/getting-started/generator.md" = "Generate a Project"
+"template/getting-started/using-the-skill.md" = "Using the Skill"
+"template/users/operations/room-provisioning" = "Room Provisioning"
+"template/upgrades/move-to-src-layout.md" = "Move to the src/ Layout"
+"concierge/index.md" = "Overview"
+"concierge/tasks/rooms/index.md" = "The Concierge"
+"concierge/tasks/admin/index.md" = "Administering Requests"
+"concierge/tasks/provisioners" = "Implementing a Provisioner"
+"concierge/reference/api.md" = "Python API"
+"concierge/reference/cli.md" = "CLI Scripts"
+"concierge/skills/soliplex-concierge-admin.md" = "soliplex-concierge-admin"
+"concierge/skills/soliplex-concierge-installer.md" = "soliplex-concierge-installer"
+"concierge/skills/soliplex-concierge-room.md" = "soliplex-concierge-room"
+
+# Copied Markdown that is not a page, kept out of the generated nav and the
+# orphan check (it still builds). Docs-relative files or directories.
+[nav_exclude]
+paths = [
+  # '--8<--' snippet fragments included by other soliplex-template pages.
+  "template/getting-started/includes",
+]

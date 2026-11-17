@@ -11,12 +11,21 @@ Unified documentation site for the Soliplex ecosystem, built with [Zensical](htt
 This repository aggregates documentation from several upstream repositories, included here as **git submodules** under `projects/`:
 
 - **[soliplex/soliplex](https://github.com/soliplex/soliplex)** — Core Platform
-- **[soliplex/ingester](https://github.com/soliplex/ingester)** — Document Ingestion
-- **[soliplex/chatbot](https://github.com/soliplex/chatbot)** — Chatbot Widget
+- **[soliplex/soliplex-template](https://github.com/soliplex/soliplex-template)** — Docker Compose Template (`projects/template`)
+- **[soliplex/soliplex-concierge](https://github.com/soliplex/soliplex-concierge)** — Concierge (`projects/concierge`)
+- **[soliplex/chatbot](https://github.com/soliplex/chatbot)** — Chatbot Widget (`projects/chatbot-widget`)
 - **[soliplex/frontend](https://github.com/soliplex/frontend)** — Flutter Client
 - **[soliplex/ingester-agents](https://github.com/soliplex/ingester-agents)** — Ingester Agents (README only)
 - **[soliplex/pdf-splitter](https://github.com/soliplex/pdf-splitter)** — PDF Splitter (README only)
 - **[soliplex/bubble-sandbox](https://github.com/soliplex/bubble-sandbox)** — Bubble Sandbox (README only)
+- **[soliplex/exquisite](https://github.com/soliplex/exquisite)** — Exquisite
+
+A submodule's directory name becomes its URL path (`docs/<project>/` is served
+at `/<project>/`). It must not match the name of a soliplex repository that
+publishes its own GitHub Pages site, or that project site shadows the section:
+`soliplex-template` and `soliplex-concierge` publish at `/soliplex-template/`
+and `/soliplex-concierge/`, which is why they are mounted as `template` and
+`concierge` (and `chatbot` as `chatbot-widget`).
 
 ## How It Works
 
@@ -80,7 +89,7 @@ soliplex.github.io/
 ### Adding a New Project
 
 1. Add the repository as a submodule under `projects/` and commit the `.gitmodules` change.
-2. Add an `@auto:<project>` nav stub (and any title overrides) to `zensical.toml.template`.
+2. Add an `@auto:<project>` nav stub (and any title overrides) to `zensical.toml.template`. If its docs use `--8<--` snippets, add the submodule root to the snippets `base_path`; list Markdown that is only a snippet fragment under `[nav_exclude]`.
 3. Add a trigger workflow to the new repo from `.github/workflows/TRIGGER_TEMPLATES/`.
 4. Run `uv run python scripts/build-docs.py --no-update` and confirm the nav validates.
 
