@@ -4476,7 +4476,7 @@ than by invoking fvm, so any tool or a human can read it too.</p>
 to — run <code>fvm global</code> as well, since the pre-commit hooks call <code>flutter</code>
 directly. Homebrew cannot pin a version: <code>brew install flutter</code> tracks the
 latest release.</p>
-<p>The <code>environment:</code> floor in <code>pubspec.yaml</code> (<code>flutter: "&gt;=3.38.4"</code>) is a
+<p>The <code>environment:</code> floor in <code>pubspec.yaml</code> (<code>flutter: "&gt;=3.41.0"</code>) is a
 different number: the oldest SDK this library promises consumers. It may lag
 <code>.fvmrc</code>, and moves only when a dependency forces it.</p>
 <p>Using VS Code, and the analyzer disagrees with the pin? See <strong>Troubleshooting</strong>.</p>
@@ -4488,6 +4488,10 @@ different number: the oldest SDK this library promises consumers. It may lag
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>macos<span class="w">   </span><span class="c1"># or: -d ios, -d chrome, -d android</span>
 </span></code></pre></div>
 <h2 id="platform-setup">Platform Setup</h2>
+<p>The supported targets are iOS, Android and the web. The macOS, Linux and
+Windows runners are for running the app locally while developing: no CI job
+builds them and nobody tests them before a release, so a dependency change can
+break one without anyone noticing.</p>
 <h3 id="macos">macOS</h3>
 <h4 id="code-signing-required-for-keychain">Code Signing (Required for Keychain)</h4>
 <p>macOS apps require code signing to access Keychain for secure token storage.

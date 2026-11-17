@@ -2553,10 +2553,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ios-may-retain-a-copy-of-every-cancelled-save" class="md-nav__link">
+  <a href="#ios-keeps-a-copy-of-every-save-until-the-next-launch" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        iOS may retain a copy of every cancelled save
+        iOS keeps a copy of every save until the next launch
       </span>
     </span>
   </a>
@@ -3850,10 +3850,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ios-may-retain-a-copy-of-every-cancelled-save" class="md-nav__link">
+  <a href="#ios-keeps-a-copy-of-every-save-until-the-next-launch" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        iOS may retain a copy of every cancelled save
+        iOS keeps a copy of every save until the next launch
       </span>
     </span>
   </a>
@@ -4065,14 +4065,17 @@ The behaviour is reasoned from <code>file_picker</code>'s web implementation: it
 an anchor click and returns null unconditionally, with no cancellation concept
 and no way to observe whether the browser delivered the download. The screen
 therefore claims only that a download started.</p>
-<h2 id="ios-may-retain-a-copy-of-every-cancelled-save">iOS may retain a copy of every cancelled save</h2>
-<p><code>file_picker</code>'s iOS plugin appears to write the bytes into app storage <em>before</em>
-presenting the export picker, and returns nil on cancel. If so, each cancelled
-save leaves a complete report — hostnames, discovery URLs, log records — on
-disk under a timestamped name that nothing deletes, outside the reasoning at
+<h2 id="ios-keeps-a-copy-of-every-save-until-the-next-launch">iOS keeps a copy of every save until the next launch</h2>
+<p><code>file_picker</code>'s iOS plugin writes the bytes to a file before presenting the
+export picker, exports a copy of it, and never deletes the original, whether
+the user saves or cancels. Each save leaves a complete report — hostnames,
+discovery URLs, log records — on disk, outside the reasoning at
 <code>_publicPaths</code>.</p>
-<p>Unverified: this was read from the plugin's Objective-C, not exercised.
-<strong>Open question: confirm, and clean up on the cancel path if it holds.</strong></p>
+<p>With <code>file_picker_darwin</code> 2.5.1 that file sits in the plugin's own directory
+under the temporary directory, which the shell's boot-time
+<code>clearTemporaryFiles()</code> sweeps (and the system may purge sooner), so it
+outlives the session but not the next launch.</p>
+<p>Read from the plugin's Swift (<code>file_picker_darwin</code> 2.5.1), not exercised.</p>
 <h2 id="smaller-recorded-rather-than-fixed">Smaller, recorded rather than fixed</h2>
 <ul>
 <li>The report's <code>Requests captured: N</code> counts the groups it renders.
