@@ -16,7 +16,6 @@ This repository aggregates documentation from several upstream repositories, inc
 - **[soliplex/chatbot](https://github.com/soliplex/chatbot)** — Chatbot Widget (`projects/chatbot-widget`)
 - **[soliplex/frontend](https://github.com/soliplex/frontend)** — Flutter Client
 - **[soliplex/ingester-agents](https://github.com/soliplex/ingester-agents)** — Ingester Agents (README only)
-- **[soliplex/pdf-splitter](https://github.com/soliplex/pdf-splitter)** — PDF Splitter (README only)
 - **[soliplex/bubble-sandbox](https://github.com/soliplex/bubble-sandbox)** — Bubble Sandbox (README only)
 - **[soliplex/exquisite](https://github.com/soliplex/exquisite)** — Exquisite
 
