@@ -22,7 +22,6 @@ soliplex.github.io/
 │   ├── exquisite/                 # Copied from projects/exquisite/docs/
 │   ├── frontend/                  # Copied from projects/frontend/docs/
 │   ├── ingester-agents/           # Created from projects/ingester-agents/README.md
-│   ├── pdf-splitter/              # Created from projects/pdf-splitter/README.md
 │   ├── bubble-sandbox/            # Created from projects/bubble-sandbox/README.md
 │   └── .gitignore                 # Ignores copied project directories
 ├── projects/                      # Git submodules (upstream sources)

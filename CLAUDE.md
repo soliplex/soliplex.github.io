@@ -4,7 +4,7 @@ This document provides context for Claude (or any AI assistant) to understand an
 
 ## Project Overview
 
-This is a **unified documentation site** (`soliplex.github.io`) that aggregates documentation from **9 separate git submodule repositories** and builds it with [Zensical](https://github.com/squidfunk/zensical). When documentation changes in any submodule, the site automatically rebuilds and deploys.
+This is a **unified documentation site** (`soliplex.github.io`) that aggregates documentation from **8 separate git submodule repositories** and builds it with [Zensical](https://github.com/squidfunk/zensical). When documentation changes in any submodule, the site automatically rebuilds and deploys.
 
 ### Core Concept
 
@@ -22,7 +22,7 @@ Individual Repos          Documentation Site
 │  chatbot    │──────┤            │
 │  /docs      │      │            ▼
 └─────────────┘      │   https://soliplex.github.io/
-     (+ 6 more)──────┘
+     (+ 5 more)──────┘
 ```
 
 ## Prerequisites
@@ -66,7 +66,6 @@ Each submodule is a separate git repository:
 - `projects/exquisite/` - Evaluation corpus management
 - `projects/frontend/` - Flutter client
 - `projects/ingester-agents/` - Ingestion agents (README only)
-- `projects/pdf-splitter/` - PDF utilities (README only)
 - `projects/bubble-sandbox/` - Bubble sandbox (README only)
 
 **Key File**: `.gitmodules` - Defines all submodules
@@ -336,7 +335,7 @@ Or use the build script which does this automatically (unless `--no-update` is s
 
 ## Current Configuration
 
-### Projects: 9 Total
+### Projects: 8 Total
 
 | Project | Type | Docs Location | In Nav |
 |---------|------|---------------|--------|
@@ -347,7 +346,6 @@ Or use the build script which does this automatically (unless `--no-update` is s
 | exquisite | Full docs | `projects/exquisite/docs/` | ✅ |
 | frontend | Full docs | `projects/frontend/docs/` | ✅ |
 | ingester-agents | README only | `projects/ingester-agents/README.md` | ✅ |
-| pdf-splitter | README only | `projects/pdf-splitter/README.md` | ✅ |
 | bubble-sandbox | README only | `projects/bubble-sandbox/README.md` | ✅ |
 
 ### Trigger Status
@@ -504,4 +502,4 @@ git rm -f projects/name
 
 **Last Updated**: 2026-06-01
 **Documentation Version**: Zensical build with template-generated navigation and repository_dispatch + nightly triggers
-**Active Projects**: 9 (soliplex, template, concierge, chatbot-widget, frontend, exquisite, ingester-agents, pdf-splitter, bubble-sandbox)
+**Active Projects**: 8 (soliplex, template, concierge, chatbot-widget, frontend, exquisite, ingester-agents, bubble-sandbox)
