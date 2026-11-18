@@ -4710,6 +4710,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#web-video-player" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Web video player
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rules" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -6050,6 +6061,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#web-video-player" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Web video player
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rules" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -6342,6 +6364,14 @@ URL.</p>
 <code>clearCallbackUrl()</code>, and pass the result to <code>standardFlavor</code> as
 <code>callbackParams</code>, as the example above does. Call them after
 <code>installLogSinks()</code>: without a sink, the missing-script error is discarded.</p>
+<h2 id="web-video-player">Web video player</h2>
+<p>On the web, a video an answer links plays through Shaka Player, which the app
+loads from <code>vendor/shaka-player.compiled.js</code> beside <code>index.html</code> the first
+time a video plays. A fork's web build serves the fork's own <code>web/</code> folder, so
+copy <code>web/vendor/shaka-player.compiled.js</code> from this repository into the
+fork's <code>web/vendor/</code>. Without it, every video on the web offers to open in the
+browser instead, and the app logs "Could not start the video player" with the
+script's path.</p>
 <h2 id="rules">Rules</h2>
 <ul>
 <li>Build the theme with <code>buildSoliplexThemeData</code> (never a bare <code>ThemeData</code>) — the

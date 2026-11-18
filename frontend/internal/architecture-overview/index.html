@@ -7059,6 +7059,12 @@
 <td>Platform-divergent behavior; web via conditional import; the copy iOS makes of every save lasts until the next launch's temp sweep.</td>
 </tr>
 <tr>
+<td><code>better_player</code> (+ Shaka Player 4.16.56, vendored under <code>web/vendor/</code>)</td>
+<td>1.37.0</td>
+<td>High</td>
+<td>Revived in 2026 after ~21 months dormant and releasing every few days, so the constraint is pinned to one minor; open-core, with a paid tier outside the package. Only its engine is used: its fullscreen loses the shared <code>&lt;video&gt;</code> element on web, and its web controls paint a fixed black gradient whatever bar colour is configured, so <code>VideoHandoff</code> hands the view between hosts and the hosts draw <code>VideoControls</code>. Its <code>BetterPlayer</code> widget is not mounted either: it re-creates the view when the video's size arrives, which pauses the moved <code>&lt;video&gt;</code> element in Safari, and its lifecycle handling makes <code>play</code> a no-op while the app is not resumed; the playback shows <code>buildVideoPlayerView()</code> in a fit of its own and on Android and iOS pauses on going to the background itself. Its <code>PlayerDataSource.network</code> drops HLS/DASH renditions unless <code>useAsmsTracks: true</code> is passed explicitly. Verified in Chrome (playback, the handoff into the dialog, full screen, sources that fail to load), on macOS (playback, failed loads) and on an Android emulator (playback, seeking, replay after the end, a failed load, HLS); not on iOS, Windows or Linux, which play through libmpv the developer installs (<code>docs/developer-setup.md</code>). Quality switching is unverified.</td>
+</tr>
+<tr>
 <td><code>cupertino_http</code></td>
 <td>2.4.0</td>
 <td>Medium</td>

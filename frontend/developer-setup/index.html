@@ -6687,7 +6687,7 @@ than by invoking fvm, so any tool or a human can read it too.</p>
 to — run <code>fvm global</code> as well, since the pre-commit hooks call <code>flutter</code>
 directly. Homebrew cannot pin a version: <code>brew install flutter</code> tracks the
 latest release.</p>
-<p>The <code>environment:</code> floor in <code>pubspec.yaml</code> (<code>flutter: "&gt;=3.41.0"</code>) is a
+<p>The <code>environment:</code> floor in <code>pubspec.yaml</code> (<code>flutter: "&gt;=3.47.0"</code>) is a
 different number: the oldest SDK this library promises consumers. It may lag
 <code>.fvmrc</code>, and moves only when a dependency forces it.</p>
 <p>Using VS Code, and the analyzer disagrees with the pin? See <strong>Troubleshooting</strong>.</p>
@@ -6785,13 +6785,22 @@ install an APK over one signed by a different key.</p>
 <h3 id="linux">Linux</h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Install GTK dependencies (Ubuntu/Debian)</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>clang<span class="w"> </span>cmake<span class="w"> </span>ninja-build<span class="w"> </span>pkg-config<span class="w"> </span>libgtk-3-dev
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>linux
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># The video player plays through libmpv, which it loads at run time</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libmpv2
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>linux
 </span></code></pre></div>
 <h3 id="windows">Windows</h3>
 <p>Requires Visual Studio with "Desktop development with C++" workload:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>flutter<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>windows
 </span></code></pre></div>
+<p>The video player plays through libmpv, which <code>better_player_windows</code> does not
+ship. Download the 64-bit <code>mpv-2.dll</code> from
+<a href="https://sourceforge.net/projects/mpv-player-windows/files/libmpv/">mpv-player-windows</a>
+and copy it beside the built app, <code>build\windows\x64\runner\Debug\</code> (again
+after <code>flutter clean</code>).</p>
+<p>On either platform, without libmpv every video waits 30 seconds, then offers
+to open in the browser.</p>
 <h2 id="backend-sign-in-settings">Backend sign-in settings</h2>
 <p>These live in the backend's OIDC config (<code>oidc/config.yaml</code> in the installation,
 or each path in its <code>oidc_paths</code>) or, where noted, in the identity provider's
