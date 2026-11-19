@@ -6274,6 +6274,23 @@ to apply. What it adds to an existing stack:</p>
   agent-facing docs with the next upgrade
   (<a href="#afterwards">Afterwards</a>), or by hand.</li>
 </ul>
+<p>The <code>v0.25</code> template introduces no rung either: a stack on Docker
+needs no change. It makes nginx's DNS resolver configurable, for
+stacks run under podman, whose DNS is not at Docker's <code>127.0.0.11</code>.
+To adopt it in an existing stack, make all three changes together:</p>
+<ul>
+<li>in <code>nginx/nginx.conf</code>, replace <code>resolver 127.0.0.11 valid=10s;</code>
+  with <code>resolver @@RESOLVER@@ valid=10s ipv6=off;</code>;</li>
+<li>in <code>docker-compose.yml</code>'s <code>nginx</code> service, add an <code>environment:</code>
+  entry <code>NGINX_RESOLVER: ${NGINX_RESOLVER:-127.0.0.11}</code>, and extend
+  the command's <code>sed</code> with a second expression,
+  <code>-e "s|@@RESOLVER@@|$$NGINX_RESOLVER|g"</code>;</li>
+<li>under podman, set <code>NGINX_RESOLVER</code> in <code>.env</code> to the <code>nameserver</code>
+  address in the nginx container's <code>/etc/resolv.conf</code>.</li>
+</ul>
+<p>The first two go together: an <code>nginx.conf</code> holding <code>@@RESOLVER@@</code>
+with a command that does not render it fails nginx's startup. A
+fresh stack generated with the release shows the full command.</p>
 </div>
 <p>The <code>[tool.soliplex-template]</code> manifest at the end of the stack's
 <code>pyproject.toml</code> records the skill commit (<code>skill_source_commit</code>) and date
