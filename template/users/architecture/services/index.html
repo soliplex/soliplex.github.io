@@ -14,7 +14,7 @@
         <link rel="prev" href="../configuration/">
       
       
-        <link rel="next" href="../../operations/ingester/">
+        <link rel="next" href="../../operations/frontend/">
       
       
         
@@ -3387,6 +3387,8 @@
       
         
       
+        
+      
     
     
     
@@ -3427,6 +3429,35 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/frontend/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-app-window" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M10 4v4M2 8h20M6 4v4"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Frontend
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -3607,7 +3638,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_5_6_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_5_6_7" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -3630,14 +3661,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_1_5_6_6" id="__nav_3_1_5_6_6_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_1_5_6_7" id="__nav_3_1_5_6_7_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_5_6_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1_5_6_6">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_5_6_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_5_6_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -6469,7 +6500,8 @@ Both the backend and the ingester reach Ollama at <code>OLLAMA_BASE_URL</code>.<
 <h2 id="nginx">nginx</h2>
 <ul>
 <li>
-<p>Serves the Flutter web frontend.</p>
+<p>Serves the Flutter web frontend (see <a href="../../operations/frontend/">Web frontend and
+  nginx</a>).</p>
 </li>
 <li>
 <p>Reverse-proxies <code>/api/</code> and <code>/mcp/</code> to <code>backend:8000</code>.</p>
@@ -6717,13 +6749,13 @@ Provision it after first boot with <code>scripts/init_gitea.py</code> — see
         
         
           
-          <a href="../../operations/ingester/" class="md-footer__link md-footer__link--next" aria-label="Next: Ingester">
+          <a href="../../operations/frontend/" class="md-footer__link md-footer__link--next" aria-label="Next: Frontend">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Ingester
+                Frontend
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -211,6 +211,9 @@
         <loc>https://soliplex.github.io/template/users/architecture/services/</loc>
       </url>
       <url>
+        <loc>https://soliplex.github.io/template/users/operations/frontend/</loc>
+      </url>
+      <url>
         <loc>https://soliplex.github.io/template/users/operations/ingester/</loc>
       </url>
       <url>
