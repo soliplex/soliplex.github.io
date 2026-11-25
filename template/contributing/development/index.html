@@ -6435,7 +6435,9 @@ environment. If <code>uv</code> resolves a Python newer than the repo supports, 
 <p><code>scripts/refresh_skill_template.py</code> is the load-bearing step: it
 regenerates the gitignored embedded template from the repo exemplars and
 render-checks every shipped <code>.mako</code> against the generator's <code>DEFAULTS</code>,
-so a stale placeholder cannot ship. Functional tests re-run it themselves.</p>
+so a stale placeholder cannot ship. Functional tests re-run it themselves.
+Run from a checkout, the generator runs it too before it renders, so it
+never renders a stale copy.</p>
 <h2 id="repository-structure">Repository structure</h2>
 <p>The repo-root stack files (<code>docker-compose.yml.mako</code>, <code>nginx/</code>,
 <code>backend/</code>, …) are the exemplar: the render-source the skill's template
