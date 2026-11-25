@@ -6465,7 +6465,10 @@ supplied by the template.  Any fields set locally override the template.</p>
 <ul>
 <li>
 <p><code>model_settings</code>: a mapping, whose keys are determined by
-  the <code>provider_type</code> above (see below).</p>
+  the <code>provider_type</code> above (see below).  For the <code>ollama</code> and <code>vllm</code>
+  providers it defaults <code>framing_announcement</code> to <code>"always"</code>: models
+  served through them write malformed tool calls without Pydantic AI's
+  <code>&lt;system&gt;</code> framing announcement.  Set the key here to override it.</p>
 </li>
 <li>
 <p><code>retries</code> (an integer, default <code>3</code>):  number of retries for LLM calls
